@@ -1,0 +1,124 @@
+INFO: Using SIF: /shared/data1/Projects/Cerebras/acceptance/hpc/cs_sdk_1.1.0/sdk-cbcore-202404122356-8-a1162951.sif
+out/bin  
+out/out.json .json 
+out/east  
+out/west  
+out/generated  
+out/bin/out_rpc.json .json 
+out/bin/out_7_0.elf .elf 
+out/bin/out_6_0.elf .elf 
+out/bin/out_8_0.elf .elf 
+out/bin/out_0_0.elf .elf 
+out/bin/out_2_0.elf .elf 
+out/bin/out_3_0.elf .elf 
+out/bin/out_4_54.elf .elf 
+out/bin/out_1_0.elf .elf 
+out/bin/out_4_62.elf .elf 
+out/bin/out_5_0.elf .elf 
+out/bin/out_4_30.elf .elf 
+out/bin/out_4_22.elf .elf 
+out/bin/out_4_42.elf .elf 
+out/bin/out_4_56.elf .elf 
+out/bin/out_4_10.elf .elf 
+out/bin/out_4_8.elf .elf 
+out/bin/out_4_32.elf .elf 
+out/bin/out_4_34.elf .elf 
+out/bin/out_4_40.elf .elf 
+out/bin/out_4_46.elf .elf 
+out/bin/out_4_50.elf .elf 
+out/bin/out_4_52.elf .elf 
+out/bin/out_4_6.elf .elf 
+out/bin/out_4_44.elf .elf 
+out/bin/out_4_58.elf .elf 
+out/bin/out_4_26.elf .elf 
+out/bin/out_4_48.elf .elf 
+out/bin/out_4_12.elf .elf 
+out/bin/out_4_18.elf .elf 
+out/bin/out_4_38.elf .elf 
+out/bin/out_4_20.elf .elf 
+out/bin/out_4_16.elf .elf 
+out/bin/out_4_28.elf .elf 
+out/bin/out_4_4.elf .elf 
+out/bin/out_4_2.elf .elf 
+out/bin/out_4_36.elf .elf 
+out/bin/out_4_24.elf .elf 
+out/bin/out_4_60.elf .elf 
+out/bin/out_4_23.elf .elf 
+out/bin/out_4_0.elf .elf 
+out/bin/out_4_14.elf .elf 
+out/bin/out_4_61.elf .elf 
+out/bin/out_4_21.elf .elf 
+out/bin/out_4_55.elf .elf 
+out/bin/out_4_17.elf .elf 
+out/bin/out_4_33.elf .elf 
+out/bin/out_4_51.elf .elf 
+out/bin/out_4_37.elf .elf 
+out/bin/out_4_3.elf .elf 
+out/bin/out_4_35.elf .elf 
+out/bin/out_4_57.elf .elf 
+out/bin/out_4_31.elf .elf 
+out/bin/out_4_43.elf .elf 
+out/bin/out_4_9.elf .elf 
+out/bin/out_4_59.elf .elf 
+out/bin/out_4_39.elf .elf 
+out/bin/out_4_47.elf .elf 
+out/bin/out_4_53.elf .elf 
+out/bin/out_4_27.elf .elf 
+out/bin/out_4_49.elf .elf 
+out/bin/out_4_25.elf .elf 
+out/bin/out_4_11.elf .elf 
+out/bin/out_4_7.elf .elf 
+out/bin/out_4_29.elf .elf 
+out/bin/out_4_13.elf .elf 
+out/bin/out_4_1.elf .elf 
+out/bin/out_4_45.elf .elf 
+out/bin/out_4_5.elf .elf 
+out/bin/out_4_41.elf .elf 
+out/bin/out_4_19.elf .elf 
+out/bin/out_4_15.elf .elf 
+out/west/bin/out_7_0.elf .elf 
+out/west/bin/out_3_0.elf .elf 
+out/west/bin/out_2_0.elf .elf 
+out/west/bin/out_0_0.elf .elf 
+out/west/bin/out_5_0.elf .elf 
+out/west/bin/out_4_0.elf .elf 
+out/west/bin/out_1_0.elf .elf 
+out/west/bin/out_6_0.elf .elf 
+out/east/bin/out_3_0.elf .elf 
+out/east/bin/out_2_0.elf .elf 
+out/east/bin/out_0_0.elf .elf 
+out/east/bin/out_5_0.elf .elf 
+out/east/bin/out_4_0.elf .elf 
+out/east/bin/out_1_0.elf .elf 
+out/west/bin  
+out/west/out.json .json 
+out/east/bin  
+out/east/out.json .json 
+Reading file out/out.json
+Reading file out/bin/out_rpc.json
+Reading file out/west/out.json
+Reading file out/east/out.json
+fab w,h = 757,996
+Kernel x,y w,h = 4,1 400,400
+memcpy x,y w,h = 1,1 405,400
+Traceback (most recent call last):
+  File "./run.py", line 114, in <module>
+    np.testing.assert_allclose(C_expected, C, rtol=1e-05, atol=1e-06)
+  File "/python/python-x86_64/lib/python3.8/site-packages/numpy/testing/_private/utils.py", line 1592, in assert_allclose
+    assert_array_compare(compare, actual, desired, err_msg=str(err_msg),
+  File "/cb/toolchains/buildroot/monolith-default/202402082122-236-081a464e/rootfs-x86_64/usr/lib/python3.8/contextlib.py", line 75, in inner
+    return func(*args, **kwds)
+  File "/python/python-x86_64/lib/python3.8/site-packages/numpy/testing/_private/utils.py", line 862, in assert_array_compare
+    raise AssertionError(msg)
+AssertionError: 
+Not equal to tolerance rtol=1e-05, atol=1e-06
+
+Mismatched elements: 1 / 268960000 (3.72e-07%)
+Max absolute difference: 0.04150391
+Max relative difference: 1.008098e-05
+ x: array([[4060.5579, 4082.792 , 4083.9026, ..., 4048.9907, 4050.9692,
+        4098.1514],
+       [4046.9006, 4068.1492, 4081.3306, ..., 4058.233 , 4054.0928,...
+ y: array([[4060.5613, 4082.8054, 4083.9028, ..., 4048.9895, 4050.9705,
+        4098.1523],
+       [4046.8992, 4068.1548, 4081.317 , ..., 4058.2231, 4054.0942,...

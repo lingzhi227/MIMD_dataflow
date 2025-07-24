@@ -1,0 +1,198 @@
+
+const print = @import_module("<simprint>", .{ .enable = true });
+const fabric = @import_module("<layout>");
+
+const timestamp = @import_module("<time>");
+// starting time of H2D/D2H
+var tscStartBuffer = @zeros([timestamp.tsc_size_words]u16);
+// ending time of H2D/D2H
+var tscEndBuffer = @zeros([timestamp.tsc_size_words]u16);
+
+var time_buf_f32 = @zeros([3]f32);
+var time_buf_f32_ptr: [*]f32 = &time_buf_f32;
+
+// memcpy module provides infrastructure for copying data
+// and launching functions from the host
+param memcpy_params: comptime_struct;
+const sys_mod = @import_module("<memcpy/memcpy>", memcpy_params);
+
+param Mt: i16;
+param Kt: i16;
+param Nt: i16;
+
+param Pc:    i16;
+param Cycle: i16;
+param Pr:    i16;
+
+const A_color_iq = @get_input_queue(2);
+const B_color_iq = @get_input_queue(3);
+
+param A_color:  color;
+param B_color:  color;
+
+// task id
+const data_transfer_task_id:   local_task_id = @get_local_task_id(16);
+const compute_task_id:      local_task_id = @get_local_task_id(17);
+const terminate_task_id:    local_task_id = @get_local_task_id(18);
+
+// Initialize
+var A = @zeros([Mt*Kt]f32);
+var B = @zeros([Kt*Nt]f32);
+var C = @zeros([Mt*Nt]f32);
+var C_ptr: [*]f32 = &C;
+
+// A_dsd store A in row major
+const A_input_dsd = @get_dsd(fabin_dsd, .{ .extent = Mt*Kt, .fabric_color = A_color, .input_queue = A_color_iq });
+const A_mem1_dsd = @get_dsd(mem1d_dsd, .{ .extent = Mt*Kt, .base_address = &A });
+
+// B_dsd store B in row major
+const B_input_dsd = @get_dsd(fabin_dsd, .{ .extent = Kt*Nt, .fabric_color = B_color, .input_queue = B_color_iq });
+const B_mem1_dsd = @get_dsd(mem1d_dsd, .{ .extent = Kt*Nt, .base_address = &B });
+
+// C_dsd store partial result of C
+var C_dsd  = @get_dsd(mem1d_dsd, .{ .tensor_access = |i|{Mt} -> C[i] });
+
+var A_cache = 
+var B_cache = 
+var A_run = @zeros([Mt*Kt]f32);
+var B_run = @zeros([Kt*Nt]f32);
+var C_result = @zeros([Mt*Nt]f32);
+
+task local_compute() void {
+    C_result = A_run * B_run
+}
+
+
+// send local copy of A_cache west
+task send_A_cache_west() void {
+
+}
+
+// send local copy of B_cache north
+task send_B_cache_north() void {
+
+}
+
+task shift() void {
+    
+}
+
+// 
+task control_task() void {
+
+}
+
+if (first row) {
+    send_B_run_south
+}
+
+if (first column) {
+    send_A_run_east
+}
+
+
+var firstA: bool = true;
+task data_transfer() void {
+    if (firstA) {
+        timestamp.enable_tsc();
+        firstA = false;
+    }
+    print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+    print.print_string("transfering new block of A\n");
+    @mov32(A_mem1_dsd, A_input_dsd, . { .async = true, .activate = compute_task_id });
+    @mov32(B_mem1_dsd, B_input_dsd, . { .async = true, .unblock = compute_task_id });
+}
+
+var beat: i16 = 0;
+task compute() void {
+    if (beat == 0){
+      f_tic();
+    }
+    
+    const A_ptr = &A;
+
+    var B_dsd  = @get_dsd(mem1d_dsd, .{ .tensor_access = |i|{Kt} -> B[i] });
+    B_dsd = @set_dsd_base_addr(B_dsd, &B);
+
+    for (@range(i16, Mt)) |m| {
+        var C_dsd = @get_dsd(mem1d_dsd, .{ .tensor_access = |i|{Mt} -> C[i] });
+
+        for (@range(i16, Kt)) |j| {
+          const a = A_ptr.*[j*Mt + m];
+          @fmacs(C_dsd, C_dsd, B_dsd, a);
+          C_dsd = @increment_dsd_offset(C_dsd, Mt, f32);
+        }
+        B_dsd = @increment_dsd_offset(B_dsd, Kt, f32);
+    }
+    
+    beat += 1;
+    @block(compute_task_id);
+
+    // increment beat until reach Cycle finish compute
+    if (beat == Cycle) {
+      print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+      print.print_string("Last block of A processed\n");
+      f_toc();
+      @unblock(terminate_task_id);
+    } else {
+      @activate(data_transfer_task_id);
+    }
+}
+
+fn rpc_sync() void {
+    print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+    print.print_string("rpc_sync started\n");
+    @activate(terminate_task_id);
+}
+
+task terminate() void {
+    @block(terminate_task_id);
+    print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+    print.print_string("Unblocking command stream\n");
+    f_timestamps_to_f32();
+    sys_mod.unblock_cmd_stream();
+}
+
+fn f_tic() void {
+    timestamp.get_timestamp(&tscStartBuffer);
+}
+
+fn f_toc() void {
+    timestamp.get_timestamp(&tscEndBuffer);
+}
+
+fn f_timestamps_to_f32() void {
+    // time_buf_f32[0] = {tscStartBuffer[1], tscStartBuffer[0]}
+    // time_buf_f32[1] = {tscEndBuffer[0], tscStartBuffer[2]}
+    // time_buf_f32[2] = {tscEndBuffer[2], tscEndBuffer[1]}
+    var lo_ : u16 = 0;
+    var hi_ : u16 = 0;
+    var word : u32 = 0;
+
+    lo_ = tscStartBuffer[0];
+    hi_ = tscStartBuffer[1];
+    time_buf_f32[0] = @bitcast(f32, (@as(u32,hi_) << @as(u16,16)) | @as(u32, lo_) );
+
+    lo_ = tscStartBuffer[2];
+    hi_ = tscEndBuffer[0];
+    time_buf_f32[1] = @bitcast(f32, (@as(u32,hi_) << @as(u16,16)) | @as(u32, lo_) );
+
+    lo_ = tscEndBuffer[1];
+    hi_ = tscEndBuffer[2];
+    time_buf_f32[2] = @bitcast(f32, (@as(u32,hi_) << @as(u16,16)) | @as(u32, lo_) );
+}
+
+comptime {
+    @bind_local_task(data_transfer, data_transfer_task_id);
+    @bind_local_task(compute, compute_task_id);
+    @bind_local_task(terminate, terminate_task_id);
+
+    @activate(data_transfer_task_id);
+    @block(compute_task_id);
+    @block(terminate_task_id);
+
+    @export_symbol(time_buf_f32_ptr, "time_buf_f32"); 
+    @export_symbol(C_ptr, "C");
+    @export_symbol(rpc_sync);
+    @export_symbol(init);
+} 

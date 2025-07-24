@@ -1,0 +1,100 @@
+// West Halo PE for Systolic Array  
+// Receives A matrix blocks from host and injects them East into systolic array
+
+param memcpy_params: comptime_struct;
+const sys_mod = @import_module("<memcpy/memcpy>", memcpy_params);
+
+// Block dimensions
+param Mt: i16;
+param Kt: i16;
+param Nt: i16;
+param Cycle: i16;
+
+// Colors
+param A_color: color;
+param MEMCPYH2D_1: color;
+
+// Queue IDs  
+const A_oq = @get_output_queue(2);
+
+// Task IDs
+const inject_A_task_id: local_task_id = @get_local_task_id(16);
+
+// Buffer for A block
+var A_block = @zeros([Mt*Kt]f32);
+var A_block_ptr: [*]f32 = &A_block;
+
+// Injection state
+var current_beat: i16 = 0;
+var row_idx: i16 = 0;
+var col_idx: i16 = 0;
+
+// Initialize function
+fn init() void {
+    current_beat = 0;
+    row_idx = 0;
+    col_idx = 0;
+    sys_mod.unblock_cmd_stream();
+}
+
+// Start A injection for a new beat
+fn start_A_injection() void {
+    row_idx = 0;
+    col_idx = 0;
+    @activate(inject_A_task_id);
+}
+
+// Task to inject A elements eastward
+task inject_A() void {
+    @block(inject_A_task_id);
+    
+    // Send current A element east
+    const A_out_dsd = @get_dsd(fabout_dsd, .{
+        .extent = 1,
+        .fabric_color = A_color,
+        .output_queue = A_oq
+    });
+    
+    var A_val = A_block[row_idx * Kt + col_idx];
+    const A_scalar_dsd = @get_dsd(mem1d_dsd, .{
+        .extent = 1,
+        .base_address = &A_val
+    });
+    
+    @fmovs(A_out_dsd, A_scalar_dsd, .{.async = true});
+    
+    // Move to next element (column-major order for systolic)
+    col_idx += 1;
+    if (col_idx >= Kt) {
+        col_idx = 0;
+        row_idx += 1;
+        
+        if (row_idx >= Mt) {
+            // Block complete
+            current_beat += 1;
+            return;
+        }
+    }
+    
+    // Continue injecting elements
+    @unblock(inject_A_task_id);
+}
+
+// RPC function for host coordination
+fn rpc_sync() void {
+    sys_mod.unblock_cmd_stream();
+}
+
+comptime {
+    @bind_local_task(inject_A, inject_A_task_id);
+    @block(inject_A_task_id);
+    
+    if (@is_arch("wse3")) {
+        @initialize_queue(A_oq, .{.color = A_color});
+    }
+    
+    @export_symbol(A_block_ptr, "A_block");
+    @export_symbol(init);
+    @export_symbol(start_A_injection);
+    @export_symbol(rpc_sync);
+}

@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(export M=64)",
+      "Bash(export K=64)",
+      "Bash(export N=64)",
+      "Bash(export Mt=16)",
+      "Bash(export Kt=16)",
+      "Bash(export Nt=16)",
+      "Bash(./compile.sh)",
+      "Bash(export M=256 K=256 N=256 Mt=64 Kt=64 Nt=64)",
+      "Bash(export M=256 K=256 N=256 Mt=32 Kt=32 Nt=32)",
+      "Bash(chmod:*)",
+      "Bash(python3:*)",
+      "Bash(M=32 K=32 N=32 Mt=16 Kt=16 Nt=16 ./compile.sh)",
+      "Bash(timeout:*)"
+    ],
+    "deny": []
+  }
+}

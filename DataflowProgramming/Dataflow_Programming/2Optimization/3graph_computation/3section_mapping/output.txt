@@ -1,0 +1,21 @@
+Total area needed for all sections: 118
+Using grid dimensions: (10,14) = 140 PEs
+Successfully mapped all sections!
+
+for (m,n)=(10,14)
+
+grid_1: (3,6), start=(0,0), end=(2,5)
+grid_2: (10,8), start=(0,6), end=(9,13)
+grid_3: (4,5), start=(3,0), end=(6,4)
+
+Visualization:
+1 1 1 1 1 1 2 2 2 2 2 2 2 2 
+1 1 1 1 1 1 2 2 2 2 2 2 2 2 
+1 1 1 1 1 1 2 2 2 2 2 2 2 2 
+3 3 3 3 3 . 2 2 2 2 2 2 2 2 
+3 3 3 3 3 . 2 2 2 2 2 2 2 2 
+3 3 3 3 3 . 2 2 2 2 2 2 2 2 
+3 3 3 3 3 . 2 2 2 2 2 2 2 2 
+. . . . . . 2 2 2 2 2 2 2 2 
+. . . . . . 2 2 2 2 2 2 2 2 
+. . . . . . 2 2 2 2 2 2 2 2 

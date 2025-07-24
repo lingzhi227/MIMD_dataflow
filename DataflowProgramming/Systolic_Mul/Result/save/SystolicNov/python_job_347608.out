@@ -1,0 +1,40 @@
+RPC_SYNC DONE
+C transfer done
+Timestamps transfer done
+[[5509.8325 5472.359  5522.3003 ... 5513.062  5505.104  5514.7056]
+ [5499.6255 5445.6245 5497.85   ... 5479.4565 5492.3423 5482.769 ]
+ [5481.946  5408.699  5456.0474 ... 5441.176  5467.194  5444.5703]
+ ...
+ [5499.7964 5435.463  5487.0435 ... 5488.419  5490.182  5480.605 ]
+ [5488.5444 5431.7725 5468.8975 ... 5487.599  5496.238  5466.434 ]
+ [5522.1646 5477.1772 5516.116  ... 5489.866  5500.894  5510.4463]]
+[[5509.838  5472.3516 5522.3086 ... 5513.066  5505.1025 5514.703 ]
+ [5499.624  5445.6143 5497.846  ... 5479.4727 5492.3457 5482.7886]
+ [5481.9404 5408.705  5456.0386 ... 5441.1904 5467.2007 5444.577 ]
+ ...
+ [5499.802  5435.4536 5487.025  ... 5488.393  5490.1943 5480.5747]
+ [5488.52   5431.761  5468.913  ... 5487.6206 5496.2437 5466.4424]
+ [5522.185  5477.1763 5516.105  ... 5489.884  5500.905  5510.4346]]
+8445311.351764705
+Traceback (most recent call last):
+  File "./run.py", line 160, in <module>
+    np.testing.assert_allclose(C_expected, C, rtol=1e-05, atol=1e-06)
+  File "/python/python-x86_64/lib/python3.8/site-packages/numpy/testing/_private/utils.py", line 1592, in assert_allclose
+    assert_array_compare(compare, actual, desired, err_msg=str(err_msg),
+  File "/cb/toolchains/buildroot/monolith-default/202403181828-238-5e1418a5/rootfs-x86_64/usr/lib/python3.8/contextlib.py", line 75, in inner
+    return func(*args, **kwds)
+  File "/python/python-x86_64/lib/python3.8/site-packages/numpy/testing/_private/utils.py", line 862, in assert_array_compare
+    raise AssertionError(msg)
+AssertionError: 
+Not equal to tolerance rtol=1e-05, atol=1e-06
+
+Mismatched elements: 29531 / 2249864925 (0.00131%)
+Max absolute difference: 0.08544922
+Max relative difference: 1.570566e-05
+ x: array([[5509.838 , 5472.3516, 5522.3086, ..., 5513.066 , 5505.1025,
+        5514.703 ],
+       [5499.624 , 5445.6143, 5497.846 , ..., 5479.4727, 5492.3457,...
+ y: array([[5509.8325, 5472.359 , 5522.3003, ..., 5513.062 , 5505.104 ,
+        5514.7056],
+       [5499.6255, 5445.6245, 5497.85  , ..., 5479.4565, 5492.3423,...
+Program completed in: 00:32:34

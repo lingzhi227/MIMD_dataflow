@@ -1,0 +1,769 @@
+README.md
+
+This program is to write systolic array for blocked matrix multiplication in csl
+
+Objective: Compute C = A * B
+Given large matrix A and B where
+
+Matrix A dimensions: 
+    M: rows
+    K: columns
+
+Matrix B dimensions: 
+    K: rows
+    N: columns
+
+A_MK, B_KN
+C_MN = A * B
+
+Three stages of the Systolic array program,
+1. H2D wavelet stream in west artificial halo, and north artificial halo
+2. systolic execution
+3. D2H wavelet stream to east artificial halo
+
+Given Mt, Kt, Nt as block matrix size
+
+block matrix A dimensions: 
+    Mt: block matrix rows
+    Kt: block matrix columns
+
+block matrix B dimensions: 
+    Kt: block matrix rows
+    Nt: block matrix columns
+
+make sure:
+M mod Mt = 0
+K mod Kt = 0
+N mod Nt = 0
+
+Parameter settings:
+Pr = M / Mt
+Pc = N / Nt
+cycle = K / Kt
+
+Hardware grid:
+    757 column
+    996 rows
+ROI resources:
+    750 columns
+    994 rows
+Artificial halo
+    west halo: 1 column
+        start point: P(0,1)
+        height: Pr
+        width: 1
+    north halo: 1 row
+        start point: P(1,0)
+        height: 1
+        width: Pc
+    east halo: 1 column
+        start point: P(Pc+1,1)
+        height: Pr
+        width: Pc
+Compute PE grid
+    number of    rows: Pr
+    number of columns: Pc
+        start point: P(1,1)
+        height: Pr
+        width: Pc
+ROI grid:
+    layout(Pc+2, Pr+1);
+    make sure: 
+        Pc+2 <= 750
+        Pr+1 <= 994
+
+command.sh
+#!/usr/bin/env bash
+
+set -e
+
+M=15
+K=12
+N=16
+Mt=15
+Kt=12
+Nt=16
+
+
+Pr=$((M / Mt))
+Cycle=$((K / Kt))
+Pc=$((N / Nt))
+
+
+cslc --arch=wse2 ./layout.csl --fabric-dims=30,30 \
+--fabric-offsets=4,1 \
+--params=M:${M},K:${K},N:${N},Mt:${Mt},Kt:${Kt},Nt:${Nt} \
+--params=MEMCPYH2D_DATA_1_ID:0 \
+--params=MEMCPYH2D_DATA_2_ID:1 \
+--params=Pc:${Pc},Cycle:${Cycle},Pr:${Pr} \
+--memcpy --channels=1 --width-west-buf=0 --width-east-buf=0 \
+-o out
+
+export SINGULARITYENV_SIMFABRIC_DEBUG=inst_trace@P5.2,landing@P5.2
+cs_python run.py --name out
+
+
+
+
+run.py
+#!/usr/bin/env cs_python
+
+import argparse
+import json
+import numpy as np
+import sys
+
+from cerebras.sdk.runtime.sdkruntimepybind import SdkRuntime
+from cerebras.sdk.runtime.sdkruntimepybind import MemcpyDataType
+from cerebras.sdk.runtime.sdkruntimepybind import MemcpyOrder
+
+# Read arguments
+parser = argparse.ArgumentParser()
+parser.add_argument('--name', help="the test compile output dir")
+parser.add_argument('--cmaddr', help="IP:port for CS system")
+args = parser.parse_args()
+
+# Get matrix dimensions from compile metadata
+with open(f"{args.name}/out.json", encoding='utf-8') as json_file:
+  compile_data = json.load(json_file)
+
+# Matrix dimensions
+M = int(compile_data['params']['M'])
+K = int(compile_data['params']['K'])
+N = int(compile_data['params']['N'])
+
+# block matrix dimensions
+Mt = int(compile_data['params']['Mt'])
+Kt = int(compile_data['params']['Kt'])
+Nt = int(compile_data['params']['Nt'])
+
+# Size of N dimension on each PE
+# block matrix dimensions
+Pr = int(compile_data['params']['Pr'])
+Cycle = int(compile_data['params']['Cycle'])
+Pc = int(compile_data['params']['Pc'])
+
+# Check if requirements are met
+if not (Pc + 2 <= 750 and Pr + 1 <= 994):
+    sys.stderr.write("Error: Conditions Pc + 2 <= 750 and Pr + 1 <= 994 must be met.\n")
+    sys.exit(1)
+
+# Colors used for memcpy streaming
+MEMCPYH2D_DATA_1 = int(compile_data['params']['MEMCPYH2D_DATA_1_ID'])
+MEMCPYH2D_DATA_2 = int(compile_data['params']['MEMCPYH2D_DATA_2_ID'])
+# MEMCPYD2H_DATA_1 = int(compile_data['params']['MEMCPYD2H_DATA_1_ID'])
+
+
+# # Generate matrices A (MxK) and B (KxN)
+# A = np.random.rand(M, K).astype(np.float32)
+# B = np.random.rand(K, N).astype(np.float32)
+
+# Generate matrices A and B with specified integer sequences
+A = np.arange(1, M * K+1, dtype=np.float32).reshape(M, K)
+B = np.arange(1, K * N+1, dtype=np.float32).reshape(K, N)
+
+# Calculate expected C
+# NOTE not a dot product!!!
+#C_expected = np.dot(A, B)
+C_expected = np.matmul(A, B)
+
+# Construct block matrix A_blocks[i,k], and block matrices B_blocks[k,j]
+# both in row major
+A1 = A.reshape(Pr, Mt, Cycle, Kt)
+A2 = A1.transpose(0, 2, 1, 3)
+A3 = A2.reshape(Pr, Cycle, Mt*Kt)
+
+B1 = B.reshape(Cycle, Kt, Pc, Nt)
+B2 = B1.transpose(0, 2, 1, 3)
+B3 = B2.reshape(Cycle, Pc, Kt*Nt)
+
+# Group A3 blocks by row + column index
+A3_groups = {}
+
+for i in range(Pr):
+    for j in range(Cycle):
+        group_idx = i + j
+        if group_idx not in A3_groups:
+            A3_groups[group_idx] = []
+        A3_groups[group_idx].append(A3[i, j].tolist())
+
+# Sort each group by row index (i) from smallest to largest
+for group_idx in A3_groups:
+    A3_groups[group_idx] = sorted(A3_groups[group_idx], key=lambda x: x[0])
+
+# Convert A3_groups lists to numpy arrays and ravel them
+ravel_A3_groups = {}
+for group_idx in A3_groups:
+    ravel_A3_groups[group_idx] = np.array(A3_groups[group_idx], dtype=np.float32).ravel()
+
+# Group B3 blocks by row + column index
+B3_groups = {}
+
+for i in range(Cycle):
+    for j in range(Pc):
+        group_idx = i + j
+        if group_idx not in B3_groups:
+            B3_groups[group_idx] = []
+        B3_groups[group_idx].append(B3[i, j].tolist())
+
+# Sort each group by column index (j) from smallest to largest
+for group_idx in B3_groups:
+    B3_groups[group_idx] = sorted(B3_groups[group_idx], key=lambda x: x[0])
+
+# Convert B3_groups lists to numpy arrays and ravel them
+ravel_B3_groups = {}
+for group_idx in B3_groups:
+    ravel_B3_groups[group_idx] = np.array(B3_groups[group_idx], dtype=np.float32).ravel()
+
+# Construct a runner using SdkRuntime
+runner = SdkRuntime(args.name, cmaddr=args.cmaddr)
+
+# Load and run the program
+runner.load()
+runner.run()
+
+C_symbol = runner.get_id('C')
+
+'''
+Given a blocked matrix of dimensions Pr*Cycle:
+    Number of Anti-Diagonals:
+        The total number of anti-diagonals is Pr+Cycle-1.
+    Representing the First Row Number of an Anti-Diagonal Using Pr,Cycle,beat:
+        Let beat represent the index of the anti-diagonal (where beat=0,1,…,Pr+Cycle-2):
+        pe_y=
+            1            if beat < Cycle   
+            beat-Cycle+2 if beat ≥ Cycle
+        This formula gives the row number of the first (topmost) element of the beat-th anti-diagonal.
+    Representing the Total Number of Elements in an Anti-Diagonal Using Pr,Cycle,beat:
+        The total number of elements in the beat-th anti-diagonal is:
+        h=
+            beat+1           if beat < Cycle
+            Pr+Cycle-1-beat  if beat ≥ Cycle
+        This formula calculates the length of the beat-th anti-diagonal based on its index beat.
+'''
+
+# stream matrix A and B to device
+for beat in range(max(Pr+Cycle-1, Pc+Cycle-1)):
+    if beat < Cycle :
+        print(f"Beat {beat}: ")
+        start = 1
+        w = beat+1
+        h = beat+1
+        # stream B to north halo
+        print(f"Size of B3 group data = {ravel_B3_groups[beat].size}")
+        runner.memcpy_h2d(MEMCPYH2D_DATA_2, ravel_B3_groups[beat], start, 0, w, 1, Kt*Nt, streaming=True, 
+            data_type=MemcpyDataType.MEMCPY_32BIT, order=MemcpyOrder.ROW_MAJOR, nonblock=True)
+        # stream A to west halo
+        print(f"Size of A3 group data = {ravel_A3_groups[beat].size}")
+        runner.memcpy_h2d(MEMCPYH2D_DATA_1, ravel_A3_groups[beat], 0, start, 1, h, Mt*Kt, streaming=True, 
+            data_type=MemcpyDataType.MEMCPY_32BIT, order=MemcpyOrder.ROW_MAJOR, nonblock=False)
+    else :   
+        print(f"Beat {beat}: ")
+        if beat < Pc+Cycle-1 :
+            start = beat-Cycle+2
+            w = min(beat, Cycle - 1) - max(0, beat - (Pc - 1)) + 1
+            # stream B to north halo
+            runner.memcpy_h2d(MEMCPYH2D_DATA_2, ravel_B3_groups[beat], start, 0, w, 1, Kt*Nt, streaming=True, 
+                data_type=MemcpyDataType.MEMCPY_32BIT, order=MemcpyOrder.ROW_MAJOR, nonblock=True)   
+            print(f"Size of B3 group data = {ravel_B3_groups[beat].size}")
+        if beat < Pr+Cycle-1 :
+            start = beat-Cycle+2
+            h = min(beat, Cycle - 1) - max(0, beat - (Pr - 1)) + 1
+            # stream A to west halo
+            runner.memcpy_h2d(MEMCPYH2D_DATA_1, ravel_A3_groups[beat], 0, start, 1, h, Mt*Kt, streaming=True, 
+                data_type=MemcpyDataType.MEMCPY_32BIT, order=MemcpyOrder.ROW_MAJOR, nonblock=False)      
+            print(f"Size of A3 group data = {ravel_A3_groups[beat].size}")  
+
+# Barrier
+runner.launch('rpc_sync', nonblock=False)
+
+print(f"RPC_SYNC DONE")
+
+
+# memcpy result C[i,j] back to host
+# we can use gemv3 symbol: https://sdk.cerebras.net/csl/tutorials/gemv-03-memcpy/
+C_temp = np.zeros(Pc*Pr*Mt*Nt, np.float32)
+runner.memcpy_d2h(C_temp, C_symbol, 1, 1, Pc, Pr, Mt*Nt, streaming=False, 
+    data_type=MemcpyDataType.MEMCPY_32BIT, order=MemcpyOrder.ROW_MAJOR, nonblock=False)
+
+print(f"C transfer done")
+
+runner.launch('init', nonblock=False)
+
+C3 = C_temp.reshape((h, w, Nt, Mt))
+# C2 is of the form (h, Mt, w, Nt)
+C2 = C3.transpose(0, 3, 1, 2)
+# C1 is of the form (M, N)
+C = C2.reshape(M, N)
+# C has the correct data type
+#C = C1.view(np.float32)
+
+runner.stop()
+
+print(C)
+print(C_expected)
+# compare result
+np.testing.assert_allclose(C_expected, C, rtol=1e-05, atol=1e-06)
+
+# feedback report
+print("SUCCESS!")
+
+
+layout.csl
+// Color Map
+//
+//  ID var              ID var             ID var                ID var
+//   0 MEMCPYH2D_DATA_1  9 WEST_STARTUP    18                    27 reserved (memcpy)
+//   1 MEMCPYH2D_DATA_2 10 NORTH_STARTUP   19                    28 reserved (memcpy)
+//   2                  11                 20                    29 reserved
+//   3                  12                 21 reserved (memcpy)  30 reserved (memcpy)
+//   4 A_color          13                 22 reserved (memcpy)  31 reserved
+//   5                  14                 23 reserved (memcpy)  32
+//   6 B_color          15                 24                    33
+//   7                  16                 25                    34
+//   8                  17                 26                    35
+
+// Parameters settings
+
+// total matrix dimensions
+param M: i16;
+param K: i16;
+param N: i16;
+
+// block matrix dimensions
+param Mt: i16;
+param Kt: i16;
+param Nt: i16;
+
+// PE dimensions
+param Pc:    i16;
+param Cycle: i16;
+param Pr:    i16;
+
+// IDs
+// IDs for memcpy streaming colors
+param MEMCPYH2D_DATA_1_ID: i16; // streams A from host to west halo
+param MEMCPYH2D_DATA_2_ID: i16; // streams B from host to north halo
+// param MEMCPYD2H_DATA_1_ID: i16; // streams C from east halo to host
+
+// Colors
+const MEMCPYH2D_DATA_1: color = @get_color(MEMCPYH2D_DATA_1_ID);
+const MEMCPYH2D_DATA_2: color = @get_color(MEMCPYH2D_DATA_2_ID);
+// const MEMCPYD2H_DATA_1: color = @get_color(MEMCPYD2H_DATA_1_ID);
+const A_color:          color = @get_color(4);
+const B_color:          color = @get_color(6);
+
+// Memcpy
+const memcpy = @import_module("<memcpy/get_params>", .{ 
+    .width = Pc+1,
+    .height = Pr+1,
+    .MEMCPYH2D_1 = MEMCPYH2D_DATA_1,
+    .MEMCPYH2D_2 = MEMCPYH2D_DATA_2,
+    // .MEMCPYD2H_1 = MEMCPYD2H_DATA_1 
+});
+
+layout {
+    // the whole ROI region of interest
+    // PE coordinates are (column, row)
+    @set_rectangle(Pc+1, Pr+1);
+
+    // set north halo code    
+    for (@range(i16, Pc)) |pe_x| {
+        @set_tile_code(pe_x+1, 0, "memcpyEdge/north.csl", .{ 
+            .USER_IN_2 = B_color, 
+            .MEMCPYH2D_2 = MEMCPYH2D_DATA_2,
+            .memcpy_params = memcpy.get_params(pe_x+1) 
+        });
+    }
+
+    // set west halo code
+    for (@range(i16, Pr)) |pe_y| {
+        @set_tile_code(0, pe_y+1, "memcpyEdge/west.csl", .{ 
+            .USER_IN_1 = A_color,
+            .MEMCPYH2D_1 = MEMCPYH2D_DATA_1,
+            .memcpy_params = memcpy.get_params(0) 
+        });
+    }
+
+    // set kernel code
+    for (@range(i16, Pr)) |pe_y| {
+        for (@range(i16, Pc)) |pe_x| {
+            @set_tile_code(pe_x+1, pe_y+1, "kernel.csl", .{
+                .Mt = Mt,
+                .Kt = Kt,
+                .Nt = Nt,
+                .Pc = Pc,
+                .Cycle = Cycle,
+                .Pr = Pr,
+                .A_color = A_color, 
+                .B_color = B_color,
+                .memcpy_params = memcpy.get_params(pe_x+1)
+            });
+        }
+    }
+
+    @set_tile_code(0, 0, "memcpyEdge/noop.csl", .{
+        .memcpy_params = memcpy.get_params(0)
+    });
+    
+    // Create route values
+    // west and north halo route values
+    // const west_A_route = .{ .rx = .{ RAMP }, .tx = .{ EAST } };
+    // const north_B_route = .{ .rx = .{ RAMP }, .tx = .{ SOUTH } };
+    
+    // kernel route values
+    const kernel_A_route = .{ .rx = .{ WEST }, .tx = .{ RAMP, EAST } };
+    const kernel_B_route = .{ .rx = .{ NORTH }, .tx = .{ RAMP, SOUTH } };
+
+    // edge route values
+    const kernel_east_edge_route = .{ .rx = .{ WEST }, .tx = .{ RAMP } };
+    const kernel_south_edge_route = .{ .rx = .{ NORTH }, .tx = .{ RAMP } };
+
+    // Set Color Config
+    // set west halo color config
+    // for (@range(i16, Pr)) |pe_y| {
+    //    @set_color_config(0, pe_y, MEMCPYH2D_DATA_1, .{ .routes = west_A_route });
+    // }
+    // set north halo color config
+    // for (@range(i16, Pc)) |pe_x| {
+    //    @set_color_config(pe_x, 0, MEMCPYH2D_DATA_2, .{ .routes = north_B_route });
+    // }
+
+    // set kernel color config
+    for (@range(i16, Pc)) |pe_x| {
+        for (@range(i16,Pr)) |pe_y| {
+            // if east edge, set color config kernel_east_edge_route
+            if (pe_x == Pc-1) {
+                @set_color_config(pe_x+1, pe_y+1, A_color, .{ .routes = kernel_east_edge_route });
+            } else {
+                @set_color_config(pe_x+1, pe_y+1, A_color, .{ .routes = kernel_A_route });
+            }
+
+            // if south edge, set color config kernel_south_edge_route
+            if (pe_y == Pr-1) {
+                @set_color_config(pe_x+1, pe_y+1, B_color, .{ .routes = kernel_south_edge_route });
+            }
+            else {
+                @set_color_config(pe_x+1, pe_y+1, B_color, .{ .routes = kernel_B_route });
+            }
+        }
+    }
+    
+    @export_name("C", [*]f32, true);
+    @export_name("rpc_sync", fn()void);
+    @export_name("init", fn()void);
+}
+
+
+west.csl
+// Color along which we send A wavelet to kernel
+param MEMCPYH2D_1 = {};
+param USER_IN_1 = {};
+
+const sys_mod = @import_module("<memcpy/memcpy>", memcpy_params);
+param memcpy_params: comptime_struct;
+
+const txdir: direction = EAST;
+
+// entrypoint
+const WEST_STARTUP: local_task_id = @get_local_task_id(9);
+
+// Queue IDs
+const h2d_1_iq: input_queue = @get_input_queue(5);
+const USER_IN_1_oq: output_queue = @get_output_queue(4);
+
+const max_fifo_len = 256*20; // maximum length of the fifo
+
+var fifo_buffer = @zeros([max_fifo_len]u32);
+const fifo = @allocate_fifo(fifo_buffer);
+
+const INFINITE_DSD_LEN: u16 = 0x7fff;
+
+var fab_recv_wdsd = @get_dsd(fabin_dsd, .{
+  .extent = INFINITE_DSD_LEN,
+  .fabric_color = MEMCPYH2D_1,
+  .input_queue = h2d_1_iq,
+});
+
+var fab_trans_wdsd = @get_dsd(fabout_dsd, .{
+  .extent = INFINITE_DSD_LEN,
+  .fabric_color = USER_IN_1,
+  .output_queue = USER_IN_1_oq,
+});
+
+// if no user's color is defined, f_startup() is empty
+task f_startup() void {
+  if (!@is_same_type(@type_of(MEMCPYH2D_1), void) and !@is_same_type(@type_of(USER_IN_1), void)) {
+    // receive data from streaming H2D
+    @mov32(fifo, fab_recv_wdsd, .{ .async = true });
+
+    // forward data to USER_IN_1
+    @mov32(fab_trans_wdsd, fifo, .{ .async = true });
+  }
+}
+
+fn rpc_sync() void {
+    sys_mod.unblock_cmd_stream();
+}
+
+fn init() void {
+    sys_mod.unblock_cmd_stream();
+}
+
+comptime {
+    @export_symbol(rpc_sync);
+    @export_symbol(init);
+}
+
+
+comptime {
+  if (!@is_same_type(@type_of(USER_IN_1), void)) {
+    @set_local_color_config(USER_IN_1, .{ .routes = .{ .rx = .{ RAMP }, .tx = .{ txdir }}});
+  }
+
+  // On WSE-3, we must explicitly initialize input and output queues
+  if (@is_arch("wse3")) {
+    if (!@is_same_type(@type_of(USER_IN_1), void)) {
+      @initialize_queue(h2d_1_iq, .{ .color = MEMCPYH2D_1 });
+      @initialize_queue(USER_IN_1_oq, .{ .color = USER_IN_1 });
+    }
+  }
+
+    @bind_local_task(f_startup, WEST_STARTUP);
+    @activate(WEST_STARTUP);
+}
+
+
+
+
+north.csl
+// Color along which we send A wavelet to kernel
+param MEMCPYH2D_2 = {};
+param USER_IN_2 = {};
+
+const sys_mod = @import_module("<memcpy/memcpy>", memcpy_params);
+param memcpy_params: comptime_struct;
+
+const txdir: direction = SOUTH;
+
+// entrypoint
+const NORTH_STARTUP: local_task_id = @get_local_task_id(10);
+
+// Queue IDs
+const h2d_2_iq: input_queue = @get_input_queue(7);
+const USER_IN_2_oq: output_queue = @get_output_queue(5);
+
+const max_fifo_len = 256*20; // maximum length of the fifo
+
+var fifo_buffer = @zeros([max_fifo_len]u32);
+const fifo = @allocate_fifo(fifo_buffer);
+
+const INFINITE_DSD_LEN: u16 = 0x7fff;
+
+var fab_recv_wdsd = @get_dsd(fabin_dsd, .{
+  .extent = INFINITE_DSD_LEN,
+  .fabric_color = MEMCPYH2D_2,
+  .input_queue = h2d_2_iq,
+});
+
+var fab_trans_wdsd = @get_dsd(fabout_dsd, .{
+  .extent = INFINITE_DSD_LEN,
+  .fabric_color = USER_IN_2,
+  .output_queue = USER_IN_2_oq,
+});
+
+// if no user's color is defined, f_startup() is empty
+task f_startup() void {
+  if (!@is_same_type(@type_of(MEMCPYH2D_2), void) and !@is_same_type(@type_of(USER_IN_2), void)) {
+    // receive data from streaming H2D
+    @mov32(fifo, fab_recv_wdsd, .{ .async = true });
+
+    // forward data to USER_IN_2
+    @mov32(fab_trans_wdsd, fifo, .{ .async = true });
+  }
+}
+
+fn rpc_sync() void {
+    sys_mod.unblock_cmd_stream();
+}
+
+fn init() void {
+    sys_mod.unblock_cmd_stream();
+}
+
+comptime {
+    @export_symbol(rpc_sync);
+    @export_symbol(init);
+}
+
+
+comptime {
+  if (!@is_same_type(@type_of(USER_IN_2), void)) {
+    @set_local_color_config(USER_IN_2, .{ .routes = .{ .rx = .{ RAMP }, .tx = .{ txdir }}});
+  }
+
+  // On WSE-3, we must explicitly initialize input and output queues
+  if (@is_arch("wse3")) {
+    if (!@is_same_type(@type_of(USER_IN_2), void)) {
+      @initialize_queue(h2d_2_iq, .{ .color = MEMCPYH2D_2 });
+      @initialize_queue(USER_IN_2_oq, .{ .color = USER_IN_2 });
+    }
+  }
+
+  @bind_local_task(f_startup, NORTH_STARTUP);
+  @activate(NORTH_STARTUP);
+}
+
+
+
+kernel.csl
+// This program is the kernel pe
+// for each kernel pe, it will:
+// set beat to 1
+// for beat < Cycle, do the following:
+
+// first,  receive B from north, store B to local mem, send B to south
+// second, receive A from west, fabin A to A_dsd, send A to east
+// third, the arrival of A will trigger wtt block_matrix_multiply
+// after completing block_matrix_multiply, receive B again
+
+// when beat = Cycle, finish, and wait for memcpy_d2h come get the result
+
+// Implementation
+// B_color is blocked
+// receive A. store in memdsd, unblock B_color
+// wtt multiply(B_color) will start
+    // fmacs(C_row_dsd, C_row_dsd, A_row_dsd, B_scalar)
+// how do we repeat consuming fabindsd A and B multiply and add for exactly 'beat' times? 
+const print = @import_module("<simprint>", .{ .enable = true });
+const fabric = @import_module("<layout>");
+
+param memcpy_params: comptime_struct;
+
+// memcpy module provides infrastructure for copying data
+// and launching functions from the host
+const sys_mod = @import_module("<memcpy/memcpy>", memcpy_params);
+
+//For future wse3 compatibility
+const iq_A = @get_input_queue(3);
+
+param Mt: i16;
+param Kt: i16;
+param Nt: i16;
+
+param Pc:    i16;
+param Cycle: i16;
+param Pr:    i16;
+
+param A_color:  color;
+param B_color:  color;
+
+const B_color_iq = @get_input_queue(2);
+
+// task id
+const B_transfer_task_id: local_task_id = @get_local_task_id(16);
+const fmacs_task_id:       data_task_id = @get_data_task_id(A_color);
+const terminate_task_id:  local_task_id = @get_local_task_id(17);
+
+// Initialize
+var B = @zeros([Kt*Nt]f32);
+var C = @zeros([Mt*Nt]f32);
+var C_ptr: [*]f32 = &C;
+
+// B_dsd store B in row major
+const B_input_dsd = @get_dsd(fabin_dsd, .{ .extent = Kt*Nt, .fabric_color = B_color, .input_queue = B_color_iq });
+const B_mem1_dsd = @get_dsd(mem1d_dsd, .{ .extent = Kt*Nt, .base_address = &B });
+
+// A_dsd store A in row major
+// const A_dsd = @get_dsd(fabin_dsd, .{ .extent = Mt*Kt, .fabric_color = A_color });
+
+var B_row_dsd = @get_dsd(mem1d_dsd, .{ .extent = Nt, .base_address = &B });
+
+// C_dsd store partial result of C
+var C_dsd  = @get_dsd(mem1d_dsd, .{ .tensor_access = |i|{Mt} -> C[i] });
+
+fn init() void {
+    const C_dsd_reset = @get_dsd(mem1d_dsd, .{ .extent = Mt*Nt, .base_address = &C });
+    @fmovs(C_dsd_reset, 0.0);
+    sys_mod.unblock_cmd_stream();
+}
+
+var A_row_counter: i16 = 0;
+var A_col_counter: i16 = 0;
+var beat: i16 = 0;
+task fmacs (A_val: f32) void {
+    print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+    print.print_f32(A_val);
+    print.print_string("\n");
+    print.print_string("A values printed out\n");
+
+    @fmacs(C_dsd, C_dsd, B_row_dsd, A_val);
+    A_col_counter += 1;
+    B_row_dsd = @increment_dsd_offset(B_mem1_dsd, Nt, f32);
+
+    if (A_col_counter == Kt) {
+        A_row_counter += 1;
+        //Reset B_row_dsd
+        B_row_dsd = @get_dsd(mem1d_dsd, .{ .extent = Nt, .base_address = &B });
+
+        C_dsd = @increment_dsd_offset(C_dsd, Nt, f32);
+        A_col_counter = 0;
+        print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+        print.print_string("Full row of A processed\n");
+    }
+    
+    if (A_row_counter == Mt) {
+        @block(fmacs_task_id);
+        print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+        print.print_string("Full block of A processed\n");
+        beat += 1;
+        if (beat == Cycle) {
+            print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+            print.print_string("Last block of A processed\n");
+            @unblock(terminate_task_id);
+        } else {
+            print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+            print.print_string("Preparing for next block of A/B\n");
+            B_row_dsd = @get_dsd(mem1d_dsd, .{ .extent = Nt, .base_address = &B });
+            C_dsd = @get_dsd(mem1d_dsd, .{ .extent = Nt, .base_address = &C });
+            A_row_counter = 0;
+            @activate(B_transfer_task_id);
+        }
+    }
+}
+
+task B_transfer() void {
+    @mov32(B_mem1_dsd, B_input_dsd, . { .async = true, .unblock = fmacs_task_id });
+}
+
+fn rpc_sync() void {
+    print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+    print.print_string("rpc_sync started\n");
+    @activate(terminate_task_id);
+}
+
+task terminate() void {
+    @block(terminate_task_id);
+    print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+    print.print_string("Unblocking command stream\n");
+    sys_mod.unblock_cmd_stream();
+}
+
+comptime {
+    @bind_local_task(B_transfer, B_transfer_task_id);
+    @bind_data_task(fmacs, fmacs_task_id);
+    @bind_local_task(terminate, terminate_task_id);
+
+    @activate(B_transfer_task_id);
+    @block(terminate_task_id);
+    @block(fmacs_task_id);
+    
+    @export_symbol(C_ptr, "C");
+    @export_symbol(rpc_sync);
+    @export_symbol(init);
+
+    if (@is_arch("wse3")){
+        // WTT must bind to an input queue
+        @initialize_queue(resources.iq_A, .{.color = A_color} );
+    }
+} 

@@ -1,0 +1,59 @@
+List of ideas:
+
+commands.sh
+
+run.py
+
+#!/usr/bin/env cs_python is known as a "shebang" line, which tells the operating system how to execute the script. Let's break it down:
+
+    #!: This indicates the start of the shebang, which is followed by a path to the interpreter that will be used to run the script.
+
+    /usr/bin/env: This command is used to find the location of the interpreter in a flexible way. Instead of hardcoding the interpreter’s path, like /usr/bin/python, it asks the system’s environment to find the correct interpreter. This makes the script more portable because the path to the interpreter may vary across systems.
+
+    cs_python: This is the name of the interpreter being invoked. In this case, cs_python refers to a specific Python interpreter provided by the Cerebras SDK (used for running programs on Cerebras AI systems). It indicates that the script should be executed using this particular interpreter, which is configured with libraries and tools specific to Cerebras hardware and software.
+
+layout.csl
+
+### Input
+
+Pipeline-03 artificial halo
+    west, north as H2D
+    and east as D2H
+
+Topic 09 fifos
+
+### DSDs
+// fin_dsd: input from others
+// fout_dsd: output to others
+// mem_1d_dsd: 
+// extent-length: how many wavelets: eg 100
+
+@get_dsd(dsd_type, properties);
+
+const array = @zeros([10]u16);
+const tenWords = @get_dsd(mem1d_dsd, .{
+  .tensor_access = |i|{10} -> array[i]
+});
+
+const inDsd = @get_dsd(fabin_dsd, .{ .extent = 5, .fabric_color = trigger });
+
+### Compute
+
+Topic 10 @map buildin
+    is for dsd custom operation. @map(callback function, input, output)
+    @map dsd is faster than explicit loop.
+
+
+### Route
+
+Topic 06 switches
+    runtime control of routes
+
+
+Topic 14 color swap
+
+
+### Output
+
+
+

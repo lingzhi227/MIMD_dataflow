@@ -1,0 +1,178 @@
+// Optimized Layout for Systolic Array Matrix Multiplication
+// Implements proper fabric routing for systolic communication
+
+// Color assignments
+//  ID 0: MEMCPYH2D_DATA_1 (A matrix from host to west halo)
+//  ID 1: MEMCPYH2D_DATA_2 (B matrix from host to north halo) 
+//  ID 4: A_color (A streams East across PEs)
+//  ID 6: B_color (B streams South across PEs)
+
+// Matrix dimensions
+param M: i16;  // Total matrix A rows
+param K: i16;  // Total matrix A cols / B rows
+param N: i16;  // Total matrix B cols
+
+// Block dimensions
+param Mt: i16; // Block matrix A rows
+param Kt: i16; // Block matrix A cols / B rows
+param Nt: i16; // Block matrix B cols
+
+// PE grid dimensions
+param Pc: i16;    // Number of PE columns
+param Pr: i16;    // Number of PE rows
+param Cycle: i16; // Number of systolic beats (K/Kt)
+
+// Memcpy color IDs
+param MEMCPYH2D_DATA_1_ID: i16; // A matrix streaming
+param MEMCPYH2D_DATA_2_ID: i16; // B matrix streaming
+
+// Define colors
+const MEMCPYH2D_DATA_1: color = @get_color(MEMCPYH2D_DATA_1_ID);
+const MEMCPYH2D_DATA_2: color = @get_color(MEMCPYH2D_DATA_2_ID);
+const A_color: color = @get_color(4);  // A streams East
+const B_color: color = @get_color(6);  // B streams South
+
+// Memcpy configuration
+const memcpy = @import_module("<memcpy/get_params>", .{
+    .width = Pc + 2,   // West halo + PEs + East boundary
+    .height = Pr + 1,  // North halo + PEs
+    .MEMCPYH2D_1 = MEMCPYH2D_DATA_1,
+    .MEMCPYH2D_2 = MEMCPYH2D_DATA_2,
+});
+
+layout {
+    // Set ROI rectangle: (west halo + PEs + east boundary) x (north halo + PEs)
+    @set_rectangle(Pc + 2, Pr + 1);
+    
+    // ========== NORTH HALO (B matrix injection) ==========
+    // North halo injects B matrix and streams it South
+    for (@range(i16, Pc)) |pe_x| {
+        @set_tile_code(pe_x + 1, 0, "memcpyEdge/north_systolic.csl", .{
+            .Mt = Mt,
+            .Kt = Kt, 
+            .Nt = Nt,
+            .Cycle = Cycle,
+            .B_color = B_color,
+            .MEMCPYH2D_2 = MEMCPYH2D_DATA_2,
+            .memcpy_params = memcpy.get_params(pe_x + 1)
+        });
+    }
+    
+    // ========== WEST HALO (A matrix injection) ==========
+    // West halo injects A matrix and streams it East
+    for (@range(i16, Pr)) |pe_y| {
+        @set_tile_code(0, pe_y + 1, "memcpyEdge/west_systolic.csl", .{
+            .Mt = Mt,
+            .Kt = Kt,
+            .Nt = Nt, 
+            .Cycle = Cycle,
+            .A_color = A_color,
+            .MEMCPYH2D_1 = MEMCPYH2D_DATA_1,
+            .memcpy_params = memcpy.get_params(0)
+        });
+    }
+    
+    // ========== COMPUTE PES (systolic array core) ==========
+    for (@range(i16, Pr)) |pe_y| {
+        for (@range(i16, Pc)) |pe_x| {
+            @set_tile_code(pe_x + 1, pe_y + 1, "kernel.csl", .{
+                .Mt = Mt,
+                .Kt = Kt,
+                .Nt = Nt,
+                .Pc = Pc,
+                .Pr = Pr,
+                .Cycle = Cycle,
+                .A_color = A_color,
+                .B_color = B_color,
+                .memcpy_params = memcpy.get_params(pe_x + 1)
+            });
+        }
+    }
+    
+    // ========== EAST BOUNDARY (A absorption) ==========
+    // East boundary absorbs A stream to prevent reflection
+    for (@range(i16, Pr)) |pe_y| {
+        @set_tile_code(Pc + 1, pe_y + 1, "memcpyEdge/east_sink.csl", .{
+            .A_color = A_color,
+            .memcpy_params = memcpy.get_params(Pc + 1)
+        });
+    }
+    
+    // ========== CORNERS (no-op) ==========
+    @set_tile_code(0, 0, "memcpyEdge/noop.csl", .{
+        .memcpy_params = memcpy.get_params(0)
+    });
+    @set_tile_code(Pc + 1, 0, "memcpyEdge/noop.csl", .{
+        .memcpy_params = memcpy.get_params(Pc + 1)
+    });
+    
+    // ========== FABRIC ROUTING CONFIGURATION ==========
+    
+    // A matrix routing: West -> East (with RAMP for local consumption)
+    const A_route_internal = .{ .rx = .{ WEST }, .tx = .{ RAMP, EAST } };
+    const A_route_east_edge = .{ .rx = .{ WEST }, .tx = .{ RAMP } }; // No East forwarding at edge
+    
+    // B matrix routing: North -> South (with RAMP for local consumption)  
+    const B_route_internal = .{ .rx = .{ NORTH }, .tx = .{ RAMP, SOUTH } };
+    const B_route_south_edge = .{ .rx = .{ NORTH }, .tx = .{ RAMP } }; // No South forwarding at edge
+    
+    // West halo routing: inject A East
+    const A_inject_route = .{ .rx = .{}, .tx = .{ EAST } };
+    
+    // North halo routing: inject B South
+    const B_inject_route = .{ .rx = .{}, .tx = .{ SOUTH } };
+    
+    // East sink routing: absorb A from West
+    const A_sink_route = .{ .rx = .{ WEST }, .tx = .{} };
+    
+    // ========== APPLY ROUTING TO TILES ==========
+    
+    // Configure compute PE routing
+    for (@range(i16, Pr)) |pe_y| {
+        for (@range(i16, Pc)) |pe_x| {
+            // A color routing
+            if (pe_x == Pc - 1) {
+                // East edge PEs don't forward A
+                @set_color_config(pe_x + 1, pe_y + 1, A_color, .{ .routes = A_route_east_edge });
+            } else {
+                // Internal PEs forward A East
+                @set_color_config(pe_x + 1, pe_y + 1, A_color, .{ .routes = A_route_internal });
+            }
+            
+            // B color routing
+            if (pe_y == Pr - 1) {
+                // South edge PEs don't forward B
+                @set_color_config(pe_x + 1, pe_y + 1, B_color, .{ .routes = B_route_south_edge });
+            } else {
+                // Internal PEs forward B South
+                @set_color_config(pe_x + 1, pe_y + 1, B_color, .{ .routes = B_route_internal });
+            }
+        }
+    }
+    
+    // Configure west halo A injection
+    for (@range(i16, Pr)) |pe_y| {
+        @set_color_config(0, pe_y + 1, A_color, .{ .routes = A_inject_route });
+    }
+    
+    // Configure north halo B injection  
+    for (@range(i16, Pc)) |pe_x| {
+        @set_color_config(pe_x + 1, 0, B_color, .{ .routes = B_inject_route });
+    }
+    
+    // Configure east boundary A absorption
+    for (@range(i16, Pr)) |pe_y| {
+        @set_color_config(Pc + 1, pe_y + 1, A_color, .{ .routes = A_sink_route });
+    }
+    
+    // ========== EXPORT SYMBOLS ==========
+    @export_name("C", [*]f32, true);
+    @export_name("time_buf_f32", [*]f32, true);
+    @export_name("A_block", [*]f32, true);
+    @export_name("B_block", [*]f32, true);
+    @export_name("init", fn()void);
+    @export_name("start_systolic", fn()void);
+    @export_name("start_A_injection", fn()void);
+    @export_name("start_B_injection", fn()void);
+    @export_name("rpc_sync", fn()void);
+}

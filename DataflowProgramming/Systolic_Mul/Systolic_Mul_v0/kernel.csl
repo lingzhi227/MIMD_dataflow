@@ -1,0 +1,113 @@
+// color/ task ID map
+//
+//  ID var              ID var             ID var                ID var
+//   0 _____________     9                 18                    27 reserved (memcpy)
+//   1 _____________    10 _______________ 19                    28 reserved (memcpy)
+//   2                  11 _______________ 20                    29 reserved
+//   3                  12 _______________ 21 reserved (memcpy)  30 reserved (memcpy)
+//   4 _____________    13 _______________ 22 reserved (memcpy)  31 reserved
+//   5 _____________    14                 23 reserved (memcpy)  32
+//   6                  15 task_x_id       24                    33
+//   7                  16 task_y_id       25                    34
+//   8                  17                 26                    35
+//
+
+// PE
+// recieve the data from west and north
+// recieve and compute overlap
+// when recieve done
+
+// compute done activate send
+// send done activate recieve
+// after Pk steps
+    //  activate exit()
+    // when compute done
+        // activate send, 
+        // activate send result to east halo, 
+        // activate exit()
+
+param Mt: i16;
+param Kt: i16;
+param Nt: i16;
+
+// Colors
+param recv_west_color:  color; // recvs block matrix A WEST
+param recv_north_color: color; // recvs block matrix B north
+param send_east_color:  color; // sends block matrix A EAST
+param send_south_color: color; // sends block matrix B SOUTH
+
+// Task IDs
+param EXIT:            local_task_id;
+param compute_task_id: local_task_id;
+param recieve_task_id: local_task_id;
+param send_task_id:    local_task_id;
+
+
+// ref: GEMM_SUMMA
+// A_tile: Input submatrix A of size Mt x Kt
+// B_tile: Input submatrix B of size Kt x Nt
+// C_tile: Output submatrix C of size Mt x Nt
+var A_tile = @zeros([Mt*Kt]f32);
+var B_tile = @zeros([Kt*Nt]f32);
+var C_tile = @zeros([Mt*Nt]f32);
+
+var step: u16 = 0;
+
+
+
+
+task receive() void {
+    // Receive block matrix from west (A) and north (B)
+
+    @activate(compute_task_id); // After receiving, activate compute
+}
+
+task compute() void {
+    var C_dsd = @get_dsd(mem1d_dsd, .{ .tensor_access = |i|{Mt} -> C_tile[i] });
+
+    for (@range(i16, Kt)) |k| {
+        var A_dsd  = @get_dsd(mem1d_dsd, .{ .tensor_access = |i|{Mt} -> A_tile[i] });
+        for (@range(i16, Nt)) |j| {
+            const b = B_tile[j * Kt + k];
+            @fmacs(C_dsd, C_dsd, A_dsd, b);
+            C_dsd = @increment_dsd_offset(C_dsd, Mt, f32);
+        }
+    }
+
+    step += 1;
+    if (step < Pk) {
+        @activate(send_task_id);  // Activate send task
+    } else {
+        @activate(EXIT);  // If done, activate exit
+    }
+}
+
+// Task to send data to the east and south
+task send() void {
+    // Send C to the east
+    if (!is_right_col()) {
+        //
+    }
+    // Send C to the south
+    if (!is_bottom_row()) {
+        //
+    }
+    // After sending, check if more computation or exit
+    if (is_right_col() && is_bottom_row()) {
+        @activate(exit_task_id);
+    } else {
+        @activate(recv_task_id);
+    }
+}
+
+// Exit task to unblock the command stream at the end of execution
+task exit() void {
+    sys_mod.unblock_cmd_stream();  // Final task
+}
+
+comptime {
+    @bind_local_task(receive, recieve_task_id);
+    @bind_local_task(compute, compute_task_id);
+    @bind_local_task(send, send_task_id);
+    @bind_local_task(exit, EXIT);
+}

@@ -1,0 +1,300 @@
+// Optimized Systolic Array for Matrix Multiplication
+// Implements true systolic communication with streaming A (East) and B (South)
+
+const print = @import_module("<simprint>", .{ .enable = false });
+const fabric = @import_module("<layout>");
+const timestamp = @import_module("<time>");
+
+// memcpy module
+param memcpy_params: comptime_struct;
+const sys_mod = @import_module("<memcpy/memcpy>", memcpy_params);
+
+// Matrix block dimensions
+param Mt: i16;  // Block rows in A
+param Kt: i16;  // Block cols in A / rows in B  
+param Nt: i16;  // Block cols in B
+
+// PE grid dimensions
+param Pc: i16;    // Number of PE columns
+param Pr: i16;    // Number of PE rows
+param Cycle: i16; // Number of systolic beats (K/Kt)
+
+// Colors for fabric communication
+param A_color: color;  // A streams East
+param B_color: color;  // B streams South
+
+// Input/Output queues for WSE-3 compatibility
+const A_iq = @get_input_queue(2);
+const A_oq = @get_output_queue(2);
+const B_iq = @get_input_queue(3); 
+const B_oq = @get_output_queue(3);
+
+// Task IDs
+const A_stream_task_id: data_task_id = 
+    if (@is_arch("wse2")) @get_data_task_id(A_color)
+    else @get_data_task_id(A_iq);
+    
+const B_transfer_task_id: local_task_id = @get_local_task_id(16);
+const systolic_control_task_id: local_task_id = @get_local_task_id(17);
+const terminate_task_id: local_task_id = @get_local_task_id(18);
+
+// Memory buffers
+var C = @zeros([Mt*Nt]f32);  // Result matrix C
+var C_ptr: [*]f32 = &C;
+
+// Double buffering for B matrix to enable streaming
+var B_buffer = @zeros([2 * Kt * Nt]f32);
+var B_active: i16 = 0;  // Which buffer is currently active (0 or 1)
+
+// Timing
+var tscStartBuffer = @zeros([timestamp.tsc_size_words]u16);
+var tscEndBuffer = @zeros([timestamp.tsc_size_words]u16);
+var time_buf_f32 = @zeros([3]f32);
+var time_buf_f32_ptr: [*]f32 = &time_buf_f32;
+
+// Systolic state tracking
+var current_beat: i16 = 0;
+var A_row_idx: i16 = 0;    // Current row of A being processed
+var A_col_idx: i16 = 0;    // Current column of A being processed
+var is_first_beat: bool = true;
+
+// PE position queries
+fn is_west_edge() bool {
+    return (fabric.get_x_coord() == 1); // Column 1 is west edge of compute PEs
+}
+
+fn is_north_edge() bool {
+    return (fabric.get_y_coord() == 1); // Row 1 is north edge of compute PEs
+}
+
+fn is_east_edge() bool {
+    return (fabric.get_x_coord() == @as(u16, Pc)); // Last column of compute PEs  
+}
+
+fn is_south_edge() bool {
+    return (fabric.get_y_coord() == @as(u16, Pr)); // Last row of compute PEs
+}
+
+// Get current B column based on A position and beat
+fn get_B_col_base_addr() [*]f32 {
+    const B_linear_idx = B_active * (Kt * Nt) + A_col_idx * Nt;
+    return @ptrcast([*]f32, &B_buffer[B_linear_idx]);
+}
+
+// Fabric DSDs are created inline when needed
+
+// Initialize function
+fn init() void {
+    // Reset state
+    current_beat = 0;
+    A_row_idx = 0;
+    A_col_idx = 0;
+    is_first_beat = true;
+    B_active = 0;
+    
+    // Clear result matrix
+    const C_init_dsd = @get_dsd(mem1d_dsd, .{
+        .extent = Mt*Nt, 
+        .base_address = &C
+    });
+    @fmovs(C_init_dsd, 0.0);
+    
+    sys_mod.unblock_cmd_stream();
+}
+
+// Start systolic computation
+fn start_systolic() void {
+    if (is_first_beat) {
+        timestamp.enable_tsc();
+        timestamp.get_timestamp(&tscStartBuffer);
+        is_first_beat = false;
+    }
+    
+    @activate(B_transfer_task_id);
+}
+
+// B matrix transfer task - implements double buffering
+task B_transfer() void {
+    // Switch to next buffer
+    B_active = B_active ^ 1;
+    
+    const B_input_dsd = @get_dsd(fabin_dsd, .{
+        .extent = Kt * Nt,
+        .fabric_color = B_color,
+        .input_queue = B_iq
+    });
+    
+    const B_mem_dsd = @get_dsd(mem1d_dsd, .{
+        .extent = Kt * Nt,
+        .base_address = &B_buffer[B_active * (Kt * Nt)]
+    });
+    
+    // Transfer B block and activate systolic control when done
+    @mov32(B_mem_dsd, B_input_dsd, .{
+        .async = true,
+        .activate = systolic_control_task_id
+    });
+}
+
+// Main systolic control task
+task systolic_control() void {
+    @block(systolic_control_task_id);
+    
+    // Reset A processing indices for new B block
+    A_row_idx = 0;
+    A_col_idx = 0;
+    
+    // Start B streaming if we're on north edge
+    if (is_north_edge()) {
+        stream_B_south();
+    }
+    
+    // Enable A processing (will be triggered by incoming A data)
+    @unblock(A_stream_task_id);
+}
+
+// Stream B matrix southward
+fn stream_B_south() void {
+    if (!is_south_edge()) {
+        const B_out_dsd = @get_dsd(fabout_dsd, .{
+            .extent = Nt,
+            .fabric_color = B_color,
+            .output_queue = B_oq
+        });
+        const B_col_dsd = @get_dsd(mem1d_dsd, .{
+            .extent = Nt,
+            .base_address = get_B_col_base_addr()
+        });
+        @fmovs(B_out_dsd, B_col_dsd, .{.async = true});
+    }
+}
+
+// Main computation task - triggered by incoming A values (WTT)
+task A_stream(A_val: f32) void {
+    // Get current B column for computation - calculate linear index
+    const B_linear_idx = B_active * (Kt * Nt) + A_col_idx * Nt;
+    const B_col_base = &B_buffer[B_linear_idx];
+    var B_col_dsd = @get_dsd(mem1d_dsd, .{
+        .extent = Nt,
+        .base_address = B_col_base
+    });
+    
+    // Get current C row for accumulation
+    const C_row_base = &C[A_row_idx * Nt];
+    var C_row_dsd = @get_dsd(mem1d_dsd, .{
+        .extent = Nt,
+        .base_address = C_row_base
+    });
+    
+    // Perform FMACS: C[row] += A_val * B[col]
+    @fmacs(C_row_dsd, C_row_dsd, B_col_dsd, A_val);
+    
+    // Forward A value eastward (systolic flow)
+    if (!is_east_edge()) {
+        const A_out_dsd = @get_dsd(fabout_dsd, .{
+            .extent = 1,
+            .fabric_color = A_color,
+            .output_queue = A_oq
+        });
+        // Create a temporary variable to hold A_val for forwarding
+        var A_temp: f32 = A_val;
+        const A_scalar_dsd = @get_dsd(mem1d_dsd, .{
+            .extent = 1,
+            .base_address = &A_temp
+        });
+        @fmovs(A_out_dsd, A_scalar_dsd, .{.async = true});
+    }
+    
+    // Update position in A matrix
+    A_col_idx += 1;
+    
+    // Check if we've finished current row of A
+    if (A_col_idx >= Kt) {
+        A_col_idx = 0;
+        A_row_idx += 1;
+        
+        // Stream next B column south if we're on north edge
+        if (is_north_edge()) {
+            if (A_col_idx < Kt) {
+                stream_B_south();
+            }
+        }
+        
+        // Check if we've finished processing entire A block
+        if (A_row_idx >= Mt) {
+            A_row_idx = 0;
+            current_beat += 1;
+            
+            // Block A processing until next B block arrives
+            @block(A_stream_task_id);
+            
+            // Check if computation is complete
+            if (current_beat >= Cycle) {
+                timestamp.get_timestamp(&tscEndBuffer);
+                f_timestamps_to_f32();
+                @activate(terminate_task_id);
+            } else {
+                // Request next B block
+                @activate(B_transfer_task_id);
+            }
+        }
+    }
+}
+
+// RPC sync function for host coordination
+fn rpc_sync() void {
+    @activate(terminate_task_id);
+}
+
+// Termination task
+task terminate() void {
+    @block(terminate_task_id);
+    sys_mod.unblock_cmd_stream();
+}
+
+// Convert timestamps to f32 for host readback
+fn f_timestamps_to_f32() void {
+    var lo_: u16 = 0;
+    var hi_: u16 = 0;
+    
+    lo_ = tscStartBuffer[0];
+    hi_ = tscStartBuffer[1];
+    time_buf_f32[0] = @bitcast(f32, (@as(u32,hi_) << @as(u16,16)) | @as(u32, lo_));
+    
+    lo_ = tscStartBuffer[2];
+    hi_ = tscEndBuffer[0];
+    time_buf_f32[1] = @bitcast(f32, (@as(u32,hi_) << @as(u16,16)) | @as(u32, lo_));
+    
+    lo_ = tscEndBuffer[1];
+    hi_ = tscEndBuffer[2];
+    time_buf_f32[2] = @bitcast(f32, (@as(u32,hi_) << @as(u16,16)) | @as(u32, lo_));
+}
+
+// Compile-time configuration
+comptime {
+    // Bind tasks
+    @bind_local_task(B_transfer, B_transfer_task_id);
+    @bind_local_task(systolic_control, systolic_control_task_id);
+    @bind_data_task(A_stream, A_stream_task_id);
+    @bind_local_task(terminate, terminate_task_id);
+    
+    // Initial state - block tasks that should wait
+    @block(systolic_control_task_id);
+    @block(A_stream_task_id);
+    @block(terminate_task_id);
+    
+    // WSE-3 queue initialization
+    if (@is_arch("wse3")) {
+        @initialize_queue(A_iq, .{.color = A_color});
+        @initialize_queue(A_oq, .{.color = A_color});
+        @initialize_queue(B_iq, .{.color = B_color});
+        @initialize_queue(B_oq, .{.color = B_color});
+    }
+    
+    // Export symbols for host access
+    @export_symbol(C_ptr, "C");
+    @export_symbol(time_buf_f32_ptr, "time_buf_f32");
+    @export_symbol(init);
+    @export_symbol(start_systolic);
+    @export_symbol(rpc_sync);
+}

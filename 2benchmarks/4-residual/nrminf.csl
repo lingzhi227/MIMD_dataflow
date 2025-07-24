@@ -1,0 +1,26 @@
+// http://www.netlib.org/lapack/explore-html/d6/d12/snrm2_8f90.html
+//  SNRMINF returns the maximum of a vector
+//     SNRMINF = max(|x|)
+//
+// @param[in] n       number of elements of the vector x
+// @param[in] x       array of dimension n
+// @param[out] result scalar
+//                    result = max(|x|)
+
+param sizeX: i16; // size of x, sizeX >= n
+
+fn snrminf(n: i16, x: *[sizeX]f32, result: *f32) void {
+
+  var nrm_r: f32 = 0.0;
+
+  for (@range(i16, n)) |row| {
+    var yi: f32 = (x.*)[row];
+    if (0.0 > yi) {
+      yi = -yi;
+    }
+    if (nrm_r < yi) {
+      nrm_r = yi;
+    }
+  }
+  (result.*) = nrm_r;
+}

@@ -1,0 +1,17 @@
+const sys_mod = @import_module("<memcpy/memcpy>", memcpy_params);
+param memcpy_params: comptime_struct;
+
+fn rpc_sync() void {
+    sys_mod.unblock_cmd_stream();
+}
+
+fn init() void {
+    sys_mod.unblock_cmd_stream();
+}
+
+comptime {
+    @export_symbol(rpc_sync);
+    @export_symbol(init);
+}
+
+

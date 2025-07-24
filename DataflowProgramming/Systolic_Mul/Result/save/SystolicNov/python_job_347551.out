@@ -1,0 +1,4 @@
+COUT002 00:40:43 GMT  ERROR: LOGGER NOT INITIALIZED:
+COUT002 00:40:43 GMT  ERROR: 		Remote end closed connection
+/var/spool/slurmd/job347551/slurm_script: line 19: 191957 Segmentation fault      ${CS_PYTHON} ./run.py --name out --cmaddr 172.24.140.100:9000
+Program completed in: 00:57:43

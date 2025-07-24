@@ -1,0 +1,42 @@
+INFO: Using SIF: /shared/data1/Projects/Cerebras/acceptance/hpc/cs_sdk_1.1.0/sdk-cbcore-202404122356-8-a1162951.sif
+SUCCESS
+out/bin  
+out/out.json .json 
+out/east  
+out/west  
+out/generated  
+out/bin/out_rpc.json .json 
+out/bin/out_7_0.elf .elf 
+out/bin/out_0_0.elf .elf 
+out/bin/out_4_0.elf .elf 
+out/bin/out_2_0.elf .elf 
+out/bin/out_3_0.elf .elf 
+out/bin/out_5_0.elf .elf 
+out/bin/out_6_0.elf .elf 
+out/bin/out_8_0.elf .elf 
+out/bin/out_1_0.elf .elf 
+out/west/bin/out_6_0.elf .elf 
+out/west/bin/out_1_0.elf .elf 
+out/west/bin/out_2_0.elf .elf 
+out/west/bin/out_0_0.elf .elf 
+out/west/bin/out_3_0.elf .elf 
+out/west/bin/out_7_0.elf .elf 
+out/west/bin/out_4_0.elf .elf 
+out/west/bin/out_5_0.elf .elf 
+out/east/bin/out_4_0.elf .elf 
+out/east/bin/out_5_0.elf .elf 
+out/east/bin/out_2_0.elf .elf 
+out/east/bin/out_3_0.elf .elf 
+out/east/bin/out_1_0.elf .elf 
+out/east/bin/out_0_0.elf .elf 
+out/west/bin  
+out/west/out.json .json 
+out/east/bin  
+out/east/out.json .json 
+Reading file out/out.json
+Reading file out/bin/out_rpc.json
+Reading file out/west/out.json
+Reading file out/east/out.json
+fab w,h = 757,996
+Kernel x,y w,h = 4,1 10,10
+memcpy x,y w,h = 1,1 15,10

@@ -1,0 +1,87 @@
+In[3]:=
+net = NetGraph[{LinearLayer[2], ElementwiseLayer[Ramp], 
+   ThreadingLayer[Plus]}, {1 -> 2, {NetPort["Input"], 2} -> 3}]
+
+Out[3]= NetGraph[
+Input Port	
+Input:	vector\[ThinSpace]( size: 2 )
+Output Port	
+Output:	vector\[ThinSpace]( size: 2 )
+
+
+1: 	LinearLayer	\[SpanFromLeft]
+Parameters	
+OutputDimensions:	2
+Arrays	
+Weights:	matrix\[ThinSpace]( size: 2*2 )
+Biases:	optional vector\[ThinSpace]( size: 2 )
+Input Port	
+Input:	vector\[ThinSpace]( size: 2 )
+Output Port	
+Output:	vector\[ThinSpace]( size: 2 )
+
+
+
+]
+In[6]:= net=NetModel["LeNet Trained on MNIST Data"]
+Out[6]= NetChain[	Input	image
+array\[ThinSpace]( size: 1*28*28 )
+
+
+1	ConvolutionLayer	array\[ThinSpace]( size: 20*24*24 )
+2	Ramp	array\[ThinSpace]( size: 20*24*24 )
+3	PoolingLayer	array\[ThinSpace]( size: 20*12*12 )
+4	ConvolutionLayer	array\[ThinSpace]( size: 50*8*8 )
+5	Ramp	array\[ThinSpace]( size: 50*8*8 )
+6	PoolingLayer	array\[ThinSpace]( size: 50*4*4 )
+7	FlattenLayer	vector\[ThinSpace]( size: 800 )
+8	LinearLayer	vector\[ThinSpace]( size: 500 )
+9	Ramp	vector\[ThinSpace]( size: 500 )
+10	LinearLayer	vector\[ThinSpace]( size: 10 )
+11	SoftmaxLayer	vector\[ThinSpace]( size: 10 )
+	Output	class
+
+]
+In[7]:= net[{, , }]
+Out[7]= {6,8,0}
+In[8]:= net[, "Probabilities"]
+Out[8]= <|0->7.28386*10^-13,1->1.81591*10^-16,2->2.15518*10^-12,3->3.2635*10^-12,4->9.74528*10^-15,5->6.61678*10^-10,6->3.45442*10^-13,7->3.57894*10^-20,8->1.,9->2.42621*10^-12|>
+In[10]:= NetModel["BPEmb Subword Embeddings Trained on Wikipedia"]
+Out[10]= EmbeddingLayer[Parameters	
+OutputDimensions:	100
+ClassCount:	50000
+Arrays	
+Weights:	matrix\[ThinSpace]( size: 50000*100 )
+Input Port	
+Input:	string
+Output Port	
+Output:	matrix\[ThinSpace]( size: n*100 )
+
+]
+In[11]:= Information[NetModel["YOLO V5 Trained on MS-COCO Data"],"SummaryGraphic"]
+Out[11]= 
+In[72]:= Information[NetModel["YOLO V5 Trained on MS-COCO Data"],{"InputPorts","OutputPorts"}]
+Out[72]= {<|Input->NetEncoder[Type:	Function
+Function:	Function[x,\[Ellipsis]]
+Pattern:	None
+Batched:	False
+Output:	array\[ThinSpace]( size: 3*640*640 )
+
+]|>,<|ClassProb->{25200,80},Boxes->{25200,4},Objectness->25200|>}
+
+In[60]:= (*Explore the network structure*)
+Information[yoloV5]
+Out[60]=  Net Information
+ Layers Count	247
+ Arrays Count	136
+ Shared Arrays Count	0
+ Input Port Names	{Input}
+ Output Port Names	{ClassProb,Boxes,Objectness}
+ Arrays Total Element Count	7267271
+ Arrays Total Size	29.0691MB
+
+
+
+
+In[73]:= Information[NetModel["YOLO V8 Detect Trained on MS-COCO Data"],"Properties"]
+Out[73]= {Arrays,ArraysByteCounts,ArraysCount,ArraysDimensions,ArraysElementCounts,ArraysLearningRateMultipliers,ArraysList,ArraysPositionList,ArraysSizes,ArraysTotalByteCount,ArraysTotalElementCount,ArraysTotalSize,FullSummaryGraphic,InputForm,InputPortNames,InputPorts,Layers,LayersCount,LayersGraph,LayersList,LayerTypeCounts,MXNetNodeGraph,MXNetNodeGraphPlot,OutputPortNames,OutputPorts,Properties,RecurrentStatesCount,RecurrentStatesPositionList,SharedArraysCount,SummaryGraphic,TopologyHash}

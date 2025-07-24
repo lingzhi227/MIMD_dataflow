@@ -1,0 +1,90 @@
+// North Halo PE for Systolic Array
+// Receives B matrix blocks from host and injects them South into systolic array
+
+param memcpy_params: comptime_struct;
+const sys_mod = @import_module("<memcpy/memcpy>", memcpy_params);
+
+// Block dimensions
+param Mt: i16;
+param Kt: i16; 
+param Nt: i16;
+param Cycle: i16;
+
+// Colors
+param B_color: color;
+param MEMCPYH2D_2: color;
+
+// Queue IDs
+const B_oq = @get_output_queue(2);
+
+// Task IDs
+const inject_B_task_id: local_task_id = @get_local_task_id(16);
+
+// Buffer for B block
+var B_block = @zeros([Kt*Nt]f32);
+var B_block_ptr: [*]f32 = &B_block;
+
+// Injection state
+var current_beat: i16 = 0;
+var col_idx: i16 = 0;
+
+// Initialize function
+fn init() void {
+    current_beat = 0;
+    col_idx = 0;
+    sys_mod.unblock_cmd_stream();
+}
+
+// Start B injection for a new beat
+fn start_B_injection() void {
+    col_idx = 0;
+    @activate(inject_B_task_id);
+}
+
+// Task to inject B columns southward
+task inject_B() void {
+    @block(inject_B_task_id);
+    
+    // Send current B column south
+    const B_out_dsd = @get_dsd(fabout_dsd, .{
+        .extent = Nt,
+        .fabric_color = B_color,
+        .output_queue = B_oq
+    });
+    
+    const B_col_dsd = @get_dsd(mem1d_dsd, .{
+        .extent = Nt,
+        .base_address = &B_block[col_idx * Nt]
+    });
+    
+    @fmovs(B_out_dsd, B_col_dsd, .{.async = true});
+    
+    col_idx += 1;
+    
+    // Continue injecting columns until block is complete
+    if (col_idx < Kt) {
+        @unblock(inject_B_task_id);
+    } else {
+        // Block complete, increment beat
+        current_beat += 1;
+    }
+}
+
+// RPC function for host coordination
+fn rpc_sync() void {
+    sys_mod.unblock_cmd_stream();
+}
+
+comptime {
+    @bind_local_task(inject_B, inject_B_task_id);
+    @block(inject_B_task_id);
+    
+    if (@is_arch("wse3")) {
+        @initialize_queue(B_oq, .{.color = B_color});
+    }
+    
+    @export_symbol(B_block_ptr, "B_block");
+    @export_symbol(init);
+    @export_symbol(start_B_injection);
+    @export_symbol(rpc_sync);
+}

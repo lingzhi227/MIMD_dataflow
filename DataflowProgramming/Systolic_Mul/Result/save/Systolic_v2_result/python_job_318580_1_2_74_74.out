@@ -1,0 +1,7 @@
+INFO: Using SIF: /shared/data1/Projects/Cerebras/sdk-cbcore-202411041444-629-be7c2a56.sif
+Traceback (most recent call last):
+  File "./run.py", line 159, in <module>
+    runner.memcpy_h2d(MEMCPYH2D_DATA_1, ravel_A3_groups[beat], 0, start, 1, h, Mt * Kt, streaming=True,
+RuntimeError: The size of src tensor is less than h*w*elt_per_pe.
+SDKR050 16:13:05 GMT  ERROR: SdkRuntime::stop() has not been called before runtime destruction. Please call SdkRuntime::stop() explicitly before program termination and Sdkruntime
+Program completed in: 00:01:23

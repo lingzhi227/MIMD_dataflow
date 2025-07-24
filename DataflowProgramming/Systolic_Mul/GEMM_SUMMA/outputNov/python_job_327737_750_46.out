@@ -1,0 +1,26 @@
+COUT002 04:29:37 GMT  ERROR: LOGGER NOT INITIALIZED:
+COUT002 04:29:37 GMT  ERROR: 		Remote end closed connection
+Timestamps transfer done
+579636.0835294118
+Traceback (most recent call last):
+  File "./run.py", line 166, in <module>
+    np.testing.assert_allclose(C_expected, C, rtol=1e-05, atol=1e-06)
+  File "/python/python-x86_64/lib/python3.8/site-packages/numpy/testing/_private/utils.py", line 1592, in assert_allclose
+    assert_array_compare(compare, actual, desired, err_msg=str(err_msg),
+  File "/cb/toolchains/buildroot/monolith-default/202403181828-238-5e1418a5/rootfs-x86_64/usr/lib/python3.8/contextlib.py", line 75, in inner
+    return func(*args, **kwds)
+  File "/python/python-x86_64/lib/python3.8/site-packages/numpy/testing/_private/utils.py", line 862, in assert_array_compare
+    raise AssertionError(msg)
+AssertionError: 
+Not equal to tolerance rtol=1e-05, atol=1e-06
+
+Mismatched elements: 176501 / 1190250000 (0.0148%)
+Max absolute difference: 0.13964844
+Max relative difference: 1.613084e-05
+ x: array([[8579.26 , 8667.393, 8566.402, ..., 8613.662, 8522.078, 8620.367],
+       [8678.912, 8719.35 , 8672.437, ..., 8672.984, 8603.646, 8660.723],
+       [8618.747, 8680.587, 8615.14 , ..., 8653.189, 8606.66 , 8609.428],...
+ y: array([[8579.259 , 8667.397 , 8566.404 , ..., 8613.667 , 8522.07  ,
+        8620.342 ],
+       [8678.91  , 8719.367 , 8672.413 , ..., 8672.985 , 8603.658 ,...
+Program completed in: 00:22:13

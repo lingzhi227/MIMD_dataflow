@@ -1,0 +1,25 @@
+M: 16384, K: 16384, N: 16384, Mt: 32, Kt: 32, Nt: 32, P: 512, channel: 1, buffer: 0
+Timestamps transfer done
+58714.10117647059
+Traceback (most recent call last):
+  File "./run.py", line 174, in <module>
+    np.testing.assert_allclose(C_expected, C, rtol=1e-05, atol=1e-06)
+  File "/python/python-x86_64/lib/python3.8/site-packages/numpy/testing/_private/utils.py", line 1592, in assert_allclose
+    assert_array_compare(compare, actual, desired, err_msg=str(err_msg),
+  File "/cb/toolchains/buildroot/monolith-default/202403181828-238-5e1418a5/rootfs-x86_64/usr/lib/python3.8/contextlib.py", line 75, in inner
+    return func(*args, **kwds)
+  File "/python/python-x86_64/lib/python3.8/site-packages/numpy/testing/_private/utils.py", line 862, in assert_array_compare
+    raise AssertionError(msg)
+AssertionError: 
+Not equal to tolerance rtol=1e-05, atol=1e-06
+
+Mismatched elements: 2 / 268435456 (7.45e-07%)
+Max absolute difference: 0.04199219
+Max relative difference: 1.0221841e-05
+ x: array([[4080.512 , 4087.0095, 4077.1665, ..., 4072.2827, 4057.9458,
+        4121.717 ],
+       [4064.294 , 4075.4648, 4086.0093, ..., 4077.0315, 4039.341 ,...
+ y: array([[4080.511 , 4087.011 , 4077.1611, ..., 4072.292 , 4057.9487,
+        4121.7085],
+       [4064.2888, 4075.4565, 4086.0034, ..., 4077.0237, 4039.3489,...
+Program completed in: 00:04:18

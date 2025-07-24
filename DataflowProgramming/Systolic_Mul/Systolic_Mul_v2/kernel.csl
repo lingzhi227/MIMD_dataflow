@@ -1,0 +1,211 @@
+// This program is the kernel pe
+// for each kernel pe, it will:
+// set beat to 0
+// for beat < Cycle, do the following:
+
+// first,  receive B from north, store B to local mem, send B to south
+// second, receive A from west, send A to east
+// third, the arrival of A will trigger wtt block_matrix_multiply
+// after completing block_matrix_multiply, receive B again
+
+// when beat = Cycle, finish, and wait for memcpy_d2h come get the result
+
+// Implementation
+// B_color is blocked
+// receive A. store in memdsd, unblock B_color
+// wtt multiply(A_color) will start
+    // fmacs(C_row_dsd, C_row_dsd, B_row_dsd, A_scalar)
+    
+const print = @import_module("<simprint>", .{ .enable = true });
+const fabric = @import_module("<layout>");
+
+const timestamp = @import_module("<time>");
+// starting time of H2D/D2H
+var tscStartBuffer = @zeros([timestamp.tsc_size_words]u16);
+// ending time of H2D/D2H
+var tscEndBuffer = @zeros([timestamp.tsc_size_words]u16);
+
+var time_buf_f32 = @zeros([3]f32);
+var time_buf_f32_ptr: [*]f32 = &time_buf_f32;
+
+param memcpy_params: comptime_struct;
+
+// memcpy module provides infrastructure for copying data
+// and launching functions from the host
+const sys_mod = @import_module("<memcpy/memcpy>", memcpy_params);
+
+//For future wse3 compatibility
+const iq_A = @get_input_queue(3);
+
+param Mt: i16;
+param Kt: i16;
+param Nt: i16;
+
+param Pc:    i16;
+param Cycle: i16;
+param Pr:    i16;
+
+param A_color:  color;
+param B_color:  color;
+
+const B_color_iq = @get_input_queue(2);
+
+// task id
+const B_transfer_task_id: local_task_id = @get_local_task_id(16);
+const fmacs_task_id:       data_task_id = @get_data_task_id(A_color);
+const terminate_task_id:  local_task_id = @get_local_task_id(17);
+
+// Initialize
+var B = @zeros([Kt*Nt]f32);
+var C = @zeros([Mt*Nt]f32);
+var C_ptr: [*]f32 = &C;
+
+// B_dsd store B in row major
+const B_input_dsd = @get_dsd(fabin_dsd, .{ .extent = Kt*Nt, .fabric_color = B_color, .input_queue = B_color_iq });
+const B_mem1_dsd = @get_dsd(mem1d_dsd, .{ .extent = Kt*Nt, .base_address = &B });
+
+// A_dsd store A in row major
+// const A_dsd = @get_dsd(fabin_dsd, .{ .extent = Mt*Kt, .fabric_color = A_color });
+
+// var B_row_dsd = @get_dsd(mem1d_dsd, .{ .extent = Nt, .base_address = &B });
+var B_row_dsd = @get_dsd(mem1d_dsd, .{ .tensor_access = |i|{Kt} -> B[i] });
+
+// C_dsd store partial result of C
+var C_dsd  = @get_dsd(mem1d_dsd, .{ .tensor_access = |i|{Nt} -> C[i] });
+
+fn init() void {
+    const C_dsd_reset = @get_dsd(mem1d_dsd, .{ .extent = Mt*Nt, .base_address = &C });
+    firstB = true;
+    @fmovs(C_dsd_reset, 0.0);
+    sys_mod.unblock_cmd_stream();
+}
+
+var A_row_counter: i16 = 0;
+var A_col_counter: i16 = 0;
+var beat: i16 = 0;
+task fmacs (A_val: f32) void {
+    print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+    print.print_string("Current A value: ");
+    print.print_f32(A_val);
+    print.print_string("\n");
+
+    // print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+    // print.print_string("B array is");
+    // for (@range(i16, @as(i16, Kt*Nt))) |i| {
+    //     print.print_f32(B[i]);
+    //     print.print_string(" ");
+    // }
+    // print.print_string("\n");
+
+    @fmacs(C_dsd, C_dsd, B_row_dsd, A_val);
+    
+    var offset: i16 = Nt*(A_col_counter+1);
+    A_col_counter += 1;
+    B_row_dsd = @increment_dsd_offset(B_mem1_dsd, offset, f32);
+
+    if (A_col_counter == Kt) {
+        A_row_counter += 1;
+        //Reset B_row_dsd
+        B_row_dsd = @get_dsd(mem1d_dsd, .{ .extent = Nt, .base_address = &B });
+
+        C_dsd = @increment_dsd_offset(C_dsd, Nt, f32);
+        A_col_counter = 0;
+        print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+        print.print_string("Full row of A processed\n");
+    }
+
+    if (A_row_counter == Mt) {
+        @block(fmacs_task_id);
+        print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+        print.print_string("Full block of A processed\n");
+        beat += 1;
+        if (beat == Cycle) {
+            print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+            print.print_string("Last block of A processed\n");
+            f_toc();
+            @unblock(terminate_task_id);
+        } else {
+            print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+            print.print_string("Preparing for next block of A/B\n");
+            B_row_dsd = @get_dsd(mem1d_dsd, .{ .extent = Nt, .base_address = &B });
+            C_dsd = @get_dsd(mem1d_dsd, .{ .extent = Nt, .base_address = &C });
+            A_row_counter = 0;
+            @activate(B_transfer_task_id);
+        }
+    }
+}
+
+var firstB: bool = true;
+task B_transfer() void {
+    if (firstB) {
+        timestamp.enable_tsc();
+        firstB = false;
+        f_tic();
+    }
+    print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+    print.print_string("transfering new block of B\n");    
+    @mov32(B_mem1_dsd, B_input_dsd, . { .async = true, .unblock = fmacs_task_id });
+}
+
+fn rpc_sync() void {
+    print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+    print.print_string("rpc_sync started\n");
+    @activate(terminate_task_id);
+}
+
+task terminate() void {
+    @block(terminate_task_id);
+    print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+    print.print_string("Unblocking command stream\n");
+    f_timestamps_to_f32();
+    sys_mod.unblock_cmd_stream();
+}
+
+fn f_tic() void {
+    timestamp.get_timestamp(&tscStartBuffer);
+}
+
+fn f_toc() void {
+    timestamp.get_timestamp(&tscEndBuffer);
+}
+
+fn f_timestamps_to_f32() void {
+    // time_buf_f32[0] = {tscStartBuffer[1], tscStartBuffer[0]}
+    // time_buf_f32[1] = {tscEndBuffer[0], tscStartBuffer[2]}
+    // time_buf_f32[2] = {tscEndBuffer[2], tscEndBuffer[1]}
+    var lo_ : u16 = 0;
+    var hi_ : u16 = 0;
+    var word : u32 = 0;
+
+    lo_ = tscStartBuffer[0];
+    hi_ = tscStartBuffer[1];
+    time_buf_f32[0] = @bitcast(f32, (@as(u32,hi_) << @as(u16,16)) | @as(u32, lo_) );
+
+    lo_ = tscStartBuffer[2];
+    hi_ = tscEndBuffer[0];
+    time_buf_f32[1] = @bitcast(f32, (@as(u32,hi_) << @as(u16,16)) | @as(u32, lo_) );
+
+    lo_ = tscEndBuffer[1];
+    hi_ = tscEndBuffer[2];
+    time_buf_f32[2] = @bitcast(f32, (@as(u32,hi_) << @as(u16,16)) | @as(u32, lo_) );
+}
+
+comptime {
+    @bind_local_task(B_transfer, B_transfer_task_id);
+    @bind_data_task(fmacs, fmacs_task_id);
+    @bind_local_task(terminate, terminate_task_id);
+
+    @activate(B_transfer_task_id);
+    @block(terminate_task_id);
+    @block(fmacs_task_id);
+
+    @export_symbol(time_buf_f32_ptr, "time_buf_f32");    
+    @export_symbol(C_ptr, "C");
+    @export_symbol(rpc_sync);
+    @export_symbol(init);
+
+    if (@is_arch("wse3")){
+        // WTT must bind to an input queue
+        @initialize_queue(resources.iq_A, .{.color = A_color} );
+    }
+}

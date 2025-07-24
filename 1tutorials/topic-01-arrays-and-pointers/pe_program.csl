@@ -1,0 +1,31 @@
+// Not a complete program; the top-level source file is layout.csl
+
+param memcpy_params: comptime_struct;
+
+const sys_mod = @import_module("<memcpy/memcpy>", memcpy_params);
+
+var result: [1]i16;
+var result_ptr: [*]i16 = &result;
+
+fn increment_and_sum(data_ptr: *[3]i16, result_ptr: *i16) void {
+  // Write an updated value to each element of the array
+  (data_ptr.*)[0] += 1;
+  (data_ptr.*)[1] += 1;
+  (data_ptr.*)[2] += 1;
+
+  // Read all array values, sum them, and write the result
+  result_ptr.* = (data_ptr.*)[0] + (data_ptr.*)[1] + (data_ptr.*)[2];
+}
+
+fn f_run() void {
+  var data = [3]i16 { 1, 2, 3 };
+
+  increment_and_sum(&data, &result[0]);
+
+  sys_mod.unblock_cmd_stream();
+}
+
+comptime {
+  @export_symbol(result_ptr, "result");
+  @export_symbol(f_run);
+}

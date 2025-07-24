@@ -1,0 +1,152 @@
+// Color Map
+//
+//  ID var              ID var             ID var                ID var
+//   0 MEMCPYH2D_DATA_1  9                 18                    27 reserved (memcpy)
+//   1 MEMCPYH2D_DATA_2 10 c2d_x_entrypt_0 19                    28 reserved (memcpy)
+//   2 MEMCPYD2H_DATA_1 11 c2d_x_entrypt_1 20                    29 reserved
+//   3                  12 c2d_y_entrypt_0 21 reserved (memcpy)  30 reserved (memcpy)
+//   4                  13 c2d_y_entrypt_1 22 reserved (memcpy)  31 reserved
+//   5                  14                 23 reserved (memcpy)  32
+//   6                  15                 24                    33
+//   7                  16                 25                    34
+//   8                  17                 26                    35
+
+// Parameters settings
+
+// total matrix dimensions
+param M: i16;
+param K: i16;
+param N: i16;
+
+// total matrix dimensions
+param Mt: i16;
+param Kt: i16;
+param Nt: i16;
+
+// kernel dimensions
+param Pc:   i16;
+param beat: i16;
+param Pr:   i16;
+
+// IDs
+// IDs for memcpy streaming colors
+param MEMCPYH2D_DATA_1_ID: i16; // streams A from host to west halo
+param MEMCPYH2D_DATA_2_ID: i16; // streams B from host to north halo
+param MEMCPYD2H_DATA_1_ID: i16; // streams C from east halo to host
+
+// Colors
+const MEMCPYH2D_DATA_1: color = @get_color(MEMCPYH2D_DATA_1_ID);
+const MEMCPYH2D_DATA_2: color = @get_color(MEMCPYH2D_DATA_2_ID);
+const MEMCPYD2H_DATA_1: color = @get_color(MEMCPYD2H_DATA_1_ID);
+const color_1: A_color   color = @get_color(3);
+const color_1: B_color   color = @get_color(4);
+
+// Memcpy
+const memcpy = @import_module("<memcpy/get_params>", .{ 
+    .width = Pc+2, 
+    .height = Pr+1,
+    .MEMCPYH2D_1 = MEMCPYH2D_DATA_1,
+    .MEMCPYH2D_2 = MEMCPYH2D_DATA_2,
+    .MEMCPYD2H_1 = MEMCPYD2H_DATA_1 
+});
+
+layout {
+    // the whole ROI region of interest
+    // PE coordinates are (column, row)
+    @set_rectangle(Pc+2, Pr+1);
+
+    const common_params = .{
+        .Mt = Mt,
+        .Kt = Kt,
+        .Nt = Nt,
+        .Pc = Pc,
+        .Pr = Pr,
+        .color = color,
+    };
+
+    const west_params = @concat_structs(common_params, .{
+        .send_east_color = ax_color_1, 
+    });
+
+    // west halo code
+    var Py: u16 = 1;
+    while (Py <= Pr) : (Py += 1) {
+        @set_tile_code(0, Py, "memcpy_edge/west.csl", .{});
+    }
+
+    const north_params = @concat_structs(common_params, .{
+        .send_south_color = ax_color_1, 
+    });
+
+    // north halo code
+    var Px: u16 = 1;
+    while (Px <= Pc) : (Px += 1) {
+        @set_tile_code();
+    }
+
+    // Create route values
+    const west_A_route = .{ .rx = .{ RAMP }, .tx = .{ EAST } };
+    const north_B_route = .{ .rx = .{ RAMP }, .tx = .{ SOUTH } };
+
+    const compute_A_route = .{ .rx = .{ WEST }, .tx = .{ RAMP, EAST } };
+    const compute_B_route = .{ .rx = .{ NORTH }, .tx = .{ RAMP, SOUTH } };
+
+    // Set Color Config
+    // set color config west
+    for (@range(i16, Pr)) |pe_y| {
+        @set_color_config(0, pe_y, MEMCPYH2D_DATA_1, west_A_route);
+    }
+    // sSet color config north
+    for (@range(i16, Pc)) |pe_x| {
+        @set_color_config(pe_x, 0, MEMCPYH2D_DATA_2, north_B_route);
+    }
+
+    // set color config compute
+    for (@range(i16, Pc)) |pe_x| {
+        for (@range(i16,Pr)) |pe_y| {
+            @set_color_config(pe_x, pe_y, A, .{ .routes = compute_A_route });
+            @set_color_config(pe_x, pe_y, B, .{ .routes = compute_B_route });
+        }
+    }
+    // set color config east
+
+    // east halo params
+    const kernel_params = @concat_structs(common_params, .{
+        .recv_west_color = ax_color_2
+        .recv_north_color = ax_color_2
+        .send_east_color = ax_color_2
+        .send_south_color = ax_color_1, 
+
+    });
+    
+    // set east halo code
+    Py = 1;
+    while (Py <= Pr) : (Py += 1) {
+        @set_tile_code(Pc + 1, Py, "east.csl", @concat_structs(.{ 
+            .memcpy_params = memcpy.get_params(pe_x) }, 
+            common_params
+        ));
+    }
+
+    // kernel parameters
+    const north_params = @concat_structs(common_params, .{
+        .send_south_color = ax_color_1, 
+        .recv_west_color = ax_color_2
+    });
+
+    // set kernel code
+    Py = 1;
+    while (Py <= Pr) : (Py += 1) {
+        Px = 1;
+        while (Px <= Pc) : (Px += 1) {
+            const ;
+            const ;
+            
+            @set_tile_code(Px, Py, "kernel.csl", .{});
+        }
+    }
+
+
+
+
+}

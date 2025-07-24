@@ -1,0 +1,40 @@
+COUT002 19:43:34 GMT  ERROR: LOGGER NOT INITIALIZED:
+COUT002 19:43:34 GMT  ERROR: 		Remote end closed connection
+RPC_SYNC DONE
+C transfer done
+Timestamps transfer done
+[[1.5097979e+03 1.4974164e+03 1.4949850e+03 ... 1.5018804e+03
+  1.5289850e+03 1.5106312e+03]
+ [1.5365856e+03 1.5175811e+03 1.5294977e+03 ... 1.5230547e+03
+  1.5435665e+03 1.5328771e+03]
+ [1.5173385e+03 1.5050869e+03 1.5241541e+03 ... 1.5054915e+03
+  1.5349073e+03 1.5071711e+03]
+ ...
+ [1.5298604e+03 1.5108774e+03 1.5110044e+03 ... 1.5136956e+03
+  1.5167333e+03 1.5259973e+03]
+ [1.5316139e+03 1.5203588e+03 1.5265330e+03 ... 1.5217662e+03
+  1.5361467e+03 1.5267091e+03]
+ [1.5503167e+03 1.5355099e+03 1.5407699e+03 ... 1.7191328e+01
+  1.4953767e+01 1.4844060e-01]]
+Traceback (most recent call last):
+  File "./run.py", line 121, in <module>
+    np.testing.assert_allclose(np.matmul(generate_matrix_a(M, K), generate_matrix_b(K, N)), C, rtol=1e-05, atol=1e-06)
+  File "/python/python-x86_64/lib/python3.8/site-packages/numpy/testing/_private/utils.py", line 1592, in assert_allclose
+    assert_array_compare(compare, actual, desired, err_msg=str(err_msg),
+  File "/cb/toolchains/buildroot/monolith-default/202403181828-238-5e1418a5/rootfs-x86_64/usr/lib/python3.8/contextlib.py", line 75, in inner
+    return func(*args, **kwds)
+  File "/python/python-x86_64/lib/python3.8/site-packages/numpy/testing/_private/utils.py", line 862, in assert_array_compare
+    raise AssertionError(msg)
+AssertionError: 
+Not equal to tolerance rtol=1e-05, atol=1e-06
+
+Mismatched elements: 1822378472 / 1823290000 (100%)
+Max absolute difference: 1605.7109
+Max relative difference: 2.931184e+09
+ x: array([[1535.839 , 1540.2816, 1540.4717, ..., 1554.6891, 1532.3077,
+        1522.9265],
+       [1537.7858, 1528.4087, 1563.1943, ..., 1551.7874, 1547.3109,...
+ y: array([[1.509798e+03, 1.497416e+03, 1.494985e+03, ..., 1.501880e+03,
+        1.528985e+03, 1.510631e+03],
+       [1.536586e+03, 1.517581e+03, 1.529498e+03, ..., 1.523055e+03,...
+Program completed in: 00:19:42

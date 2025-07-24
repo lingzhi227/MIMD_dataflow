@@ -1,0 +1,42 @@
+COUT002 05:59:29 GMT  ERROR: LOGGER NOT INITIALIZED:
+COUT002 05:59:29 GMT  ERROR: 		Remote end closed connection
+RPC_SYNC DONE
+C transfer done
+Timestamps transfer done
+[[2745.8823 2732.6655 2744.9211 ... 2728.3347 2740.152  2716.7046]
+ [2758.3118 2767.8835 2760.108  ... 2779.9104 2756.2463 2734.023 ]
+ [2752.977  2733.7761 2751.422  ... 2776.6677 2747.0022 2728.7954]
+ ...
+ [2732.5725 2727.1562 2711.9067 ... 2745.4087 2737.324  2693.16  ]
+ [2731.542  2733.2422 2728.0906 ... 2775.6343 2736.4626 2696.022 ]
+ [2752.9382 2747.9148 2731.5144 ... 2766.0825 2738.763  2700.625 ]]
+[[2745.884  2732.6602 2744.923  ... 2728.3315 2740.1592 2716.7017]
+ [2758.3086 2767.884  2760.107  ... 2779.9092 2756.2444 2734.0251]
+ [2752.9731 2733.784  2751.418  ... 2776.6675 2747.002  2728.7888]
+ ...
+ [2732.5708 2727.1643 2711.907  ... 2745.4058 2737.3354 2693.155 ]
+ [2731.546  2733.2397 2728.0918 ... 2775.6313 2736.4607 2696.0234]
+ [2752.9304 2747.9119 2731.516  ... 2766.0903 2738.771  2700.6309]]
+4377060.228235294
+Traceback (most recent call last):
+  File "./run.py", line 160, in <module>
+    np.testing.assert_allclose(C_expected, C, rtol=1e-05, atol=1e-06)
+  File "/python/python-x86_64/lib/python3.8/site-packages/numpy/testing/_private/utils.py", line 1592, in assert_allclose
+    assert_array_compare(compare, actual, desired, err_msg=str(err_msg),
+  File "/cb/toolchains/buildroot/monolith-default/202403181828-238-5e1418a5/rootfs-x86_64/usr/lib/python3.8/contextlib.py", line 75, in inner
+    return func(*args, **kwds)
+  File "/python/python-x86_64/lib/python3.8/site-packages/numpy/testing/_private/utils.py", line 862, in assert_array_compare
+    raise AssertionError(msg)
+AssertionError: 
+Not equal to tolerance rtol=1e-05, atol=1e-06
+
+Mismatched elements: 2 / 2249864925 (8.89e-08%)
+Max absolute difference: 0.02783203
+Max relative difference: 1.0194726e-05
+ x: array([[2745.884 , 2732.6602, 2744.923 , ..., 2728.3315, 2740.1592,
+        2716.7017],
+       [2758.3086, 2767.884 , 2760.107 , ..., 2779.9092, 2756.2444,...
+ y: array([[2745.8823, 2732.6655, 2744.9211, ..., 2728.3347, 2740.152 ,
+        2716.7046],
+       [2758.3118, 2767.8835, 2760.108 , ..., 2779.9104, 2756.2463,...
+Program completed in: 00:22:15

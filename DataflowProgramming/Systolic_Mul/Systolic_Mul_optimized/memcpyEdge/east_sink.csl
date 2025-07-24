@@ -1,0 +1,43 @@
+// East Boundary PE for Systolic Array
+// Absorbs A matrix elements to prevent reflection
+
+param memcpy_params: comptime_struct;
+const sys_mod = @import_module("<memcpy/memcpy>", memcpy_params);
+
+// Colors
+param A_color: color;
+
+// Queue IDs
+const A_iq = @get_input_queue(2);
+
+// Task IDs
+const A_sink_task_id: data_task_id = 
+    if (@is_arch("wse2")) @get_data_task_id(A_color)
+    else @get_data_task_id(A_iq);
+
+// Initialize function  
+fn init() void {
+    sys_mod.unblock_cmd_stream();
+}
+
+// Sink task - absorbs A values without processing
+task A_sink(A_val: f32) void {
+    // Simply consume the A value - no processing needed
+    // This prevents reflection back into the systolic array
+}
+
+// RPC function for host coordination
+fn rpc_sync() void {
+    sys_mod.unblock_cmd_stream();
+}
+
+comptime {
+    @bind_data_task(A_sink, A_sink_task_id);
+    
+    if (@is_arch("wse3")) {
+        @initialize_queue(A_iq, .{.color = A_color});
+    }
+    
+    @export_symbol(init);
+    @export_symbol(rpc_sync);
+}

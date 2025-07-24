@@ -1,0 +1,5 @@
+COUT002 04:19:49 GMT  ERROR: LOGGER NOT INITIALIZED:
+COUT002 04:19:49 GMT  ERROR: 		Remote end closed connection
+slurmstepd: error: poll(): Bad address
+/var/spool/slurmd/job347604/slurm_script: line 19: 223262 Killed                  ${CS_PYTHON} ./run.py --name out --cmaddr 172.24.140.100:9000
+Program completed in: 00:44:32

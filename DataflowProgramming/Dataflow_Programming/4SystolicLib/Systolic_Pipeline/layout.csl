@@ -1,0 +1,174 @@
+// Color Map
+//
+//  ID var              ID var             ID var                ID var
+//   0 MEMCPYH2D_DATA_1  9 WEST_STARTUP    18                    27 reserved (memcpy)
+//   1 MEMCPYH2D_DATA_2 10 NORTH_STARTUP   19                    28 reserved (memcpy)
+//   2                  11                 20                    29 reserved
+//   3                  12                 21 reserved (memcpy)  30 reserved (memcpy)
+//   4 A_color          13                 22 reserved (memcpy)  31 reserved
+//   5                  14                 23 reserved (memcpy)  32
+//   6 B_color          15                 24                    33
+//   7                  16                 25                    34
+//   8                  17                 26                    35
+
+// Parameters settings
+
+// Matrix 1
+// Parameters
+// Grid Dimension
+// routing
+// input, kernel, output
+param M1: i16;
+param K1: i16;
+param N1: i16;
+
+// block matrix dimensions
+param Mt: i16;
+param Kt: i16;
+param Nt: i16;
+
+// PE dimensions
+param Pc:    i16;
+param Cycle: i16;
+param Pr:    i16;
+
+// Matrix 2
+// Parameters
+// Grid Dimension
+// routing
+// input, kernel, output
+param M2: i16;
+param K2: i16;
+param N2: i16;
+
+// block matrix dimensions
+param Mt: i16;
+param Kt: i16;
+param Nt: i16;
+
+// PE dimensions
+param Pc:    i16;
+param Cycle: i16;
+param Pr:    i16;
+
+// Matrix 3
+// Parameters
+// Grid Dimension
+// routing
+// input, kernel, output
+param M3: i16;
+param K3: i16;
+param N3: i16;
+
+// block matrix dimensions
+param Mt: i16;
+param Kt: i16;
+param Nt: i16;
+
+// PE dimensions
+param Pc:    i16;
+param Cycle: i16;
+param Pr:    i16;
+
+// IDs
+// IDs for memcpy streaming colors
+param MEMCPYH2D_DATA_1_ID: i16; // streams A from host to west halo
+param MEMCPYH2D_DATA_2_ID: i16; // streams B from host to north halo
+// param MEMCPYD2H_DATA_1_ID: i16; // streams C from east halo to host
+
+// Colors
+const MEMCPYH2D_DATA_1: color = @get_color(MEMCPYH2D_DATA_1_ID);
+const MEMCPYH2D_DATA_2: color = @get_color(MEMCPYH2D_DATA_2_ID);
+// const MEMCPYD2H_DATA_1: color = @get_color(MEMCPYD2H_DATA_1_ID);
+const A_color:          color = @get_color(4);
+const B_color:          color = @get_color(6);
+
+// Memcpy
+const memcpy = @import_module("<memcpy/get_params>", .{ 
+    .width = Pc+1,
+    .height = Pr+1,
+    .MEMCPYH2D_1 = MEMCPYH2D_DATA_1,
+    .MEMCPYH2D_2 = MEMCPYH2D_DATA_2,
+    // .MEMCPYD2H_1 = MEMCPYD2H_DATA_1 
+});
+
+layout {
+    // the whole ROI region of interest
+    // PE coordinates are (column, row)
+    @set_rectangle(Pc+1, Pr+1);
+
+    // set north halo code    
+    for (@range(i16, Pc)) |pe_x| {
+        @set_tile_code(pe_x+1, 0, "memcpyEdge/north.csl", .{ 
+            .USER_IN_2 = B_color, 
+            .MEMCPYH2D_2 = MEMCPYH2D_DATA_2,
+            .memcpy_params = memcpy.get_params(pe_x+1) 
+        });
+    }
+
+    // set west halo code
+    for (@range(i16, Pr)) |pe_y| {
+        @set_tile_code(0, pe_y+1, "memcpyEdge/west.csl", .{ 
+            .USER_IN_1 = A_color,
+            .MEMCPYH2D_1 = MEMCPYH2D_DATA_1,
+            .memcpy_params = memcpy.get_params(0) 
+        });
+    }
+
+    // set kernel code
+    for (@range(i16, Pr)) |pe_y| {
+        for (@range(i16, Pc)) |pe_x| {
+            @set_tile_code(pe_x+1, pe_y+1, "kernel.csl", .{
+                .Mt = Mt,
+                .Kt = Kt,
+                .Nt = Nt,
+                .Pc = Pc,
+                .Cycle = Cycle,
+                .Pr = Pr,
+                .A_color = A_color, 
+                .B_color = B_color,
+                .memcpy_params = memcpy.get_params(pe_x+1)
+            });
+        }
+    }
+
+    @set_tile_code(0, 0, "memcpyEdge/noop.csl", .{
+        .memcpy_params = memcpy.get_params(0)
+    });
+    
+    // Create route values
+    
+    // kernel route values
+    const kernel_A_route = .{ .rx = .{ WEST }, .tx = .{ RAMP, EAST } };
+    const kernel_B_route = .{ .rx = .{ NORTH }, .tx = .{ RAMP, SOUTH } };
+
+    // edge route values
+    const kernel_east_edge_route = .{ .rx = .{ WEST }, .tx = .{ RAMP } };
+    const kernel_south_edge_route = .{ .rx = .{ NORTH }, .tx = .{ RAMP } };
+
+    // set kernel color config
+    for (@range(i16, Pc)) |pe_x| {
+        for (@range(i16,Pr)) |pe_y| {
+            // if east edge, set color config kernel_east_edge_route
+            if (pe_x == Pc-1) {
+                @set_color_config(pe_x+1, pe_y+1, A_color, .{ .routes = kernel_east_edge_route });
+            } else {
+                @set_color_config(pe_x+1, pe_y+1, A_color, .{ .routes = kernel_A_route });
+            }
+
+            // if south edge, set color config kernel_south_edge_route
+            if (pe_y == Pr-1) {
+                @set_color_config(pe_x+1, pe_y+1, B_color, .{ .routes = kernel_south_edge_route });
+            }
+            else {
+                @set_color_config(pe_x+1, pe_y+1, B_color, .{ .routes = kernel_B_route });
+            }
+        }
+    }
+    
+    @export_name("C", [*]f32, true);
+    @export_name("time_buf_f32", [*]f32, true);
+    @export_name("rpc_sync", fn()void);
+    @export_name("start", fn()void);
+    @export_name("init", fn()void);
+}

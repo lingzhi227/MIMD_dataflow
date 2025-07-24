@@ -1,0 +1,20 @@
+// No-op PE for corner position
+// Simply exists to complete the rectangle layout
+
+param memcpy_params: comptime_struct;
+const sys_mod = @import_module("<memcpy/memcpy>", memcpy_params);
+
+// Initialize function
+fn init() void {
+    sys_mod.unblock_cmd_stream();
+}
+
+// RPC function for host coordination
+fn rpc_sync() void {
+    sys_mod.unblock_cmd_stream();
+}
+
+comptime {
+    @export_symbol(init);
+    @export_symbol(rpc_sync);
+}

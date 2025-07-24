@@ -1,0 +1,23 @@
+INFO: Using SIF: /shared/data1/Projects/Cerebras/acceptance/hpc/cs_sdk_1.2.0/sdk-cbcore-202406260214-3-f03c8e31.sif
+Traceback (most recent call last):
+  File "./run.py", line 114, in <module>
+    np.testing.assert_allclose(C_expected, C, rtol=1e-05, atol=1e-06)
+  File "/python/python-x86_64/lib/python3.8/site-packages/numpy/testing/_private/utils.py", line 1592, in assert_allclose
+    assert_array_compare(compare, actual, desired, err_msg=str(err_msg),
+  File "/cb/toolchains/buildroot/monolith-default/202403181828-238-5e1418a5/rootfs-x86_64/usr/lib/python3.8/contextlib.py", line 75, in inner
+    return func(*args, **kwds)
+  File "/python/python-x86_64/lib/python3.8/site-packages/numpy/testing/_private/utils.py", line 862, in assert_array_compare
+    raise AssertionError(msg)
+AssertionError: 
+Not equal to tolerance rtol=1e-05, atol=1e-06
+
+Mismatched elements: 307566 / 1242562500 (0.0248%)
+Max absolute difference: 0.14550781
+Max relative difference: 1.6664393e-05
+ x: array([[8776.828 , 8778.191 , 8760.403 , ..., 8757.224 , 8816.725 ,
+        8790.155 ],
+       [8831.82  , 8851.437 , 8818.161 , ..., 8833.063 , 8905.679 ,...
+ y: array([[8776.847 , 8778.216 , 8760.408 , ..., 8757.197 , 8816.72  ,
+        8790.159 ],
+       [8831.819 , 8851.403 , 8818.1455, ..., 8833.052 , 8905.671 ,...
+Program completed in: 00:27:21

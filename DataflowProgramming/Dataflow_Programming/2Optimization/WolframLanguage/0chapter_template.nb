@@ -1,0 +1,1139 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     47967,       1131]
+NotebookOptionsPosition[     37965,        969]
+NotebookOutlinePosition[     38483,        987]
+CellTagsIndexPosition[     38440,        984]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[" ", "BookChapterNumber",ExpressionUUID->"afb4bf8c-c67f-bf4f-b0b4-f6c965f98627"],
+
+Cell["Graph Theory", "BookChapterTitle",
+ CellChangeTimes->{{3.9428453032943172`*^9, 
+  3.942845305515774*^9}},ExpressionUUID->"ea1b438e-449b-0740-ab9d-\
+cb9c3a5ace50"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ 
+ CounterBox["BookChapterNumber"],
+ ".",
+ 
+ CounterBox["Section"],
+ ". Basic Wolfram Language Graph Function"
+}], "Section",
+ CellChangeTimes->{{3.942845343447254*^9, 
+  3.942845353425873*^9}},ExpressionUUID->"d553a70e-f0c9-a44c-850b-\
+e078b51e4534"],
+
+Cell["Enter text here.", "Text",ExpressionUUID->"e0bd2534-e79b-dd44-8175-01045cfa0260"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"\[Integral]", 
+    RowBox[{"x", 
+     RowBox[{"\[DifferentialD]", "x"}]}]}], "+", 
+   SqrtBox["z"]}], TraditionalForm]], "EquationNumbered",ExpressionUUID->\
+"02e378c2-3bcc-6247-a493-b2f5cc4eb86c"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ 
+ CounterBox["BookChapterNumber"],
+ ".",
+ 
+ CounterBox["Section"],
+ ".",
+ 
+ CounterBox["Subsection"],
+ ". Enter subsection title here"
+}], "Subsection",ExpressionUUID->"6bc5e1c0-2765-e04c-8cba-ec89f9320470"],
+
+Cell["Enter text here.", "Text",ExpressionUUID->"d47cd33b-7456-1b48-9897-69f1ced35900"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"2", "+", "2"}]], "Input",ExpressionUUID->"7f516600-0df6-3741-8bbe-53b85ab13388"],
+
+Cell[BoxData["4"], "Output",ExpressionUUID->"1bf7ebff-2553-7f41-8267-cb4309b02419"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ 
+ CounterBox["BookChapterNumber"],
+ ".",
+ 
+ CounterBox["Section"],
+ ".",
+ 
+ CounterBox["Subsection"],
+ ". Enter subsection title here"
+}], "Subsection",ExpressionUUID->"8f8041a2-0a5c-d74d-9b63-2101613d85ed"],
+
+Cell["Enter text here.", "Text",ExpressionUUID->"ca727cb9-f8ee-f844-bc22-8d716fb3774e"],
+
+Cell[CellGroupData[{
+
+Cell["Enter item1 text here.", "Item1",ExpressionUUID->"5f0367b3-a9d1-d14d-ae39-9ae43611b501"],
+
+Cell[CellGroupData[{
+
+Cell["Enter item1paragraph text here.", "Item1Paragraph",ExpressionUUID->"05c490cb-7694-ff46-968e-e0a4df341721"],
+
+Cell[CellGroupData[{
+
+Cell["Enter item2 text here.", "Item2",ExpressionUUID->"21c63763-5ba7-b142-a908-8110121ad875"],
+
+Cell[CellGroupData[{
+
+Cell["Enter item2paragraph text here.", "Item2Paragraph",ExpressionUUID->"0f170892-3bd6-8e43-8937-31db34a3de63"],
+
+Cell[CellGroupData[{
+
+Cell["Enter item3 text here.", "Item3",ExpressionUUID->"54e4e6a3-c280-da48-8f1f-fc19fc31e838"],
+
+Cell["Enter item3paragraph text here.", "Item3Paragraph",ExpressionUUID->"f76a2271-7b3a-4d4b-82c9-97ed2720e485"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ 
+ CounterBox["BookChapterNumber"],
+ ".",
+ 
+ CounterBox["Section"],
+ ". Grid Graph Operations"
+}], "Section",
+ CellChangeTimes->{{3.9428453637943172`*^9, 
+  3.9428453680640793`*^9}},ExpressionUUID->"b450c9e2-59a3-1a4f-b0e9-\
+aead6a6d6983"],
+
+Cell[TextData[{
+ "Enter text here. Enter an inline formula like this: ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"2", "+", "2"}], TraditionalForm]],ExpressionUUID->
+  "12b11bbb-3f86-0047-9956-d4946fda091c"],
+ "."
+}], "Text",ExpressionUUID->"0f829d8c-ac48-c44f-81bb-cedcf29d2f5b"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"\[Integral]", 
+    RowBox[{"x", 
+     RowBox[{"\[DifferentialD]", "x"}]}]}], "+", 
+   SqrtBox["z"]}], TraditionalForm]], "EquationNumbered",ExpressionUUID->\
+"fc8a103a-6562-a44a-b734-b11adc031e40"],
+
+Cell["Enter text here.", "Text",ExpressionUUID->"2ab9c509-f498-8f4f-a790-57788af35144"],
+
+Cell[CellGroupData[{
+
+Cell["Enter item1numbered text here.", "Item1Numbered",ExpressionUUID->"064feca5-e2dc-e942-95bf-44ebbde1ba9d"],
+
+Cell[CellGroupData[{
+
+Cell["Enter item1paragraph text here.", "Item1Paragraph",ExpressionUUID->"4420997c-4f88-ab4f-b8d3-47696a92f945"],
+
+Cell[CellGroupData[{
+
+Cell["Enter item2numbered text here.", "Item2Numbered",ExpressionUUID->"a3668715-9c68-ad49-891d-e21a2081f024"],
+
+Cell[CellGroupData[{
+
+Cell["Enter item2paragraph text here.", "Item2Paragraph",ExpressionUUID->"07503bee-b223-f142-8977-c6561cc30f85"],
+
+Cell[CellGroupData[{
+
+Cell["Enter item3numbered text here.", "Item3Numbered",ExpressionUUID->"85b989d4-7aca-9547-bffd-40375aaa677a"],
+
+Cell["Enter item3paragraph text here.", "Item3Paragraph",ExpressionUUID->"d2e8865b-7841-0740-b9dc-8bbff6d3c43d"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell["Enter text here.", "Text",ExpressionUUID->"14465aae-6e22-8344-87ab-c90e19e76f23"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["Theorem\[MediumSpace]\[ThinSpace]", "TheoremLabel"],
+ StyleBox[
+ CounterBox["BookChapterNumber"], "TheoremLabel"],
+ StyleBox[".", "TheoremLabel"],
+ StyleBox[
+ CounterBox["Theorem"], "TheoremLabel"],
+ StyleBox[". ", "TheoremLabel"],
+ "Enter theorem text here."
+}], "Theorem",ExpressionUUID->"0836be54-be58-e341-b62d-dec24e03faa6"],
+
+Cell["Enter continued theorem text here.", "TheoremContinuation",ExpressionUUID->"b6e888cc-7972-f94b-9fb8-86fae702f72d"],
+
+Cell[TextData[{
+ StyleBox["Corollary\[MediumSpace]\[ThinSpace]", "CorollaryLabel"],
+ StyleBox[
+ CounterBox["BookChapterNumber"], "CorollaryLabel"],
+ StyleBox[".", "CorollaryLabel"],
+ StyleBox[
+ CounterBox["Corollary"], "CorollaryLabel"],
+ StyleBox[". ", "CorollaryLabel"],
+ "Enter corollary text here."
+}], "Corollary",ExpressionUUID->"c4d80db3-52fa-ec40-a6fa-01d10dce059f"],
+
+Cell["Enter continued corollary text here.", "CorollaryContinuation",ExpressionUUID->"b136c4ca-bef5-4a45-bf63-cbd9704546c3"],
+
+Cell[TextData[{
+ StyleBox["Definition\[MediumSpace]", "DefinitionLabel"],
+ StyleBox[
+ CounterBox["BookChapterNumber"], "DefinitionLabel"],
+ StyleBox[".", "DefinitionLabel"],
+ StyleBox[
+ CounterBox["Definition"], "DefinitionLabel"],
+ StyleBox[". ", "DefinitionLabel"],
+ "Enter definition text here."
+}], "Definition",ExpressionUUID->"bb812ce4-cea0-5a44-a8cf-b4154cc65ade"],
+
+Cell["Enter continued definition text here.", "DefinitionContinuation",ExpressionUUID->"f1cef63c-00b4-ec42-98d3-492c482b398f"],
+
+Cell[TextData[{
+ StyleBox["Proposition\[MediumSpace]\[ThinSpace]", "PropositionLabel"],
+ StyleBox[
+ CounterBox["BookChapterNumber"], "PropositionLabel"],
+ StyleBox[".", "PropositionLabel"],
+ StyleBox[
+ CounterBox["Proposition"], "PropositionLabel"],
+ StyleBox[". ", "PropositionLabel"],
+ "Enter proposition text here."
+}], "Proposition",ExpressionUUID->"1df9cf83-4492-c341-af62-97e5041ca172"],
+
+Cell["Enter continued proposition text here.", "PropositionContinuation",ExpressionUUID->"797761fe-afe9-ca4b-b75c-01a9146524e8"],
+
+Cell[TextData[{
+ StyleBox["Conjecture\[MediumSpace]\[ThinSpace]", "ConjectureLabel"],
+ StyleBox[
+ CounterBox["BookChapterNumber"], "ConjectureLabel"],
+ StyleBox[".", "ConjectureLabel"],
+ StyleBox[
+ CounterBox["Conjecture"], "ConjectureLabel"],
+ StyleBox[". ", "ConjectureLabel"],
+ "Enter conjecture text here."
+}], "Conjecture",ExpressionUUID->"9e88aeaf-c0ed-6646-9a61-5792a5cb4df2"],
+
+Cell["Enter continued conjecture text here.", "ConjectureContinuation",ExpressionUUID->"2e78ef74-e50e-434a-879f-0813a732001f"],
+
+Cell[TextData[{
+ StyleBox["Axiom\[MediumSpace]\[ThinSpace]", "AxiomLabel"],
+ StyleBox[
+ CounterBox["BookChapterNumber"], "AxiomLabel"],
+ StyleBox[".", "AxiomLabel"],
+ StyleBox[
+ CounterBox["Axiom"], "AxiomLabel"],
+ StyleBox[". ", "AxiomLabel"],
+ "Enter axiom text here."
+}], "Axiom",ExpressionUUID->"f6360340-19ed-b341-b577-8f735c9a143e"],
+
+Cell["Enter continued axiom text here.", "AxiomContinuation",ExpressionUUID->"88ec8a30-5a6f-314c-80f9-f856766970fa"],
+
+Cell[TextData[{
+ StyleBox["Rule\[MediumSpace]\[ThinSpace]", "RuleLabel"],
+ StyleBox[
+ CounterBox["BookChapterNumber"], "RuleLabel"],
+ StyleBox[".", "RuleLabel"],
+ StyleBox[
+ CounterBox["Rule"], "RuleLabel"],
+ StyleBox[". ", "RuleLabel"],
+ "Enter rule text here."
+}], "Rule",ExpressionUUID->"85b48653-f26c-3749-9827-61ffd0cd5c67"],
+
+Cell["Enter continued rule text here.", "RuleContinuation",ExpressionUUID->"387b66d8-5df4-a94c-8035-2ae889b66668"],
+
+Cell[TextData[{
+ StyleBox["Example\[MediumSpace]\[ThinSpace]", "ExampleLabel"],
+ StyleBox[
+ CounterBox["BookChapterNumber"], "ExampleLabel"],
+ StyleBox[".", "ExampleLabel"],
+ StyleBox[
+ CounterBox["Example"], "ExampleLabel"],
+ StyleBox[". ", "ExampleLabel"],
+ "Enter example text here."
+}], "Example",ExpressionUUID->"f9264d4d-d021-9241-b68d-d801506e7c9d"],
+
+Cell["Enter continued example text here.", "ExampleContinuation",ExpressionUUID->"ae6852e1-bec0-eb4a-894b-ddd02e3f42ca"],
+
+Cell[TextData[{
+ StyleBox["Remark\[MediumSpace]\[ThinSpace]", "RemarkLabel"],
+ StyleBox[
+ CounterBox["BookChapterNumber"], "RemarkLabel"],
+ StyleBox[".", "RemarkLabel"],
+ StyleBox[
+ CounterBox["Remark"], "RemarkLabel"],
+ StyleBox[". ", "RemarkLabel"],
+ "Enter remark text here."
+}], "Remark",ExpressionUUID->"7cc9aa84-3e7a-5642-9dc6-04132f7ef764"],
+
+Cell["Enter continued remark text here.", "RemarkContinuation",ExpressionUUID->"f4a8a460-045d-b34f-a761-8f63a08f3552"],
+
+Cell[TextData[{
+ StyleBox["Solution\[MediumSpace]\[ThinSpace]", "SolutionLabel"],
+ StyleBox[
+ CounterBox["BookChapterNumber"], "SolutionLabel"],
+ StyleBox[".", "SolutionLabel"],
+ StyleBox[
+ CounterBox["Remark"], "SolutionLabel"],
+ StyleBox[". ", "SolutionLabel"],
+ "Enter solution text here."
+}], "Solution",ExpressionUUID->"dac2d9e0-f8ef-844b-b4aa-a55d63c1145e"],
+
+Cell["Enter continued solution text here.", "SolutionContinuation",ExpressionUUID->"91686ea0-6e77-044b-baf0-a85e19cb4123"],
+
+Cell[TextData[{
+ StyleBox["Proof\[MediumSpace]\[ThinSpace]", "ProofLabel"],
+ StyleBox[
+ CounterBox["BookChapterNumber"], "ProofLabel"],
+ StyleBox[".", "ProofLabel"],
+ StyleBox[
+ CounterBox["Remark"], "ProofLabel"],
+ StyleBox[". ", "ProofLabel"],
+ "Enter solution text here."
+}], "Proof",ExpressionUUID->"0229c606-623c-c94e-b8e9-10f65e6e8103"],
+
+Cell["Enter continued solution text here.", "ProofContinuation",ExpressionUUID->"7398cce9-a218-c447-aae7-0e8a614ea88b"],
+
+Cell["\[EmptySquare]", "QED",ExpressionUUID->"b327f09a-3974-7841-93ff-53a7918f91b5"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ GraphicsBox[
+  TagBox[RasterBox[CompressedData["
+1:eJzt2LFr1GAch/Gii6P/gv+Fqzi5nrgKLdbqckIrFSdxc3DooHTQSV0cBBEE
+cdFFwUXo4CLiIg4iOIiIW/3qD17iXXunFk0eeD6kJZfk3ivvk+RCDy2dG53e
+t7CwsHYgv0aLF46sri5ePH4wL06M186ujJdPHRufX15ZXj28tD8br+VnIz8/
+1reFsnl03YW19H3K6HfZi8VeLPZisReLvVjsxWIvFnux2IvFXiz2YrEXi71Y
+7MViLxZ7sdiLxV4s9mKxF4u9WOzFYi8We7HYi8VeLPZisReLvVjsxWIvFnux
+2IvFXiz2YrEXi71Y7MViLxZ7sdiLxV4s9mKxF4u9WOzFYi8We7HYi8VeLPZi
+sReLvVjsxWIvFnux2IvFXiz2YrEXi71Y7MViLxZ7sdiLpcde10frbbm7tvHx
+7fu2fe8j//Vhe//0f6rfXm391eMXDy7fmN6+95H/9DB77WZiZtpLe80wkF4v
+7z99dPVOd3tuj7nisn77zJU3z7Zq17cvX5/felgbc0nWlieb926evJQlI+Rl
+jZC92dJ9b95Yh2Wl+0FthBpzYuOOw/6P2dnFEL6/ak4mvr/yjfZu6/X2z3Bt
+ijKHWdrGzx8+5WVa196s1N6MUFFyWMZpuzLtFaLeUh/UxqxdbeOOw+bvrL+q
+LwO5vqa3Z/ZyMmeu6oKqXbkE6lRvUq373FJls9IOq/d235iVvGy78pa2KydA
+2zh72L4MtlduhimVk7nN4favc5trJ+u5fLpzWCd/d+S5vSZ2tat79rB9GWyv
+pKk7ZC6xdmS7TdX9MFPabnS1t74Ep3vNuB/mrJi+H84dti+D7ZWbYc78egbI
+tVYz1h4D2rdbPYHU7av7YDD9KXOfN7K0c2PusH3x/xss9mKxF4u9WOzFYi8W
+e7HYi8VeLPZisReLvVjsxWIvFnux2IvFXiz2YrEXi71Y7MViLxZ7sdiLxV4s
+9mKxF4u9WOzFYi8We7HYi8VeLPZisReLvVjsxWIvFnux2IvFXiz2YrEXi71Y
+7MViLxZ7sdiLxV4s9mKxF4u9WOzFYi8We7HYi8VeLPZisReLvVjsxWIvFnux
+2IvFXiz2YrEXS/VyAS19nzKSNBTfASHlGWk=
+    "], {{0, 148}, {144, 0}}, {0, 255},
+    ColorFunction->RGBColor],
+   BoxForm`ImageTag["Byte", ColorSpace -> "RGB", Interleaving -> True],
+   Selectable->False],
+  BaseStyle->"ImageGraphics",
+  ImageSize->{144., 148.},
+  ImageSizeRaw->{144, 148},
+  PlotRange->{{0, 144}, {0, 148}}]], "Figure",ExpressionUUID->"bd49d100-5e6a-\
+3648-85b8-143f147c9ce8"],
+
+Cell[TextData[{
+ StyleBox["Figure ", "FigureCaptionLabel"],
+ StyleBox[
+ CounterBox["BookChapterNumber"], "FigureCaptionLabel"],
+ StyleBox[".", "FigureCaptionLabel"],
+ StyleBox[
+ CounterBox["FigureCaption"], "FigureCaptionLabel"],
+ StyleBox[".\[ThickSpace]\[ThickSpace]\[ThickSpace]", "FigureCaptionLabel"],
+ "Figure caption."
+}], "FigureCaption",ExpressionUUID->"505ee0ef-7810-e348-90bf-311bac20d5eb"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ GraphicsBox[
+  TagBox[RasterBox[CompressedData["
+1:eJzt2LFr1GAch/Gii6P/gv+Fqzi5nrgKLdbqckIrFSdxc3DooHTQSV0cBBEE
+cdFFwUXo4CLiIg4iOIiIW/3qD17iXXunFk0eeD6kJZfk3ivvk+RCDy2dG53e
+t7CwsHYgv0aLF46sri5ePH4wL06M186ujJdPHRufX15ZXj28tD8br+VnIz8/
+1reFsnl03YW19H3K6HfZi8VeLPZisReLvVjsxWIvFnux2IvFXiz2YrEXi71Y
+7MViLxZ7sdiLxV4s9mKxF4u9WOzFYi8We7HYi8VeLPZisReLvVjsxWIvFnux
+2IvFXiz2YrEXi71Y7MViLxZ7sdiLxV4s9mKxF4u9WOzFYi8We7HYi8VeLPZi
+sReLvVjsxWIvFnux2IvFXiz2YrEXi71Y7MViLxZ7sdiLpcde10frbbm7tvHx
+7fu2fe8j//Vhe//0f6rfXm391eMXDy7fmN6+95H/9DB77WZiZtpLe80wkF4v
+7z99dPVOd3tuj7nisn77zJU3z7Zq17cvX5/felgbc0nWlieb926evJQlI+Rl
+jZC92dJ9b95Yh2Wl+0FthBpzYuOOw/6P2dnFEL6/ak4mvr/yjfZu6/X2z3Bt
+ijKHWdrGzx8+5WVa196s1N6MUFFyWMZpuzLtFaLeUh/UxqxdbeOOw+bvrL+q
+LwO5vqa3Z/ZyMmeu6oKqXbkE6lRvUq373FJls9IOq/d235iVvGy78pa2KydA
+2zh72L4MtlduhimVk7nN4favc5trJ+u5fLpzWCd/d+S5vSZ2tat79rB9GWyv
+pKk7ZC6xdmS7TdX9MFPabnS1t74Ep3vNuB/mrJi+H84dti+D7ZWbYc78egbI
+tVYz1h4D2rdbPYHU7av7YDD9KXOfN7K0c2PusH3x/xss9mKxF4u9WOzFYi8W
+e7HYi8VeLPZisReLvVjsxWIvFnux2IvFXiz2YrEXi71Y7MViLxZ7sdiLxV4s
+9mKxF4u9WOzFYi8We7HYi8VeLPZisReLvVjsxWIvFnux2IvFXiz2YrEXi71Y
+7MViLxZ7sdiLxV4s9mKxF4u9WOzFYi8We7HYi8VeLPZisReLvVjsxWIvFnux
+2IvFXiz2YrEXS/VyAS19nzKSNBTfASHlGWk=
+    "], {{0, 148}, {144, 0}}, {0, 255},
+    ColorFunction->RGBColor],
+   BoxForm`ImageTag["Byte", ColorSpace -> "RGB", Interleaving -> True],
+   Selectable->False],
+  BaseStyle->"ImageGraphics",
+  ImageSize->{144., 148.},
+  ImageSizeRaw->{144, 148},
+  PlotRange->{{0, 144}, {0, 148}}]], "Picture",ExpressionUUID->"ba829082-e7c2-\
+d644-a265-6ed626d7ac56"],
+
+Cell[TextData[{
+ StyleBox["Picture ", "PictureCaptionLabel"],
+ StyleBox[
+ CounterBox["BookChapterNumber"], "PictureCaptionLabel"],
+ StyleBox[".", "PictureCaptionLabel"],
+ StyleBox[
+ CounterBox["PictureCaption"], "PictureCaptionLabel"],
+ StyleBox[".\[ThickSpace]\[ThickSpace]\[ThickSpace]", "PictureCaptionLabel"],
+ "Picture caption."
+}], "PictureCaption",ExpressionUUID->"0cd6590c-8cf7-1b48-965b-64907ceca9ce"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["Table ", "TableTitleLabel"],
+ StyleBox[
+ CounterBox["BookChapterNumber"], "TableTitleLabel"],
+ StyleBox[".", "TableTitleLabel"],
+ StyleBox[
+ CounterBox["TableTitle"], "TableTitleLabel"],
+ StyleBox[".\[ThickSpace]\[ThickSpace]\[ThickSpace]", "TableTitleLabel"],
+ "Enter table title here"
+}], "TableTitle",ExpressionUUID->"480139c8-cae6-6a41-a6b1-2d3979213d9b"],
+
+Cell[BoxData[
+ FormBox[
+  TagBox[GridBox[{
+     {
+      InterpretationBox[Cell["Enter column head here",
+        Editable->True,
+        FontSlant->Italic,ExpressionUUID->
+        "c2bd495c-5442-134e-b078-63acad8bcb91"],
+       TextCell["Enter column head here", Italic, Editable -> True]], 
+      InterpretationBox[Cell["Enter column head here",
+        Editable->True,
+        FontSlant->Italic,ExpressionUUID->
+        "d5b9e81a-dcc9-b94f-81c5-ace6d275bc37"],
+       TextCell["Enter column head here", Italic, Editable -> True]]},
+     {
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"7e898d12-3ccf-1c46-9227-9591a762729f"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"98e9ae75-3076-174a-9fb7-eaabd7d5bfbc"],
+       TextCell["Enter data here", Editable -> True]]},
+     {
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"1f7a09c0-7dc2-a149-a745-b6409ee1d1af"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"6b4eee0f-cf47-ec4d-a62a-58681159b9b7"],
+       TextCell["Enter data here", Editable -> True]]},
+     {
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"ee271ab8-58da-184b-9efc-be39859003f2"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"2a044707-90b5-2640-b763-26812112cc68"],
+       TextCell["Enter data here", Editable -> True]]},
+     {
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"024f3c24-39a1-9043-b0d2-a51bb8cafb81"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"398cca5f-a99d-d64f-bb30-81327690ee1d"],
+       TextCell["Enter data here", Editable -> True]]}
+    },
+    AutoDelete->False,
+    BaseStyle->{TextJustification -> 0, ParagraphIndent -> 0},
+    GridBoxAlignment->{"Columns" -> {Left, Center}, "Rows" -> {Bottom, Top}},
+    GridBoxDividers->{
+     "Columns" -> {False}, 
+      "RowsIndexed" -> {
+       1 -> AbsoluteThickness[2.], 2 -> AbsoluteThickness[0.5], -1 -> 
+        AbsoluteThickness[0.5]}},
+    GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+    GridBoxSpacings->{"Columns" -> {{10.}}, "Rows" -> {1, 0.5}}],
+   "Grid"], TraditionalForm]], "Table",ExpressionUUID->"fe2910fd-368c-3f40-\
+8caf-c51983671d48"],
+
+Cell["Enter table note here.", "TableNote",ExpressionUUID->"28b2efc4-99b3-d048-9440-6b2eb8484c5f"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["Table ", "TableTitleLabel"],
+ StyleBox[
+ CounterBox["BookChapterNumber"], "TableTitleLabel"],
+ StyleBox[".", "TableTitleLabel"],
+ StyleBox[
+ CounterBox["TableTitle"], "TableTitleLabel"],
+ StyleBox[".\[ThickSpace]\[ThickSpace]\[ThickSpace]", "TableTitleLabel"],
+ "Enter table title here"
+}], "TableTitle",ExpressionUUID->"b15ea377-2b8e-c248-bc81-4a6a8c00c0ea"],
+
+Cell[BoxData[
+ FormBox[
+  TagBox[GridBox[{
+     {
+      InterpretationBox[Cell["Enter column head here",
+        Editable->True,
+        FontSlant->Italic,ExpressionUUID->
+        "f4c35dc6-d4dc-ef45-9277-3f5b068c511f"],
+       TextCell["Enter column head here", Italic, Editable -> True]], 
+      InterpretationBox[Cell["Enter column head here",
+        Editable->True,
+        FontSlant->Italic,ExpressionUUID->
+        "96597f3d-2eec-a748-95cb-feacc696af94"],
+       TextCell["Enter column head here", Italic, Editable -> True]], 
+      InterpretationBox[Cell["Enter column head here",
+        Editable->True,
+        FontSlant->Italic,ExpressionUUID->
+        "4d9668a0-ad74-ac4a-b392-94f3869bb267"],
+       TextCell["Enter column head here", Italic, Editable -> True]]},
+     {
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"6dc0e21f-7c00-114a-b6f2-32e2b0d4ea48"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"648e7b15-f144-7344-82b1-b1e7605f2474"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"d2e8cb1b-ee4c-9446-8abf-cdfbcd412007"],
+       TextCell["Enter data here", Editable -> True]]},
+     {
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"5fa9fa39-4e18-064b-93cf-9f5c462fc4e9"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"ba20cd6c-bdee-874b-bab7-a722976ceba4"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"bc30d0db-e506-b54b-bc92-714e2525487d"],
+       TextCell["Enter data here", Editable -> True]]},
+     {
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"9de0557a-ef4c-c84f-99d8-521e9db38983"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"2ea5614c-539b-c543-b057-935e282a00f0"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"44c3e00a-0166-7e4f-8511-35b534c3cbbc"],
+       TextCell["Enter data here", Editable -> True]]},
+     {
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"f8c55678-4237-964c-b521-71620babdd92"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"83f6795f-a9f7-9b40-91df-5f7867215f3a"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"8b92b7e6-6015-dd4a-89c3-345d3c4b6a20"],
+       TextCell["Enter data here", Editable -> True]]}
+    },
+    AutoDelete->False,
+    BaseStyle->{TextJustification -> 0, ParagraphIndent -> 0},
+    GridBoxAlignment->{"Columns" -> {Left, Center}, "Rows" -> {Bottom, Top}},
+    GridBoxDividers->{
+     "Columns" -> {False}, 
+      "RowsIndexed" -> {
+       1 -> AbsoluteThickness[2.], 2 -> AbsoluteThickness[0.5], -1 -> 
+        AbsoluteThickness[0.5]}},
+    GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+    GridBoxSpacings->{"Columns" -> {{6.666666666666666}}, "Rows" -> {1, 0.5}}],
+   "Grid"], TraditionalForm]], "Table",ExpressionUUID->"d8bb8d94-c2e7-cd46-\
+a8b4-7a3cde7236d1"],
+
+Cell["Enter table note here.", "TableNote",ExpressionUUID->"29d15ab3-09d8-d747-8b53-cebae3588095"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["Table ", "TableTitleLabel"],
+ StyleBox[
+ CounterBox["BookChapterNumber"], "TableTitleLabel"],
+ StyleBox[".", "TableTitleLabel"],
+ StyleBox[
+ CounterBox["TableTitle"], "TableTitleLabel"],
+ StyleBox[".\[ThickSpace]\[ThickSpace]\[ThickSpace]", "TableTitleLabel"],
+ "Enter table title here"
+}], "TableTitle",ExpressionUUID->"b6943390-d80d-ce46-b57f-1e8cae0f3cdb"],
+
+Cell[BoxData[
+ FormBox[
+  TagBox[GridBox[{
+     {
+      InterpretationBox[Cell["Enter column head here",
+        Editable->True,
+        FontSlant->Italic,ExpressionUUID->
+        "94cb9cc2-1056-8943-ab53-b167cede22eb"],
+       TextCell["Enter column head here", Italic, Editable -> True]], 
+      InterpretationBox[Cell["Enter column head here",
+        Editable->True,
+        FontSlant->Italic,ExpressionUUID->
+        "15d1bd9c-1c21-7548-9bdc-84d3d4f6a4e5"],
+       TextCell["Enter column head here", Italic, Editable -> True]], 
+      InterpretationBox[Cell["Enter column head here",
+        Editable->True,
+        FontSlant->Italic,ExpressionUUID->
+        "60e5ff1f-8a4b-a949-878a-87a7ffc4cf03"],
+       TextCell["Enter column head here", Italic, Editable -> True]], 
+      InterpretationBox[Cell["Enter column head here",
+        Editable->True,
+        FontSlant->Italic,ExpressionUUID->
+        "7c1f5767-b841-0d48-aa44-f6451800c344"],
+       TextCell["Enter column head here", Italic, Editable -> True]]},
+     {
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"ac06f7fa-f80c-8a4c-924f-f44dac0007c1"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"5a37eb06-4227-0347-bae5-246b6c46a7ce"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"09bc0375-184f-1142-af9a-9ac59eb79608"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"49d55b34-3c9f-bb46-b15c-70ae696230c1"],
+       TextCell["Enter data here", Editable -> True]]},
+     {
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"34091d63-97d1-344b-b63c-569c6dea90be"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"e4ab5090-6aa2-0c41-8a1e-be34239f95cf"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"d9b0b4de-bd62-024f-bd4d-ad2c2a1c763d"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"0262c346-e9ba-ad4d-85de-36c4639de42d"],
+       TextCell["Enter data here", Editable -> True]]},
+     {
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"6284652c-2888-8944-96dc-31ad1ac3d497"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"7b946eb9-cb1f-a24d-afa2-c1b5037a5783"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"a0a800c4-e7f4-b346-98d7-7f49eca9b669"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"5ef5efc4-0739-e44a-92e6-eb82f36e64ed"],
+       TextCell["Enter data here", Editable -> True]]},
+     {
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"6ef57363-1a03-f844-8ad3-f729d403bfaa"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"2530965e-699a-4945-bb49-38266319f2f2"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"2360616a-002c-d345-bffc-7ad8d71f78e2"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"51041637-6212-5844-b793-76ff52099029"],
+       TextCell["Enter data here", Editable -> True]]}
+    },
+    AutoDelete->False,
+    BaseStyle->{TextJustification -> 0, ParagraphIndent -> 0},
+    GridBoxAlignment->{"Columns" -> {Left, Center}, "Rows" -> {Bottom, Top}},
+    GridBoxDividers->{
+     "Columns" -> {False}, 
+      "RowsIndexed" -> {
+       1 -> AbsoluteThickness[2.], 2 -> AbsoluteThickness[0.5], -1 -> 
+        AbsoluteThickness[0.5]}},
+    GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+    GridBoxSpacings->{"Columns" -> {{5.}}, "Rows" -> {1, 0.5}}],
+   "Grid"], TraditionalForm]], "Table",ExpressionUUID->"820444d9-0bb9-e640-\
+9dbc-ceaded897eb2"],
+
+Cell["Enter table note here.", "TableNote",ExpressionUUID->"fdadb5b1-2169-4a48-bba7-268ab4fa26f1"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["Table ", "TableTitleLabel"],
+ StyleBox[
+ CounterBox["BookChapterNumber"], "TableTitleLabel"],
+ StyleBox[".", "TableTitleLabel"],
+ StyleBox[
+ CounterBox["TableTitle"], "TableTitleLabel"],
+ StyleBox[".\[ThickSpace]\[ThickSpace]\[ThickSpace]", "TableTitleLabel"],
+ "Enter table title here"
+}], "TableTitle",ExpressionUUID->"f0c986c1-c8dc-c140-83b5-d293765b056b"],
+
+Cell[BoxData[
+ FormBox[
+  TagBox[GridBox[{
+     {
+      InterpretationBox[Cell["Enter column head here",
+        Editable->True,
+        FontSlant->Italic,ExpressionUUID->
+        "bb732de3-0f13-014e-bc2f-5e1cd935c142"],
+       TextCell["Enter column head here", Italic, Editable -> True]], 
+      InterpretationBox[Cell["Enter column head here",
+        Editable->True,
+        FontSlant->Italic,ExpressionUUID->
+        "9f215d80-cb49-984d-87dc-d81d43d4411e"],
+       TextCell["Enter column head here", Italic, Editable -> True]], 
+      InterpretationBox[Cell["Enter column head here",
+        Editable->True,
+        FontSlant->Italic,ExpressionUUID->
+        "ce56fda5-9f7b-3441-a070-9034e3eb3eb7"],
+       TextCell["Enter column head here", Italic, Editable -> True]], 
+      InterpretationBox[Cell["Enter column head here",
+        Editable->True,
+        FontSlant->Italic,ExpressionUUID->
+        "b3bb0930-f954-9f4c-871e-bf40c8513793"],
+       TextCell["Enter column head here", Italic, Editable -> True]], 
+      InterpretationBox[Cell["Enter column head here",
+        Editable->True,
+        FontSlant->Italic,ExpressionUUID->
+        "dd8aad59-39ca-8e45-aa60-e319d2f52966"],
+       TextCell["Enter column head here", Italic, Editable -> True]]},
+     {
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"d6bb9895-5ec2-8c49-8bed-7e48a6e1f7c8"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"96b560ea-8618-8841-a9e1-b408f0dc818c"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"6958b517-63b5-4049-af9a-f692971c7a13"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"32cbb77d-166b-344d-b664-4d2c2b7cf37d"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"60b190a8-fecd-974e-90ae-24dcf767528b"],
+       TextCell["Enter data here", Editable -> True]]},
+     {
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"e7474283-216c-2f43-b75d-3624fe0ab4d2"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"115a2594-6c52-4248-8aed-146ee59be430"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"7dd0c29d-3563-0945-9ebd-476b744055ac"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"ebbbfbcc-37bd-a046-9959-c0b650e4c831"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"f6348f24-2108-d74b-87fc-e65ed2d6375d"],
+       TextCell["Enter data here", Editable -> True]]},
+     {
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"18a02f23-787c-cc40-8d37-f5a41ee64927"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"20798774-1aeb-0e41-839e-bba0082c9d60"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"24e71981-97ac-3b4a-9fd1-5c9c753bee78"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"fcfe7255-0202-ac46-94ea-5b0c36d91dab"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"1a34b915-c1ca-6240-9318-a68bf71c8099"],
+       TextCell["Enter data here", Editable -> True]]},
+     {
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"22799bcd-5eed-9847-a426-5263cbf5f07f"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"756feecf-e788-ff4b-b58d-380a65639e96"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"9a005dd1-e6fb-8f4e-aad2-b10c497d8233"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"2cb95496-6447-ed4f-8863-23a0636dd54b"],
+       TextCell["Enter data here", Editable -> True]], 
+      InterpretationBox[Cell["Enter data here",
+        Editable->True,ExpressionUUID->"98b100b5-06a5-8640-8af8-20d9d6a7352d"],
+       TextCell["Enter data here", Editable -> True]]}
+    },
+    AutoDelete->False,
+    BaseStyle->{TextJustification -> 0, ParagraphIndent -> 0},
+    GridBoxAlignment->{"Columns" -> {Left, Center}, "Rows" -> {Bottom, Top}},
+    GridBoxDividers->{
+     "Columns" -> {False}, 
+      "RowsIndexed" -> {
+       1 -> AbsoluteThickness[2.], 2 -> AbsoluteThickness[0.5], -1 -> 
+        AbsoluteThickness[0.5]}},
+    GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+    GridBoxSpacings->{"Columns" -> {{4.}}, "Rows" -> {1, 0.5}}],
+   "Grid"], TraditionalForm]], "Table",ExpressionUUID->"ac13bdd2-9dad-1d4a-\
+9c57-b55f6bbfa265"],
+
+Cell["Enter table note here.", "TableNote",ExpressionUUID->"24b53910-4f8e-2d47-9d8f-5147b01e33f5"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "A  P  P  E  N  D  I  X    ",
+ StyleBox[
+ CounterBox["AppendixSectionLabel"], "BookChapterNumber"]
+}], "AppendixSectionLabel",ExpressionUUID->"f5d358a4-ad06-694f-a64b-\
+4057f594dda3"],
+
+Cell[CellGroupData[{
+
+Cell["Enter appendix title here", "AppendixSection",ExpressionUUID->"351cddb7-2bd1-ae4d-b02c-c72141496e9d"],
+
+Cell[CellGroupData[{
+
+Cell["Enter appendix text here.", "Appendix",ExpressionUUID->"33324b74-7a34-a04e-bae7-f3b6ec2b2c88"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"\[Integral]", 
+    RowBox[{"x", 
+     RowBox[{"\[DifferentialD]", "x"}]}]}], "+", 
+   SqrtBox["z"]}], TraditionalForm]], "AppendixEquation",ExpressionUUID->\
+"e92e7db8-aef2-0a42-b382-752e1631cef9"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Enter acknowledgments title here", "AcknowledgmentsSection",ExpressionUUID->"8bc39d32-3691-e548-bc9b-eeaa119a1f68"],
+
+Cell["Enter acknowledgment text here.", "Acknowledgments",ExpressionUUID->"9ae95025-20ea-cc4e-8d84-4a95eb609023"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Enter endnote title here", "EndnoteSection",ExpressionUUID->"4fc08241-7178-3d4b-9c5e-ca0f876b79b1"],
+
+Cell["Enter endnote text here.", "Endnote",ExpressionUUID->"90ce5541-bcb3-0e4b-ad5b-e1545c60ede1"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Enter reference title here", "ReferenceSection",ExpressionUUID->"632f64d6-73fd-6a4a-bd3e-c18f52890a1a"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Authorlast, \[OpenCurlyDoubleQuote]Article Title,\[CloseCurlyDoubleQuote] ",
+ StyleBox["Journal Title",
+  FontSlant->"Italic"],
+ ", ",
+ StyleBox["Volume",
+  FontWeight->"Bold"],
+ "(Issue), 2005 pp. #\[Dash]#."
+}], "Reference",ExpressionUUID->"a20a73d1-3efd-f547-bce9-8273c781fedb"],
+
+Cell[TextData[{
+ "Authorlast1 and B. Authorlast2, \[OpenCurlyDoubleQuote]Article Title,\
+\[CloseCurlyDoubleQuote] ",
+ StyleBox["Journal Title",
+  FontSlant->"Italic"],
+ ", ",
+ StyleBox["Volume",
+  FontWeight->"Bold"],
+ "(Issue), 2005 pp. #\[Dash]#."
+}], "Reference",ExpressionUUID->"1b9a1173-bd86-7548-acfa-823b74c1324d"],
+
+Cell[TextData[{
+ "Authorlast1, B. Authorlast2, and C. Authorlast3, \
+\[OpenCurlyDoubleQuote]Article Title,\[CloseCurlyDoubleQuote] ",
+ StyleBox["Journal Title",
+  FontSlant->"Italic"],
+ ", ",
+ StyleBox["Volume",
+  FontWeight->"Bold"],
+ "(Issue), 2005 pp. #\[Dash]#."
+}], "Reference",ExpressionUUID->"12e5ca81-f27f-ea40-a767-eaed20edc91f"],
+
+Cell[TextData[{
+ "Authorlast, ",
+ StyleBox["Book Title",
+  FontSlant->"Italic"],
+ ", ",
+ StyleBox["n",
+  FontSlant->"Italic"],
+ "th ed., Publisher Location: Publisher Name, 2005."
+}], "Reference",ExpressionUUID->"40399356-a24b-ba4a-9e04-7cda2965e528"],
+
+Cell[TextData[{
+ "Authorlast1 and B. Authorlast2, ",
+ StyleBox["Book Title",
+  FontSlant->"Italic"],
+ ", ",
+ StyleBox["n",
+  FontSlant->"Italic"],
+ "th ed., Publisher Location: Publisher Name, 2005."
+}], "Reference",ExpressionUUID->"1b65b9ca-79d5-c64f-95fc-a6208e82f751"],
+
+Cell[TextData[{
+ "Authorlast1, B. Authorlast2, and C. Authorlast3, ",
+ StyleBox["Book Title",
+  FontSlant->"Italic"],
+ ", ",
+ StyleBox["n",
+  FontSlant->"Italic"],
+ "th ed., Publisher Location: Publisher Name, 2005."
+}], "Reference",ExpressionUUID->"51e8454a-bd91-5f43-95a4-b0e3091356fe"],
+
+Cell[TextData[{
+ "Authorlast, \[OpenCurlyDoubleQuote]Paper Title,\[CloseCurlyDoubleQuote] in ",
+ StyleBox["Conference Proceedings Title (Conference Acronym and Year)",
+  FontSlant->"Italic"],
+ ", Conference Location (A. Authorlast, ed.), Publisher Location: Publisher \
+Name, Publication Date pp. #\[Dash]#."
+}], "Reference",ExpressionUUID->"fb34493d-5e76-7b4b-804e-c7965714fa7c"],
+
+Cell[TextData[{
+ "Authorlast1, B. Authorlast2, and C. Authorlast3, \
+\[OpenCurlyDoubleQuote]Paper Title,\[CloseCurlyDoubleQuote] in ",
+ StyleBox["Conference Proceedings Title (Conference Acronym and Year)",
+  FontSlant->"Italic"],
+ ", Conference Location (A. Authorlast, ed.), Publisher Location: Publisher \
+Name, Publication Date pp. #\[Dash]#."
+}], "Reference",ExpressionUUID->"058b2729-45c5-7541-b3bf-7424d90c2723"],
+
+Cell[TextData[{
+ "Authorlast1, B. Authorlast2, and C. Authorlast3, \
+\[OpenCurlyDoubleQuote]Paper Title,\[CloseCurlyDoubleQuote] in ",
+ StyleBox["Conference Proceedings Title (Conference Acronym and Year)",
+  FontSlant->"Italic"],
+ ", Conference Location (A. Authorlast, ed.), Publisher Location: Publisher \
+Name, Publication Date pp. #\[Dash]#."
+}], "Reference",ExpressionUUID->"784dbf10-3008-8045-a40e-64e63ef4229d"],
+
+Cell["\<\
+Authorlast. \[OpenCurlyDoubleQuote]Website Title.\[CloseCurlyDoubleQuote] \
+(Last updated date or date visited in three-character Month Day, Year format) \
+URL.\
+\>", "Reference",ExpressionUUID->"1cab8022-dc47-3c4c-84c8-61d6fbe88d79"],
+
+Cell["\<\
+B. Authorlast. \[OpenCurlyDoubleQuote]Entry Title\[CloseCurlyDoubleQuote] \
+from CompanyN\[LongDash]A CompanyN Web Resource. URL.\
+\>", "Reference",ExpressionUUID->"c64ae6b8-2adf-0642-869e-0411bc828fc0"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1920, 741.75},
+WindowMargins->{{-6, Automatic}, {Automatic, -6}},
+FrontEndVersion->"14.1 for Microsoft Windows (64-bit) (July 16, 2024)",
+StyleDefinitions->FrontEnd`FileName[{"Book"}, "Monograph.nb", 
+  CharacterEncoding -> "UTF-8"],
+PrivateNotebookOptions -> {"NotebookAuthor" -> ""},
+ExpressionUUID->"d9b3da64-8486-5c49-94d6-d5f5bcced94e"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[576, 22, 85, 0, 110, "BookChapterNumber",ExpressionUUID->"afb4bf8c-c67f-bf4f-b0b4-f6c965f98627"],
+Cell[664, 24, 168, 3, 139, "BookChapterTitle",ExpressionUUID->"ea1b438e-449b-0740-ab9d-cb9c3a5ace50"],
+Cell[CellGroupData[{
+Cell[857, 31, 267, 10, 69, "Section",ExpressionUUID->"d553a70e-f0c9-a44c-850b-e078b51e4534"],
+Cell[1127, 43, 87, 0, 15, "Text",ExpressionUUID->"e0bd2534-e79b-dd44-8175-01045cfa0260"],
+Cell[1217, 45, 244, 7, 38, "EquationNumbered",ExpressionUUID->"02e378c2-3bcc-6247-a493-b2f5cc4eb86c"],
+Cell[CellGroupData[{
+Cell[1486, 56, 224, 10, 35, "Subsection",ExpressionUUID->"6bc5e1c0-2765-e04c-8cba-ec89f9320470"],
+Cell[1713, 68, 87, 0, 15, "Text",ExpressionUUID->"d47cd33b-7456-1b48-9897-69f1ced35900"],
+Cell[CellGroupData[{
+Cell[1825, 72, 104, 1, 29, "Input",ExpressionUUID->"7f516600-0df6-3741-8bbe-53b85ab13388"],
+Cell[1932, 75, 83, 0, 29, "Output",ExpressionUUID->"1bf7ebff-2553-7f41-8267-cb4309b02419"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2064, 81, 224, 10, 35, "Subsection",ExpressionUUID->"8f8041a2-0a5c-d74d-9b63-2101613d85ed"],
+Cell[2291, 93, 87, 0, 15, "Text",ExpressionUUID->"ca727cb9-f8ee-f844-bc22-8d716fb3774e"],
+Cell[CellGroupData[{
+Cell[2403, 97, 94, 0, 17, "Item1",ExpressionUUID->"5f0367b3-a9d1-d14d-ae39-9ae43611b501"],
+Cell[CellGroupData[{
+Cell[2522, 101, 112, 0, 15, "Item1Paragraph",ExpressionUUID->"05c490cb-7694-ff46-968e-e0a4df341721"],
+Cell[CellGroupData[{
+Cell[2659, 105, 94, 0, 16, "Item2",ExpressionUUID->"21c63763-5ba7-b142-a908-8110121ad875"],
+Cell[CellGroupData[{
+Cell[2778, 109, 112, 0, 15, "Item2Paragraph",ExpressionUUID->"0f170892-3bd6-8e43-8937-31db34a3de63"],
+Cell[CellGroupData[{
+Cell[2915, 113, 94, 0, 16, "Item3",ExpressionUUID->"54e4e6a3-c280-da48-8f1f-fc19fc31e838"],
+Cell[3012, 115, 112, 0, 15, "Item3Paragraph",ExpressionUUID->"f76a2271-7b3a-4d4b-82c9-97ed2720e485"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3233, 126, 255, 10, 69, "Section",ExpressionUUID->"b450c9e2-59a3-1a4f-b0e9-aead6a6d6983"],
+Cell[3491, 138, 276, 7, 15, "Text",ExpressionUUID->"0f829d8c-ac48-c44f-81bb-cedcf29d2f5b"],
+Cell[3770, 147, 244, 7, 38, "EquationNumbered",ExpressionUUID->"fc8a103a-6562-a44a-b734-b11adc031e40"],
+Cell[4017, 156, 87, 0, 15, "Text",ExpressionUUID->"2ab9c509-f498-8f4f-a790-57788af35144"],
+Cell[CellGroupData[{
+Cell[4129, 160, 110, 0, 17, "Item1Numbered",ExpressionUUID->"064feca5-e2dc-e942-95bf-44ebbde1ba9d"],
+Cell[CellGroupData[{
+Cell[4264, 164, 112, 0, 15, "Item1Paragraph",ExpressionUUID->"4420997c-4f88-ab4f-b8d3-47696a92f945"],
+Cell[CellGroupData[{
+Cell[4401, 168, 110, 0, 16, "Item2Numbered",ExpressionUUID->"a3668715-9c68-ad49-891d-e21a2081f024"],
+Cell[CellGroupData[{
+Cell[4536, 172, 112, 0, 15, "Item2Paragraph",ExpressionUUID->"07503bee-b223-f142-8977-c6561cc30f85"],
+Cell[CellGroupData[{
+Cell[4673, 176, 110, 0, 16, "Item3Numbered",ExpressionUUID->"85b989d4-7aca-9547-bffd-40375aaa677a"],
+Cell[4786, 178, 112, 0, 15, "Item3Paragraph",ExpressionUUID->"d2e8865b-7841-0740-b9dc-8bbff6d3c43d"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[4961, 185, 87, 0, 15, "Text",ExpressionUUID->"14465aae-6e22-8344-87ab-c90e19e76f23"],
+Cell[CellGroupData[{
+Cell[5073, 189, 356, 9, 21, "Theorem",ExpressionUUID->"0836be54-be58-e341-b62d-dec24e03faa6"],
+Cell[5432, 200, 120, 0, 21, "TheoremContinuation",ExpressionUUID->"b6e888cc-7972-f94b-9fb8-86fae702f72d"],
+Cell[5555, 202, 374, 9, 21, "Corollary",ExpressionUUID->"c4d80db3-52fa-ec40-a6fa-01d10dce059f"],
+Cell[5932, 213, 124, 0, 21, "CorollaryContinuation",ExpressionUUID->"b136c4ca-bef5-4a45-bf63-cbd9704546c3"],
+Cell[6059, 215, 371, 9, 21, "Definition",ExpressionUUID->"bb812ce4-cea0-5a44-a8cf-b4154cc65ade"],
+Cell[6433, 226, 126, 0, 21, "DefinitionContinuation",ExpressionUUID->"f1cef63c-00b4-ec42-98d3-492c482b398f"],
+Cell[6562, 228, 392, 9, 21, "Proposition",ExpressionUUID->"1df9cf83-4492-c341-af62-97e5041ca172"],
+Cell[6957, 239, 128, 0, 21, "PropositionContinuation",ExpressionUUID->"797761fe-afe9-ca4b-b75c-01a9146524e8"],
+Cell[7088, 241, 383, 9, 21, "Conjecture",ExpressionUUID->"9e88aeaf-c0ed-6646-9a61-5792a5cb4df2"],
+Cell[7474, 252, 126, 0, 21, "ConjectureContinuation",ExpressionUUID->"2e78ef74-e50e-434a-879f-0813a732001f"],
+Cell[7603, 254, 338, 9, 21, "Axiom",ExpressionUUID->"f6360340-19ed-b341-b577-8f735c9a143e"],
+Cell[7944, 265, 116, 0, 21, "AxiomContinuation",ExpressionUUID->"88ec8a30-5a6f-314c-80f9-f856766970fa"],
+Cell[8063, 267, 329, 9, 21, "Rule",ExpressionUUID->"85b48653-f26c-3749-9827-61ffd0cd5c67"],
+Cell[8395, 278, 114, 0, 21, "RuleContinuation",ExpressionUUID->"387b66d8-5df4-a94c-8035-2ae889b66668"],
+Cell[8512, 280, 356, 9, 21, "Example",ExpressionUUID->"f9264d4d-d021-9241-b68d-d801506e7c9d"],
+Cell[8871, 291, 120, 0, 21, "ExampleContinuation",ExpressionUUID->"ae6852e1-bec0-eb4a-894b-ddd02e3f42ca"],
+Cell[8994, 293, 347, 9, 21, "Remark",ExpressionUUID->"7cc9aa84-3e7a-5642-9dc6-04132f7ef764"],
+Cell[9344, 304, 118, 0, 21, "RemarkContinuation",ExpressionUUID->"f4a8a460-045d-b34f-a761-8f63a08f3552"],
+Cell[9465, 306, 363, 9, 21, "Solution",ExpressionUUID->"dac2d9e0-f8ef-844b-b4aa-a55d63c1145e"],
+Cell[9831, 317, 122, 0, 21, "SolutionContinuation",ExpressionUUID->"91686ea0-6e77-044b-baf0-a85e19cb4123"],
+Cell[9956, 319, 342, 9, 21, "Proof",ExpressionUUID->"0229c606-623c-c94e-b8e9-10f65e6e8103"],
+Cell[10301, 330, 119, 0, 21, "ProofContinuation",ExpressionUUID->"7398cce9-a218-c447-aae7-0e8a614ea88b"],
+Cell[10423, 332, 84, 0, 23, "QED",ExpressionUUID->"b327f09a-3974-7841-93ff-53a7918f91b5"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[10544, 337, 1554, 30, 162, "Figure",ExpressionUUID->"bd49d100-5e6a-3648-85b8-143f147c9ce8"],
+Cell[12101, 369, 401, 9, 20, "FigureCaption",ExpressionUUID->"505ee0ef-7810-e348-90bf-311bac20d5eb"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12539, 383, 1555, 30, 162, "Picture",ExpressionUUID->"ba829082-e7c2-d644-a265-6ed626d7ac56"],
+Cell[14097, 415, 410, 9, 20, "PictureCaption",ExpressionUUID->"0cd6590c-8cf7-1b48-965b-64907ceca9ce"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[14544, 429, 386, 9, 21, "TableTitle",ExpressionUUID->"480139c8-cae6-6a41-a6b1-2d3979213d9b"],
+Cell[14933, 440, 2623, 54, 101, "Table",ExpressionUUID->"fe2910fd-368c-3f40-8caf-c51983671d48"],
+Cell[17559, 496, 98, 0, 16, "TableNote",ExpressionUUID->"28b2efc4-99b3-d048-9440-6b2eb8484c5f"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[17694, 501, 386, 9, 21, "TableTitle",ExpressionUUID->"b15ea377-2b8e-c248-bc81-4a6a8c00c0ea"],
+Cell[18083, 512, 3615, 71, 101, "Table",ExpressionUUID->"d8bb8d94-c2e7-cd46-a8b4-7a3cde7236d1"],
+Cell[21701, 585, 98, 0, 16, "TableNote",ExpressionUUID->"29d15ab3-09d8-d747-8b53-cebae3588095"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[21836, 590, 386, 9, 21, "TableTitle",ExpressionUUID->"b6943390-d80d-ce46-b57f-1e8cae0f3cdb"],
+Cell[22225, 601, 4578, 88, 101, "Table",ExpressionUUID->"820444d9-0bb9-e640-9dbc-ceaded897eb2"],
+Cell[26806, 691, 98, 0, 16, "TableNote",ExpressionUUID->"fdadb5b1-2169-4a48-bba7-268ab4fa26f1"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[26941, 696, 386, 9, 21, "TableTitle",ExpressionUUID->"f0c986c1-c8dc-c140-83b5-d293765b056b"],
+Cell[27330, 707, 5556, 105, 101, "Table",ExpressionUUID->"ac13bdd2-9dad-1d4a-9c57-b55f6bbfa265"],
+Cell[32889, 814, 98, 0, 16, "TableNote",ExpressionUUID->"24b53910-4f8e-2d47-9d8f-5147b01e33f5"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[33036, 820, 200, 5, 93, "AppendixSectionLabel",ExpressionUUID->"f5d358a4-ad06-694f-a64b-4057f594dda3"],
+Cell[CellGroupData[{
+Cell[33261, 829, 107, 0, 139, "AppendixSection",ExpressionUUID->"351cddb7-2bd1-ae4d-b02c-c72141496e9d"],
+Cell[CellGroupData[{
+Cell[33393, 833, 100, 0, 15, "Appendix",ExpressionUUID->"33324b74-7a34-a04e-bae7-f3b6ec2b2c88"],
+Cell[33496, 835, 244, 7, 38, "AppendixEquation",ExpressionUUID->"e92e7db8-aef2-0a42-b382-752e1631cef9"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[33789, 848, 121, 0, 139, "AcknowledgmentsSection",ExpressionUUID->"8bc39d32-3691-e548-bc9b-eeaa119a1f68"],
+Cell[33913, 850, 113, 0, 15, "Acknowledgments",ExpressionUUID->"9ae95025-20ea-cc4e-8d84-4a95eb609023"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[34075, 856, 105, 0, 199, "EndnoteSection",ExpressionUUID->"4fc08241-7178-3d4b-9c5e-ca0f876b79b1"],
+Cell[34183, 858, 98, 0, 15, "Endnote",ExpressionUUID->"90ce5541-bcb3-0e4b-ad5b-e1545c60ede1"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[34318, 863, 109, 0, 199, "ReferenceSection",ExpressionUUID->"632f64d6-73fd-6a4a-bd3e-c18f52890a1a"],
+Cell[CellGroupData[{
+Cell[34452, 867, 299, 8, 17, "Reference",ExpressionUUID->"a20a73d1-3efd-f547-bce9-8273c781fedb"],
+Cell[34754, 877, 321, 9, 17, "Reference",ExpressionUUID->"1b9a1173-bd86-7548-acfa-823b74c1324d"],
+Cell[35078, 888, 338, 9, 17, "Reference",ExpressionUUID->"12e5ca81-f27f-ea40-a767-eaed20edc91f"],
+Cell[35419, 899, 251, 8, 17, "Reference",ExpressionUUID->"40399356-a24b-ba4a-9e04-7cda2965e528"],
+Cell[35673, 909, 271, 8, 17, "Reference",ExpressionUUID->"1b65b9ca-79d5-c64f-95fc-a6208e82f751"],
+Cell[35947, 919, 288, 8, 17, "Reference",ExpressionUUID->"51e8454a-bd91-5f43-95a4-b0e3091356fe"],
+Cell[36238, 929, 380, 6, 32, "Reference",ExpressionUUID->"fb34493d-5e76-7b4b-804e-c7965714fa7c"],
+Cell[36621, 937, 419, 7, 32, "Reference",ExpressionUUID->"058b2729-45c5-7541-b3bf-7424d90c2723"],
+Cell[37043, 946, 419, 7, 32, "Reference",ExpressionUUID->"784dbf10-3008-8045-a40e-64e63ef4229d"],
+Cell[37465, 955, 244, 4, 17, "Reference",ExpressionUUID->"1cab8022-dc47-3c4c-84c8-61d6fbe88d79"],
+Cell[37712, 961, 213, 3, 17, "Reference",ExpressionUUID->"c64ae6b8-2adf-0642-869e-0411bc828fc0"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
