@@ -1,0 +1,14 @@
+{
+  "project": "sdk_examples",
+  "kernel": "mesh_bicgstab_512_4x4",
+  "origins": [
+    "benchmarks/bicgstab/src/kernel_bicgstab.csl",
+    "benchmarks/spmv-hypersparse/src/hypersparse_spmv/pe.csl"
+  ],
+  "status": "source_ready",
+  "contract": "Resident real unpreconditioned BiCGStab512/4608stored CSC entries,4x4 PEs,32maximum updates. SDK train SpMV, row/column scalar reductions, transpose and DSD/FMA; early-s completion, zero-operator/zero-omega guards preserve last completed solution. General sparse operator, not original seven-point schedule.",
+  "fixture": "mesh_bicgstab:512",
+  "partitions": 1,
+  "validation": "Ten SDK2.10.1 warm calls pass original-system residual, exported trajectory, branch-specific counts and resource audit; all reason0 strict residual checks pass. Two full selected-store controls show0.48\u20130.58% maximum-local overhead for the removed stores only.",
+  "remaining": "Larger shapes, broader numerical breakdown cases, paired reductions and native-seven-point/hardware/global performance parity.47584static SRAM bytes are not stack high-water."
+}

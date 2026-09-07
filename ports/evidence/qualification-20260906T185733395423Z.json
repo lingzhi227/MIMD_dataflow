@@ -1,0 +1,2083 @@
+{
+  "kind": "qualification_index_of_existing_sdk_runs",
+  "sdk": true,
+  "success": true,
+  "cases": [
+    {
+      "key": "waferllm/mesh_grouped_gemv_512_8x8_g2_f16",
+      "artifact": "projects/waferllm/mesh_grouped_gemv_512_8x8_g2_f16/run-20260906T182658530022Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_grouped_gemv.v1",
+        "epochs": 8,
+        "actors": 64,
+        "internal_half_observations": 45056,
+        "cases": [
+          {
+            "final_and_active_phase_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.008618465479230508,
+              "max_error_over_bound": 0.0002613825015970765,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.027765228878706694,
+              "max_error_over_bound": 0.0008246328939412772,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": false,
+            "max_native_abs_difference": 0.03125,
+            "max_local_cycles": 1509,
+            "compute_cycles_median": 1111.0,
+            "total_cycles_per_pe": [
+              [
+                1509,
+                1509,
+                1509,
+                1509,
+                1509,
+                1509,
+                1509,
+                1509
+              ],
+              [
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508
+              ],
+              [
+                1499,
+                1499,
+                1499,
+                1499,
+                1499,
+                1499,
+                1499,
+                1499
+              ],
+              [
+                1498,
+                1498,
+                1498,
+                1498,
+                1498,
+                1498,
+                1498,
+                1498
+              ],
+              [
+                1489,
+                1489,
+                1489,
+                1489,
+                1489,
+                1489,
+                1489,
+                1489
+              ],
+              [
+                1488,
+                1488,
+                1488,
+                1488,
+                1488,
+                1488,
+                1488,
+                1488
+              ],
+              [
+                1505,
+                1505,
+                1505,
+                1505,
+                1505,
+                1505,
+                1505,
+                1505
+              ],
+              [
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508
+              ]
+            ]
+          },
+          {
+            "final_and_active_phase_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 1509,
+            "compute_cycles_median": 1111.0,
+            "total_cycles_per_pe": [
+              [
+                1509,
+                1509,
+                1509,
+                1509,
+                1509,
+                1509,
+                1509,
+                1509
+              ],
+              [
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508
+              ],
+              [
+                1499,
+                1499,
+                1499,
+                1499,
+                1499,
+                1499,
+                1499,
+                1499
+              ],
+              [
+                1498,
+                1498,
+                1498,
+                1498,
+                1498,
+                1498,
+                1498,
+                1498
+              ],
+              [
+                1489,
+                1489,
+                1489,
+                1489,
+                1489,
+                1489,
+                1489,
+                1489
+              ],
+              [
+                1488,
+                1488,
+                1488,
+                1488,
+                1488,
+                1488,
+                1488,
+                1488
+              ],
+              [
+                1505,
+                1505,
+                1505,
+                1505,
+                1505,
+                1505,
+                1505,
+                1505
+              ],
+              [
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508
+              ]
+            ]
+          },
+          {
+            "final_and_active_phase_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 1509,
+            "compute_cycles_median": 1111.0,
+            "total_cycles_per_pe": [
+              [
+                1509,
+                1509,
+                1509,
+                1509,
+                1509,
+                1509,
+                1509,
+                1509
+              ],
+              [
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508
+              ],
+              [
+                1499,
+                1499,
+                1499,
+                1499,
+                1499,
+                1499,
+                1499,
+                1499
+              ],
+              [
+                1498,
+                1498,
+                1498,
+                1498,
+                1498,
+                1498,
+                1498,
+                1498
+              ],
+              [
+                1489,
+                1489,
+                1489,
+                1489,
+                1489,
+                1489,
+                1489,
+                1489
+              ],
+              [
+                1488,
+                1488,
+                1488,
+                1488,
+                1488,
+                1488,
+                1488,
+                1488
+              ],
+              [
+                1505,
+                1505,
+                1505,
+                1505,
+                1505,
+                1505,
+                1505,
+                1505
+              ],
+              [
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508
+              ]
+            ]
+          },
+          {
+            "final_and_active_phase_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 1509,
+            "compute_cycles_median": 1111.0,
+            "total_cycles_per_pe": [
+              [
+                1509,
+                1509,
+                1509,
+                1509,
+                1509,
+                1509,
+                1509,
+                1509
+              ],
+              [
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508
+              ],
+              [
+                1499,
+                1499,
+                1499,
+                1499,
+                1499,
+                1499,
+                1499,
+                1499
+              ],
+              [
+                1498,
+                1498,
+                1498,
+                1498,
+                1498,
+                1498,
+                1498,
+                1498
+              ],
+              [
+                1489,
+                1489,
+                1489,
+                1489,
+                1489,
+                1489,
+                1489,
+                1489
+              ],
+              [
+                1488,
+                1488,
+                1488,
+                1488,
+                1488,
+                1488,
+                1488,
+                1488
+              ],
+              [
+                1505,
+                1505,
+                1505,
+                1505,
+                1505,
+                1505,
+                1505,
+                1505
+              ],
+              [
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508
+              ]
+            ]
+          },
+          {
+            "final_and_active_phase_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 1509,
+            "compute_cycles_median": 1111.0,
+            "total_cycles_per_pe": [
+              [
+                1509,
+                1509,
+                1509,
+                1509,
+                1509,
+                1509,
+                1509,
+                1509
+              ],
+              [
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508
+              ],
+              [
+                1499,
+                1499,
+                1499,
+                1499,
+                1499,
+                1499,
+                1499,
+                1499
+              ],
+              [
+                1498,
+                1498,
+                1498,
+                1498,
+                1498,
+                1498,
+                1498,
+                1498
+              ],
+              [
+                1489,
+                1489,
+                1489,
+                1489,
+                1489,
+                1489,
+                1489,
+                1489
+              ],
+              [
+                1488,
+                1488,
+                1488,
+                1488,
+                1488,
+                1488,
+                1488,
+                1488
+              ],
+              [
+                1505,
+                1505,
+                1505,
+                1505,
+                1505,
+                1505,
+                1505,
+                1505
+              ],
+              [
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508
+              ]
+            ]
+          },
+          {
+            "final_and_active_phase_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 1509,
+            "compute_cycles_median": 1111.0,
+            "total_cycles_per_pe": [
+              [
+                1509,
+                1509,
+                1509,
+                1509,
+                1509,
+                1509,
+                1509,
+                1509
+              ],
+              [
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508
+              ],
+              [
+                1499,
+                1499,
+                1499,
+                1499,
+                1499,
+                1499,
+                1499,
+                1499
+              ],
+              [
+                1498,
+                1498,
+                1498,
+                1498,
+                1498,
+                1498,
+                1498,
+                1498
+              ],
+              [
+                1489,
+                1489,
+                1489,
+                1489,
+                1489,
+                1489,
+                1489,
+                1489
+              ],
+              [
+                1488,
+                1488,
+                1488,
+                1488,
+                1488,
+                1488,
+                1488,
+                1488
+              ],
+              [
+                1505,
+                1505,
+                1505,
+                1505,
+                1505,
+                1505,
+                1505,
+                1505
+              ],
+              [
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508
+              ]
+            ]
+          },
+          {
+            "final_and_active_phase_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.000244140625,
+              "max_error_over_bound": 8.117847659422437e-05,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": false,
+            "max_native_abs_difference": 0.000244140625,
+            "max_local_cycles": 1509,
+            "compute_cycles_median": 1111.0,
+            "total_cycles_per_pe": [
+              [
+                1509,
+                1509,
+                1509,
+                1509,
+                1509,
+                1509,
+                1509,
+                1509
+              ],
+              [
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508
+              ],
+              [
+                1499,
+                1499,
+                1499,
+                1499,
+                1499,
+                1499,
+                1499,
+                1499
+              ],
+              [
+                1498,
+                1498,
+                1498,
+                1498,
+                1498,
+                1498,
+                1498,
+                1498
+              ],
+              [
+                1489,
+                1489,
+                1489,
+                1489,
+                1489,
+                1489,
+                1489,
+                1489
+              ],
+              [
+                1488,
+                1488,
+                1488,
+                1488,
+                1488,
+                1488,
+                1488,
+                1488
+              ],
+              [
+                1505,
+                1505,
+                1505,
+                1505,
+                1505,
+                1505,
+                1505,
+                1505
+              ],
+              [
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508
+              ]
+            ]
+          },
+          {
+            "final_and_active_phase_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 1509,
+            "compute_cycles_median": 1111.0,
+            "total_cycles_per_pe": [
+              [
+                1509,
+                1509,
+                1509,
+                1509,
+                1509,
+                1509,
+                1509,
+                1509
+              ],
+              [
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508
+              ],
+              [
+                1499,
+                1499,
+                1499,
+                1499,
+                1499,
+                1499,
+                1499,
+                1499
+              ],
+              [
+                1498,
+                1498,
+                1498,
+                1498,
+                1498,
+                1498,
+                1498,
+                1498
+              ],
+              [
+                1489,
+                1489,
+                1489,
+                1489,
+                1489,
+                1489,
+                1489,
+                1489
+              ],
+              [
+                1488,
+                1488,
+                1488,
+                1488,
+                1488,
+                1488,
+                1488,
+                1488
+              ],
+              [
+                1505,
+                1505,
+                1505,
+                1505,
+                1505,
+                1505,
+                1505,
+                1505
+              ],
+              [
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508
+              ]
+            ]
+          }
+        ],
+        "contract": "Exact local fused half contraction, active group/global root half addition records and every replicated final result; non-root phase records inactive; relaxed high-level order plus original-product bound"
+      },
+      "qualification_sha256": "2e63d06ba74ae23ba4bc58cb3b5f170a3db3bfa17d5396503beb1dac0393bf7c",
+      "native_application_checks": [
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.027765228878706694,
+          "max_error_over_bound": 0.0008246328939412772,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": []
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_zero_reset"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "fused_not_split_half_rounding"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "minimum_half_subnormal_preserved",
+            "distributed_signed_column_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": []
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "distributed_signed_column_selection"
+          ]
+        }
+      ],
+      "device_application_checks": [
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.008618465479230508,
+          "max_error_over_bound": 0.0002613825015970765,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": []
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_zero_reset"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "fused_not_split_half_rounding"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "minimum_half_subnormal_preserved",
+            "distributed_signed_column_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.000244140625,
+          "max_error_over_bound": 8.117847659422437e-05,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": []
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "distributed_signed_column_selection"
+          ]
+        }
+      ],
+      "numerical_validation": {
+        "contract": "binary16-fma-relaxed-v1",
+        "native_forward_bound_passed": true,
+        "device_forward_bound_passed": true,
+        "device_scheduled_bits_passed": true,
+        "native_f32_accuracy_not_implied": true
+      }
+    },
+    {
+      "key": "waferllm/mesh_grouped_gemv_512_8x8_g4_f16",
+      "artifact": "projects/waferllm/mesh_grouped_gemv_512_8x8_g4_f16/run-20260906T182702944701Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_grouped_gemv.v1",
+        "epochs": 8,
+        "actors": 64,
+        "internal_half_observations": 53248,
+        "cases": [
+          {
+            "final_and_active_phase_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.008618465479230508,
+              "max_error_over_bound": 0.0002613825015970765,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.027765228878706694,
+              "max_error_over_bound": 0.0008246328939412772,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": false,
+            "max_native_abs_difference": 0.03125,
+            "max_local_cycles": 1532,
+            "compute_cycles_median": 1111.0,
+            "total_cycles_per_pe": [
+              [
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528
+              ],
+              [
+                1519,
+                1519,
+                1519,
+                1519,
+                1519,
+                1519,
+                1519,
+                1519
+              ],
+              [
+                1518,
+                1518,
+                1518,
+                1518,
+                1518,
+                1518,
+                1518,
+                1518
+              ],
+              [
+                1513,
+                1513,
+                1513,
+                1513,
+                1513,
+                1513,
+                1513,
+                1513
+              ],
+              [
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508
+              ],
+              [
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528
+              ],
+              [
+                1532,
+                1532,
+                1532,
+                1532,
+                1532,
+                1532,
+                1532,
+                1532
+              ],
+              [
+                1527,
+                1527,
+                1527,
+                1527,
+                1527,
+                1527,
+                1527,
+                1527
+              ]
+            ]
+          },
+          {
+            "final_and_active_phase_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 1532,
+            "compute_cycles_median": 1111.0,
+            "total_cycles_per_pe": [
+              [
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528
+              ],
+              [
+                1519,
+                1519,
+                1519,
+                1519,
+                1519,
+                1519,
+                1519,
+                1519
+              ],
+              [
+                1518,
+                1518,
+                1518,
+                1518,
+                1518,
+                1518,
+                1518,
+                1518
+              ],
+              [
+                1513,
+                1513,
+                1513,
+                1513,
+                1513,
+                1513,
+                1513,
+                1513
+              ],
+              [
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508
+              ],
+              [
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528
+              ],
+              [
+                1532,
+                1532,
+                1532,
+                1532,
+                1532,
+                1532,
+                1532,
+                1532
+              ],
+              [
+                1527,
+                1527,
+                1527,
+                1527,
+                1527,
+                1527,
+                1527,
+                1527
+              ]
+            ]
+          },
+          {
+            "final_and_active_phase_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 1532,
+            "compute_cycles_median": 1111.0,
+            "total_cycles_per_pe": [
+              [
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528
+              ],
+              [
+                1519,
+                1519,
+                1519,
+                1519,
+                1519,
+                1519,
+                1519,
+                1519
+              ],
+              [
+                1518,
+                1518,
+                1518,
+                1518,
+                1518,
+                1518,
+                1518,
+                1518
+              ],
+              [
+                1513,
+                1513,
+                1513,
+                1513,
+                1513,
+                1513,
+                1513,
+                1513
+              ],
+              [
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508
+              ],
+              [
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528
+              ],
+              [
+                1532,
+                1532,
+                1532,
+                1532,
+                1532,
+                1532,
+                1532,
+                1532
+              ],
+              [
+                1527,
+                1527,
+                1527,
+                1527,
+                1527,
+                1527,
+                1527,
+                1527
+              ]
+            ]
+          },
+          {
+            "final_and_active_phase_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 1532,
+            "compute_cycles_median": 1111.0,
+            "total_cycles_per_pe": [
+              [
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528
+              ],
+              [
+                1519,
+                1519,
+                1519,
+                1519,
+                1519,
+                1519,
+                1519,
+                1519
+              ],
+              [
+                1518,
+                1518,
+                1518,
+                1518,
+                1518,
+                1518,
+                1518,
+                1518
+              ],
+              [
+                1513,
+                1513,
+                1513,
+                1513,
+                1513,
+                1513,
+                1513,
+                1513
+              ],
+              [
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508
+              ],
+              [
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528
+              ],
+              [
+                1532,
+                1532,
+                1532,
+                1532,
+                1532,
+                1532,
+                1532,
+                1532
+              ],
+              [
+                1527,
+                1527,
+                1527,
+                1527,
+                1527,
+                1527,
+                1527,
+                1527
+              ]
+            ]
+          },
+          {
+            "final_and_active_phase_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 1532,
+            "compute_cycles_median": 1111.0,
+            "total_cycles_per_pe": [
+              [
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528
+              ],
+              [
+                1519,
+                1519,
+                1519,
+                1519,
+                1519,
+                1519,
+                1519,
+                1519
+              ],
+              [
+                1518,
+                1518,
+                1518,
+                1518,
+                1518,
+                1518,
+                1518,
+                1518
+              ],
+              [
+                1513,
+                1513,
+                1513,
+                1513,
+                1513,
+                1513,
+                1513,
+                1513
+              ],
+              [
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508
+              ],
+              [
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528
+              ],
+              [
+                1532,
+                1532,
+                1532,
+                1532,
+                1532,
+                1532,
+                1532,
+                1532
+              ],
+              [
+                1527,
+                1527,
+                1527,
+                1527,
+                1527,
+                1527,
+                1527,
+                1527
+              ]
+            ]
+          },
+          {
+            "final_and_active_phase_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 1532,
+            "compute_cycles_median": 1111.0,
+            "total_cycles_per_pe": [
+              [
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528
+              ],
+              [
+                1519,
+                1519,
+                1519,
+                1519,
+                1519,
+                1519,
+                1519,
+                1519
+              ],
+              [
+                1518,
+                1518,
+                1518,
+                1518,
+                1518,
+                1518,
+                1518,
+                1518
+              ],
+              [
+                1513,
+                1513,
+                1513,
+                1513,
+                1513,
+                1513,
+                1513,
+                1513
+              ],
+              [
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508
+              ],
+              [
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528
+              ],
+              [
+                1532,
+                1532,
+                1532,
+                1532,
+                1532,
+                1532,
+                1532,
+                1532
+              ],
+              [
+                1527,
+                1527,
+                1527,
+                1527,
+                1527,
+                1527,
+                1527,
+                1527
+              ]
+            ]
+          },
+          {
+            "final_and_active_phase_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.000244140625,
+              "max_error_over_bound": 8.117847659422437e-05,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": false,
+            "max_native_abs_difference": 0.000244140625,
+            "max_local_cycles": 1532,
+            "compute_cycles_median": 1111.0,
+            "total_cycles_per_pe": [
+              [
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528
+              ],
+              [
+                1519,
+                1519,
+                1519,
+                1519,
+                1519,
+                1519,
+                1519,
+                1519
+              ],
+              [
+                1518,
+                1518,
+                1518,
+                1518,
+                1518,
+                1518,
+                1518,
+                1518
+              ],
+              [
+                1513,
+                1513,
+                1513,
+                1513,
+                1513,
+                1513,
+                1513,
+                1513
+              ],
+              [
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508
+              ],
+              [
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528
+              ],
+              [
+                1532,
+                1532,
+                1532,
+                1532,
+                1532,
+                1532,
+                1532,
+                1532
+              ],
+              [
+                1527,
+                1527,
+                1527,
+                1527,
+                1527,
+                1527,
+                1527,
+                1527
+              ]
+            ]
+          },
+          {
+            "final_and_active_phase_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 1532,
+            "compute_cycles_median": 1111.0,
+            "total_cycles_per_pe": [
+              [
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528
+              ],
+              [
+                1519,
+                1519,
+                1519,
+                1519,
+                1519,
+                1519,
+                1519,
+                1519
+              ],
+              [
+                1518,
+                1518,
+                1518,
+                1518,
+                1518,
+                1518,
+                1518,
+                1518
+              ],
+              [
+                1513,
+                1513,
+                1513,
+                1513,
+                1513,
+                1513,
+                1513,
+                1513
+              ],
+              [
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508,
+                1508
+              ],
+              [
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528,
+                1528
+              ],
+              [
+                1532,
+                1532,
+                1532,
+                1532,
+                1532,
+                1532,
+                1532,
+                1532
+              ],
+              [
+                1527,
+                1527,
+                1527,
+                1527,
+                1527,
+                1527,
+                1527,
+                1527
+              ]
+            ]
+          }
+        ],
+        "contract": "Exact local fused half contraction, active group/global root half addition records and every replicated final result; non-root phase records inactive; relaxed high-level order plus original-product bound"
+      },
+      "qualification_sha256": "956480d1565709be7b583766ee9b304a074466d771d7d616fcf96bb3bc35b8f4",
+      "native_application_checks": [
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.027765228878706694,
+          "max_error_over_bound": 0.0008246328939412772,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": []
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_zero_reset"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "fused_not_split_half_rounding"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "minimum_half_subnormal_preserved",
+            "distributed_signed_column_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": []
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "distributed_signed_column_selection"
+          ]
+        }
+      ],
+      "device_application_checks": [
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.008618465479230508,
+          "max_error_over_bound": 0.0002613825015970765,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": []
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_zero_reset"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "fused_not_split_half_rounding"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "minimum_half_subnormal_preserved",
+            "distributed_signed_column_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.000244140625,
+          "max_error_over_bound": 8.117847659422437e-05,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": []
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 1.0019550342130987,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "distributed_signed_column_selection"
+          ]
+        }
+      ],
+      "numerical_validation": {
+        "contract": "binary16-fma-relaxed-v1",
+        "native_forward_bound_passed": true,
+        "device_forward_bound_passed": true,
+        "device_scheduled_bits_passed": true,
+        "native_f32_accuracy_not_implied": true
+      }
+    }
+  ]
+}

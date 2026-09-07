@@ -1,0 +1,312 @@
+{
+  "run": "run-20260906T145225072459Z",
+  "sdk": true,
+  "instrumentation": null,
+  "sdk_runtime_options": {
+    "suppress_trace": true,
+    "num_threads": 16,
+    "dump_core": true
+  },
+  "sdk_timeout_seconds": 600,
+  "success": true,
+  "cases": [
+    {
+      "key": "sdk_examples/mesh_cg_512_4x4",
+      "passed": true,
+      "artifact": "projects/sdk_examples/mesh_cg_512_4x4/run-20260906T145225072459Z",
+      "native_application_checks": [
+        {
+          "contract": "original-CSC-CG-residual-v1",
+          "passed": true,
+          "reason": 0,
+          "iterations": 9,
+          "true_residual": 0.0006247430807710387,
+          "requested_threshold": 0.0013356971295926123,
+          "strict_requested_tolerance_met": true,
+          "rounding_allowance": 6.812055364296577e-05
+        },
+        {
+          "contract": "original-CSC-CG-residual-v1",
+          "passed": true,
+          "reason": 0,
+          "iterations": 0,
+          "true_residual": 0.0,
+          "requested_threshold": 0.0,
+          "strict_requested_tolerance_met": true,
+          "rounding_allowance": 0.0
+        },
+        {
+          "contract": "original-CSC-CG-residual-v1",
+          "passed": true,
+          "reason": 0,
+          "iterations": 0,
+          "true_residual": 0.0,
+          "requested_threshold": 0.002262741642635289,
+          "strict_requested_tolerance_met": true,
+          "rounding_allowance": 0.00011539982383156143
+        },
+        {
+          "contract": "original-CSC-CG-residual-v1",
+          "passed": true,
+          "reason": 1,
+          "iterations": 1,
+          "true_residual": 3.8724664754975406,
+          "requested_threshold": 0.0012760567692621926,
+          "strict_requested_tolerance_met": false,
+          "rounding_allowance": 6.507889526460773e-05
+        },
+        {
+          "contract": "original-CSC-CG-residual-v1",
+          "passed": true,
+          "reason": 2,
+          "iterations": 0,
+          "true_residual": 22.627416997969522,
+          "requested_threshold": 0.002262741642635289,
+          "strict_requested_tolerance_met": false,
+          "rounding_allowance": 0.00011539982383156143
+        },
+        {
+          "contract": "original-CSC-CG-residual-v1",
+          "passed": true,
+          "reason": 1,
+          "iterations": 0,
+          "true_residual": 13.501050127697985,
+          "requested_threshold": 0.0013501049786632771,
+          "strict_requested_tolerance_met": false,
+          "rounding_allowance": 6.885535394593366e-05
+        },
+        {
+          "contract": "original-CSC-CG-residual-v1",
+          "passed": true,
+          "reason": 0,
+          "iterations": 8,
+          "true_residual": 0.0012911797641171467,
+          "requested_threshold": 0.001322145838592701,
+          "strict_requested_tolerance_met": true,
+          "rounding_allowance": 6.742943780162797e-05
+        },
+        {
+          "contract": "original-CSC-CG-residual-v1",
+          "passed": true,
+          "reason": 3,
+          "iterations": 0,
+          "true_residual": 2.2627417069722799e-29,
+          "requested_threshold": 2.2627416498106165e-33,
+          "strict_requested_tolerance_met": false,
+          "rounding_allowance": 1.153998241975031e-34
+        }
+      ],
+      "numerical_validation": null,
+      "audit": {
+        "passed": true,
+        "actors": 16,
+        "epochs": 8,
+        "output_values": 4640,
+        "solver_checks": [
+          {
+            "reason": 0,
+            "iterations": 9,
+            "true_residual": 0.0006247565469220606,
+            "requested_threshold": 0.0013356971295926123,
+            "strict_requested_tolerance_met": true,
+            "rounding_allowance": 6.812055364296577e-05,
+            "original_residual_within_rounding_allowance": true,
+            "spmv_calls": 11,
+            "scalar_collectives": 25
+          },
+          {
+            "reason": 0,
+            "iterations": 0,
+            "true_residual": 0.0,
+            "requested_threshold": 0.0,
+            "strict_requested_tolerance_met": true,
+            "rounding_allowance": 0.0,
+            "original_residual_within_rounding_allowance": true,
+            "spmv_calls": 2,
+            "scalar_collectives": 7
+          },
+          {
+            "reason": 0,
+            "iterations": 0,
+            "true_residual": 0.0,
+            "requested_threshold": 0.002262741642635289,
+            "strict_requested_tolerance_met": true,
+            "rounding_allowance": 0.00011539982383156143,
+            "original_residual_within_rounding_allowance": true,
+            "spmv_calls": 2,
+            "scalar_collectives": 7
+          },
+          {
+            "reason": 1,
+            "iterations": 1,
+            "true_residual": 3.8724641924177186,
+            "requested_threshold": 0.0012760567692621926,
+            "strict_requested_tolerance_met": false,
+            "rounding_allowance": 6.507889526460773e-05,
+            "original_residual_within_rounding_allowance": false,
+            "spmv_calls": 3,
+            "scalar_collectives": 9
+          },
+          {
+            "reason": 2,
+            "iterations": 0,
+            "true_residual": 22.627416997969522,
+            "requested_threshold": 0.002262741642635289,
+            "strict_requested_tolerance_met": false,
+            "rounding_allowance": 0.00011539982383156143,
+            "original_residual_within_rounding_allowance": false,
+            "spmv_calls": 3,
+            "scalar_collectives": 8
+          },
+          {
+            "reason": 1,
+            "iterations": 0,
+            "true_residual": 13.501050127697985,
+            "requested_threshold": 0.0013501049786632771,
+            "strict_requested_tolerance_met": false,
+            "rounding_allowance": 6.885535394593366e-05,
+            "original_residual_within_rounding_allowance": false,
+            "spmv_calls": 2,
+            "scalar_collectives": 7
+          },
+          {
+            "reason": 0,
+            "iterations": 8,
+            "true_residual": 0.0012910939713526052,
+            "requested_threshold": 0.001322145838592701,
+            "strict_requested_tolerance_met": true,
+            "rounding_allowance": 6.742943780162797e-05,
+            "original_residual_within_rounding_allowance": true,
+            "spmv_calls": 10,
+            "scalar_collectives": 23
+          },
+          {
+            "reason": 3,
+            "iterations": 0,
+            "true_residual": 2.2627417069722799e-29,
+            "requested_threshold": 2.2627416498106165e-33,
+            "strict_requested_tolerance_met": false,
+            "rounding_allowance": 1.153998241975031e-34,
+            "original_residual_within_rounding_allowance": false,
+            "spmv_calls": 2,
+            "scalar_collectives": 7
+          }
+        ],
+        "max_local_cycles": [
+          788234,
+          145508,
+          145183,
+          212929,
+          207087,
+          150355,
+          669937,
+          148156
+        ],
+        "timing_scope": "Maximum local interval of one resident solver launch, excludes host copies; simulator only, not synchronized global latency",
+        "source_sha256": "1afc21f74e431eb72085729f5f90f3b16bf29c693037446d1988a7f521fe0108"
+      },
+      "device_application_checks": [
+        {
+          "contract": "original-CSC-CG-residual-v1",
+          "passed": true,
+          "reason": 0,
+          "iterations": 9,
+          "true_residual": 0.0006247565469220606,
+          "requested_threshold": 0.0013356971295926123,
+          "strict_requested_tolerance_met": true,
+          "rounding_allowance": 6.812055364296577e-05
+        },
+        {
+          "contract": "original-CSC-CG-residual-v1",
+          "passed": true,
+          "reason": 0,
+          "iterations": 0,
+          "true_residual": 0.0,
+          "requested_threshold": 0.0,
+          "strict_requested_tolerance_met": true,
+          "rounding_allowance": 0.0
+        },
+        {
+          "contract": "original-CSC-CG-residual-v1",
+          "passed": true,
+          "reason": 0,
+          "iterations": 0,
+          "true_residual": 0.0,
+          "requested_threshold": 0.002262741642635289,
+          "strict_requested_tolerance_met": true,
+          "rounding_allowance": 0.00011539982383156143
+        },
+        {
+          "contract": "original-CSC-CG-residual-v1",
+          "passed": true,
+          "reason": 1,
+          "iterations": 1,
+          "true_residual": 3.8724641924177186,
+          "requested_threshold": 0.0012760567692621926,
+          "strict_requested_tolerance_met": false,
+          "rounding_allowance": 6.507889526460773e-05
+        },
+        {
+          "contract": "original-CSC-CG-residual-v1",
+          "passed": true,
+          "reason": 2,
+          "iterations": 0,
+          "true_residual": 22.627416997969522,
+          "requested_threshold": 0.002262741642635289,
+          "strict_requested_tolerance_met": false,
+          "rounding_allowance": 0.00011539982383156143
+        },
+        {
+          "contract": "original-CSC-CG-residual-v1",
+          "passed": true,
+          "reason": 1,
+          "iterations": 0,
+          "true_residual": 13.501050127697985,
+          "requested_threshold": 0.0013501049786632771,
+          "strict_requested_tolerance_met": false,
+          "rounding_allowance": 6.885535394593366e-05
+        },
+        {
+          "contract": "original-CSC-CG-residual-v1",
+          "passed": true,
+          "reason": 0,
+          "iterations": 8,
+          "true_residual": 0.0012910939713526052,
+          "requested_threshold": 0.001322145838592701,
+          "strict_requested_tolerance_met": true,
+          "rounding_allowance": 6.742943780162797e-05
+        },
+        {
+          "contract": "original-CSC-CG-residual-v1",
+          "passed": true,
+          "reason": 3,
+          "iterations": 0,
+          "true_residual": 2.2627417069722799e-29,
+          "requested_threshold": 2.2627416498106165e-33,
+          "strict_requested_tolerance_met": false,
+          "rounding_allowance": 1.153998241975031e-34
+        }
+      ],
+      "level": "sdk_simulator"
+    }
+  ],
+  "oracle": {
+    "python": "3.13.11",
+    "numpy": "2.2.6",
+    "rtol": 3e-05,
+    "atol": 3e-06,
+    "input_seed_base": 911,
+    "additional_contract_by_fixture_prefix": {
+      "mesh_gemm:": "componentwise-f32-dot-v1; fixed accuracy reported separately"
+    },
+    "sources": {
+      "fixtures.py": "f3bb4c8848827059d22360a31a06e862dd5abe205ac8f780b3933f10ef8ae04e",
+      "solver_fixtures.py": "dcb8eb701ae4ab720c8855ac92a78eac8c72a09e4c0171faa9d4a1a4b78b7868",
+      "toolchain/roundoff.py": "4bc4e693d456bdf39dee4ac6774a545f812c085aacc7ec4d2244e583fcb935b5",
+      "import_stencil.py": "9a4dfd60f39c9ee90f056f1f07391ba8e361030067c380a85b99241ae09e5bc3",
+      "catalog.json": "43c121ee434ac2ef981df348f516dc402d32815a414e2d07724c24c2999ef1e6",
+      "run_ports.py": "96ffd46e3386cbe6d69fda10bff39c220ff1cd006e6720dc7b09edf89bd369ba"
+    }
+  },
+  "sdk_sha256": "fff17e81c61dcb6012bdee2941a6fdc570f5c8604967530e7b7108651258193d"
+}

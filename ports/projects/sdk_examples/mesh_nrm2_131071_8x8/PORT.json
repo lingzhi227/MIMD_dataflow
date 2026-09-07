@@ -1,0 +1,12 @@
+{
+  "project": "sdk_examples",
+  "kernel": "mesh_nrm2_131071_8x8",
+  "origins": [
+    "benchmarks/conjugate-gradient/src/blas.csl",
+    "benchmarks/conjugate-gradient/src/kernel_cg.csl"
+  ],
+  "fixture": "mesh_reduction:nrm2:131071",
+  "contract": "nrm2 over 131071 original f32 elements with contiguous 8x8 distribution, zero tail padding, SDK map local arithmetic and replicated SDK row/column scalar collective; standalone reduction, not full CG.",
+  "partitions": 1,
+  "status": "source_ready"
+}

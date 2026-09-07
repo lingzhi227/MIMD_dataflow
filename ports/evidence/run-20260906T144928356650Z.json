@@ -1,0 +1,129 @@
+{
+  "run": "run-20260906T144928356650Z",
+  "sdk": true,
+  "instrumentation": null,
+  "sdk_runtime_options": {
+    "suppress_trace": true,
+    "num_threads": 16,
+    "dump_core": true
+  },
+  "sdk_timeout_seconds": 300,
+  "success": true,
+  "cases": [
+    {
+      "key": "sdk_examples/mesh_spmv_512x512_4x4",
+      "passed": true,
+      "artifact": "projects/sdk_examples/mesh_spmv_512x512_4x4/run-20260906T144928356650Z",
+      "native_application_checks": [
+        {
+          "contract": "fixed-original-entry-SpMV-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 2.9272793344858883e-07
+        },
+        {
+          "contract": "fixed-original-entry-SpMV-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0
+        },
+        {
+          "contract": "fixed-original-entry-SpMV-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 2.476714779930944e-07
+        },
+        {
+          "contract": "fixed-original-entry-SpMV-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 3.220038777840273e-07
+        }
+      ],
+      "numerical_validation": {
+        "contract": "fixed-original-entry-SpMV-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_fixed_accuracy_passed": true,
+        "fixed_accuracy_passed": true,
+        "rtol": 3e-05,
+        "atol": 3e-06
+      },
+      "audit": {
+        "passed": true,
+        "fixed_accuracy_passed": true,
+        "actors": 16,
+        "epochs": 4,
+        "output_values": 2048,
+        "factor_checks": [
+          {
+            "contract": "fixed-original-entry-SpMV-v1",
+            "fixed_accuracy_passed": true,
+            "max_abs_error": 2.7371901190065273e-07
+          },
+          {
+            "contract": "fixed-original-entry-SpMV-v1",
+            "fixed_accuracy_passed": true,
+            "max_abs_error": 0.0
+          },
+          {
+            "contract": "fixed-original-entry-SpMV-v1",
+            "fixed_accuracy_passed": true,
+            "max_abs_error": 2.12624477136103e-07
+          },
+          {
+            "contract": "fixed-original-entry-SpMV-v1",
+            "fixed_accuracy_passed": true,
+            "max_abs_error": 2.467833946084852e-07
+          }
+        ],
+        "max_local_cycles": [
+          52953,
+          53202,
+          53448,
+          53298
+        ],
+        "timing_scope": "Maximum local SDK interval; includes command launch between tic/toc, excludes host input/output copies; no synchronized global latency or hardware claim",
+        "partial_scope": "first/last occupied original row per matrix partition before east/west reduction; sampled, not full trajectory",
+        "source_sha256": "3d54ae8c484fb234bc2804121a1cdd55c0da1625546b8f65487ffce4b3d59fd0"
+      },
+      "device_application_checks": [
+        {
+          "contract": "fixed-original-entry-SpMV-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 2.7371901190065273e-07
+        },
+        {
+          "contract": "fixed-original-entry-SpMV-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0
+        },
+        {
+          "contract": "fixed-original-entry-SpMV-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 2.12624477136103e-07
+        },
+        {
+          "contract": "fixed-original-entry-SpMV-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 2.467833946084852e-07
+        }
+      ],
+      "level": "sdk_simulator"
+    }
+  ],
+  "oracle": {
+    "python": "3.13.11",
+    "numpy": "2.2.6",
+    "rtol": 3e-05,
+    "atol": 3e-06,
+    "input_seed_base": 911,
+    "additional_contract_by_fixture_prefix": {
+      "mesh_gemm:": "componentwise-f32-dot-v1; fixed accuracy reported separately"
+    },
+    "sources": {
+      "fixtures.py": "414f6c2815eddaeac0c45adad679020f22afb5e77168adec668874dd58779b48",
+      "toolchain/roundoff.py": "4bc4e693d456bdf39dee4ac6774a545f812c085aacc7ec4d2244e583fcb935b5",
+      "import_stencil.py": "9a4dfd60f39c9ee90f056f1f07391ba8e361030067c380a85b99241ae09e5bc3",
+      "catalog.json": "171770b6f35498ae610eb90d8bedb689cf0ea17c7ffc22b9148de1ba7ad0b24d",
+      "run_ports.py": "19fedb9db7d8eef862158fde64fdd32ec785b13c571eeff8996cd001b674af99"
+    }
+  },
+  "sdk_sha256": "fff17e81c61dcb6012bdee2941a6fdc570f5c8604967530e7b7108651258193d"
+}

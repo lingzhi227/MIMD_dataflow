@@ -1,0 +1,10 @@
+{
+  "execution_succeeded": true,
+  "numerical_passed": false,
+  "cause": "Our probe adapter replaced both identical zero-clearing lines, changing sum initializer as well as maximum initializer. Not a CSL/upstream failure.",
+  "observed_output_half_bits": 32768,
+  "cases": 3,
+  "words_per_case": 4096,
+  "results_sha256": "6a45cbe49cc45f52223fc7efae3c13dd654851e8eca98c09326b22cf8dbddf84",
+  "correction": "Anchor maximum repair to preceding local_max_dsd load; verify local_sum_dsd initializer remains zero; source edit regression added. Fresh source probe022749783345."
+}

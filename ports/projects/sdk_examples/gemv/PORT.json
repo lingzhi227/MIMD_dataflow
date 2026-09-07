@@ -1,0 +1,13 @@
+{
+  "project": "sdk_examples",
+  "kernel": "gemv",
+  "origins": [
+    "benchmarks/gemv-collectives_2d/pe.csl",
+    "benchmarks/gemv-checkerboard-pattern/pe.csl",
+    "benchmarks/single-tile-matvec/src/pe_matvec.csl"
+  ],
+  "fixture": "gemv",
+  "contract": "Matrix-vector equation; f32 instead of WaferLLM original half profile where applicable.",
+  "partitions": 2,
+  "status": "source_ready"
+}

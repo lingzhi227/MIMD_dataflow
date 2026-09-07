@@ -1,0 +1,2749 @@
+{
+  "kind": "numerical_summary_metadata_correction",
+  "sdk": true,
+  "success": true,
+  "new_sdk_execution": false,
+  "new_native_execution": false,
+  "source_report": "evidence/qualification-20260906T231500546037Z.json",
+  "source_report_sha256": "ce4fe3d9328f50b53c1364d68d534257ad93b0d5e5c5e2dc01e3fab44f5cb93b",
+  "summary_implementation_sha256": "25facaf2e38ee69f2689dc7f00ab02af749fef1afe14366c8457cc0bdbbed850",
+  "correction": "Remove inapplicable inherited f32 componentwise rtol/atol labels; state the normwise half limits actually checked, and softmax row mass/nonnegativity. Original independent checks, raw outputs, execution audits and artifacts preserved.",
+  "cases": [
+    {
+      "key": "waferllm/softmax_64x128_8x8",
+      "artifact": "projects/waferllm/softmax_64x128_8x8/run-20260906T221434624057Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_softmax.v1",
+        "epochs": 6,
+        "actors": 64,
+        "instrumentation": "sampled",
+        "internal_half_observations": 64512,
+        "cases": [
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.00044820907017596956,
+            "standard_max_abs": 1.3343460254233025e-05,
+            "max_row_mass_error": 0.000789642333984375,
+            "max_local_cycles": 9450,
+            "cycles_per_pe": [
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0,
+            "standard_max_abs": 0.0,
+            "max_row_mass_error": 0.0,
+            "max_local_cycles": 9450,
+            "cycles_per_pe": [
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0,
+            "standard_max_abs": 0.0,
+            "max_row_mass_error": 0.0,
+            "max_local_cycles": 9450,
+            "cycles_per_pe": [
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 1.6146028776513974e-12,
+            "standard_max_abs": 1.6084911180769268e-12,
+            "max_row_mass_error": 0.0,
+            "max_local_cycles": 5039,
+            "cycles_per_pe": [
+              [
+                5005,
+                5001,
+                4997,
+                4993,
+                4979,
+                4989,
+                4989,
+                4989
+              ],
+              [
+                5039,
+                5035,
+                5031,
+                5027,
+                5013,
+                5023,
+                5023,
+                5023
+              ],
+              [
+                5005,
+                5001,
+                4997,
+                4993,
+                4979,
+                4989,
+                4989,
+                4989
+              ],
+              [
+                5029,
+                5025,
+                5021,
+                5017,
+                5003,
+                5013,
+                5013,
+                5013
+              ],
+              [
+                5005,
+                5001,
+                4997,
+                4993,
+                4979,
+                4989,
+                4989,
+                4989
+              ],
+              [
+                5018,
+                5014,
+                5010,
+                5006,
+                4992,
+                5002,
+                5002,
+                5002
+              ],
+              [
+                5005,
+                5001,
+                4997,
+                4993,
+                4979,
+                4989,
+                4989,
+                4989
+              ],
+              [
+                5008,
+                5004,
+                5000,
+                4996,
+                4982,
+                4992,
+                4992,
+                4992
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0,
+            "standard_max_abs": 0.0,
+            "max_row_mass_error": 0.0,
+            "max_local_cycles": 9450,
+            "cycles_per_pe": [
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.00047377215297564877,
+            "standard_max_abs": 2.4880288677493062e-05,
+            "max_row_mass_error": 0.0009326934814453125,
+            "max_local_cycles": 9450,
+            "cycles_per_pe": [
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ],
+              [
+                9450,
+                9446,
+                9442,
+                9438,
+                9424,
+                9434,
+                9434,
+                9434
+              ]
+            ]
+          }
+        ],
+        "acceptance": {
+          "relative_l2": 0.01,
+          "peak_scaled_max_abs": 0.015,
+          "row_mass": 0.01
+        },
+        "scope": "Standard stable scaled row softmax with SDK half math; exact source-derived target bits. Original zero-max defect corrected. WSE3 simulator, no hardware/full-inference claim."
+      },
+      "native_application_checks": [
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00021671204189806537,
+          "max_abs_error": 3.812969756260276e-06,
+          "max_row_mass_error": 4.57763671875e-05,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.6145890532902724e-12,
+          "max_abs_error": 1.6082690734720018e-12,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00020984053894431597,
+          "max_abs_error": 7.626109916825802e-06,
+          "max_row_mass_error": 5.91278076171875e-05,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        }
+      ],
+      "native_application_source": "native-output.txt: actual C++ executable stdout, independent math.fsum recheck",
+      "device_application_checks": [
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0004482090701759771,
+          "max_abs_error": 1.3343460254233025e-05,
+          "max_row_mass_error": 0.000789642333984375,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.6145890532902724e-12,
+          "max_abs_error": 1.6082690734720018e-12,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00047377215297565674,
+          "max_abs_error": 2.4880288677493062e-05,
+          "max_row_mass_error": 0.0009326934814453125,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        }
+      ],
+      "qualification_sha256": "d2145136608d7985cf54a6767dade08dd372647d8b0af9c4a5318c2cb04a93e6",
+      "results_sha256": "5b6f04bce6a2da47ede2639dfc52cca7af91aacf738615fa64d91db747a0c28f",
+      "numerical_validation": {
+        "contract": "softmax-half-normwise-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "relative_l2_limit": 0.01,
+        "max_error_over_reference_peak_limit": 0.015,
+        "zero_reference_requires_exact_zero": false,
+        "max_row_mass_error_limit": 0.01,
+        "nonnegative_probability_required": true,
+        "per_component_accuracy_not_implied": true
+      }
+    },
+    {
+      "key": "waferllm/softmax_64x128_8x8_map",
+      "artifact": "projects/waferllm/softmax_64x128_8x8_map/run-20260906T223906593879Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_softmax.v1",
+        "epochs": 6,
+        "actors": 64,
+        "instrumentation": "sampled",
+        "internal_half_observations": 64512,
+        "cases": [
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.00044820907017596956,
+            "standard_max_abs": 1.3343460254233025e-05,
+            "max_row_mass_error": 0.000789642333984375,
+            "max_local_cycles": 7394,
+            "cycles_per_pe": [
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0,
+            "standard_max_abs": 0.0,
+            "max_row_mass_error": 0.0,
+            "max_local_cycles": 7394,
+            "cycles_per_pe": [
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0,
+            "standard_max_abs": 0.0,
+            "max_row_mass_error": 0.0,
+            "max_local_cycles": 7394,
+            "cycles_per_pe": [
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 1.6146028776513974e-12,
+            "standard_max_abs": 1.6084911180769268e-12,
+            "max_row_mass_error": 0.0,
+            "max_local_cycles": 3110,
+            "cycles_per_pe": [
+              [
+                3077,
+                3073,
+                3069,
+                3065,
+                3051,
+                3061,
+                3061,
+                3061
+              ],
+              [
+                3110,
+                3106,
+                3102,
+                3098,
+                3084,
+                3094,
+                3094,
+                3094
+              ],
+              [
+                3077,
+                3073,
+                3069,
+                3065,
+                3051,
+                3061,
+                3061,
+                3061
+              ],
+              [
+                3101,
+                3097,
+                3093,
+                3089,
+                3075,
+                3085,
+                3085,
+                3085
+              ],
+              [
+                3077,
+                3073,
+                3069,
+                3065,
+                3051,
+                3061,
+                3061,
+                3061
+              ],
+              [
+                3090,
+                3086,
+                3082,
+                3078,
+                3064,
+                3074,
+                3074,
+                3074
+              ],
+              [
+                3077,
+                3073,
+                3069,
+                3065,
+                3051,
+                3061,
+                3061,
+                3061
+              ],
+              [
+                3080,
+                3076,
+                3072,
+                3068,
+                3054,
+                3064,
+                3064,
+                3064
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0,
+            "standard_max_abs": 0.0,
+            "max_row_mass_error": 0.0,
+            "max_local_cycles": 7394,
+            "cycles_per_pe": [
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.00047377215297564877,
+            "standard_max_abs": 2.4880288677493062e-05,
+            "max_row_mass_error": 0.0009326934814453125,
+            "max_local_cycles": 7394,
+            "cycles_per_pe": [
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7368,
+                7378,
+                7378,
+                7378
+              ]
+            ]
+          }
+        ],
+        "acceptance": {
+          "relative_l2": 0.01,
+          "peak_scaled_max_abs": 0.015,
+          "row_mass": 0.01
+        },
+        "scope": "Standard stable scaled row softmax with SDK half math; exact source-derived target bits. Original zero-max defect corrected. WSE3 simulator, no hardware/full-inference claim."
+      },
+      "native_application_checks": [
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00021671204189806537,
+          "max_abs_error": 3.812969756260276e-06,
+          "max_row_mass_error": 4.57763671875e-05,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.6145890532902724e-12,
+          "max_abs_error": 1.6082690734720018e-12,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00020984053894431597,
+          "max_abs_error": 7.626109916825802e-06,
+          "max_row_mass_error": 5.91278076171875e-05,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        }
+      ],
+      "native_application_source": "native-output.txt: actual C++ executable stdout, independent math.fsum recheck",
+      "device_application_checks": [
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0004482090701759771,
+          "max_abs_error": 1.3343460254233025e-05,
+          "max_row_mass_error": 0.000789642333984375,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.6145890532902724e-12,
+          "max_abs_error": 1.6082690734720018e-12,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00047377215297565674,
+          "max_abs_error": 2.4880288677493062e-05,
+          "max_row_mass_error": 0.0009326934814453125,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        }
+      ],
+      "qualification_sha256": "3164cbbb79fcb0654b24b78f697b37e3196ee742ab2ae35e5052f979b88a5005",
+      "results_sha256": "bbaf3a3dad98d115d30226c3883e67bc1efda9d3f05d2a0fd67f4d467de0bca5",
+      "numerical_validation": {
+        "contract": "softmax-half-normwise-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "relative_l2_limit": 0.01,
+        "max_error_over_reference_peak_limit": 0.015,
+        "zero_reference_requires_exact_zero": false,
+        "max_row_mass_error_limit": 0.01,
+        "nonnegative_probability_required": true,
+        "per_component_accuracy_not_implied": true
+      }
+    },
+    {
+      "key": "waferllm/softmax_128x1024_8x8",
+      "artifact": "projects/waferllm/softmax_128x1024_8x8/run-20260906T222220747022Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_softmax.v1",
+        "epochs": 6,
+        "actors": 64,
+        "instrumentation": "sampled",
+        "internal_half_observations": 817152,
+        "cases": [
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0006798681619188393,
+            "standard_max_abs": 2.989342146361273e-06,
+            "max_row_mass_error": 0.0019183158874511719,
+            "max_local_cycles": 137398,
+            "cycles_per_pe": [
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0,
+            "standard_max_abs": 0.0,
+            "max_row_mass_error": 0.0,
+            "max_local_cycles": 137398,
+            "cycles_per_pe": [
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0,
+            "standard_max_abs": 0.0,
+            "max_row_mass_error": 0.0,
+            "max_local_cycles": 137398,
+            "cycles_per_pe": [
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 1.2961758939453167e-11,
+            "standard_max_abs": 1.2955636563560802e-11,
+            "max_row_mass_error": 0.0,
+            "max_local_cycles": 68038,
+            "cycles_per_pe": [
+              [
+                68033,
+                68029,
+                68025,
+                68021,
+                68004,
+                68017,
+                68017,
+                68017
+              ],
+              [
+                67979,
+                67975,
+                67971,
+                67967,
+                67950,
+                67963,
+                67963,
+                67963
+              ],
+              [
+                67984,
+                67980,
+                67976,
+                67972,
+                67955,
+                67968,
+                67968,
+                67968
+              ],
+              [
+                68038,
+                68034,
+                68030,
+                68026,
+                68009,
+                68022,
+                68022,
+                68022
+              ],
+              [
+                68024,
+                68020,
+                68016,
+                68012,
+                67995,
+                68008,
+                68008,
+                68008
+              ],
+              [
+                68002,
+                67998,
+                67994,
+                67990,
+                67973,
+                67986,
+                67986,
+                67986
+              ],
+              [
+                68018,
+                68014,
+                68010,
+                68006,
+                67989,
+                68002,
+                68002,
+                68002
+              ],
+              [
+                68038,
+                68034,
+                68030,
+                68026,
+                68009,
+                68022,
+                68022,
+                68022
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0,
+            "standard_max_abs": 0.0,
+            "max_row_mass_error": 0.0,
+            "max_local_cycles": 137398,
+            "cycles_per_pe": [
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0006579813577090644,
+            "standard_max_abs": 4.362009144742197e-06,
+            "max_row_mass_error": 0.0013175010681152344,
+            "max_local_cycles": 137398,
+            "cycles_per_pe": [
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ],
+              [
+                137398,
+                137394,
+                137390,
+                137386,
+                137369,
+                137382,
+                137382,
+                137382
+              ]
+            ]
+          }
+        ],
+        "acceptance": {
+          "relative_l2": 0.01,
+          "peak_scaled_max_abs": 0.015,
+          "row_mass": 0.01
+        },
+        "scope": "Standard stable scaled row softmax with SDK half math; exact source-derived target bits. Original zero-max defect corrected. WSE3 simulator, no hardware/full-inference claim."
+      },
+      "native_application_checks": [
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0002175280574645666,
+          "max_abs_error": 4.768291232027256e-07,
+          "max_row_mass_error": 1.811981201171875e-05,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.2961745068331842e-11,
+          "max_abs_error": 1.2955414518955877e-11,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0002117805449078234,
+          "max_abs_error": 9.534567864382532e-07,
+          "max_row_mass_error": 2.4318695068359375e-05,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        }
+      ],
+      "native_application_source": "native-output.txt: actual C++ executable stdout, independent math.fsum recheck",
+      "device_application_checks": [
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0006798681619188412,
+          "max_abs_error": 2.989342146361273e-06,
+          "max_row_mass_error": 0.0019183158874511719,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.2961745068331842e-11,
+          "max_abs_error": 1.2955414518955877e-11,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0006579813577090616,
+          "max_abs_error": 4.362009144742197e-06,
+          "max_row_mass_error": 0.0013175010681152344,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        }
+      ],
+      "qualification_sha256": "d65526ed3d1e68aabe5d70f04766c36c6f42bf29270e0cbbb59a1697dbefeeb6",
+      "results_sha256": "04081fa0bf9abb9eede274747f4eda890b93922372c6801936320767dd1c57df",
+      "numerical_validation": {
+        "contract": "softmax-half-normwise-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "relative_l2_limit": 0.01,
+        "max_error_over_reference_peak_limit": 0.015,
+        "zero_reference_requires_exact_zero": false,
+        "max_row_mass_error_limit": 0.01,
+        "nonnegative_probability_required": true,
+        "per_component_accuracy_not_implied": true
+      }
+    },
+    {
+      "key": "waferllm/softmax_128x1024_8x8_map",
+      "artifact": "projects/waferllm/softmax_128x1024_8x8_map/run-20260906T224135809555Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_softmax.v1",
+        "epochs": 6,
+        "actors": 64,
+        "instrumentation": "sampled",
+        "internal_half_observations": 817152,
+        "cases": [
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0006798681619188393,
+            "standard_max_abs": 2.989342146361273e-06,
+            "max_row_mass_error": 0.0019183158874511719,
+            "max_local_cycles": 106671,
+            "cycles_per_pe": [
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0,
+            "standard_max_abs": 0.0,
+            "max_row_mass_error": 0.0,
+            "max_local_cycles": 106671,
+            "cycles_per_pe": [
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0,
+            "standard_max_abs": 0.0,
+            "max_row_mass_error": 0.0,
+            "max_local_cycles": 106671,
+            "cycles_per_pe": [
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 1.2961758939453167e-11,
+            "standard_max_abs": 1.2955636563560802e-11,
+            "max_row_mass_error": 0.0,
+            "max_local_cycles": 37312,
+            "cycles_per_pe": [
+              [
+                37307,
+                37303,
+                37299,
+                37295,
+                37278,
+                37291,
+                37291,
+                37291
+              ],
+              [
+                37252,
+                37248,
+                37244,
+                37240,
+                37223,
+                37236,
+                37236,
+                37236
+              ],
+              [
+                37257,
+                37253,
+                37249,
+                37245,
+                37228,
+                37241,
+                37241,
+                37241
+              ],
+              [
+                37312,
+                37308,
+                37304,
+                37300,
+                37283,
+                37296,
+                37296,
+                37296
+              ],
+              [
+                37297,
+                37293,
+                37289,
+                37285,
+                37268,
+                37281,
+                37281,
+                37281
+              ],
+              [
+                37275,
+                37271,
+                37267,
+                37263,
+                37246,
+                37259,
+                37259,
+                37259
+              ],
+              [
+                37291,
+                37287,
+                37283,
+                37279,
+                37262,
+                37275,
+                37275,
+                37275
+              ],
+              [
+                37312,
+                37308,
+                37304,
+                37300,
+                37283,
+                37296,
+                37296,
+                37296
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0,
+            "standard_max_abs": 0.0,
+            "max_row_mass_error": 0.0,
+            "max_local_cycles": 106671,
+            "cycles_per_pe": [
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0006579813577090644,
+            "standard_max_abs": 4.362009144742197e-06,
+            "max_row_mass_error": 0.0013175010681152344,
+            "max_local_cycles": 106671,
+            "cycles_per_pe": [
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ],
+              [
+                106671,
+                106667,
+                106663,
+                106659,
+                106642,
+                106655,
+                106655,
+                106655
+              ]
+            ]
+          }
+        ],
+        "acceptance": {
+          "relative_l2": 0.01,
+          "peak_scaled_max_abs": 0.015,
+          "row_mass": 0.01
+        },
+        "scope": "Standard stable scaled row softmax with SDK half math; exact source-derived target bits. Original zero-max defect corrected. WSE3 simulator, no hardware/full-inference claim."
+      },
+      "native_application_checks": [
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0002175280574645666,
+          "max_abs_error": 4.768291232027256e-07,
+          "max_row_mass_error": 1.811981201171875e-05,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.2961745068331842e-11,
+          "max_abs_error": 1.2955414518955877e-11,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0002117805449078234,
+          "max_abs_error": 9.534567864382532e-07,
+          "max_row_mass_error": 2.4318695068359375e-05,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        }
+      ],
+      "native_application_source": "native-output.txt: actual C++ executable stdout, independent math.fsum recheck",
+      "device_application_checks": [
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0006798681619188412,
+          "max_abs_error": 2.989342146361273e-06,
+          "max_row_mass_error": 0.0019183158874511719,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.2961745068331842e-11,
+          "max_abs_error": 1.2955414518955877e-11,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "max_row_mass_error": 0.0,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "softmax-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0006579813577090616,
+          "max_abs_error": 4.362009144742197e-06,
+          "max_row_mass_error": 0.0013175010681152344,
+          "reference": "independent math.exp and math.fsum; stable row softmax, scale 0.125",
+          "per_component_accuracy_not_implied": true
+        }
+      ],
+      "qualification_sha256": "17ac4e97a9eee8f433a5590bb2b76de6caf1215cc093383fb5fec96e822674ed",
+      "results_sha256": "43186817cd79550bbf7913e6adc85ee614da15ec3717ab518fea06fa7a0e4673",
+      "numerical_validation": {
+        "contract": "softmax-half-normwise-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "relative_l2_limit": 0.01,
+        "max_error_over_reference_peak_limit": 0.015,
+        "zero_reference_requires_exact_zero": false,
+        "max_row_mass_error_limit": 0.01,
+        "nonnegative_probability_required": true,
+        "per_component_accuracy_not_implied": true
+      }
+    }
+  ]
+}

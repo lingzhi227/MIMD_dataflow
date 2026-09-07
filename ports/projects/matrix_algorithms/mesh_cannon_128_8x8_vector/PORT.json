@@ -1,0 +1,14 @@
+{
+  "project": "matrix_algorithms",
+  "kernel": "mesh_cannon_128_8x8_vector",
+  "origins": [
+    "Cannons_algorithm/layout.csl",
+    "Cannons_algorithm/pe_program.csl"
+  ],
+  "fixture": "mesh_gemm:128:128:128",
+  "partitions": 1,
+  "status": "source_ready",
+  "contract": "Source-distinct Cannon: host skew, cyclic six-color parity exchange, rotating temporary tile, stable host input handles, resident local contraction with explicit relaxed f32 policy.",
+  "validation": "Four SDK2.10.1 warm calls pass full cyclic-prefix, exact block-witness, original-product and protocol audits. Same-schedule vector/scalar control and original-CSL migration baselines retained.",
+  "remaining": "Odd or incomplete meshes, rectangular products, asynchronous overlap, lean instrumentation and real-hardware/global performance. Static SRAM is not stack high-water."
+}

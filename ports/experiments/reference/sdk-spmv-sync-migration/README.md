@@ -1,0 +1,1 @@
+Unfinished legacy benchmark-only clock synchronization migration. Preserved after SDK run115710053565 failed before clock D2H; not an accepted allreduce. Production SpMV uses local timestamp intervals. Original SDK examples commit4866cf330333446cb5e529e10f36be4600d1df29. All intermediate failures remain frozen.

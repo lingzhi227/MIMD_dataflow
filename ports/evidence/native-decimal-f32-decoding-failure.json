@@ -1,0 +1,73 @@
+{
+  "report": "evidence/run-20260906T201844813894Z.json",
+  "report_sha256": "bc5fdad9c8a51ddfb63c9f8d8596b95bc18d5310d9fc591d3df43d0d3aa98359",
+  "failed_cases": [
+    {
+      "key": "sdk_examples/mesh_gemm_64x64x64_4x4_vector",
+      "artifact": "projects/sdk_examples/mesh_gemm_64x64x64_4x4_vector/run-20260906T201844813894Z",
+      "error": "\nArrays are not equal\n\nMismatched elements: 2048 / 4096 (50%)\nFirst 5 mismatches are at indices:\n [1, 0]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\n [1, 1]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\n [1, 2]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\n [1, 3]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\n [1, 4]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\nMax absolute difference among violations: 1.58142099e-09\nMax relative difference among violations: 1.58142062e-09\n ACTUAL: array([[1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],...\n DESIRED: array([[1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],..."
+    },
+    {
+      "key": "sdk_examples/mesh_gemm_64x64x64_4x4_scalar",
+      "artifact": "projects/sdk_examples/mesh_gemm_64x64x64_4x4_scalar/run-20260906T201844813894Z",
+      "error": "\nArrays are not equal\n\nMismatched elements: 2048 / 4096 (50%)\nFirst 5 mismatches are at indices:\n [1, 0]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\n [1, 1]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\n [1, 2]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\n [1, 3]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\n [1, 4]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\nMax absolute difference among violations: 1.58142099e-09\nMax relative difference among violations: 1.58142062e-09\n ACTUAL: array([[1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],...\n DESIRED: array([[1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],..."
+    },
+    {
+      "key": "sdk_examples/mesh_gemm_128x256x128_8x8_vector",
+      "artifact": "projects/sdk_examples/mesh_gemm_128x256x128_8x8_vector/run-20260906T201844813894Z",
+      "error": "\nArrays are not equal\n\nMismatched elements: 8192 / 16384 (50%)\nFirst 5 mismatches are at indices:\n [1, 0]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\n [1, 1]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\n [1, 2]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\n [1, 3]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\n [1, 4]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\nMax absolute difference among violations: 1.58142099e-09\nMax relative difference among violations: 1.58142062e-09\n ACTUAL: array([[1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],...\n DESIRED: array([[1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],..."
+    },
+    {
+      "key": "matrix_algorithms/mesh_cannon_64_4x4_vector",
+      "artifact": "projects/matrix_algorithms/mesh_cannon_64_4x4_vector/run-20260906T201844813894Z",
+      "error": "\nArrays are not equal\n\nMismatched elements: 2048 / 4096 (50%)\nFirst 5 mismatches are at indices:\n [1, 0]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\n [1, 1]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\n [1, 2]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\n [1, 3]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\n [1, 4]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\nMax absolute difference among violations: 1.58142099e-09\nMax relative difference among violations: 1.58142062e-09\n ACTUAL: array([[1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],...\n DESIRED: array([[1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],..."
+    },
+    {
+      "key": "matrix_algorithms/mesh_cannon_64_4x4_scalar",
+      "artifact": "projects/matrix_algorithms/mesh_cannon_64_4x4_scalar/run-20260906T201844813894Z",
+      "error": "\nArrays are not equal\n\nMismatched elements: 2048 / 4096 (50%)\nFirst 5 mismatches are at indices:\n [1, 0]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\n [1, 1]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\n [1, 2]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\n [1, 3]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\n [1, 4]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\nMax absolute difference among violations: 1.58142099e-09\nMax relative difference among violations: 1.58142062e-09\n ACTUAL: array([[1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],...\n DESIRED: array([[1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],..."
+    },
+    {
+      "key": "matrix_algorithms/mesh_cannon_128_8x8_vector",
+      "artifact": "projects/matrix_algorithms/mesh_cannon_128_8x8_vector/run-20260906T201844813894Z",
+      "error": "\nArrays are not equal\n\nMismatched elements: 8192 / 16384 (50%)\nFirst 5 mismatches are at indices:\n [1, 0]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\n [1, 1]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\n [1, 2]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\n [1, 3]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\n [1, 4]: 1.00000024 (ACTUAL), 1.000000238418579 (DESIRED)\nMax absolute difference among violations: 1.58142099e-09\nMax relative difference among violations: 1.58142062e-09\n ACTUAL: array([[1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],...\n DESIRED: array([[1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],..."
+    },
+    {
+      "key": "waferllm/mesh_twohop_64_4x4_f16",
+      "artifact": "projects/waferllm/mesh_twohop_64_4x4_f16/run-20260906T201844813894Z",
+      "error": "\nArrays are not equal\n\nMismatched elements: 3458 / 4096 (84.4%)\nFirst 5 mismatches are at indices:\n [0, 1]: -0.499755859 (ACTUAL), -0.499755859375 (DESIRED)\n [0, 2]: -0.499511719 (ACTUAL), -0.49951171875 (DESIRED)\n [0, 3]: -0.499267578 (ACTUAL), -0.499267578125 (DESIRED)\n [0, 4]: -0.499023438 (ACTUAL), -0.4990234375 (DESIRED)\n [0, 5]: -0.498779297 (ACTUAL), -0.498779296875 (DESIRED)\nMax absolute difference among violations: 5.00000014e-10\nMax relative difference among violations: 4.97087378e-09\n ACTUAL: array([[-0.5     , -0.499756, -0.499512, ..., -0.485107, -0.484863,\n        -0.484619],\n       [-0.484375, -0.484131, -0.483887, ..., -0.469482, -0.469238,...\n DESIRED: array([[-0.5     , -0.499756, -0.499512, ..., -0.485107, -0.484863,\n        -0.484619],\n       [-0.484375, -0.484131, -0.483887, ..., -0.469482, -0.469238,..."
+    },
+    {
+      "key": "waferllm/mesh_twohop_128_4x4_f16",
+      "artifact": "projects/waferllm/mesh_twohop_128_4x4_f16/run-20260906T201844813894Z",
+      "error": "\nArrays are not equal\n\nMismatched elements: 14466 / 16384 (88.3%)\nFirst 5 mismatches are at indices:\n [0, 3]: -0.499755859 (ACTUAL), -0.499755859375 (DESIRED)\n [0, 4]: -0.499755859 (ACTUAL), -0.499755859375 (DESIRED)\n [0, 5]: -0.499755859 (ACTUAL), -0.499755859375 (DESIRED)\n [0, 6]: -0.499511719 (ACTUAL), -0.49951171875 (DESIRED)\n [0, 7]: -0.499511719 (ACTUAL), -0.49951171875 (DESIRED)\nMax absolute difference among violations: 5.00000014e-10\nMax relative difference among violations: 4.97087378e-09\n ACTUAL: array([[-0.5     , -0.5     , -0.5     , ..., -0.492432, -0.492188,\n        -0.492188],\n       [-0.492188, -0.492188, -0.492188, ..., -0.484619, -0.484375,...\n DESIRED: array([[-0.5     , -0.5     , -0.5     , ..., -0.492432, -0.492188,\n        -0.492188],\n       [-0.492188, -0.492188, -0.492188, ..., -0.484619, -0.484375,..."
+    },
+    {
+      "key": "waferllm/mesh_twohop_256_8x8_f16",
+      "artifact": "projects/waferllm/mesh_twohop_256_8x8_f16/run-20260906T201844813894Z",
+      "error": "\nArrays are not equal\n\nMismatched elements: 59242 / 65536 (90.4%)\nFirst 5 mismatches are at indices:\n [0, 9]: -0.499755859 (ACTUAL), -0.499755859375 (DESIRED)\n [0, 10]: -0.499755859 (ACTUAL), -0.499755859375 (DESIRED)\n [0, 11]: -0.499755859 (ACTUAL), -0.499755859375 (DESIRED)\n [0, 12]: -0.499755859 (ACTUAL), -0.499755859375 (DESIRED)\n [0, 13]: -0.499755859 (ACTUAL), -0.499755859375 (DESIRED)\nMax absolute difference among violations: 5.00000014e-10\nMax relative difference among violations: 4.97087378e-09\n ACTUAL: array([[-0.5     , -0.5     , -0.5     , ..., -0.496094, -0.496094,\n        -0.496094],\n       [-0.496094, -0.496094, -0.496094, ..., -0.492188, -0.492188,...\n DESIRED: array([[-0.5     , -0.5     , -0.5     , ..., -0.496094, -0.496094,\n        -0.496094],\n       [-0.496094, -0.496094, -0.496094, ..., -0.492188, -0.492188,..."
+    },
+    {
+      "key": "waferllm/mesh_grouped_gemv_128_4x4_g2_f16",
+      "artifact": "projects/waferllm/mesh_grouped_gemv_128_4x4_g2_f16/run-20260906T201844813894Z",
+      "error": "\nArrays are not equal\n\nMismatched elements: 108 / 128 (84.4%)\nFirst 5 mismatches are at indices:\n [0, 3]: -0.499755859 (ACTUAL), -0.499755859375 (DESIRED)\n [0, 4]: -0.499755859 (ACTUAL), -0.499755859375 (DESIRED)\n [0, 5]: -0.499755859 (ACTUAL), -0.499755859375 (DESIRED)\n [0, 6]: -0.499511719 (ACTUAL), -0.49951171875 (DESIRED)\n [0, 7]: -0.499511719 (ACTUAL), -0.49951171875 (DESIRED)\nMax absolute difference among violations: 4.99999986e-10\nMax relative difference among violations: 1.01386136e-09\n ACTUAL: array([[-0.5     , -0.5     , -0.5     , -0.499756, -0.499756, -0.499756,\n        -0.499512, -0.499512, -0.499512, -0.499512, -0.499512, -0.499268,\n        -0.499268, -0.499268, -0.499023, -0.499023, -0.499023, -0.499023,...\n DESIRED: array([[-0.5     , -0.5     , -0.5     , -0.499756, -0.499756, -0.499756,\n        -0.499512, -0.499512, -0.499512, -0.499512, -0.499512, -0.499268,\n        -0.499268, -0.499268, -0.499023, -0.499023, -0.499023, -0.499023,..."
+    },
+    {
+      "key": "waferllm/mesh_grouped_gemv_512_8x8_g2_f16",
+      "artifact": "projects/waferllm/mesh_grouped_gemv_512_8x8_g2_f16/run-20260906T201844813894Z",
+      "error": "\nArrays are not equal\n\nMismatched elements: 447 / 512 (87.3%)\nFirst 5 mismatches are at indices:\n [0, 33]: -0.499755859 (ACTUAL), -0.499755859375 (DESIRED)\n [0, 34]: -0.499755859 (ACTUAL), -0.499755859375 (DESIRED)\n [0, 35]: -0.499755859 (ACTUAL), -0.499755859375 (DESIRED)\n [0, 36]: -0.499755859 (ACTUAL), -0.499755859375 (DESIRED)\n [0, 37]: -0.499755859 (ACTUAL), -0.499755859375 (DESIRED)\nMax absolute difference among violations: 4.99999986e-10\nMax relative difference among violations: 1.00195692e-09\n ACTUAL: array([[-0.5     , -0.5     , -0.5     , -0.5     , -0.5     , -0.5     ,\n        -0.5     , -0.5     , -0.5     , -0.5     , -0.5     , -0.5     ,\n        -0.5     , -0.5     , -0.5     , -0.5     , -0.5     , -0.5     ,...\n DESIRED: array([[-0.5     , -0.5     , -0.5     , -0.5     , -0.5     , -0.5     ,\n        -0.5     , -0.5     , -0.5     , -0.5     , -0.5     , -0.5     ,\n        -0.5     , -0.5     , -0.5     , -0.5     , -0.5     , -0.5     ,..."
+    },
+    {
+      "key": "waferllm/mesh_grouped_gemv_512_8x8_g4_f16",
+      "artifact": "projects/waferllm/mesh_grouped_gemv_512_8x8_g4_f16/run-20260906T201844813894Z",
+      "error": "\nArrays are not equal\n\nMismatched elements: 447 / 512 (87.3%)\nFirst 5 mismatches are at indices:\n [0, 33]: -0.499755859 (ACTUAL), -0.499755859375 (DESIRED)\n [0, 34]: -0.499755859 (ACTUAL), -0.499755859375 (DESIRED)\n [0, 35]: -0.499755859 (ACTUAL), -0.499755859375 (DESIRED)\n [0, 36]: -0.499755859 (ACTUAL), -0.499755859375 (DESIRED)\n [0, 37]: -0.499755859 (ACTUAL), -0.499755859375 (DESIRED)\nMax absolute difference among violations: 4.99999986e-10\nMax relative difference among violations: 1.00195692e-09\n ACTUAL: array([[-0.5     , -0.5     , -0.5     , -0.5     , -0.5     , -0.5     ,\n        -0.5     , -0.5     , -0.5     , -0.5     , -0.5     , -0.5     ,\n        -0.5     , -0.5     , -0.5     , -0.5     , -0.5     , -0.5     ,...\n DESIRED: array([[-0.5     , -0.5     , -0.5     , -0.5     , -0.5     , -0.5     ,\n        -0.5     , -0.5     , -0.5     , -0.5     , -0.5     , -0.5     ,\n        -0.5     , -0.5     , -0.5     , -0.5     , -0.5     , -0.5     ,..."
+    }
+  ],
+  "cause": "Native stdout uses binary32 max_digits10=9. Decimal parsed as float64 differs from the actual f32 value; exact application checks exposed the type error.",
+  "example": {
+    "decimal": "1.00000024",
+    "recovered_binary32": 1.000000238418579
+  },
+  "fix": "Decode every floating output token back to finite binary32; preserve u32 separately. No algorithm, data or tolerance change.",
+  "new_sdk_execution": false
+}

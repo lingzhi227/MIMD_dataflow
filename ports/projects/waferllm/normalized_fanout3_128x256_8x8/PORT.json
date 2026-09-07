@@ -1,0 +1,13 @@
+{
+  "project": "waferllm",
+  "kernel": "normalized_fanout3_128x256_8x8",
+  "origins": [
+    "Prefill/src/prefill.csl rmsnorm_x/xq_matmul/xk_matmul/xv_matmul"
+  ],
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "status": "source_ready",
+  "partitions": 1,
+  "contract": "Resident RMSNorm plus 3 independent square projections 128x256 on 8x8 PEs. Shared normalization/alignment and live buffer ownership, sequential branches with overlapped per-branch two-hop communication and local DSR math. Six SDK calls including independent changed branch weights, exact final half bits, sampled prefixes/live ownership where enabled, immutable inputs, epochs/queues and actual native/device independent math.fsum review. Half normwise .015 L2/.02 peak; inputs<=1. Counter source comparison is scoped to three projections64x128/8x8 with explicit source repairs; no performance extrapolation to other geometries, full inference or hardware.",
+  "fixture": "normalized_fanout:128:256:3",
+  "instrumentation": "counters"
+}

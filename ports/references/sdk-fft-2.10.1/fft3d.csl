@@ -1,0 +1,206 @@
+param fft_params;
+
+// System resources
+param colors: [4]color;
+param dsr_ids: [3]u16 = [3]u16 {1, 2, 3};
+param ut_ids: [2]ut_id = [2]ut_id {@get_ut_id(2), @get_ut_id(3)};
+param iq_ids: [2]input_queue = [2]input_queue {@get_input_queue(2), @get_input_queue(4)};
+param oq_ids: [2]output_queue = [2]output_queue {@get_output_queue(3), @get_output_queue(5)};
+param local_task_ids: [3]local_task_id = [3]local_task_id
+  {@get_local_task_id(11), @get_local_task_id(12), @get_local_task_id(13)};
+
+const tensor_type = fft_params.tensor_type;
+
+param callback: fn()void;
+
+// Problem size
+param N: u16;
+
+// Number of PEs in a row or column
+param WIDTH: u16;
+
+comptime {
+  // Validate parameters
+  @comptime_assert(N >= 4, "FFT size N must be at least 4");
+  @comptime_assert(N & (N-1) == 0, "FFT size N must be a power of 2");
+  @comptime_assert(WIDTH > 1, "Kernel width must be at least 2");
+  @comptime_assert(WIDTH & (WIDTH-1) == 0, "Kernel width must be a power of 2");
+}
+
+// Number of pencils in each dimension
+const T: u16 = N/WIDTH;
+
+const ELEM_SIZE: u16 = 2; // 2 for real and imaginary components
+const WORDS_PER_ELEM: u16 = if (tensor_type == f16) 1 else 2;
+
+// Depth of the array of Bricks of T*T
+const DEPTH = N / T; // = WIDTH
+// Length of the Pencil array of elements (complex numbers)
+const PENCIL_ELEMS = N; // = DEPTH*T
+const PENCIL_LEN = PENCIL_ELEMS * ELEM_SIZE;
+const NUM_PENCILS = T*T;
+
+// Local Tensor
+const BRICK_ELEMS = T*T*T;
+const BRICK_LEN: i16 = @as(i16, BRICK_ELEMS*ELEM_SIZE);
+const ARRAY_LEN = DEPTH*@as(u16, BRICK_LEN); // 2 as complex+real
+
+// Workspace
+var twiddle_array = @zeros([N*ELEM_SIZE]tensor_type);
+var ptr_twiddle : [*]tensor_type = &twiddle_array;
+
+var fft_wkspc = @zeros([PENCIL_LEN]tensor_type);
+var ptr_fft_wkspc : [*]tensor_type = &fft_wkspc;
+
+const transpose_mod = @import_module("<kernels/fft/fft_internal/transpose>", .{
+  .LR_color = colors[0],
+  .RL_color = colors[1],
+  .sync_id = local_task_ids[0],
+  .transposeLR_id = local_task_ids[1],
+  .transposeRL_id = local_task_ids[2],
+  .LR_recv_iq = iq_ids[0],
+  .RL_recv_iq = iq_ids[1],
+  .LR_send_oq = oq_ids[0],
+  .RL_send_oq = oq_ids[1],
+  .LR_ut_id = ut_ids[0],
+  .RL_ut_id = ut_ids[1],
+  .src0_dsr_0 = @get_dsr(dsr_src0, dsr_ids[0]),
+  .src1_dsr_0 = @get_dsr(dsr_src1, dsr_ids[0]),
+  .dest_dsr_0 = @get_dsr(dsr_dest, dsr_ids[0]),
+  .src0_dsr_1 = @get_dsr(dsr_src0, dsr_ids[1]),
+  .src1_dsr_1 = @get_dsr(dsr_src1, dsr_ids[1]),
+  .dest_dsr_1 = @get_dsr(dsr_dest, dsr_ids[1]),
+  .callback = transpose_cb,
+  .DEPTH = DEPTH,
+  .BRICK_ELEMS = BRICK_ELEMS,
+  .WORDS_PER_ELEM = WORDS_PER_ELEM,
+  .T = T,
+  .firstPE = fft_params.first_pe,
+  .secondPE = fft_params.second_pe,
+  .secondToLastPE = fft_params.second_to_last_pe,
+  .lastPE = fft_params.last_pe,
+  .v_firstPE = fft_params.v_first_pe,
+  .v_secondPE = fft_params.v_second_pe,
+  .v_secondToLastPE = fft_params.v_second_to_last_pe,
+  .v_lastPE = fft_params.v_last_pe,
+
+  .tensor_type = tensor_type,
+  .WIDTH = WIDTH,
+});
+
+var ptr_X : [*]tensor_type;
+var ptr_Xaux : [*]tensor_type;
+
+const fft = @import_module("<kernels/fft/fft_internal/fft>", .{
+  .N = N,
+  .tensor_type = tensor_type,
+  .ws_mode = false,
+  .NUM_PENCILS = NUM_PENCILS,
+
+  .X_s0_dsr      = @get_dsr(dsr_src0, dsr_ids[0]),
+  .Xaux_dest_dsr = @get_dsr(dsr_dest, dsr_ids[0]),
+  .imag_s0_dsr   = @get_dsr(dsr_src0, dsr_ids[1]),
+  .imag_src_dsr  = @get_dsr(dsr_src1, dsr_ids[1]),
+  .imag_dst_dsr  = @get_dsr(dsr_dest, dsr_ids[1]),
+  .real_s0_dsr   = @get_dsr(dsr_src0, dsr_ids[2]),
+  .real_src_dsr  = @get_dsr(dsr_src1, dsr_ids[2]),
+  .real_dst_dsr  = @get_dsr(dsr_dest, dsr_ids[2]),
+});
+
+var inv_mode: bool;
+var norm: fft.fft_normalization = fft.fft_normalization.backward;
+var transpose_cnt: u16 = 0;
+
+const data_xdsr = @get_xdsr(0);
+const sr1 = @get_sr(0);
+const sr2 = @get_sr(1);
+const sr3 = @get_sr(2);
+
+fn fftDriver(data: [*]tensor_type, wkspc: [*]tensor_type, anorm: fft.fft_normalization) void {
+  norm = anorm;
+
+  if (transpose_cnt < 3) {
+    const wkspc_extent = if (f16 == tensor_type) PENCIL_ELEMS else PENCIL_LEN;
+    var fft_wkspc_dsd = @get_dsd(mem1d_dsd, .{ .base_address = ptr_fft_wkspc, .extent = wkspc_extent });
+    var data_dsd = if (f16 == tensor_type)
+        @get_dsd(mem1d_dsd, .{ .base_address = data, .extent = PENCIL_ELEMS, .stride = NUM_PENCILS })
+      else
+        @get_dsd(mem4d_dsd, .{ .base_address = data,
+                 .extent = .{PENCIL_ELEMS, ELEM_SIZE}, .stride = .{1, NUM_PENCILS*ELEM_SIZE - 1}});
+
+    for (@range(u16, NUM_PENCILS)) |p| {
+      const src1_dsr = @get_dsr(dsr_src1, dsr_ids[0]);
+      const dest_dsr = @get_dsr(dsr_dest, dsr_ids[0]);
+      @load_to_dsr(dest_dsr, fft_wkspc_dsd);
+      if (f16 == tensor_type) {
+        @load_to_dsr(src1_dsr, data_dsd);
+      } else {
+        @load_to_dsr_xdsr_sr(src1_dsr, data_xdsr, .{sr1, sr2, sr3}, data_dsd);
+      }
+      @fmovs(dest_dsr, src1_dsr);
+
+      if (inv_mode) {
+        fft.ifft(&fft_wkspc, wkspc, &twiddle_array, norm);
+      } else {
+        fft.fft( &fft_wkspc, wkspc, &twiddle_array, norm);
+      }
+
+      if (f16 == tensor_type) {
+        @load_to_dsr(dest_dsr, data_dsd);
+      } else {
+        @load_to_dsr_xdsr_sr(dest_dsr, data_xdsr, .{sr1, sr2, sr3}, data_dsd);
+      }
+      @load_to_dsr(src1_dsr, fft_wkspc_dsd);
+      @fmovs(dest_dsr, src1_dsr);
+
+      data_dsd = @increment_dsd_offset(data_dsd, ELEM_SIZE, tensor_type);
+    }
+  }
+
+  transpose_cnt += 1;
+  if (transpose_cnt < 2) {
+    transpose_mod.transpose_start(data, false, true);
+  } else if (transpose_cnt < 3) {
+    transpose_mod.transpose_start(data, true, true);
+  } else if (transpose_cnt < 4) {
+    transpose_mod.transpose_start(data, true, false);
+  } else if (transpose_cnt < 5) {
+    transpose_mod.transpose_start(data, false, false);
+  } else {
+    transpose_cnt = 0;
+    //user callback
+    callback();
+  }
+}
+
+fn transpose_cb() void {
+  fftDriver(ptr_X, ptr_Xaux, norm);
+}
+
+fn csfftExecR2C(idata: [*]tensor_type, odata: [*]tensor_type, wkspc: [*]tensor_type, anorm: fft.fft_normalization) void {
+  const fft_direction = fft.fft_direction.CSFFT_FORWARD;
+  //embed input into complex array
+
+  ptr_X = idata;
+  ptr_Xaux = wkspc;
+
+  inv_mode = false;
+  fftDriver(idata, wkspc, anorm);
+}
+
+fn csfftExecC2R(idata: [*]tensor_type, odata: [*]tensor_type, wkspc: [*]tensor_type, anorm: fft.fft_normalization) void {
+  const fft_direction = fft.fft_direction.CSFFT_INVERSE;
+  inv_mode = true;
+  ptr_X = idata;
+  ptr_Xaux = wkspc;
+
+  fftDriver(idata, wkspc, anorm);
+  //convert output to real
+}
+
+fn csfftExecC2C(idata: [*]tensor_type, odata: [*]tensor_type, wkspc: [*]tensor_type, anorm: fft.fft_normalization, fft_direction: fft.fft_direction) void {
+  inv_mode = fft_direction == fft.fft_direction.CSFFT_INVERSE;
+  ptr_X = idata;
+  ptr_Xaux = wkspc;
+  fftDriver(idata, wkspc, anorm);
+}

@@ -1,0 +1,11 @@
+{
+  "project": "sdk_examples",
+  "kernel": "power_method",
+  "origins": [
+    "benchmarks/power-method/src/kernel_power.csl"
+  ],
+  "fixture": "power",
+  "contract": "Eight original SpMV/norm/scale iterations, supplied initial vector; tridiagonal operator. No converged-eigenvector claim.",
+  "partitions": 1,
+  "status": "source_ready"
+}

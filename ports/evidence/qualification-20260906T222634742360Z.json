@@ -1,0 +1,2395 @@
+{
+  "kind": "qualification_index_of_existing_sdk_runs",
+  "sdk": true,
+  "success": true,
+  "new_sdk_execution": false,
+  "source_controls": [
+    {
+      "path": "evidence/rms-math-exhaustive-analysis-20260906T2151Z.json",
+      "sha256": "42b2a90f821468dd60631bd8fde92dcb80bead89579ea9bd6af6f885492733e1"
+    },
+    {
+      "path": "evidence/rms64x128-counter-source-comparison.json",
+      "sha256": "4758513d141583676dc6d5be927d521c28c324042e90b0f5cf3a3dafb4ad0d5e"
+    },
+    {
+      "path": "evidence/rms64x128-instrumentation-comparison.json",
+      "sha256": "10ed67d5fe7f975bb1bb99ecb9be5d4ae4fe977eb0bf894bc0e98a908db2fcba"
+    }
+  ],
+  "cases": [
+    {
+      "key": "waferllm/rmsnorm_64x128_8x8",
+      "artifact": "projects/waferllm/rmsnorm_64x128_8x8/run-20260906T214556543689Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_rms.v1",
+        "epochs": 6,
+        "actors": 64,
+        "instrumentation": "counters",
+        "internal_half_observations": 0,
+        "cases": [
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.00043548812718574164,
+            "standard_max_abs": 0.0016105651428113266,
+            "max_local_cycles": 1470,
+            "cycles_per_pe": [
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0003908398631490752,
+            "standard_max_abs": 0.0007723170111555433,
+            "max_local_cycles": 1475,
+            "cycles_per_pe": [
+              [
+                1475,
+                1471,
+                1467,
+                1463,
+                1449,
+                1459,
+                1459,
+                1459
+              ],
+              [
+                1474,
+                1470,
+                1466,
+                1462,
+                1448,
+                1458,
+                1458,
+                1458
+              ],
+              [
+                1475,
+                1471,
+                1467,
+                1463,
+                1449,
+                1459,
+                1459,
+                1459
+              ],
+              [
+                1474,
+                1470,
+                1466,
+                1462,
+                1448,
+                1458,
+                1458,
+                1458
+              ],
+              [
+                1475,
+                1471,
+                1467,
+                1463,
+                1449,
+                1459,
+                1459,
+                1459
+              ],
+              [
+                1474,
+                1470,
+                1466,
+                1462,
+                1448,
+                1458,
+                1458,
+                1458
+              ],
+              [
+                1475,
+                1471,
+                1467,
+                1463,
+                1449,
+                1459,
+                1459,
+                1459
+              ],
+              [
+                1474,
+                1470,
+                1466,
+                1462,
+                1448,
+                1458,
+                1458,
+                1458
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0003932505243047122,
+            "standard_max_abs": 0.0018878242661775069,
+            "max_local_cycles": 1470,
+            "cycles_per_pe": [
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0,
+            "standard_max_abs": 0.0,
+            "max_local_cycles": 1470,
+            "cycles_per_pe": [
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.006116081533260906,
+            "standard_max_abs": 0.0014567984629690889,
+            "max_local_cycles": 1470,
+            "cycles_per_pe": [
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0005245558177816116,
+            "standard_max_abs": 0.0018813831509234547,
+            "max_local_cycles": 1470,
+            "cycles_per_pe": [
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ],
+              [
+                1470,
+                1466,
+                1462,
+                1458,
+                1444,
+                1454,
+                1454,
+                1454
+              ]
+            ]
+          }
+        ],
+        "scope": "WSE3 SDK simulator; correct row RMSNorm with half source-order accumulation and SDK sqrt. No full Prefill/Decode or hardware throughput claim.",
+        "acceptance": {
+          "relative_l2": 0.01,
+          "peak_scaled_max_abs": 0.015
+        }
+      },
+      "native_application_checks": [
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0002101156150036492,
+          "max_abs_error": 0.0004879201260514776,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0001958423097368027,
+          "max_abs_error": 0.0004228554277387886,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.000202086278662609,
+          "max_abs_error": 0.0004881786746122607,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00011956411661067509,
+          "max_abs_error": 4.074806279316667e-05,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00020538154164040742,
+          "max_abs_error": 0.0004852764051983538,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        }
+      ],
+      "native_application_source": "native-output.txt: actual C++ executable stdout, independent math.fsum recheck",
+      "device_application_checks": [
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00043548812718574174,
+          "max_abs_error": 0.0016105651428113266,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0003908398631490754,
+          "max_abs_error": 0.0007723170111555433,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0003932505243047122,
+          "max_abs_error": 0.0018878242661775069,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.006116081533260902,
+          "max_abs_error": 0.0014567984629690889,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0005245558177816116,
+          "max_abs_error": 0.0018813831509234547,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        }
+      ],
+      "qualification_sha256": "31f69b516fb3c1984018e200ab72711115da0736ee75a622c4c442a975ceaf24",
+      "results_sha256": "39db37889e7233e782998e8dc51e619c6174435266e50c5947e40b3714bef6bd",
+      "numerical_validation": {
+        "contract": "rms-half-normwise-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "relative_l2_limit": 0.01,
+        "max_error_over_reference_peak_limit": 0.015,
+        "zero_reference_requires_exact_zero": true,
+        "per_component_accuracy_not_implied": true
+      }
+    },
+    {
+      "key": "waferllm/rmsnorm_128x1024_8x8",
+      "artifact": "projects/waferllm/rmsnorm_128x1024_8x8/run-20260906T214324267081Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_rms.v1",
+        "epochs": 6,
+        "actors": 64,
+        "instrumentation": "sampled",
+        "internal_half_observations": 18432,
+        "cases": [
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0005860050780731704,
+            "standard_max_abs": 0.0025588269154481758,
+            "max_local_cycles": 7385,
+            "cycles_per_pe": [
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.003035423196005643,
+            "standard_max_abs": 0.007571020150172192,
+            "max_local_cycles": 7394,
+            "cycles_per_pe": [
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7365,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7365,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7365,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7365,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7365,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7365,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7365,
+                7378,
+                7378,
+                7378
+              ],
+              [
+                7394,
+                7390,
+                7386,
+                7382,
+                7365,
+                7378,
+                7378,
+                7378
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0005587057832729147,
+            "standard_max_abs": 0.0025891634440207145,
+            "max_local_cycles": 7385,
+            "cycles_per_pe": [
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0,
+            "standard_max_abs": 0.0,
+            "max_local_cycles": 7385,
+            "cycles_per_pe": [
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.006115985778831972,
+            "standard_max_abs": 0.0014567984629690889,
+            "max_local_cycles": 7385,
+            "cycles_per_pe": [
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0005427847244884248,
+            "standard_max_abs": 0.0023884036390255936,
+            "max_local_cycles": 7385,
+            "cycles_per_pe": [
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ],
+              [
+                7385,
+                7381,
+                7377,
+                7373,
+                7356,
+                7369,
+                7369,
+                7369
+              ]
+            ]
+          }
+        ],
+        "scope": "WSE3 SDK simulator; correct row RMSNorm with half source-order accumulation and SDK sqrt. No full Prefill/Decode or hardware throughput claim.",
+        "acceptance": {
+          "relative_l2": 0.01,
+          "peak_scaled_max_abs": 0.015
+        }
+      },
+      "native_application_checks": [
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00020814749104731923,
+          "max_abs_error": 0.00048825834966659265,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00019465992916421366,
+          "max_abs_error": 0.0004228554277387886,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00020094421802202924,
+          "max_abs_error": 0.0004882599213600347,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00011960383534913959,
+          "max_abs_error": 4.074806279316667e-05,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00021025483108632327,
+          "max_abs_error": 0.00048826941929647205,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        }
+      ],
+      "native_application_source": "native-output.txt: actual C++ executable stdout, independent math.fsum recheck",
+      "device_application_checks": [
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0005860050780731706,
+          "max_abs_error": 0.0025588269154481758,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0030354231960056433,
+          "max_abs_error": 0.007571020150172192,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0005587057832729148,
+          "max_abs_error": 0.0025891634440207145,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00611598577883197,
+          "max_abs_error": 0.0014567984629690889,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0005427847244884247,
+          "max_abs_error": 0.0023884036390255936,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        }
+      ],
+      "qualification_sha256": "274e773d44abe0aad66b1074e533c634062623ae3b997e73842fb22273706219",
+      "results_sha256": "f0faabf4f84b4c0175c44d55359fde35bbbe6ff6b86c12c33a6d69da4ac8cbd7",
+      "numerical_validation": {
+        "contract": "rms-half-normwise-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "relative_l2_limit": 0.01,
+        "max_error_over_reference_peak_limit": 0.015,
+        "zero_reference_requires_exact_zero": true,
+        "per_component_accuracy_not_implied": true
+      }
+    },
+    {
+      "key": "waferllm/rmsnorm_128x2048_8x16",
+      "artifact": "projects/waferllm/rmsnorm_128x2048_8x16/run-20260906T214710421604Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_rms.v1",
+        "epochs": 6,
+        "actors": 128,
+        "instrumentation": "sampled",
+        "internal_half_observations": 36864,
+        "cases": [
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0005229921398715096,
+            "standard_max_abs": 0.002357731447735212,
+            "max_local_cycles": 7445,
+            "cycles_per_pe": [
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.003058116209452577,
+            "standard_max_abs": 0.007571020150172192,
+            "max_local_cycles": 7454,
+            "cycles_per_pe": [
+              [
+                7454,
+                7450,
+                7446,
+                7442,
+                7438,
+                7434,
+                7430,
+                7426,
+                7409,
+                7422,
+                7422,
+                7422,
+                7422,
+                7422,
+                7422,
+                7422
+              ],
+              [
+                7454,
+                7450,
+                7446,
+                7442,
+                7438,
+                7434,
+                7430,
+                7426,
+                7409,
+                7422,
+                7422,
+                7422,
+                7422,
+                7422,
+                7422,
+                7422
+              ],
+              [
+                7454,
+                7450,
+                7446,
+                7442,
+                7438,
+                7434,
+                7430,
+                7426,
+                7409,
+                7422,
+                7422,
+                7422,
+                7422,
+                7422,
+                7422,
+                7422
+              ],
+              [
+                7454,
+                7450,
+                7446,
+                7442,
+                7438,
+                7434,
+                7430,
+                7426,
+                7409,
+                7422,
+                7422,
+                7422,
+                7422,
+                7422,
+                7422,
+                7422
+              ],
+              [
+                7454,
+                7450,
+                7446,
+                7442,
+                7438,
+                7434,
+                7430,
+                7426,
+                7409,
+                7422,
+                7422,
+                7422,
+                7422,
+                7422,
+                7422,
+                7422
+              ],
+              [
+                7454,
+                7450,
+                7446,
+                7442,
+                7438,
+                7434,
+                7430,
+                7426,
+                7409,
+                7422,
+                7422,
+                7422,
+                7422,
+                7422,
+                7422,
+                7422
+              ],
+              [
+                7454,
+                7450,
+                7446,
+                7442,
+                7438,
+                7434,
+                7430,
+                7426,
+                7409,
+                7422,
+                7422,
+                7422,
+                7422,
+                7422,
+                7422,
+                7422
+              ],
+              [
+                7454,
+                7450,
+                7446,
+                7442,
+                7438,
+                7434,
+                7430,
+                7426,
+                7409,
+                7422,
+                7422,
+                7422,
+                7422,
+                7422,
+                7422,
+                7422
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0004930866349049125,
+            "standard_max_abs": 0.0024562356129582685,
+            "max_local_cycles": 7445,
+            "cycles_per_pe": [
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0,
+            "standard_max_abs": 0.0,
+            "max_local_cycles": 7445,
+            "cycles_per_pe": [
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.006116081533260931,
+            "standard_max_abs": 0.0014567984629690889,
+            "max_local_cycles": 7445,
+            "cycles_per_pe": [
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0004958241712293141,
+            "standard_max_abs": 0.002753747271471596,
+            "max_local_cycles": 7445,
+            "cycles_per_pe": [
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ],
+              [
+                7445,
+                7441,
+                7437,
+                7433,
+                7429,
+                7425,
+                7421,
+                7417,
+                7400,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413,
+                7413
+              ]
+            ]
+          }
+        ],
+        "scope": "WSE3 SDK simulator; correct row RMSNorm with half source-order accumulation and SDK sqrt. No full Prefill/Decode or hardware throughput claim.",
+        "acceptance": {
+          "relative_l2": 0.01,
+          "peak_scaled_max_abs": 0.015
+        }
+      },
+      "native_application_checks": [
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00020771693344101344,
+          "max_abs_error": 0.0004882363234675058,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0001945275555000356,
+          "max_abs_error": 0.0004228554277387886,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0002001762796783394,
+          "max_abs_error": 0.00048826020980907714,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00011956411661067509,
+          "max_abs_error": 4.074806279316667e-05,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00020981010293035548,
+          "max_abs_error": 0.00048825502230531725,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        }
+      ],
+      "native_application_source": "native-output.txt: actual C++ executable stdout, independent math.fsum recheck",
+      "device_application_checks": [
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0005229921398715097,
+          "max_abs_error": 0.002357731447735212,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0030581162094525808,
+          "max_abs_error": 0.007571020150172192,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0004930866349049125,
+          "max_abs_error": 0.0024562356129582685,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.006116081533260902,
+          "max_abs_error": 0.0014567984629690889,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0004958241712293142,
+          "max_abs_error": 0.002753747271471596,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        }
+      ],
+      "qualification_sha256": "317555ac4a94f95568920b9e06c4349e3674740a5c3d16b38e731d161876136f",
+      "results_sha256": "07e38420a635b6b7124deb53a63e8181fe44a0ce9dad11294c5a013d4bfe6b05",
+      "numerical_validation": {
+        "contract": "rms-half-normwise-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "relative_l2_limit": 0.01,
+        "max_error_over_reference_peak_limit": 0.015,
+        "zero_reference_requires_exact_zero": true,
+        "per_component_accuracy_not_implied": true
+      }
+    }
+  ]
+}

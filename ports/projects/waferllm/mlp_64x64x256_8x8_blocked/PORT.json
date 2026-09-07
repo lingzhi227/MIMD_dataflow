@@ -1,0 +1,13 @@
+{
+  "project": "waferllm",
+  "kernel": "mlp_64x64x256_8x8_blocked",
+  "origins": [
+    "Prefill/src/prefill.csl z1_matmul/z2_matmul/z3_comp/h2_matmul"
+  ],
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "status": "source_ready",
+  "partitions": 1,
+  "contract": "Resident supplied bounded X/U/G/D rectangular gated MLP 64x64\u2192256\u219264 on 8x8 PEs. Typed three-matmul/SiLU/multiply graph; forward aligned two-hop projections, explicit gate-left carry, joined task resources, SDK map/DSR gating, immutable inputs and last-use buffer reuse. No intermediate host transfer. 8 SDK calls, exact target outputs; sampled mode additionally observes projection prefixes/gate/hidden/first operands, counter mode omits half intermediate-prefix observations (blocked mode retains final f32 accumulator readout). Corruption rejection, actual C++/device independent fsum/exp checks, matched adapted-source control and static ELF memory. No RMS/residual/full-model or hardware claim. Explicit half partials per physical K block, float32 merge and final half rounding; exact f32 accumulator snapshots, cross-block cancellation and subsequent warm-zero reset. Source control shares the precision library; independent original-input math remains separate.",
+  "fixture": "mlp_blocked:64:64:256:8",
+  "instrumentation": "sampled"
+}

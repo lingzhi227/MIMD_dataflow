@@ -1,0 +1,10 @@
+{
+  "vector_artifact": "csl-hls/ports/projects/sdk_examples/resident_stencil_2x2x32_t4/run-20260906T081445392252Z",
+  "scalar_artifact": "csl-hls/ports/projects/sdk_examples/resident_stencil_2x2x32_t4_scalar/run-20260906T081445392252Z",
+  "vector_cycles": 28377,
+  "scalar_cycles": 55603,
+  "scalar_over_vector": 1.9594389822743772,
+  "same_inputs": true,
+  "all_step_float_bits_identical": true,
+  "scope": "Total SDK simulator cycles including host IO and full history instrumentation. Same DSD communication, different compute lowering. Not a comparison with hand-written SDK stencil or a hardware performance result."
+}

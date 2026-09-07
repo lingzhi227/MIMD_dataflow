@@ -1,0 +1,398 @@
+{
+  "passed": true,
+  "new_sdk_execution": false,
+  "source_bundle": "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/projects/waferllm/attention_64x128_8x8/run-20260907T032800549283Z",
+  "results_sha256": "6db49862ffffdf29ddf1ecdb3e8da450dede64d6faa1d03d7254a4546895f0e0",
+  "mutations": [
+    {
+      "name": "coherent_output",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 8192 (0.0122%)\nMismatch at index:\n [0, 0]: 9265 (ACTUAL), 9264 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.00010794\n ACTUAL: array([[ 9265, 42546, 40617, ..., 40498,  6716, 42771],\n       [ 9256, 42528, 40654, ..., 40475,  6712, 42790],\n       [ 9241, 42566, 40654, ..., 40493,  6728, 42773],...\n DESIRED: array([[ 9264, 42546, 40617, ..., 40498,  6716, 42771],\n       [ 9256, 42528, 40654, ..., 40475,  6712, 42790],\n       [ 9241, 42566, 40654, ..., 40493,  6728, 42773],..."
+    },
+    {
+      "name": "changed_qk_warm",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 8192 (0.0122%)\nMismatch at index:\n [0, 0]: 7795 (ACTUAL), 7794 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.0001283\n ACTUAL: array([[ 7795,  8906, 41494, ..., 42150, 10209,  7270],\n       [ 7859,  8439, 41666, ..., 42062, 10313,  7503],\n       [ 8053,  8885, 41544, ..., 42160, 10280,  7703],...\n DESIRED: array([[ 7794,  8906, 41494, ..., 42150, 10209,  7270],\n       [ 7859,  8439, 41666, ..., 42062, 10313,  7503],\n       [ 8053,  8885, 41544, ..., 42160, 10280,  7703],..."
+    },
+    {
+      "name": "zero_value_warm",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 8192 (0.0122%)\nMismatch at index:\n [0, 0]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACTUAL: array([[1, 0, 0, ..., 0, 0, 0],\n       [0, 0, 0, ..., 0, 0, 0],\n       [0, 0, 0, ..., 0, 0, 0],...\n DESIRED: array([[0, 0, 0, ..., 0, 0, 0],\n       [0, 0, 0, ..., 0, 0, 0],\n       [0, 0, 0, ..., 0, 0, 0],..."
+    },
+    {
+      "name": "immutable_q",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 8192 (0.0122%)\nMismatch at index:\n [0, 0, 0]: 15361 (ACTUAL), 15360 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 6.51041667e-05\n ACTUAL: array([[[15361,     0,     0, ...,     0,     0,     0],\n        [    0,     0,     0, ...,     0,     0,     0],\n        [    0,     0,     0, ...,     0,     0,     0],...\n DESIRED: array([[[15360,     0,     0, ...,     0,     0,     0],\n        [    0,     0,     0, ...,     0,     0,     0],\n        [    0,     0,     0, ...,     0,     0,     0],..."
+    },
+    {
+      "name": "immutable_k",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 8192 (0.0122%)\nMismatch at index:\n [0, 0, 0]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACTUAL: array([[[1, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],...\n DESIRED: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],..."
+    },
+    {
+      "name": "missing_round",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 192 (0.521%)\nMismatch at index:\n [0, 0, 0]: 9 (ACTUAL), 8 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.125\n ACTUAL: array([[[9, 1, 1],\n        [8, 1, 1],\n        [8, 1, 1],...\n DESIRED: array([[[8, 1, 1],\n        [8, 1, 1],\n        [8, 1, 1],..."
+    },
+    {
+      "name": "wrong_root_count",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 192 (0.521%)\nMismatch at index:\n [0, 0, 1]: 0 (ACTUAL), 1 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 1.\n ACTUAL: array([[[8, 0, 1],\n        [8, 1, 1],\n        [8, 1, 1],...\n DESIRED: array([[[8, 1, 1],\n        [8, 1, 1],\n        [8, 1, 1],..."
+    },
+    {
+      "name": "stale_epoch",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 192 (0.521%)\nMismatch at index:\n [0, 0, 2]: 3 (ACTUAL), 2 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.5\n ACTUAL: array([[[8, 1, 3],\n        [8, 1, 2],\n        [8, 1, 2],...\n DESIRED: array([[[8, 1, 2],\n        [8, 1, 2],\n        [8, 1, 2],..."
+    },
+    {
+      "name": "undrained_queue",
+      "rejected": true,
+      "error": "score owned queues drained"
+    },
+    {
+      "name": "missing_call",
+      "rejected": true,
+      "error": "score lifecycle"
+    },
+    {
+      "name": "bad_timestamp",
+      "rejected": true,
+      "error": "score bounded timestamps"
+    },
+    {
+      "name": "root_round_0",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 512 (0.195%)\nMismatch at index:\n [0, 0, 0]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACTUAL: array([[[1, 1, 3, 5, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],...\n DESIRED: array([[[0, 1, 3, 5, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],..."
+    },
+    {
+      "name": "partial_round_0",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 32768 (0.00305%)\nMismatch at index:\n [0, 0, 0]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACTUAL: array([[[1, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],...\n DESIRED: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],..."
+    },
+    {
+      "name": "owner_round_0",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 65536 (0.00153%)\nMismatch at index:\n [0, 0, 0]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACTUAL: array([[[1, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],...\n DESIRED: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],..."
+    },
+    {
+      "name": "root_round_1",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 512 (0.195%)\nMismatch at index:\n [0, 0, 1]: 0 (ACTUAL), 1 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 1.\n ACTUAL: array([[[0, 0, 3, 5, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],...\n DESIRED: array([[[0, 1, 3, 5, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],..."
+    },
+    {
+      "name": "partial_round_1",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 32768 (0.00305%)\nMismatch at index:\n [0, 0, 64]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACTUAL: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],...\n DESIRED: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],..."
+    },
+    {
+      "name": "owner_round_1",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 65536 (0.00153%)\nMismatch at index:\n [0, 0, 128]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACTUAL: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],...\n DESIRED: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],..."
+    },
+    {
+      "name": "root_round_2",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 512 (0.195%)\nMismatch at index:\n [0, 0, 2]: 2 (ACTUAL), 3 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.33333333\n ACTUAL: array([[[0, 1, 2, 5, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],...\n DESIRED: array([[[0, 1, 3, 5, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],..."
+    },
+    {
+      "name": "partial_round_2",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 32768 (0.00305%)\nMismatch at index:\n [0, 0, 128]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACTUAL: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],...\n DESIRED: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],..."
+    },
+    {
+      "name": "owner_round_2",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 65536 (0.00153%)\nMismatch at index:\n [0, 0, 256]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACTUAL: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],...\n DESIRED: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],..."
+    },
+    {
+      "name": "root_round_3",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 512 (0.195%)\nMismatch at index:\n [0, 0, 3]: 4 (ACTUAL), 5 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.2\n ACTUAL: array([[[0, 1, 3, 4, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],...\n DESIRED: array([[[0, 1, 3, 5, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],..."
+    },
+    {
+      "name": "partial_round_3",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 32768 (0.00305%)\nMismatch at index:\n [0, 0, 192]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACTUAL: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],...\n DESIRED: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],..."
+    },
+    {
+      "name": "owner_round_3",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 65536 (0.00153%)\nMismatch at index:\n [0, 0, 384]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACTUAL: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],...\n DESIRED: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],..."
+    },
+    {
+      "name": "root_round_4",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 512 (0.195%)\nMismatch at index:\n [0, 0, 4]: 6 (ACTUAL), 7 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.14285714\n ACTUAL: array([[[0, 1, 3, 5, 6, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],...\n DESIRED: array([[[0, 1, 3, 5, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],..."
+    },
+    {
+      "name": "partial_round_4",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 32768 (0.00305%)\nMismatch at index:\n [0, 0, 256]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACTUAL: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],...\n DESIRED: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],..."
+    },
+    {
+      "name": "owner_round_4",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 65536 (0.00153%)\nMismatch at index:\n [0, 0, 512]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACTUAL: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],...\n DESIRED: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],..."
+    },
+    {
+      "name": "root_round_5",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 512 (0.195%)\nMismatch at index:\n [0, 0, 5]: 7 (ACTUAL), 6 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.16666667\n ACTUAL: array([[[0, 1, 3, 5, 7, 7, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],...\n DESIRED: array([[[0, 1, 3, 5, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],..."
+    },
+    {
+      "name": "partial_round_5",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 32768 (0.00305%)\nMismatch at index:\n [0, 0, 320]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACTUAL: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],...\n DESIRED: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],..."
+    },
+    {
+      "name": "owner_round_5",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 65536 (0.00153%)\nMismatch at index:\n [0, 0, 640]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACTUAL: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],...\n DESIRED: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],..."
+    },
+    {
+      "name": "root_round_6",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 512 (0.195%)\nMismatch at index:\n [0, 0, 6]: 5 (ACTUAL), 4 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.25\n ACTUAL: array([[[0, 1, 3, 5, 7, 6, 5, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],...\n DESIRED: array([[[0, 1, 3, 5, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],..."
+    },
+    {
+      "name": "partial_round_6",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 32768 (0.00305%)\nMismatch at index:\n [0, 0, 384]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACTUAL: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],...\n DESIRED: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],..."
+    },
+    {
+      "name": "owner_round_6",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 65536 (0.00153%)\nMismatch at index:\n [0, 0, 768]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACTUAL: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],...\n DESIRED: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],..."
+    },
+    {
+      "name": "root_round_7",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 512 (0.195%)\nMismatch at index:\n [0, 0, 7]: 3 (ACTUAL), 2 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.5\n ACTUAL: array([[[0, 1, 3, 5, 7, 6, 4, 3],\n        [0, 1, 3, 5, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],...\n DESIRED: array([[[0, 1, 3, 5, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],\n        [0, 1, 3, 5, 7, 6, 4, 2],..."
+    },
+    {
+      "name": "partial_round_7",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 32768 (0.00305%)\nMismatch at index:\n [0, 0, 448]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACTUAL: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],...\n DESIRED: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],..."
+    },
+    {
+      "name": "owner_round_7",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 65536 (0.00153%)\nMismatch at index:\n [0, 0, 896]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACTUAL: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],...\n DESIRED: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],..."
+    },
+    {
+      "name": "softmax_phase_0",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 384 (0.26%)\nMismatch at index:\n [0, 0, 0]: 0 (ACTUAL), 1 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 1.\n ACTUAL: array([[[0, 1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1, 1],...\n DESIRED: array([[[1, 1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1, 1],..."
+    },
+    {
+      "name": "softmax_phase_1",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 384 (0.26%)\nMismatch at index:\n [0, 0, 1]: 0 (ACTUAL), 1 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 1.\n ACTUAL: array([[[1, 0, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1, 1],...\n DESIRED: array([[[1, 1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1, 1],..."
+    },
+    {
+      "name": "softmax_phase_2",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 384 (0.26%)\nMismatch at index:\n [0, 0, 2]: 0 (ACTUAL), 1 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 1.\n ACTUAL: array([[[1, 1, 0, 1, 1, 1],\n        [1, 1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1, 1],...\n DESIRED: array([[[1, 1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1, 1],..."
+    },
+    {
+      "name": "softmax_phase_3",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 384 (0.26%)\nMismatch at index:\n [0, 0, 3]: 0 (ACTUAL), 1 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 1.\n ACTUAL: array([[[1, 1, 1, 0, 1, 1],\n        [1, 1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1, 1],...\n DESIRED: array([[[1, 1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1, 1],..."
+    },
+    {
+      "name": "softmax_phase_4",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 384 (0.26%)\nMismatch at index:\n [0, 0, 4]: 0 (ACTUAL), 1 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 1.\n ACTUAL: array([[[1, 1, 1, 1, 0, 1],\n        [1, 1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1, 1],...\n DESIRED: array([[[1, 1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1, 1],..."
+    },
+    {
+      "name": "softmax_phase_5",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 384 (0.26%)\nMismatch at index:\n [0, 0, 5]: 0 (ACTUAL), 1 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 1.\n ACTUAL: array([[[1, 1, 1, 1, 1, 0],\n        [1, 1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1, 1],...\n DESIRED: array([[[1, 1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1, 1],..."
+    },
+    {
+      "name": "wrong_logits",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 4096 (0.0244%)\nMismatch at index:\n [0, 0, 0]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACTUAL: array([[[1, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],...\n DESIRED: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],..."
+    },
+    {
+      "name": "wrong_exponents",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 4096 (0.0244%)\nMismatch at index:\n [0, 0, 0]: 15186 (ACTUAL), 15187 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 6.58457892e-05\n ACTUAL: array([[[15186, 15187, 15187, ..., 15187, 15187, 15187],\n        [15187, 15187, 15187, ..., 15187, 15187, 15187],\n        [15187, 15187, 15187, ..., 15187, 15187, 15187],...\n DESIRED: array([[[15187, 15187, 15187, ..., 15187, 15187, 15187],\n        [15187, 15187, 15187, ..., 15187, 15187, 15187],\n        [15187, 15187, 15187, ..., 15187, 15187, 15187],..."
+    },
+    {
+      "name": "softmax_stat_0",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 2560 (0.0391%)\nMismatch at index:\n [0, 0, 0]: 11689 (ACTUAL), 11688 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 8.55578371e-05\n ACTUAL: array([[[11689, 11688, 11688, ...,  9309,  9309,  9309],\n        [    0,     0,     0, ...,  9309,  9309,  9309],\n        [    0,     0,     0, ...,  9309,  9309,  9309],...\n DESIRED: array([[[11688, 11688, 11688, ...,  9309,  9309,  9309],\n        [    0,     0,     0, ...,  9309,  9309,  9309],\n        [    0,     0,     0, ...,  9309,  9309,  9309],..."
+    },
+    {
+      "name": "softmax_stat_1",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 2560 (0.0391%)\nMismatch at index:\n [0, 0, 8]: 11689 (ACTUAL), 11688 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 8.55578371e-05\n ACTUAL: array([[[11688, 11688, 11688, ...,  9309,  9309,  9309],\n        [    0,     0,     0, ...,  9309,  9309,  9309],\n        [    0,     0,     0, ...,  9309,  9309,  9309],...\n DESIRED: array([[[11688, 11688, 11688, ...,  9309,  9309,  9309],\n        [    0,     0,     0, ...,  9309,  9309,  9309],\n        [    0,     0,     0, ...,  9309,  9309,  9309],..."
+    },
+    {
+      "name": "softmax_stat_2",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 2560 (0.0391%)\nMismatch at index:\n [0, 0, 16]: 18278 (ACTUAL), 18279 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 5.47075879e-05\n ACTUAL: array([[[11688, 11688, 11688, ...,  9309,  9309,  9309],\n        [    0,     0,     0, ...,  9309,  9309,  9309],\n        [    0,     0,     0, ...,  9309,  9309,  9309],...\n DESIRED: array([[[11688, 11688, 11688, ...,  9309,  9309,  9309],\n        [    0,     0,     0, ...,  9309,  9309,  9309],\n        [    0,     0,     0, ...,  9309,  9309,  9309],..."
+    },
+    {
+      "name": "softmax_stat_3",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 2560 (0.0391%)\nMismatch at index:\n [0, 0, 24]: 21333 (ACTUAL), 21332 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 4.68779299e-05\n ACTUAL: array([[[11688, 11688, 11688, ...,  9309,  9309,  9309],\n        [    0,     0,     0, ...,  9309,  9309,  9309],\n        [    0,     0,     0, ...,  9309,  9309,  9309],...\n DESIRED: array([[[11688, 11688, 11688, ...,  9309,  9309,  9309],\n        [    0,     0,     0, ...,  9309,  9309,  9309],\n        [    0,     0,     0, ...,  9309,  9309,  9309],..."
+    },
+    {
+      "name": "softmax_stat_4",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 2560 (0.0391%)\nMismatch at index:\n [0, 0, 32]: 9311 (ACTUAL), 9310 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.00010741\n ACTUAL: array([[[11688, 11688, 11688, ...,  9309,  9309,  9309],\n        [    0,     0,     0, ...,  9309,  9309,  9309],\n        [    0,     0,     0, ...,  9309,  9309,  9309],...\n DESIRED: array([[[11688, 11688, 11688, ...,  9309,  9309,  9309],\n        [    0,     0,     0, ...,  9309,  9309,  9309],\n        [    0,     0,     0, ...,  9309,  9309,  9309],..."
+    },
+    {
+      "name": "immutable_v",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 8192 (0.0122%)\nMismatch at index:\n [0, 0, 0]: 12108 (ACTUAL), 12109 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 8.25832026e-05\n ACTUAL: array([[[12108, 12423, 12720, ..., 43387, 43517, 45589],\n        [12616, 44572, 44394, ..., 12994, 44656, 45707],\n        [10548, 13150, 45893, ..., 12379, 12860, 45527],...\n DESIRED: array([[[12109, 12423, 12720, ..., 43387, 43517, 45589],\n        [12616, 44572, 44394, ..., 12994, 44656, 45707],\n        [10548, 13150, 45893, ..., 12379, 12860, 45527],..."
+    },
+    {
+      "name": "value_progress_0",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 4 (25%)\nMismatch at index:\n [0]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACTUAL: array([1, 0, 8, 2], dtype=uint16)\n DESIRED: array([0, 0, 8, 2])"
+    },
+    {
+      "name": "value_progress_1",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 4 (25%)\nMismatch at index:\n [1]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACTUAL: array([0, 1, 8, 2], dtype=uint16)\n DESIRED: array([0, 0, 8, 2])"
+    },
+    {
+      "name": "value_progress_2",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 4 (25%)\nMismatch at index:\n [2]: 9 (ACTUAL), 8 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.125\n ACTUAL: array([0, 0, 9, 2], dtype=uint16)\n DESIRED: array([0, 0, 8, 2])"
+    },
+    {
+      "name": "value_progress_3",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 4 (25%)\nMismatch at index:\n [3]: 3 (ACTUAL), 2 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.5\n ACTUAL: array([0, 0, 8, 3], dtype=uint16)\n DESIRED: array([0, 0, 8, 2])"
+    },
+    {
+      "name": "probability_before_destructive_alignment",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 4096 (0.0244%)\nMismatch at index:\n [0, 0, 0]: 9214 (ACTUAL), 9215 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.00010852\n ACTUAL: array([[[9214, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],...\n DESIRED: array([[[9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],..."
+    },
+    {
+      "name": "value_history_0",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 65536 (0.00153%)\nMismatch at index:\n [0, 0, 0]: 3033 (ACTUAL), 3032 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.00032982\n ACTUAL: array([[[ 3033,  2072, 34576, ...,  9458,  9450,  9468],\n        [ 8375,  8374,  8374, ..., 10280, 10285, 10289],\n        [41576, 41575, 41575, ...,  9350,  9318,  9347],...\n DESIRED: array([[[ 3032,  2072, 34576, ...,  9458,  9450,  9468],\n        [ 8375,  8374,  8374, ..., 10280, 10285, 10289],\n        [41576, 41575, 41575, ...,  9350,  9318,  9347],..."
+    },
+    {
+      "name": "value_left_0",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 32768 (0.00305%)\nMismatch at index:\n [0, 0, 0]: 9214 (ACTUAL), 9215 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.00010852\n ACTUAL: array([[[9214, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],...\n DESIRED: array([[[9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],..."
+    },
+    {
+      "name": "value_right_0",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 65536 (0.00153%)\nMismatch at index:\n [0, 0, 0]: 12108 (ACTUAL), 12109 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 8.25832026e-05\n ACTUAL: array([[[12108, 12423, 12720, ..., 43327, 45938, 45070],\n        [11796, 11986,  9686, ..., 12994, 44656, 45707],\n        [10176, 45597, 43588, ..., 13235, 45659, 44273],...\n DESIRED: array([[[12109, 12423, 12720, ..., 43327, 45938, 45070],\n        [11796, 11986,  9686, ..., 12994, 44656, 45707],\n        [10176, 45597, 43588, ..., 13235, 45659, 44273],..."
+    },
+    {
+      "name": "value_history_1",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 65536 (0.00153%)\nMismatch at index:\n [0, 0, 128]: 9161 (ACTUAL), 9160 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.00010917\n ACTUAL: array([[[ 3032,  2072, 34576, ...,  9458,  9450,  9468],\n        [ 8375,  8374,  8374, ..., 10280, 10285, 10289],\n        [41576, 41575, 41575, ...,  9350,  9318,  9347],...\n DESIRED: array([[[ 3032,  2072, 34576, ...,  9458,  9450,  9468],\n        [ 8375,  8374,  8374, ..., 10280, 10285, 10289],\n        [41576, 41575, 41575, ...,  9350,  9318,  9347],..."
+    },
+    {
+      "name": "value_left_1",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 32768 (0.00305%)\nMismatch at index:\n [0, 0, 64]: 9214 (ACTUAL), 9215 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.00010852\n ACTUAL: array([[[9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],...\n DESIRED: array([[[9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],..."
+    },
+    {
+      "name": "value_right_1",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 65536 (0.00153%)\nMismatch at index:\n [0, 0, 128]: 11944 (ACTUAL), 11945 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 8.37170364e-05\n ACTUAL: array([[[12109, 12423, 12720, ..., 43327, 45938, 45070],\n        [11796, 11986,  9686, ..., 12994, 44656, 45707],\n        [10176, 45597, 43588, ..., 13235, 45659, 44273],...\n DESIRED: array([[[12109, 12423, 12720, ..., 43327, 45938, 45070],\n        [11796, 11986,  9686, ..., 12994, 44656, 45707],\n        [10176, 45597, 43588, ..., 13235, 45659, 44273],..."
+    },
+    {
+      "name": "value_history_2",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 65536 (0.00153%)\nMismatch at index:\n [0, 0, 256]: 8842 (ACTUAL), 8843 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.00011308\n ACTUAL: array([[[ 3032,  2072, 34576, ...,  9458,  9450,  9468],\n        [ 8375,  8374,  8374, ..., 10280, 10285, 10289],\n        [41576, 41575, 41575, ...,  9350,  9318,  9347],...\n DESIRED: array([[[ 3032,  2072, 34576, ...,  9458,  9450,  9468],\n        [ 8375,  8374,  8374, ..., 10280, 10285, 10289],\n        [41576, 41575, 41575, ...,  9350,  9318,  9347],..."
+    },
+    {
+      "name": "value_left_2",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 32768 (0.00305%)\nMismatch at index:\n [0, 0, 128]: 9214 (ACTUAL), 9215 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.00010852\n ACTUAL: array([[[9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],...\n DESIRED: array([[[9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],..."
+    },
+    {
+      "name": "value_right_2",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 65536 (0.00153%)\nMismatch at index:\n [0, 0, 256]: 45111 (ACTUAL), 45110 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 2.21680337e-05\n ACTUAL: array([[[12109, 12423, 12720, ..., 43327, 45938, 45070],\n        [11796, 11986,  9686, ..., 12994, 44656, 45707],\n        [10176, 45597, 43588, ..., 13235, 45659, 44273],...\n DESIRED: array([[[12109, 12423, 12720, ..., 43327, 45938, 45070],\n        [11796, 11986,  9686, ..., 12994, 44656, 45707],\n        [10176, 45597, 43588, ..., 13235, 45659, 44273],..."
+    },
+    {
+      "name": "value_history_3",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 65536 (0.00153%)\nMismatch at index:\n [0, 0, 384]: 9566 (ACTUAL), 9567 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.00010453\n ACTUAL: array([[[ 3032,  2072, 34576, ...,  9458,  9450,  9468],\n        [ 8375,  8374,  8374, ..., 10280, 10285, 10289],\n        [41576, 41575, 41575, ...,  9350,  9318,  9347],...\n DESIRED: array([[[ 3032,  2072, 34576, ...,  9458,  9450,  9468],\n        [ 8375,  8374,  8374, ..., 10280, 10285, 10289],\n        [41576, 41575, 41575, ...,  9350,  9318,  9347],..."
+    },
+    {
+      "name": "value_left_3",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 32768 (0.00305%)\nMismatch at index:\n [0, 0, 192]: 9214 (ACTUAL), 9215 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.00010852\n ACTUAL: array([[[9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],...\n DESIRED: array([[[9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],..."
+    },
+    {
+      "name": "value_right_3",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 65536 (0.00153%)\nMismatch at index:\n [0, 0, 384]: 7632 (ACTUAL), 7633 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.00013101\n ACTUAL: array([[[12109, 12423, 12720, ..., 43327, 45938, 45070],\n        [11796, 11986,  9686, ..., 12994, 44656, 45707],\n        [10176, 45597, 43588, ..., 13235, 45659, 44273],...\n DESIRED: array([[[12109, 12423, 12720, ..., 43327, 45938, 45070],\n        [11796, 11986,  9686, ..., 12994, 44656, 45707],\n        [10176, 45597, 43588, ..., 13235, 45659, 44273],..."
+    },
+    {
+      "name": "value_history_4",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 65536 (0.00153%)\nMismatch at index:\n [0, 0, 512]: 9705 (ACTUAL), 9704 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.00010305\n ACTUAL: array([[[ 3032,  2072, 34576, ...,  9458,  9450,  9468],\n        [ 8375,  8374,  8374, ..., 10280, 10285, 10289],\n        [41576, 41575, 41575, ...,  9350,  9318,  9347],...\n DESIRED: array([[[ 3032,  2072, 34576, ...,  9458,  9450,  9468],\n        [ 8375,  8374,  8374, ..., 10280, 10285, 10289],\n        [41576, 41575, 41575, ...,  9350,  9318,  9347],..."
+    },
+    {
+      "name": "value_left_4",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 32768 (0.00305%)\nMismatch at index:\n [0, 0, 256]: 9214 (ACTUAL), 9215 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.00010852\n ACTUAL: array([[[9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],...\n DESIRED: array([[[9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],..."
+    },
+    {
+      "name": "value_right_4",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 65536 (0.00153%)\nMismatch at index:\n [0, 0, 512]: 12106 (ACTUAL), 12107 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 8.25968448e-05\n ACTUAL: array([[[12109, 12423, 12720, ..., 43327, 45938, 45070],\n        [11796, 11986,  9686, ..., 12994, 44656, 45707],\n        [10176, 45597, 43588, ..., 13235, 45659, 44273],...\n DESIRED: array([[[12109, 12423, 12720, ..., 43327, 45938, 45070],\n        [11796, 11986,  9686, ..., 12994, 44656, 45707],\n        [10176, 45597, 43588, ..., 13235, 45659, 44273],..."
+    },
+    {
+      "name": "value_history_5",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 65536 (0.00153%)\nMismatch at index:\n [0, 0, 640]: 9527 (ACTUAL), 9526 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.00010498\n ACTUAL: array([[[ 3032,  2072, 34576, ...,  9458,  9450,  9468],\n        [ 8375,  8374,  8374, ..., 10280, 10285, 10289],\n        [41576, 41575, 41575, ...,  9350,  9318,  9347],...\n DESIRED: array([[[ 3032,  2072, 34576, ...,  9458,  9450,  9468],\n        [ 8375,  8374,  8374, ..., 10280, 10285, 10289],\n        [41576, 41575, 41575, ...,  9350,  9318,  9347],..."
+    },
+    {
+      "name": "value_left_5",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 32768 (0.00305%)\nMismatch at index:\n [0, 0, 320]: 9214 (ACTUAL), 9215 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.00010852\n ACTUAL: array([[[9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],...\n DESIRED: array([[[9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],..."
+    },
+    {
+      "name": "value_right_5",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 65536 (0.00153%)\nMismatch at index:\n [0, 0, 640]: 46069 (ACTUAL), 46068 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 2.17070418e-05\n ACTUAL: array([[[12109, 12423, 12720, ..., 43327, 45938, 45070],\n        [11796, 11986,  9686, ..., 12994, 44656, 45707],\n        [10176, 45597, 43588, ..., 13235, 45659, 44273],...\n DESIRED: array([[[12109, 12423, 12720, ..., 43327, 45938, 45070],\n        [11796, 11986,  9686, ..., 12994, 44656, 45707],\n        [10176, 45597, 43588, ..., 13235, 45659, 44273],..."
+    },
+    {
+      "name": "value_history_6",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 65536 (0.00153%)\nMismatch at index:\n [0, 0, 768]: 8315 (ACTUAL), 8314 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.00012028\n ACTUAL: array([[[ 3032,  2072, 34576, ...,  9458,  9450,  9468],\n        [ 8375,  8374,  8374, ..., 10280, 10285, 10289],\n        [41576, 41575, 41575, ...,  9350,  9318,  9347],...\n DESIRED: array([[[ 3032,  2072, 34576, ...,  9458,  9450,  9468],\n        [ 8375,  8374,  8374, ..., 10280, 10285, 10289],\n        [41576, 41575, 41575, ...,  9350,  9318,  9347],..."
+    },
+    {
+      "name": "value_left_6",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 32768 (0.00305%)\nMismatch at index:\n [0, 0, 384]: 9214 (ACTUAL), 9215 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.00010852\n ACTUAL: array([[[9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],...\n DESIRED: array([[[9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],..."
+    },
+    {
+      "name": "value_right_6",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 65536 (0.00153%)\nMismatch at index:\n [0, 0, 768]: 45930 (ACTUAL), 45931 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 2.17717881e-05\n ACTUAL: array([[[12109, 12423, 12720, ..., 43327, 45938, 45070],\n        [11796, 11986,  9686, ..., 12994, 44656, 45707],\n        [10176, 45597, 43588, ..., 13235, 45659, 44273],...\n DESIRED: array([[[12109, 12423, 12720, ..., 43327, 45938, 45070],\n        [11796, 11986,  9686, ..., 12994, 44656, 45707],\n        [10176, 45597, 43588, ..., 13235, 45659, 44273],..."
+    },
+    {
+      "name": "value_history_7",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 65536 (0.00153%)\nMismatch at index:\n [0, 0, 896]: 9265 (ACTUAL), 9264 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.00010794\n ACTUAL: array([[[ 3032,  2072, 34576, ...,  9458,  9450,  9468],\n        [ 8375,  8374,  8374, ..., 10280, 10285, 10289],\n        [41576, 41575, 41575, ...,  9350,  9318,  9347],...\n DESIRED: array([[[ 3032,  2072, 34576, ...,  9458,  9450,  9468],\n        [ 8375,  8374,  8374, ..., 10280, 10285, 10289],\n        [41576, 41575, 41575, ...,  9350,  9318,  9347],..."
+    },
+    {
+      "name": "value_left_7",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 32768 (0.00305%)\nMismatch at index:\n [0, 0, 448]: 9214 (ACTUAL), 9215 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.00010852\n ACTUAL: array([[[9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],...\n DESIRED: array([[[9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],\n        [9215, 9213, 9213, ..., 9213, 9213, 9213],..."
+    },
+    {
+      "name": "value_right_7",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 65536 (0.00153%)\nMismatch at index:\n [0, 0, 896]: 12553 (ACTUAL), 12552 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 7.96685787e-05\n ACTUAL: array([[[12109, 12423, 12720, ..., 43327, 45938, 45070],\n        [11796, 11986,  9686, ..., 12994, 44656, 45707],\n        [10176, 45597, 43588, ..., 13235, 45659, 44273],...\n DESIRED: array([[[12109, 12423, 12720, ..., 43327, 45938, 45070],\n        [11796, 11986,  9686, ..., 12994, 44656, 45707],\n        [10176, 45597, 43588, ..., 13235, 45659, 44273],..."
+    }
+  ]
+}

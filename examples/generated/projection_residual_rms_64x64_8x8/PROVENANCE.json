@@ -1,0 +1,44 @@
+{
+  "key": "waferllm/projection_residual_rms_64x64_8x8",
+  "contract": "Resident supplied activation/weight/residual/gamma: 64x64 projection, residual add and row RMSNorm on 8x8 PEs. Ordinary typed matmul/add/rmsnorm graph, source forward two-hop DSR engine, joined resources, original CSL row collective and reusable local RMS library. Immutable inputs and last-use private buffer reuse; no intermediate host transfer. Eight SDK calls, exact output/inverse bits, fixed original-input native/device accuracy, mutation rejection and static ELF memory. Sampled mode additionally validates every projection prefix and normalization stages. Matched repaired-source comparison covers first three calls with observation/copy differences stated. No full Prefill or hardware performance claim.",
+  "origins": [
+    "Prefill/src/prefill.csl h1_matmul/z_add/rmsnorm_z"
+  ],
+  "source_sha256": "81ccac0e9b5fcce807b240e57df37baaa3856354d68df00a172fb80a48cf0de5",
+  "native_stdout_verification": {
+    "level": "sdk_simulator",
+    "artifact": "projects/waferllm/projection_residual_rms_64x64_8x8/run-20260907T071024411920Z",
+    "report": "evidence/qualification-20260907T074658560657Z.json",
+    "native_application_source": "native-output.txt: actual C++ stdout, independent original-input projection/add/RMS math.fsum review",
+    "current_toolchain": true,
+    "numerical_validation": {
+      "contract": "projection-residual-rms-half-normwise-v1",
+      "native_fixed_accuracy_passed": true,
+      "device_fixed_accuracy_passed": true,
+      "device_audit_passed": true,
+      "fixed_accuracy_passed": true,
+      "relative_l2_limit": 0.02,
+      "max_error_over_reference_peak_limit": 0.03,
+      "zero_reference_requires_exact_zero": true,
+      "per_component_accuracy_not_implied": true
+    }
+  },
+  "verification": {
+    "level": "sdk_simulator",
+    "artifact": "projects/waferllm/projection_residual_rms_64x64_8x8/run-20260907T071024411920Z",
+    "report": "evidence/qualification-20260907T074658560657Z.json",
+    "native_application_source": "native-output.txt: actual C++ stdout, independent original-input projection/add/RMS math.fsum review",
+    "current_toolchain": true,
+    "numerical_validation": {
+      "contract": "projection-residual-rms-half-normwise-v1",
+      "native_fixed_accuracy_passed": true,
+      "device_fixed_accuracy_passed": true,
+      "device_audit_passed": true,
+      "fixed_accuracy_passed": true,
+      "relative_l2_limit": 0.02,
+      "max_error_over_reference_peak_limit": 0.03,
+      "zero_reference_requires_exact_zero": true,
+      "per_component_accuracy_not_implied": true
+    }
+  }
+}

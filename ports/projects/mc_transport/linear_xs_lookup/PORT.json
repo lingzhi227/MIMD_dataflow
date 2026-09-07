@@ -1,0 +1,11 @@
+{
+  "project": "mc_transport",
+  "kernel": "linear_xs_lookup",
+  "origins": [
+    "csl/full_implementation/device_code.csl"
+  ],
+  "fixture": "mc_xs",
+  "contract": "calculate_xs deterministic scalar-interpolation branch, two nuclides/four gridpoints/five XS components. Search specialized to bounded scan; particle sorting, diffusion and stochastic interpolation remain pending.",
+  "partitions": 1,
+  "status": "source_ready"
+}

@@ -1,0 +1,14 @@
+{
+  "project": "waferllm",
+  "kernel": "normalized_matmul_128x512_8x8",
+  "origins": [
+    "Prefill/src/prefill.csl rmsnorm_x/xq_matmul/matmul_compute",
+    "Prefill/src/comm_lib/comm_pe.csl"
+  ],
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "contract": "Resident RMSNorm -> projection 128x512 on 8x8 PEs, six warm SDK calls in counters mode. Exact final target-half bits and completion checks plus actual native stdout/independent standard composition. No internal tensor/prefix observation at this larger size. Matched counter source control removes unrelated exports to allow compiler dead-storage elimination, preserving active numerical/communication code and the explicit RMS scale repair. Input magnitude <=1; no intermediate host transfer, no full inference/hardware claim.",
+  "status": "source_ready",
+  "partitions": 1,
+  "instrumentation": "counters",
+  "fixture": "normalized_matmul:128:512"
+}

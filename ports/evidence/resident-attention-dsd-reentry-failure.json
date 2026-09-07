@@ -1,0 +1,22 @@
+{
+  "passed": false,
+  "cases": [
+    {
+      "epoch": 0,
+      "logit_mismatches": 0,
+      "partial_mismatches": 0
+    },
+    {
+      "epoch": 1,
+      "logit_mismatches": 3584,
+      "partial_mismatches": 28669
+    },
+    {
+      "epoch": 2,
+      "logit_mismatches": 0,
+      "partial_mismatches": 0
+    }
+  ],
+  "results_sha256": "759cba9ee3a02164113d01fc935f422c018c8aa96a405930caf5f27164b58326",
+  "scope": "Our composed source adapter retains strided value DSD into the next score entry; first call passes, changed warm call fails. Proposed contiguous DSD reset requires fresh SDK validation. Not an upstream or CSL defect."
+}

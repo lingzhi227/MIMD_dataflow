@@ -1,0 +1,12 @@
+param rows:u16;param cols:u16;param N:u32;param local_length:u16;param norm:u16;
+const memcpy=@import_module("<memcpy/get_params>",.{.width=cols,.height=rows});
+const c2d=@import_module("<collectives_2d/params>");
+layout {
+ @set_rectangle(cols,rows);
+ for(@range(u16,rows)) |y| {for(@range(u16,cols)) |x| {
+  const first=@as(u32,y*cols+x)*@as(u32,local_length);
+  const valid=if(first>=N) 0 else if(N-first<local_length) @as(u16,N-first) else local_length;
+  @set_tile_code(x,y,"pe.csl",.{.memcpy_params=memcpy.get_params(x),.c2d_params=c2d.get_params(x,y,.{.x_colors=.{@get_color(0),@get_color(1)},.x_entrypoints=.{@get_local_task_id(14),@get_local_task_id(15)},.y_colors=.{@get_color(4),@get_color(5)},.y_entrypoints=.{@get_local_task_id(16),@get_local_task_id(17)}}),.local_length=local_length,.valid=valid,.norm=norm});
+ }}
+ @export_name("x",[*]f32,true);@export_name("y",[*]f32,true);@export_name("result",[*]f32,true);@export_name("witness",[*]f32,true);@export_name("progress",[*]u16,true);@export_name("timing",[*]u16,true);@export_name("main",fn()void);
+}

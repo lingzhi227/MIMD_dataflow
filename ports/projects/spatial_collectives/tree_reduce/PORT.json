@@ -1,0 +1,11 @@
+{
+  "project": "spatial_collectives",
+  "kernel": "tree_reduce",
+  "origins": [
+    "modules/tree_runtime.csl"
+  ],
+  "fixture": "collective",
+  "contract": "Four-participant balanced binary vector sum; no performance-equivalence claim.",
+  "partitions": 1,
+  "status": "source_ready"
+}

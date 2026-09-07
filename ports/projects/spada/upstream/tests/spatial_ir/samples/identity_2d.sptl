@@ -1,0 +1,25 @@
+/**
+ * Load data on a 2D grid, output only the first column (i=0).
+ * out[0, j] = inp[0, j] for j in 0..NY-1.
+ *
+ */
+kernel @identity_2d<NX, NY, K>(
+    stream<f32, K>[NX, NY] readonly  inp,
+    stream<f32, K>[1, NY]  writeonly out
+) {
+    place i16 i, i16 j in [0:NX, 0:NY] {
+        f32[K] buf
+    }
+
+    phase {
+        compute i16 i, i16 j in [0:NX, 0:NY] {
+            await receive(buf, inp[i, j])
+        }
+    }
+
+    phase {
+        compute i16 i, i16 j in [0, 0:NY] {
+            await send(buf, out[i, j])
+        }
+    }
+}

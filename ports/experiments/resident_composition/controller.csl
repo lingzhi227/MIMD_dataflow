@@ -1,0 +1,79 @@
+// Dependency probe: transpose twice, SpMV, global output square norm.
+// One host launch owns all stages. This is not the CG recurrence yet.
+param c2dParams;
+const blas = @import_module("blas.csl");
+const collect = @import_module("scalar_allreduce.csl", .{
+  .c2d_params=c2dParams, .f_callback=composition_done,
+  .vector_length=local_vec_sz,
+  .x_queues=[2]u16{3,6}, .y_queues=[2]u16{5,7}
+});
+var transpose_buffer = @zeros([local_vec_sz]f32);
+var transpose_scratch = @zeros([spmvParams.pcols * local_vec_sz]u32);
+var composition_result = [1]f32{0.0};
+var composition_progress = @zeros([4]u16);
+var cp_ptr: [*]u16 = &composition_progress;
+var cr_ptr: [*]f32 = &composition_result;
+var tr_ptr: [*]f32 = &transpose_buffer;
+var composition_phase: u16 = 0;
+var queue_witness = @zeros([6]u16);
+var qw_ptr: [*]u16 = &queue_witness;
+var queue_check_index: u16 = 0;
+const queue_state = @import_module("<tile_config>");
+fn quiescent() bool {
+  const input_state = queue_state.input_queue_status.get();
+  const output_state = queue_state.output_queue_status.get();
+  queue_witness[2*queue_check_index] = @as(u16,input_state.empty);
+  queue_witness[2*queue_check_index+1] = @as(u16,output_state.empty);
+  queue_check_index += 1;
+  return (input_state.empty & 252) == 252 and (output_state.empty & 252) == 252;
+}
+fn begin_composition() void {
+  queue_check_index=0;
+  if (!quiescent()) {composition_result[0]=-1.0;sys_mod.unblock_cmd_stream();return;}
+  collect.configure_queues();
+  collect.init();
+  composition_phase=1;
+  collect.transpose(@ptrcast(*[local_vec_sz]u32, &x_tx_buf),
+                    @ptrcast(*[local_vec_sz]u32, &transpose_buffer), &transpose_scratch);
+}
+fn composition_done() void {
+  if (composition_phase == 1) {
+    composition_progress[0] += 1;
+    composition_phase=2;
+    collect.transpose(@ptrcast(*[local_vec_sz]u32, &transpose_buffer),
+                      @ptrcast(*[local_vec_sz]u32, &x_tx_buf), &transpose_scratch);
+  } else if (composition_phase == 2) {
+    composition_progress[0] += 1;
+    composition_phase=3;
+    if (!quiescent()) {composition_result[0]=-2.0;sys_mod.unblock_cmd_stream();return;}
+    spmv_mod.configure_queues();
+    spmv_mod.spmv(&x_tx_buf, &y_local_buf);
+  } else if (composition_phase == 3) {
+    composition_progress[1] += 1;
+    composition_phase=4;
+    if (!quiescent()) {composition_result[0]=-3.0;sys_mod.unblock_cmd_stream();return;}
+    collect.configure_queues();
+    const local=blas.dot(@as(i16,local_out_vec_sz), &y_local_buf, &y_local_buf);
+    collect.start(local, false);
+  } else {
+    composition_result[0]=collect.result[0];
+    composition_progress[2] += 1;
+    composition_progress[3] += 1;
+    sys_mod.unblock_cmd_stream();
+  }
+}
+comptime {
+  @export_symbol(qw_ptr, "queue_witness");
+  @export_symbol(cp_ptr, "composition_progress");
+  @export_symbol(cr_ptr, "composition_result");
+  @export_symbol(tr_ptr, "transpose_buffer");
+}
+
+// SDK collective owns both queue banks at3/5/6/7. The phase owner initializes
+// the remaining SpMV queues; runtime transition sets every SpMV association.
+comptime {
+  @initialize_queue(@get_input_queue(2), .{.color=spmvParams.north_train});
+  @initialize_queue(@get_input_queue(4), .{.color=spmvParams.south_train});
+  @initialize_queue(@get_output_queue(2), .{.color=spmvParams.north_train});
+  @initialize_queue(@get_output_queue(4), .{.color=spmvParams.tx_west_train});
+}

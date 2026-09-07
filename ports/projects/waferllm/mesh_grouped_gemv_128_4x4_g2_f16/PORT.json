@@ -1,0 +1,13 @@
+{
+  "project": "waferllm",
+  "kernel": "mesh_grouped_gemv_128_4x4_g2_f16",
+  "origins": [
+    "MeshGEMV/src/meshgemv.csl",
+    "MeshGEMV/src/comm_lib/comm_pe.csl",
+    "MeshGEMV/src/layout.csl"
+  ],
+  "fixture": "grouped_half:128:128:4:2",
+  "partitions": 1,
+  "status": "source_ready",
+  "contract": "128x128 half row-vector contraction on4x4 PEs with2groups; original local DSR FMA, two-phase half reduction and all-row replicas. Eight SDK calls in sampled/counter modes, exact active phases/finals, mutations and source-native control. Max-local overhead16.0% sampled /1.76% counters; relaxed half arithmetic, not f32 accuracy or hardware."
+}

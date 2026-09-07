@@ -1,0 +1,12 @@
+{
+  "project": "matrix_algorithms",
+  "kernel": "qr_givens",
+  "origins": [
+    "QR_factorization/many_elements_per_pe/pe_program.csl",
+    "QR_factorization/one_element_per_pe/pe_program.csl"
+  ],
+  "fixture": "qr",
+  "contract": "Stable source Givens coefficient branches; return R and accumulated Q-transpose. Explicit pivot-row rotation order; original distributed ordering/layout not preserved.",
+  "partitions": 1,
+  "status": "source_ready"
+}

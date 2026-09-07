@@ -1,0 +1,128 @@
+{
+  "run": "run-20260906T132205677244Z",
+  "sdk": true,
+  "instrumentation": null,
+  "sdk_runtime_options": {
+    "suppress_trace": true,
+    "num_threads": 16,
+    "dump_core": true
+  },
+  "sdk_timeout_seconds": 300,
+  "success": true,
+  "cases": [
+    {
+      "key": "sdk_examples/mesh_nrm2_131071_8x8",
+      "passed": true,
+      "artifact": "projects/sdk_examples/mesh_nrm2_131071_8x8/run-20260906T132205677244Z",
+      "native_application_checks": [
+        {
+          "contract": "fixed-original-vector-reduction-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0016765446211763901
+        },
+        {
+          "contract": "fixed-original-vector-reduction-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0
+        },
+        {
+          "contract": "fixed-original-vector-reduction-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 5.766323738498613e-06
+        },
+        {
+          "contract": "fixed-original-vector-reduction-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 1.3707424620507362e-33
+        }
+      ],
+      "numerical_validation": {
+        "contract": "fixed-original-vector-reduction-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_fixed_accuracy_passed": true,
+        "fixed_accuracy_passed": true,
+        "rtol": 3e-05,
+        "atol": 3e-06
+      },
+      "audit": {
+        "passed": true,
+        "fixed_accuracy_passed": true,
+        "actors": 64,
+        "epochs": 4,
+        "vector_values": 131071,
+        "numerical_checks": [
+          {
+            "contract": "fixed-original-vector-reduction-v1",
+            "fixed_accuracy_passed": true,
+            "max_abs_error": 1.3336613363890137e-05
+          },
+          {
+            "contract": "fixed-original-vector-reduction-v1",
+            "fixed_accuracy_passed": true,
+            "max_abs_error": 0.0
+          },
+          {
+            "contract": "fixed-original-vector-reduction-v1",
+            "fixed_accuracy_passed": true,
+            "max_abs_error": 5.766323738498613e-06
+          },
+          {
+            "contract": "fixed-original-vector-reduction-v1",
+            "fixed_accuracy_passed": true,
+            "max_abs_error": 2.2591500979671093e-35
+          }
+        ],
+        "max_local_cycles": [
+          30577,
+          30519,
+          30583,
+          30580
+        ],
+        "timing_scope": "Maximum local compute plus collective interval; excludes H2D/D2H, not a synchronized global or hardware interval",
+        "witness_scope": "all-PE local dot or local max/global max/scaled-sum/scale; replicated scalar and callback counts"
+      },
+      "device_application_checks": [
+        {
+          "contract": "fixed-original-vector-reduction-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 1.3336613363890137e-05
+        },
+        {
+          "contract": "fixed-original-vector-reduction-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0
+        },
+        {
+          "contract": "fixed-original-vector-reduction-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 5.766323738498613e-06
+        },
+        {
+          "contract": "fixed-original-vector-reduction-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 2.2591500979671093e-35
+        }
+      ],
+      "level": "sdk_simulator"
+    }
+  ],
+  "oracle": {
+    "python": "3.13.11",
+    "numpy": "2.2.6",
+    "rtol": 3e-05,
+    "atol": 3e-06,
+    "input_seed_base": 911,
+    "additional_contract_by_fixture_prefix": {
+      "mesh_gemm:": "componentwise-f32-dot-v1; fixed accuracy reported separately"
+    },
+    "sources": {
+      "fixtures.py": "414f6c2815eddaeac0c45adad679020f22afb5e77168adec668874dd58779b48",
+      "toolchain/roundoff.py": "4bc4e693d456bdf39dee4ac6774a545f812c085aacc7ec4d2244e583fcb935b5",
+      "import_stencil.py": "9a4dfd60f39c9ee90f056f1f07391ba8e361030067c380a85b99241ae09e5bc3",
+      "catalog.json": "171770b6f35498ae610eb90d8bedb689cf0ea17c7ffc22b9148de1ba7ad0b24d",
+      "run_ports.py": "19fedb9db7d8eef862158fde64fdd32ec785b13c571eeff8996cd001b674af99"
+    }
+  },
+  "sdk_sha256": "fff17e81c61dcb6012bdee2941a6fdc570f5c8604967530e7b7108651258193d"
+}

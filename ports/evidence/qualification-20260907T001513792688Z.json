@@ -1,0 +1,677 @@
+{
+  "kind": "qualification_index_of_existing_sdk_runs",
+  "sdk": true,
+  "success": true,
+  "new_sdk_execution": false,
+  "source_controls": [
+    {
+      "path": "evidence/normalized-matmul128x512-counter-source-comparison.json",
+      "sha256": "860014cb8bb9275a84e3baa90e5d19f2b9dd2384f6df515b0ae66290f3d9e282"
+    },
+    {
+      "path": "evidence/normalized-matmul64x128-counter-source-comparison.json",
+      "sha256": "5f246f3e10ad545ad02d1eec2480e757be72fe49dbec70ae33b99bd16b8d9153"
+    }
+  ],
+  "cases": [
+    {
+      "key": "waferllm/normalized_matmul_128x512_8x8",
+      "artifact": "projects/waferllm/normalized_matmul_128x512_8x8/run-20260906T234028422262Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_normalized_matmul.v1",
+        "epochs": 6,
+        "actors": 64,
+        "instrumentation": "counters",
+        "internal_half_observations": 0,
+        "cases": [
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0004939072867583248,
+            "standard_max_abs_error": 0.002785170942652071,
+            "max_local_cycles": 219115,
+            "cycles_per_pe": [
+              [
+                218803,
+                218811,
+                218790,
+                218792,
+                218798,
+                218779,
+                218798,
+                218784
+              ],
+              [
+                217949,
+                217940,
+                217922,
+                217902,
+                217929,
+                217892,
+                217917,
+                217937
+              ],
+              [
+                219103,
+                219108,
+                219094,
+                219098,
+                219096,
+                219090,
+                219096,
+                219087
+              ],
+              [
+                217927,
+                217927,
+                217938,
+                217925,
+                217919,
+                217932,
+                217922,
+                217916
+              ],
+              [
+                219111,
+                219115,
+                219102,
+                219105,
+                219102,
+                219097,
+                219103,
+                219094
+              ],
+              [
+                218429,
+                218424,
+                218430,
+                218424,
+                218421,
+                218429,
+                218418,
+                218409
+              ],
+              [
+                219057,
+                219064,
+                219062,
+                219057,
+                219055,
+                219049,
+                219052,
+                219043
+              ],
+              [
+                218839,
+                218846,
+                218848,
+                218838,
+                218835,
+                218838,
+                218833,
+                218831
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.003473639399307812,
+            "standard_max_abs_error": 0.02009240804331003,
+            "max_local_cycles": 219124,
+            "cycles_per_pe": [
+              [
+                218821,
+                218822,
+                218803,
+                218800,
+                218806,
+                218767,
+                218806,
+                218791
+              ],
+              [
+                217963,
+                217951,
+                217953,
+                217921,
+                217958,
+                217920,
+                217944,
+                217946
+              ],
+              [
+                219112,
+                219117,
+                219103,
+                219107,
+                219105,
+                219099,
+                219105,
+                219096
+              ],
+              [
+                217936,
+                217936,
+                217947,
+                217934,
+                217928,
+                217941,
+                217931,
+                217922
+              ],
+              [
+                219120,
+                219124,
+                219111,
+                219114,
+                219111,
+                219106,
+                219112,
+                219103
+              ],
+              [
+                218438,
+                218433,
+                218439,
+                218433,
+                218430,
+                218438,
+                218427,
+                218423
+              ],
+              [
+                219066,
+                219073,
+                219071,
+                219066,
+                219064,
+                219058,
+                219061,
+                219052
+              ],
+              [
+                218848,
+                218855,
+                218857,
+                218847,
+                218844,
+                218847,
+                218842,
+                218840
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0033633525633840933,
+            "standard_max_abs_error": 0.027653341087460426,
+            "max_local_cycles": 219115,
+            "cycles_per_pe": [
+              [
+                218812,
+                218806,
+                218798,
+                218793,
+                218801,
+                218788,
+                218780,
+                218792
+              ],
+              [
+                217965,
+                217941,
+                217952,
+                217916,
+                217946,
+                217925,
+                217945,
+                217919
+              ],
+              [
+                219103,
+                219108,
+                219094,
+                219098,
+                219096,
+                219090,
+                219096,
+                219087
+              ],
+              [
+                217927,
+                217927,
+                217935,
+                217925,
+                217921,
+                217930,
+                217922,
+                217915
+              ],
+              [
+                219111,
+                219115,
+                219102,
+                219105,
+                219102,
+                219097,
+                219103,
+                219094
+              ],
+              [
+                218429,
+                218424,
+                218435,
+                218424,
+                218420,
+                218429,
+                218415,
+                218415
+              ],
+              [
+                219057,
+                219064,
+                219062,
+                219057,
+                219055,
+                219049,
+                219051,
+                219042
+              ],
+              [
+                218839,
+                218846,
+                218849,
+                218838,
+                218837,
+                218838,
+                218834,
+                218830
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0,
+            "standard_max_abs_error": 0.0,
+            "max_local_cycles": 219115,
+            "cycles_per_pe": [
+              [
+                218812,
+                218806,
+                218798,
+                218793,
+                218801,
+                218788,
+                218780,
+                218792
+              ],
+              [
+                217965,
+                217941,
+                217952,
+                217916,
+                217946,
+                217925,
+                217945,
+                217919
+              ],
+              [
+                219103,
+                219108,
+                219094,
+                219098,
+                219096,
+                219090,
+                219096,
+                219087
+              ],
+              [
+                217927,
+                217927,
+                217935,
+                217925,
+                217921,
+                217930,
+                217922,
+                217915
+              ],
+              [
+                219111,
+                219115,
+                219102,
+                219105,
+                219102,
+                219097,
+                219103,
+                219094
+              ],
+              [
+                218429,
+                218424,
+                218435,
+                218424,
+                218420,
+                218429,
+                218415,
+                218415
+              ],
+              [
+                219057,
+                219064,
+                219062,
+                219057,
+                219055,
+                219049,
+                219051,
+                219042
+              ],
+              [
+                218839,
+                218846,
+                218849,
+                218838,
+                218837,
+                218838,
+                218834,
+                218830
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.006115458958587998,
+            "standard_max_abs_error": 0.0014567984629690889,
+            "max_local_cycles": 219115,
+            "cycles_per_pe": [
+              [
+                218812,
+                218806,
+                218798,
+                218793,
+                218801,
+                218788,
+                218780,
+                218792
+              ],
+              [
+                217965,
+                217941,
+                217952,
+                217916,
+                217946,
+                217925,
+                217945,
+                217919
+              ],
+              [
+                219103,
+                219108,
+                219094,
+                219098,
+                219096,
+                219090,
+                219096,
+                219087
+              ],
+              [
+                217927,
+                217927,
+                217935,
+                217925,
+                217921,
+                217930,
+                217922,
+                217915
+              ],
+              [
+                219111,
+                219115,
+                219102,
+                219105,
+                219102,
+                219097,
+                219103,
+                219094
+              ],
+              [
+                218429,
+                218424,
+                218435,
+                218424,
+                218420,
+                218429,
+                218415,
+                218415
+              ],
+              [
+                219057,
+                219064,
+                219062,
+                219057,
+                219055,
+                219049,
+                219051,
+                219042
+              ],
+              [
+                218839,
+                218846,
+                218849,
+                218838,
+                218837,
+                218838,
+                218834,
+                218830
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "standard_relative_l2": 0.0033448474666031456,
+            "standard_max_abs_error": 0.01677889822547196,
+            "max_local_cycles": 219115,
+            "cycles_per_pe": [
+              [
+                218812,
+                218806,
+                218798,
+                218793,
+                218801,
+                218788,
+                218780,
+                218792
+              ],
+              [
+                217965,
+                217941,
+                217952,
+                217916,
+                217946,
+                217925,
+                217945,
+                217919
+              ],
+              [
+                219103,
+                219108,
+                219094,
+                219098,
+                219096,
+                219090,
+                219096,
+                219087
+              ],
+              [
+                217927,
+                217927,
+                217935,
+                217925,
+                217921,
+                217930,
+                217922,
+                217915
+              ],
+              [
+                219111,
+                219115,
+                219102,
+                219105,
+                219102,
+                219097,
+                219103,
+                219094
+              ],
+              [
+                218429,
+                218424,
+                218435,
+                218424,
+                218420,
+                218429,
+                218415,
+                218415
+              ],
+              [
+                219057,
+                219064,
+                219062,
+                219057,
+                219055,
+                219049,
+                219051,
+                219042
+              ],
+              [
+                218839,
+                218846,
+                218849,
+                218838,
+                218837,
+                218838,
+                218834,
+                218830
+              ]
+            ]
+          }
+        ],
+        "performance_scope": "WSE3 simulator local intervals, not hardware throughput or end-to-end latency"
+      },
+      "native_application_checks": [
+        {
+          "contract": "normalized-matmul-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0002061983084797635,
+          "max_abs_error": 0.0004882793165899013,
+          "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-matmul-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.003259544847106429,
+          "max_abs_error": 0.00850278498352397,
+          "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-matmul-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0032986406275947932,
+          "max_abs_error": 0.023526484200706133,
+          "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-matmul-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-matmul-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00011906717236559992,
+          "max_abs_error": 4.074806279316667e-05,
+          "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-matmul-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0032557711440064307,
+          "max_abs_error": 0.012809766855866211,
+          "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+          "per_component_accuracy_not_implied": true
+        }
+      ],
+      "native_application_source": "native-output.txt: actual C++ executable stdout, independent math.fsum recheck",
+      "device_application_checks": [
+        {
+          "contract": "normalized-matmul-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0004939072867583248,
+          "max_abs_error": 0.002785170942652071,
+          "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-matmul-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0034736393993078057,
+          "max_abs_error": 0.020092408043309584,
+          "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-matmul-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0033633525633840933,
+          "max_abs_error": 0.027653341087459093,
+          "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-matmul-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-matmul-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.006115458958587998,
+          "max_abs_error": 0.0014567984629690889,
+          "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-matmul-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.003344847466603142,
+          "max_abs_error": 0.016778898225471295,
+          "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+          "per_component_accuracy_not_implied": true
+        }
+      ],
+      "qualification_sha256": "2f09bbca6a988dcaaa95a4a4344763e806d350e914bc62af45b263e6a71582a6",
+      "results_sha256": "0c759c9b46d2ab6b0bdef03d48c0e9034efbcb6feeec606c5faef6dd8485630e",
+      "numerical_validation": {
+        "contract": "normalized-matmul-half-normwise-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "relative_l2_limit": 0.015,
+        "max_error_over_reference_peak_limit": 0.02,
+        "zero_reference_requires_exact_zero": true,
+        "per_component_accuracy_not_implied": true
+      }
+    }
+  ]
+}

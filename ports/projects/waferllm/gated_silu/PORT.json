@@ -1,0 +1,12 @@
+{
+  "project": "waferllm",
+  "kernel": "gated_silu",
+  "origins": [
+    "Prefill/src/prefill.csl",
+    "Decode/src/decode.csl"
+  ],
+  "fixture": "silu",
+  "contract": "Up times SiLU(gate), f32 stage profile; weights/projections supplied separately.",
+  "partitions": 1,
+  "status": "source_ready"
+}

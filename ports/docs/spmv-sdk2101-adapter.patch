@@ -1,0 +1,906 @@
+--- projects/sdk_examples/upstream/benchmarks/spmv-hypersparse/src/layout.csl
++++ toolchain/runtime/spmv_layout.csl
+@@ -76,16 +76,9 @@
+ param y_pad_start_row_idx: u16; // local row index where padding starts
+ 
+ 
+-const spmv = @import_module( "hypersparse_spmv/layout.csl", .{
++const spmv = @import_module( "spmv_routes.csl", .{
+     .colors = [6]color{c0, c1, c2, c3, c4, c5},
+     .entrypoints = [14]local_task_id{EN1, EN2, EN3, EN4, EN5, EN6, EN7, EN8, EN9, EN10, EN11, EN12, EN13, EN14},
+-    .width = pcols,
+-    .height = prows
+-    });
+-
+-const reduce = @import_module( "allreduce2R1E/layout.csl", .{
+-    .colors = [2]color{allreduce_c0, allreduce_c1},
+-    .entrypoints = [1]local_task_id{allreduce_EN1},
+     .width = pcols,
+     .height = prows
+     });
+@@ -115,11 +108,9 @@
+ 
+             const memcpyParams = memcpy.get_params(pcol_id);
+             const spmvParams = spmv.get_params(pcol_id, prow_id);
+-            const reduceParams = reduce.get_params(pcol_id, prow_id);
+             var params = .{
+                 .memcpyParams = memcpyParams,
+                 .spmvParams = spmvParams,
+-                .reduceParams = reduceParams,
+                 .nrows = nrows,
+                 .ncols = ncols,
+                 .local_vec_sz = local_vec_sz,
+@@ -150,13 +141,13 @@
+ 
+     @export_name("time_buf_u16", [*]u16, true);
+ 
+-    @export_name("time_ref_u16", [*]u16, true);
+ 
+     @export_name("f_enable_tsc", fn()void);
+     @export_name("f_tic", fn()void);
+     @export_name("f_toc", fn()void);
+     @export_name("f_spmv", fn()void);
++    @export_name("hls_capture", fn()void);
++    @export_name("hls_progress", [*]u16, true);
++    @export_name("hls_partial", [*]f32, true);
+     @export_name("f_memcpy_timestamps", fn()void);
+-    @export_name("f_sync", fn(i16)void);
+-    @export_name("f_reference_timestamps", fn()void);
+ }
+--- projects/sdk_examples/upstream/benchmarks/spmv-hypersparse/src/kernel.csl
++++ toolchain/runtime/spmv_kernel.csl
+@@ -17,7 +17,7 @@
+ 
+ param spmvParams;
+ 
+-param reduceParams;
++
+ 
+ // parameters
+ param nrows: u32;   // total number of matrix rows
+@@ -58,8 +58,9 @@
+ 
+ const sys_mod = @import_module( "<memcpy/memcpy>", memcpyParams);
+ 
+-// input_queues cannot overlap with output_queues
+-const spmv_mod = @import_module( "hypersparse_spmv/pe.csl", .{
++// SDK2.10.1/WSE3: input queue1 belongs to memcpy commands.
++// Input/output queues are separate banks; RX_SOUTH uses input2, TX_NORTH output2.
++const spmv_mod = @import_module( "spmv_pe.csl", .{
+      .spmv_params = spmvParams,
+      .f_callback = sys_mod.unblock_cmd_stream,
+ 
+@@ -82,22 +83,10 @@
+      .local_nnz_cols = &local_nnz_cols,
+      .local_nnz_rows = &local_nnz_rows,
+ 
+-     .input_queues=[4]u16{4, 1, 6, 7},
+-     .output_queues=[2]u16{2,3},
++     .input_queues=[4]u16{4, 2, 6, 7},
++     .output_queues=[4]u16{2,3,4,5},
+      .dest_dsr_ids = [6]u16{1, 4, 5, 6, 2, 3},
+      .src1_dsr_ids = [6]u16{4, 1, 6, 7, 2, 3},
+-     });
+-
+-// allreduce uses input queue/output queue 5
+-// dest_dsr and src0_dsr must be a valid pair, for example (7,1) is invalid
+-const reduce_mod = @import_module( "allreduce2R1E/pe.csl", .{
+-     .reduce_params = reduceParams,
+-     .f_callback = sys_mod.unblock_cmd_stream,
+-     .MAX_ZDIM = 1,
+-     .queues = [1]u16{5},
+-     .dest_dsr_ids = [1]u16{7},
+-     .src0_dsr_ids = [1]u16{7},
+-     .src1_dsr_ids = [1]u16{5}
+      });
+ 
+ // tsc library
+@@ -154,6 +143,16 @@
+ // we need to make sure local_vec_sz = local_out_vec_sz, otherwise compilation fails
+ // because of mismatch of the dimensions
+ //
++var hls_progress = @zeros([11]u16);
++var hls_partial = @zeros([2]f32);
++var ptr_hls_progress: [*]u16 = &hls_progress;
++var ptr_hls_partial: [*]f32 = &hls_partial;
++fn hls_capture() void {
++    spmv_mod.completion_counts(&hls_progress);
++    hls_progress[10] += 1;
++    hls_partial = spmv_mod.partial_witness;
++    sys_mod.unblock_cmd_stream();
++}
+ fn f_spmv() void {
+     spmv_mod.spmv(&x_tx_buf, &y_local_buf);
+ }
+@@ -171,19 +170,9 @@
+     sys_mod.unblock_cmd_stream();
+ }
+ 
+-fn f_sync( n: i16 ) void {
+-   reduce_mod.allreduce(n, &dot);
+-}
+-
+-fn f_reference_timestamps() void {
+-
+-    time_ref_u16[0] = reduce_mod.tscRefBuffer[0];
+-    time_ref_u16[1] = reduce_mod.tscRefBuffer[1];
+-    time_ref_u16[2] = reduce_mod.tscRefBuffer[2];
+-
+-    // the user must unblock cmd color for every PE
+-    sys_mod.unblock_cmd_stream();
+-}
++
++
++
+ 
+ comptime{
+ 
+@@ -203,7 +192,6 @@
+ 
+     @export_symbol(ptr_time_buf_u16, "time_buf_u16");
+ 
+-    @export_symbol(ptr_time_ref_u16, "time_ref_u16");
+ }
+ 
+ 
+@@ -213,6 +201,10 @@
+     @export_symbol(f_toc);
+     @export_symbol(f_memcpy_timestamps);
+     @export_symbol(f_spmv);
+-    @export_symbol(f_sync);
+-    @export_symbol(f_reference_timestamps);
+-}
++}
++
++comptime {
++ @export_symbol(ptr_hls_progress, "hls_progress");
++ @export_symbol(ptr_hls_partial, "hls_partial");
++ @export_symbol(hls_capture);
++}
+--- projects/sdk_examples/upstream/benchmarks/spmv-hypersparse/src/hypersparse_spmv/pe.csl
++++ toolchain/runtime/spmv_pe.csl
+@@ -1,3 +1,4 @@
++// HLS adaptation: bounded pre-reduction witnesses and completion counters.
+ // Copyright 2025 Cerebras Systems.
+ //
+ // Licensed under the Apache License, Version 2.0 (the "License");
+@@ -17,7 +18,7 @@
+ param f_callback : fn ()void;
+ 
+ param input_queues:[4]u16;
+-param output_queues:[2]u16;
++param output_queues:[4]u16;
+ 
+ // explicit DSR allocation
+ param dest_dsr_ids:[6]u16;
+@@ -60,6 +61,8 @@
+ //   is_second_last_row: bool,
+ // }
+ param spmv_params;
++// An enclosing phase owner may initialize shared queues instead.
++param initialize_queues: bool = true;
+ 
+ // unpack nested params
+ const north_train = spmv_params.north_train;
+@@ -68,7 +71,8 @@
+ const rx_east_train = spmv_params.rx_east_train;
+ const tx_west_train = spmv_params.tx_west_train;
+ const tx_east_train = spmv_params.tx_east_train;
+-const init = spmv_params.init;
++// Initialization runs synchronously before activating receive tasks.
++// The former init entrypoint is not bound, freeing one local task slot.
+ const compute_north = spmv_params.compute_north;
+ const compute_south = spmv_params.compute_south;
+ const compute_local = spmv_params.compute_local;
+@@ -184,8 +188,8 @@
+ const TX_SOUTH_Q: u16 = output_queues[1];
+ // reduction trains, corresponding rx and tx are not active simultaneously
+ // NOTE: the two phases are exclusive, so uthreads can actually be reused from north-south
+-const TX_WEST_Q: u16 = output_queues[0];
+-const TX_EAST_Q: u16 = output_queues[1];
++const TX_WEST_Q: u16 = output_queues[2];
++const TX_EAST_Q: u16 = output_queues[3];
+ const RX_WEST_Q: u16 = input_queues[2];
+ const RX_EAST_Q: u16 = input_queues[3];
+ 
+@@ -210,6 +214,13 @@
+ var y_vals_east_buf = @zeros([max_local_nnz_rows]f32);    // rx/tx vals on east-train during reduction (sparse): 4B
+ var y_rows_east_buf = @zeros([max_local_nnz_rows]u16);    // rx/tx rows on east-train during reduction (sparse): 4B
+ 
++
++// Independent, word-aligned metadata staging for concurrent east/west sends.
++// Numerical values remain in the original train buffers; only row metadata
++// is staged. The matching send callback protects each staging buffer's reuse.
++const row_transport = @import_module("u16_transport.csl", .{.capacity=max_local_nnz_rows});
++var west_row_wire = @zeros([row_transport.words]u32);
++var east_row_wire = @zeros([row_transport.words]u32);
+ 
+ // need to keep track of both, the size to use, and the start offset into the buffers.
+ // var rx_east_buf_len = @zeros([2, 1]u16);
+@@ -292,49 +303,41 @@
+ });
+ const tx_north_dsd = @get_dsd(fabout_dsd, .{
+     .extent = local_vec_sz,                 // fp32 => 1 per wavelet
+-    .fabric_color = north_train,
+     .output_queue = @get_output_queue(TX_NORTH_Q),
+ });
+ const tx_south_dsd = @get_dsd(fabout_dsd, .{
+     .extent = local_vec_sz,
+-    .fabric_color = south_train,
+     .output_queue = @get_output_queue(TX_SOUTH_Q),
+ });
+ const tx_north_ctrl_adv_dsd = @get_dsd(fabout_dsd, .{
+     .extent = 2,    // two switch wavelets
+     .control = true,
+-    .fabric_color = north_train,
+     .output_queue = @get_output_queue(TX_NORTH_Q),
+ });
+ const tx_south_ctrl_adv_dsd = @get_dsd(fabout_dsd, .{
+     .extent = 2,    // two switch wavelets
+     .control = true,
+-    .fabric_color = south_train,
+     .output_queue = @get_output_queue(TX_SOUTH_Q),
+ });
+ const tx_north_ctrl_rst_dsd = @get_dsd(fabout_dsd, .{
+     .extent = 1,    // two switch wavelets
+     .control = true,
+-    .fabric_color = north_train,
+     .output_queue = @get_output_queue(TX_NORTH_Q),
+ });
+ const tx_south_ctrl_rst_dsd = @get_dsd(fabout_dsd, .{
+     .extent = 1,    // two switch wavelets
+     .control = true,
+-    .fabric_color = south_train,
+     .output_queue = @get_output_queue(TX_SOUTH_Q),
+ });
+ 
+ // 2. reduce phase: west and east trains for partial output vectors (sparse: vals + rows)
+ const tx_west_dsd = @get_dsd(fabout_dsd, .{
+     .extent = 1,
+-    .fabric_color = tx_west_train,
+     .output_queue = @get_output_queue(TX_WEST_Q),
+ });
+ 
+ const tx_east_dsd = @get_dsd(fabout_dsd, .{
+     .extent = 1,
+-    .fabric_color = tx_east_train,
+     .output_queue = @get_output_queue(TX_EAST_Q),
+ });
+ 
+@@ -611,8 +614,9 @@
+     // 1. locate local col idx >= xlow in mat_col_idx
+     // 2. until local col idx < xhigh, compute into local y_vals_buf
+     var i: u16 = north_train_start_idx;
+-    // start_idx is initialized to `local_nnz_cols`, and goes in reverse
+-    while (i >= 0 and (mat_col_idx_buf.*)[i] >= x_low_idx and (mat_col_idx_buf.*)[i] < x_high_idx) : (i -= 1) {
++    // Reverse scan uses 0xffff as exhausted/empty sentinel. Check the
++    // occupied extent before indexing: an unsigned i >= 0 never guards it.
++    while (i < (local_nnz_cols.*)[0] and (mat_col_idx_buf.*)[i] >= x_low_idx and (mat_col_idx_buf.*)[i] < x_high_idx) : (i -= 1) {
+         var local_col_idx = (mat_col_idx_buf.*)[i]; // local col idx
+         var local_col_len = (mat_col_len_buf.*)[i]; // num nz per corresponding col
+         var local_col_loc = (mat_col_loc_buf.*)[i]; // loc into mat_vals_bufs
+@@ -664,7 +668,7 @@
+         // run it again
+         // NOTE: With multiple iterations, the tsc_reduce_start and tsc_reduce_end will only
+         // contain the last iteration's timestamps.
+-        @activate(init);
++        initialize();
+     } else {
+ 
+         // spmv is done, continue next command
+@@ -697,7 +701,7 @@
+             // first and last rows do not need to switch
+             @activate(tx_north);
+         } else {
+-            @load_to_dsr(tx_north_dsr, tx_north_ctrl_rst_dsd, .{ .async = true, .activate = tx_north_task });
++            @load_to_dsr(tx_north_dsr, tx_north_ctrl_rst_dsd, .{ .ut_id = @get_ut_id(0), .async = true, .activate = tx_north_task });
+             @load_to_dsr(mem1d_north_dsr, ctrl_rst_dsd);
+             @mov32(tx_north_dsr, mem1d_north_dsr, .{ .async = true, .priority = .{ .high = true }});
+         }
+@@ -718,7 +722,7 @@
+             // last and first rows do not need to switch
+             @activate(tx_south);
+         } else {
+-            @load_to_dsr(tx_south_dsr, tx_south_ctrl_rst_dsd, .{ .async = true, .activate = tx_south_task });
++            @load_to_dsr(tx_south_dsr, tx_south_ctrl_rst_dsd, .{ .ut_id = @get_ut_id(3), .async = true, .activate = tx_south_task });
+             @load_to_dsr(mem1d_south_dsr, ctrl_rst_dsd);
+             @mov32(tx_south_dsr, mem1d_south_dsr, .{ .async = true, .priority = .{ .high = true }});
+         }
+@@ -739,7 +743,11 @@
+     }
+ }
+ 
++var partial_witness = @zeros([2]f32);
+ fn start_reduce() void {
++    // Both north/south sends have retired before compute_done calls here.
++    partial_witness[0] = 0.0;
++    partial_witness[1] = 0.0;
+     // Record the value of the timestamp counter
+     timestamp.get_timestamp(&tsc_reduce_start_buffer);
+ 
+@@ -759,6 +767,8 @@
+             break;
+         }
+         curr_val = y_vals_north_buf[north_idx] + y_vals_south_buf[south_idx];
++        if (north_idx == 0) { partial_witness[0] = curr_val; }
++        if (north_idx + 1 == (local_nnz_rows.*)[0]) { partial_witness[1] = curr_val; }
+         north_idx += 1;
+         south_idx += 1;
+         // now that we have the current reduced data, put it in its right place
+@@ -1240,7 +1250,7 @@
+     if (tx_north_task_state == 0) {
+         // tx buf is always ready at init
+         tx_north_task_state = 1;
+-        @load_to_dsr(tx_north_dsr, tx_north_dsd, .{ .async = true, .activate = tx_north_task });
++        @load_to_dsr(tx_north_dsr, tx_north_dsd, .{ .ut_id = @get_ut_id(0), .async = true, .activate = tx_north_task });
+         @load_to_dsr(mem1d_north_dsr, x_tx_buf_dsd);
+         @mov32(tx_north_dsr, mem1d_north_dsr, .{ .async = true, .priority = .{ .high = true }});
+     } else if (tx_north_task_state == 1) {
+@@ -1250,7 +1260,7 @@
+             // top two rows do not send out switch wavelets
+             @activate(tx_north);
+         } else {
+-            @load_to_dsr(tx_north_dsr, tx_north_ctrl_adv_dsd, .{ .async = true, .activate = tx_north_task });
++            @load_to_dsr(tx_north_dsr, tx_north_ctrl_adv_dsd, .{ .ut_id = @get_ut_id(0), .async = true, .activate = tx_north_task });
+             @load_to_dsr(mem1d_north_dsr, ctrl_adv_dsd);
+             @mov32(tx_north_dsr, mem1d_north_dsr, .{ .async = true, .priority = .{ .high = true }});
+         }
+@@ -1274,7 +1284,7 @@
+     if (tx_south_task_state == 0) {
+         // tx buf is always ready at init
+         tx_south_task_state = 1;
+-        @load_to_dsr(tx_south_dsr, tx_south_dsd, .{ .async = true, .activate = tx_south_task });
++        @load_to_dsr(tx_south_dsr, tx_south_dsd, .{ .ut_id = @get_ut_id(3), .async = true, .activate = tx_south_task });
+         @load_to_dsr(mem1d_south_dsr, x_tx_buf_dsd);
+         @mov32(tx_south_dsr, mem1d_south_dsr, .{ .async = true, .priority = .{ .high = true }});
+     } else if (tx_south_task_state == 1) {
+@@ -1284,7 +1294,7 @@
+             // bottom two rows do not send out switch wavelets
+             @activate(tx_south);
+         } else {
+-            @load_to_dsr(tx_south_dsr, tx_south_ctrl_adv_dsd, .{ .async = true, .activate = tx_south_task });
++            @load_to_dsr(tx_south_dsr, tx_south_ctrl_adv_dsd, .{ .ut_id = @get_ut_id(3), .async = true, .activate = tx_south_task });
+             @load_to_dsr(mem1d_south_dsr, ctrl_adv_dsd);
+             @mov32(tx_south_dsr, mem1d_south_dsr, .{ .async = true, .priority = .{ .high = true }});
+         }
+@@ -1312,7 +1322,7 @@
+             tx_west_task_state = 1;
+             is_tx_west_active = true;
+             // segment 1: send the valid size first
+-            @load_to_dsr(tx_west_dsr, tx_west_dsd, .{ .async = true, .activate = tx_west_task });
++            @load_to_dsr(tx_west_dsr, tx_west_dsd, .{ .ut_id = @get_ut_id(0), .async = true, .activate = tx_west_task });
+             if (curr_tx_west_buf == 0) {
+                 @load_to_dsr(mem1d_west_dsr, y_tx_west_buf0_len_dsd);
+                 @mov16(tx_west_dsr, mem1d_west_dsr, .{ .async = true, .priority = .{ .high = true }});
+@@ -1326,41 +1336,22 @@
+         }
+     } else if (tx_west_task_state == 1) {
+         tx_west_task_state = 2;
+-        // segment 2: set the base addr and valid data size to tx the y_rows data
+-        // note: padding is not sent
+-        if (curr_tx_west_buf == 0) {
+-            if (tx_west_buf0_len[0] == 0) {
+-                @activate(tx_west);
+-                return;
+-            }
+-            if (tx_west_buf_off[0] == 0) {
+-                const y_rows_west_dsd = @set_dsd_length(y_rows_west_buf0_dsd, tx_west_buf0_len[0]);
+-                @load_to_dsr(tx_west_dsr, tx_west_dsd, .{ .async = true, .activate = tx_west_task });
+-                @load_to_dsr(mem1d_west_dsr, y_rows_west_dsd);
+-                @mov16(tx_west_dsr, mem1d_west_dsr, .{ .async = true, .priority = .{ .high = true }});
+-            } else {
+-                const y_rows_west_dsd = @increment_dsd_offset(@set_dsd_length(y_rows_west_buf0_dsd, tx_west_buf0_len[0]), tx_west_buf_off[0], u16);
+-                @load_to_dsr(tx_west_dsr, tx_west_dsd, .{ .async = true, .activate = tx_west_task });
+-                @load_to_dsr(mem1d_west_dsr, y_rows_west_dsd);
+-                @mov16(tx_west_dsr, mem1d_west_dsr, .{ .async = true, .priority = .{ .high = true }});
+-            }
+-        } else {
+-            if (tx_west_buf1_len[0] == 0) {
+-                @activate(tx_west);
+-                return;
+-            }
+-            if (tx_west_buf_off[1] == 0) {
+-                const y_rows_west_dsd = @set_dsd_length(y_rows_west_buf1_dsd, tx_west_buf1_len[0]);
+-                @load_to_dsr(tx_west_dsr, tx_west_dsd, .{ .async = true, .activate = tx_west_task });
+-                @load_to_dsr(mem1d_west_dsr, y_rows_west_dsd);
+-                @mov16(tx_west_dsr, mem1d_west_dsr, .{ .async = true, .priority = .{ .high = true }});
+-            } else {
+-                const y_rows_west_dsd = @increment_dsd_offset(@set_dsd_length(y_rows_west_buf1_dsd, tx_west_buf1_len[0]), tx_west_buf_off[1], u16);
+-                @load_to_dsr(tx_west_dsr, tx_west_dsd, .{ .async = true, .activate = tx_west_task });
+-                @load_to_dsr(mem1d_west_dsr, y_rows_west_dsd);
+-                @mov16(tx_west_dsr, mem1d_west_dsr, .{ .async = true, .priority = .{ .high = true }});
+-            }
+-        }
++        var rows: [*]u16 = &y_rows_west_buf;
++        var count: u16 = tx_west_buf0_len[0];
++        var offset: u16 = @as(u16, tx_west_buf_off[0]);
++        if (curr_tx_west_buf == 1) {
++            rows = &y_rows_north_buf;
++            count = tx_west_buf1_len[0];
++            offset = @as(u16, tx_west_buf_off[1]);
++        }
++        if (count == 0) { @activate(tx_west); return; }
++        row_transport.stage(rows, offset, count, &west_row_wire);
++        const aligned_rows = @set_dsd_base_addr(
++            @set_dsd_length(y_rows_west_buf0_dsd, count),
++            @ptrcast([*]u16, &west_row_wire));
++        @load_to_dsr(tx_west_dsr, tx_west_dsd, .{ .ut_id=@get_ut_id(0), .async=true, .activate=tx_west_task });
++        @load_to_dsr(mem1d_west_dsr, aligned_rows);
++        @mov16(tx_west_dsr, mem1d_west_dsr, .{ .async=true, .priority=.{.high=true} });
+     } else if (tx_west_task_state == 2) {
+         tx_west_task_state = 4;
+         // segment 3: send vals data
+@@ -1371,12 +1362,12 @@
+             }
+             if (tx_west_buf_off[0] == 0) {
+                 const y_vals_west_dsd = @set_dsd_length(y_vals_west_buf0_dsd, tx_west_buf0_len[0]);
+-                @load_to_dsr(tx_west_dsr, tx_west_dsd, .{ .async = true, .activate = tx_west_task });
++                @load_to_dsr(tx_west_dsr, tx_west_dsd, .{ .ut_id = @get_ut_id(0), .async = true, .activate = tx_west_task });
+                 @load_to_dsr(mem1d_west_dsr, y_vals_west_dsd);
+                 @mov32(tx_west_dsr, mem1d_west_dsr, .{ .async = true, .priority = .{ .high = true }});
+             } else {
+                 const y_vals_west_dsd = @increment_dsd_offset(@set_dsd_length(y_vals_west_buf0_dsd, tx_west_buf0_len[0]), tx_west_buf_off[0], f32);
+-                @load_to_dsr(tx_west_dsr, tx_west_dsd, .{ .async = true, .activate = tx_west_task });
++                @load_to_dsr(tx_west_dsr, tx_west_dsd, .{ .ut_id = @get_ut_id(0), .async = true, .activate = tx_west_task });
+                 @load_to_dsr(mem1d_west_dsr, y_vals_west_dsd);
+                 @mov32(tx_west_dsr, mem1d_west_dsr, .{ .async = true, .priority = .{ .high = true }});
+             }
+@@ -1387,12 +1378,12 @@
+             }
+             if (tx_west_buf_off[1] == 0) {
+                 const y_vals_west_dsd = @set_dsd_length(y_vals_west_buf1_dsd, tx_west_buf1_len[0]);
+-                @load_to_dsr(tx_west_dsr, tx_west_dsd, .{ .async = true, .activate = tx_west_task });
++                @load_to_dsr(tx_west_dsr, tx_west_dsd, .{ .ut_id = @get_ut_id(0), .async = true, .activate = tx_west_task });
+                 @load_to_dsr(mem1d_west_dsr, y_vals_west_dsd);
+                 @mov32(tx_west_dsr, mem1d_west_dsr, .{ .async = true, .priority = .{ .high = true }});
+             } else {
+                 const y_vals_west_dsd = @increment_dsd_offset(@set_dsd_length(y_vals_west_buf1_dsd, tx_west_buf1_len[0]), tx_west_buf_off[1], f32);
+-                @load_to_dsr(tx_west_dsr, tx_west_dsd, .{ .async = true, .activate = tx_west_task });
++                @load_to_dsr(tx_west_dsr, tx_west_dsd, .{ .ut_id = @get_ut_id(0), .async = true, .activate = tx_west_task });
+                 @load_to_dsr(mem1d_west_dsr, y_vals_west_dsd);
+                 @mov32(tx_west_dsr, mem1d_west_dsr, .{ .async = true, .priority = .{ .high = true }});
+             }
+@@ -1432,7 +1423,7 @@
+             tx_east_task_state = 1;
+             is_tx_east_active = true;
+             // segment 1: send the valid size first
+-            @load_to_dsr(tx_east_dsr, tx_east_dsd, .{ .async = true, .activate = tx_east_task });
++            @load_to_dsr(tx_east_dsr, tx_east_dsd, .{ .ut_id = @get_ut_id(3), .async = true, .activate = tx_east_task });
+             if (curr_tx_east_buf == 0) {
+                 @load_to_dsr(mem1d_east_dsr, y_tx_east_buf0_len_dsd);
+                 @mov16(tx_east_dsr, mem1d_east_dsr, .{ .async = true, .priority = .{ .high = true }});
+@@ -1446,41 +1437,22 @@
+         }
+     } else if (tx_east_task_state == 1) {
+         tx_east_task_state = 2;
+-        // segment 2: set the base addr and valid data size to tx the y_rows data
+-        // note: padding is not sent, so no need to check for it in rx task
+-        if (curr_tx_east_buf == 0) {
+-            if (tx_east_buf0_len[0] == 0) {
+-                @activate(tx_east);
+-                return;
+-            }
+-            if (tx_east_buf_off[0] == 0) {
+-                const y_rows_east_dsd = @set_dsd_length(y_rows_east_buf0_dsd, tx_east_buf0_len[0]);
+-                @load_to_dsr(tx_east_dsr, tx_east_dsd, .{ .async = true, .activate = tx_east_task });
+-                @load_to_dsr(mem1d_east_dsr, y_rows_east_dsd);
+-                @mov16(tx_east_dsr, mem1d_east_dsr, .{ .async = true, .priority = .{ .high = true }});
+-            } else {
+-                const y_rows_east_dsd = @increment_dsd_offset(@set_dsd_length(y_rows_east_buf0_dsd, tx_east_buf0_len[0]), tx_east_buf_off[0], u16);
+-                @load_to_dsr(tx_east_dsr, tx_east_dsd, .{ .async = true, .activate = tx_east_task });
+-                @load_to_dsr(mem1d_east_dsr, y_rows_east_dsd);
+-                @mov16(tx_east_dsr, mem1d_east_dsr, .{ .async = true, .priority = .{ .high = true }});
+-            }
+-        } else {
+-            if (tx_east_buf1_len[0] == 0) {
+-                @activate(tx_east);
+-                return;
+-            }
+-            if (tx_east_buf_off[1] == 0) {
+-                const y_rows_east_dsd = @set_dsd_length(y_rows_east_buf1_dsd, tx_east_buf1_len[0]);
+-                @load_to_dsr(tx_east_dsr, tx_east_dsd, .{ .async = true, .activate = tx_east_task });
+-                @load_to_dsr(mem1d_east_dsr, y_rows_east_dsd);
+-                @mov16(tx_east_dsr, mem1d_east_dsr, .{ .async = true, .priority = .{ .high = true }});
+-            } else {
+-                const y_rows_east_dsd = @increment_dsd_offset(@set_dsd_length(y_rows_east_buf1_dsd, tx_east_buf1_len[0]), tx_east_buf_off[1], u16);
+-                @load_to_dsr(tx_east_dsr, tx_east_dsd, .{ .async = true, .activate = tx_east_task });
+-                @load_to_dsr(mem1d_east_dsr, y_rows_east_dsd);
+-                @mov16(tx_east_dsr, mem1d_east_dsr, .{ .async = true, .priority = .{ .high = true }});
+-            }
+-        }
++        var rows: [*]u16 = &y_rows_east_buf;
++        var count: u16 = tx_east_buf0_len[0];
++        var offset: u16 = @as(u16, tx_east_buf_off[0]);
++        if (curr_tx_east_buf == 1) {
++            rows = &y_rows_south_buf;
++            count = tx_east_buf1_len[0];
++            offset = @as(u16, tx_east_buf_off[1]);
++        }
++        if (count == 0) { @activate(tx_east); return; }
++        row_transport.stage(rows, offset, count, &east_row_wire);
++        const aligned_rows = @set_dsd_base_addr(
++            @set_dsd_length(y_rows_east_buf0_dsd, count),
++            @ptrcast([*]u16, &east_row_wire));
++        @load_to_dsr(tx_east_dsr, tx_east_dsd, .{ .ut_id=@get_ut_id(3), .async=true, .activate=tx_east_task });
++        @load_to_dsr(mem1d_east_dsr, aligned_rows);
++        @mov16(tx_east_dsr, mem1d_east_dsr, .{ .async=true, .priority=.{.high=true} });
+     } else if (tx_east_task_state == 2) {
+         tx_east_task_state = 4;
+         // segment 2: send vals data
+@@ -1491,12 +1463,12 @@
+             }
+             if (tx_east_buf_off[0] == 0) {
+                 const y_vals_east_dsd = @set_dsd_length(y_vals_east_buf0_dsd, tx_east_buf0_len[0]);
+-                @load_to_dsr(tx_east_dsr, tx_east_dsd, .{ .async = true, .activate = tx_east_task });
++                @load_to_dsr(tx_east_dsr, tx_east_dsd, .{ .ut_id = @get_ut_id(3), .async = true, .activate = tx_east_task });
+                 @load_to_dsr(mem1d_east_dsr, y_vals_east_dsd);
+                 @mov32(tx_east_dsr, mem1d_east_dsr, .{ .async = true, .priority = .{ .high = true }});
+             } else {
+                 const y_vals_east_dsd = @increment_dsd_offset(@set_dsd_length(y_vals_east_buf0_dsd, tx_east_buf0_len[0]), tx_east_buf_off[0], f32);
+-                @load_to_dsr(tx_east_dsr, tx_east_dsd, .{ .async = true, .activate = tx_east_task });
++                @load_to_dsr(tx_east_dsr, tx_east_dsd, .{ .ut_id = @get_ut_id(3), .async = true, .activate = tx_east_task });
+                 @load_to_dsr(mem1d_east_dsr, y_vals_east_dsd);
+                 @mov32(tx_east_dsr, mem1d_east_dsr, .{ .async = true, .priority = .{ .high = true }});
+             }
+@@ -1507,12 +1479,12 @@
+             }
+             if (tx_east_buf_off[1] == 0) {
+                 const y_vals_east_dsd = @set_dsd_length(y_vals_east_buf1_dsd, tx_east_buf1_len[0]);
+-                @load_to_dsr(tx_east_dsr, tx_east_dsd, .{ .async = true, .activate = tx_east_task });
++                @load_to_dsr(tx_east_dsr, tx_east_dsd, .{ .ut_id = @get_ut_id(3), .async = true, .activate = tx_east_task });
+                 @load_to_dsr(mem1d_east_dsr, y_vals_east_dsd);
+                 @mov32(tx_east_dsr, mem1d_east_dsr, .{ .async = true, .priority = .{ .high = true }});
+             } else {
+                 const y_vals_east_dsd = @increment_dsd_offset(@set_dsd_length(y_vals_east_buf1_dsd, tx_east_buf1_len[0]), tx_east_buf_off[1], f32);
+-                @load_to_dsr(tx_east_dsr, tx_east_dsd, .{ .async = true, .activate = tx_east_task });
++                @load_to_dsr(tx_east_dsr, tx_east_dsd, .{ .ut_id = @get_ut_id(3), .async = true, .activate = tx_east_task });
+                 @load_to_dsr(mem1d_east_dsr, y_vals_east_dsd);
+                 @mov32(tx_east_dsr, mem1d_east_dsr, .{ .async = true, .priority = .{ .high = true }});
+             }
+@@ -1723,7 +1695,8 @@
+     }
+ }
+ 
+-task init_task() void {
++fn initialize() void {
++    // Previous invocation callback joins all four trains.
+ 
+     zero_out_flags_and_data();
+ 
+@@ -1852,7 +1825,7 @@
+     iter_count = @as(i16, 1);
+     // set initial counter because init_task is called "iter_count" times
+     iter_counter = iter_count;
+-    @activate(init);
++    initialize();
+     // post_processing() is the last task of spmv, it triggers f_callback()
+     // when spmv is done
+ }
+@@ -1863,7 +1836,7 @@
+ comptime {
+ 
+     // bind tasks
+-    @bind_local_task(init_task, init);
++
+ 
+     @bind_local_task(rx_north_task, rx_north);
+     @bind_local_task(rx_south_task, rx_south);
+@@ -1892,10 +1865,12 @@
+     // color north_train maps to RX_SOUTH_Q: u16 = 1;
+     // color rx_east_train maps to RX_WEST_Q: u16 = 6;
+     // color rx_west_train maps to RX_EAST_Q: u16 = 7;
++    if (initialize_queues) {
+     @initialize_queue(@get_input_queue(RX_NORTH_Q), .{.color = south_train});
+     @initialize_queue(@get_input_queue(RX_SOUTH_Q), .{.color = north_train});
+     @initialize_queue(@get_input_queue(RX_WEST_Q), .{.color = rx_east_train});
+     @initialize_queue(@get_input_queue(RX_EAST_Q), .{.color = rx_west_train});
++    }
+ }
+ 
+ comptime {
+@@ -1986,3 +1961,41 @@
+         @set_local_color_config(tx_west_train, west_train_out);
+     }
+ }
++
++fn completion_counts(out: *[11]u16) void {
++    (out.*)[0] = tx_north_count;
++    (out.*)[1] = rx_south_count;
++    (out.*)[2] = compute_north_count;
++    (out.*)[3] = tx_south_count;
++    (out.*)[4] = rx_north_count;
++    (out.*)[5] = compute_south_count;
++    (out.*)[6] = tx_west_count;
++    (out.*)[7] = rx_east_count;
++    (out.*)[8] = tx_east_count;
++    (out.*)[9] = rx_west_count;
++}
++
++// Separate fixed-color output queues avoid changing a queue while old wavelets
++// may remain in the fabric pipeline beyond local DSD completion.
++comptime {
++ if (initialize_queues) {
++ @initialize_queue(@get_output_queue(TX_NORTH_Q), .{.color=north_train});
++ @initialize_queue(@get_output_queue(TX_SOUTH_Q), .{.color=south_train});
++ @initialize_queue(@get_output_queue(TX_WEST_Q), .{.color=tx_west_train});
++ @initialize_queue(@get_output_queue(TX_EAST_Q), .{.color=tx_east_train});
++ }
++}
++
++// Requires quiescent queues and completed preceding library callbacks.
++// Uses SDK configuration helpers, preserving unrelated configuration fields.
++const queue_cfg = @import_module("<tile_config>");
++fn configure_queues() void {
++  queue_cfg.input_queue_config.encode_input_queue(RX_NORTH_Q, @as(i16,@get_int(south_train)), false);
++  queue_cfg.input_queue_config.encode_input_queue(RX_SOUTH_Q, @as(i16,@get_int(north_train)), false);
++  queue_cfg.input_queue_config.encode_input_queue(RX_WEST_Q, @as(i16,@get_int(rx_east_train)), false);
++  queue_cfg.input_queue_config.encode_input_queue(RX_EAST_Q, @as(i16,@get_int(rx_west_train)), false);
++  queue_cfg.output_queue_config.encode_output_queue(TX_NORTH_Q, @as(i16,@get_int(north_train)));
++  queue_cfg.output_queue_config.encode_output_queue(TX_SOUTH_Q, @as(i16,@get_int(south_train)));
++  queue_cfg.output_queue_config.encode_output_queue(TX_WEST_Q, @as(i16,@get_int(tx_west_train)));
++  queue_cfg.output_queue_config.encode_output_queue(TX_EAST_Q, @as(i16,@get_int(tx_east_train)));
++}
+--- projects/sdk_examples/upstream/benchmarks/spmv-hypersparse/src/allreduce2R1E/pe.csl
++++ experiments/reference/sdk-spmv-sync-migration/spmv_reduce_pe.csl
+@@ -381,7 +381,7 @@
+     .extent = 1,
+     .fabric_color = C_DISPATCH,
+     .control = true,
+-    .output_queue = @get_output_queue(queues[0])
++    .output_queue = @get_output_queue(4)
+ });
+ 
+ ////////////////////////////////////////////////////////////////////////////////
+@@ -617,20 +617,21 @@
+ 
+ 
+ // entrypoint to trigger f_send_data or f_send_ctrl by a control wavelet
++const control = @import_module("<control>");
+ task f_dispatch() void {
+ 
+     // the state must be {STATE_DISPATCH_SEND_DATA, STATE_DISPATCH_SEND_CTRL, STATE_DISPATCH_STATE_ENTRY}
+     @assert( (0 <= state_dispatch) and (2 >= state_dispatch) );
+ 
+-    var ctrl_index: u16; // index field of a control wavelet
+-    if (STATE_DISPATCH_SEND_DATA == state_dispatch){
+-        ctrl_index = C_SEND_DATA_ID;
+-    }else if (STATE_DISPATCH_SEND_CTRL == state_dispatch){
+-        ctrl_index = C_SEND_CTRL_ID;
+-    }else{ // STATE_DISPATCH_STATE_ENTRY == state_dispatch
+-        ctrl_index = C_STATE_ENTRY_ID;
++    // Use SDK encoding: a control_task_id is not its public numeric task ID.
++    // Encode a switch-advance command and a typed control-task entrypoint.
++    if (STATE_DISPATCH_SEND_DATA == state_dispatch) {
++        mem_cmd_buf[0] = control.encode_single_payload(control.opcode.SWITCH_ADV,false,C_SEND_DATA,0);
++    } else if (STATE_DISPATCH_SEND_CTRL == state_dispatch) {
++        mem_cmd_buf[0] = control.encode_single_payload(control.opcode.SWITCH_ADV,false,C_SEND_CTRL,0);
++    } else {
++        mem_cmd_buf[0] = control.encode_single_payload(control.opcode.SWITCH_ADV,false,C_STATE_ENTRY,0);
+     }
+-    mem_cmd_buf[0] = (@as(u32, ctrl_index) << 16);
+     //@mov32(fab_trans_cmd_wdsd, mem_cmd_buf_dsd, .{.async=true} );
+     @load_to_dsr(dest_dsr, fab_trans_cmd_wdsd, .{.async=true} );
+     @load_to_dsr(src1_dsr, mem_cmd_buf_dsd);
+@@ -652,117 +653,27 @@
+ 
+ const tile_config = @import_module("<tile_config>");
+ 
++// Target-aware SDK API replaces legacy FYN register masks; route topology unchanged.
+ fn rowReduce_configure() void {
+-
+-    // (1) setup switch according to config parameters
+-    // 1. pos0 (color config reg)
+-    // 2. pos1 (switch config reg)
+-    //    pos1 = {.rx = RAMP} for all PEs except last PE
+-
+-    // reset switch position to pos0
+-    // WARNING: if switch config register does not reset the switch position back to pos0,
+-    // it is possible that some PE is at pos1 after the switch is reconfigured and the sending
+-    // pattern is messed up, for example, the PE sends data first, then forwards the data from
+-    // the west.
+-    var r_switch_state : u16 = @bitcast(*u16, translate_word_to_bytes(D2H_SWITCH_CONFIG_ADDR) ).* ;
+-    // mask bits 14:13 to reset input&output position to pos0
+-    r_switch_state = r_switch_state & MASK_SWITCH_RESET_POS0;
+-    // WARNING: all PEs are configured by
+-    //   - ".pos1 = .{ .rx = RAMP }"  --> bit 3 is 1
+-    //   - ".ring_mode = true"  --> bit 12 is 1
+-    //   - ".pop_mode = .{ .pop_on_advance = true }" --> bits 13:12 of fabric per-color config
+-    // mask bits 2:0 to clear setting of pos1
+-    r_switch_state = r_switch_state & MASK_SWITCH_CLEAR_POS1;
+-    if (last_px){
+-        // last PE does not have pos1
+-        r_switch_state = r_switch_state | SWITCH_POS1_INVALID;
+-    }else{
+-        // others have ".pos1 = .{ .rx = RAMP }"
+-        r_switch_state = r_switch_state | SWITCH_POS1_RAMP;
+-    }
+-    @bitcast(*u16, translate_word_to_bytes(D2H_SWITCH_CONFIG_ADDR) ).* = r_switch_state;
+-
+-    var r_state : u16 = @bitcast(*u16, translate_word_to_bytes(D2H_COLOR_CONFIG_ADDR) ).* ;
+-    // clear input/output switch pos0
+-    r_state = r_state & MASK_INPUT_OUTPUT_POS0 ;
+-
+-    if (first_px){
+-        // 1st PE must has {rx = RAMP} to send out the data
+-        // .rx = .{ RAMP },.tx = .{ EAST },
+-        r_state = r_state | INPUT_RAMP | OUTPUT_EAST;
+-    }else if (last_px){
+-        // last PE only receives data
+-        // .rx = .{ WEST }, .tx = .{ RAMP },
+-        r_state = r_state | INPUT_WEST | OUTPUT_RAMP;
+-    }else{
+-        // 0 < px < width-1
+-        // .rx = .{ WEST }, .tx = .{ EAST },
+-        r_state = r_state | INPUT_WEST | OUTPUT_EAST;
+-    }
+-    // update the switch pos0
+-    @bitcast(*u16, translate_word_to_bytes(D2H_COLOR_CONFIG_ADDR) ).* = r_state;
+-
+-    // (2) clear teardown-in-progress bit
+-    // config_reg[c] ^= mask where mask = 1 << 14
++    tile_config.switch_config.clear_current_position(C_ROUTE);
++    tile_config.switch_config.set_invalid_for_all_switch_positions(C_ROUTE);
++    if (!last_px) { tile_config.switch_config.set_rx_switch_pos1(C_ROUTE,RAMP); }
++    if (first_px) { tile_config.color_config.reset_routes(C_ROUTE,.{.rx=RAMP,.tx=EAST}); }
++    else if (last_px) { tile_config.color_config.reset_routes(C_ROUTE,.{.rx=WEST,.tx=RAMP}); }
++    else { tile_config.color_config.reset_routes(C_ROUTE,.{.rx=WEST,.tx=EAST}); }
+     tile_config.teardown.exit(C_ROUTE);
+ }
+ 
+-
++// Target-aware SDK API replaces legacy FYN register masks; route topology unchanged.
+ fn colReduce_configure() void {
+-
+-    // (1) setup switch according to config parameters
+-    // 1. pos0 (color config reg)
+-    // 2. pos1 (switch config reg)
+-    //    pos1 = {.rx = RAMP} for all PEs except last PE
+-
+-    // reset switch position to pos0
+-    // WARNING: if switch config register does not reset the switch position back to pos0,
+-    // it is possible that some PE is at pos1 after the switch is reconfigured and the sending
+-    // pattern is messed up, for example, the PE sends data first, then forwards the data from
+-    // the west.
+-    var r_switch_state : u16 = @bitcast(*u16, translate_word_to_bytes(D2H_SWITCH_CONFIG_ADDR) ).* ;
+-    // mask bits 14:13 to reset input&output position to pos0
+-    r_switch_state = r_switch_state & MASK_SWITCH_RESET_POS0;
+-    // WARNING: all PEs are configured by
+-    //   - ".pos1 = .{ .rx = RAMP }"  --> bit 3 is 1
+-    //   - ".ring_mode = true"  --> bit 12 is 1
+-    //   - ".pop_mode = .{ .pop_on_advance = true }" --> bits 13:12 of fabric per-color config
+-    // mask bits 2:0 to clear setting of pos1
+-    r_switch_state = r_switch_state & MASK_SWITCH_CLEAR_POS1;
+-    if (last_py){
+-        // last PE does not have pos1
+-        r_switch_state = r_switch_state | SWITCH_POS1_INVALID;
+-    }else{
+-        // others have ".pos1 = .{ .rx = RAMP }"
+-        r_switch_state = r_switch_state | SWITCH_POS1_RAMP;
+-    }
+-    @bitcast(*u16, translate_word_to_bytes(D2H_SWITCH_CONFIG_ADDR) ).* = r_switch_state;
+-
+-    var r_state : u16 = @bitcast(*u16, translate_word_to_bytes(D2H_COLOR_CONFIG_ADDR) ).* ;
+-    // clear input/output switch pos0
+-    r_state = r_state & MASK_INPUT_OUTPUT_POS0 ;
+-
+-    if (first_py){
+-        // 1st PE must has {rx = RAMP} to send out the data
+-        // .rx = .{ RAMP },.tx = .{ SOUTH },
+-        r_state = r_state | INPUT_RAMP | OUTPUT_SOUTH;
+-    }else if (last_py){
+-        // last PE only receives data
+-        // .rx = .{ NORTH }, .tx = .{ RAMP },
+-        r_state = r_state | INPUT_NORTH | OUTPUT_RAMP;
+-    }else{
+-        // 0 < py < width-1
+-        // .rx = .{ NORTH }, .tx = .{ SOUTH },
+-        r_state = r_state | INPUT_NORTH | OUTPUT_SOUTH;
+-    }
+-    // update the switch pos0
+-    @bitcast(*u16, translate_word_to_bytes(D2H_COLOR_CONFIG_ADDR) ).* = r_state;
+-
+-    // (2) clear teardown-in-progress bit
+-    // config_reg[c] ^= mask where mask = 1 << 14
++    tile_config.switch_config.clear_current_position(C_ROUTE);
++    tile_config.switch_config.set_invalid_for_all_switch_positions(C_ROUTE);
++    if (!last_py) { tile_config.switch_config.set_rx_switch_pos1(C_ROUTE,RAMP); }
++    if (first_py) { tile_config.color_config.reset_routes(C_ROUTE,.{.rx=RAMP,.tx=SOUTH}); }
++    else if (last_py) { tile_config.color_config.reset_routes(C_ROUTE,.{.rx=NORTH,.tx=RAMP}); }
++    else { tile_config.color_config.reset_routes(C_ROUTE,.{.rx=NORTH,.tx=SOUTH}); }
+     tile_config.teardown.exit(C_ROUTE);
+ }
+-
+ 
+ // w > 1 and h > 1
+ //  x <-- x <-- x
+@@ -773,63 +684,16 @@
+ //              |
+ //  x <-- x <-- x
+ //
++// Target-aware SDK API replaces legacy FYN register masks; route topology unchanged.
+ fn bcast_configure() void {
+-
+-    // (1) setup switch according to config parameters
+-    // 1. pos0 (color config reg)
+-    // 2. pos1 (switch config reg)
+-    //    pos1 = {invalid} for all PEs
+-
+-    // reset switch position to pos0
+-    // WARNING: if switch config register does not reset the switch position back to pos0,
+-    // it is possible that some PE is at pos1 after the switch is reconfigured and the sending
+-    // pattern is messed up, for example, the PE sends data first, then forwards the data from
+-    // the west.
+-    var r_switch_state : u16 = @bitcast(*u16, translate_word_to_bytes(D2H_SWITCH_CONFIG_ADDR) ).* ;
+-    // mask bits 14:13 to reset input&output position to pos0
+-    r_switch_state = r_switch_state & MASK_SWITCH_RESET_POS0;
+-    // WARNING: all PEs have pos0 only, so disable pos1
+-    //   no change for ring_mode and pop_mode
+-    //   - ".ring_mode = true"  --> bit 12 is 1
+-    //   - ".pop_mode = .{ .pop_on_advance = true }" --> bits 13:12 of fabric per-color config
+-    // mask bits 2:0 to clear setting of pos1
+-    r_switch_state = r_switch_state & MASK_SWITCH_CLEAR_POS1;
+-    r_switch_state = r_switch_state | SWITCH_POS1_INVALID;
+-    @bitcast(*u16, translate_word_to_bytes(D2H_SWITCH_CONFIG_ADDR) ).* = r_switch_state;
+-
+-    var r_state : u16 = @bitcast(*u16, translate_word_to_bytes(D2H_COLOR_CONFIG_ADDR) ).* ;
+-    // clear input/output switch pos0
+-    r_state = r_state & MASK_INPUT_OUTPUT_POS0 ;
+-
+-    if (last_px){
+-        // px = w-1
+-        if (last_py){
+-            // Pw-1,h-1: send to west and north, { .rx = .{RAMP}, .tx = .{WEST, NOTH} } }
+-            r_state = r_state | INPUT_RAMP | OUTPUT_WEST | OUTPUT_NORTH;
+-        }else{
+-            if (first_py){
+-                // Pw-1,0: { .rx = .{SOUTH}, .tx = .{WEST, RAMP} }
+-                r_state = r_state | INPUT_SOUTH | OUTPUT_WEST | OUTPUT_RAMP;
+-            }else{
+-                // Pw-1,py: 0 < py < h-1, { .rx = .{SOUTH}, .tx = .{WEST, RAMP, NORTH} }
+-                r_state = r_state | INPUT_SOUTH | OUTPUT_WEST | OUTPUT_RAMP | OUTPUT_NORTH;
+-            }
+-        }
+-    }else{
+-        if (first_px){
+-            // px = 0, {.rx = .{EAST}, .tx = .{RAMP}}
+-            r_state = r_state | INPUT_EAST | OUTPUT_RAMP;
+-        }else{
+-            // 0 < px < w-1, { .rx = .{EAST}, .tx = .{WEST, RAMP} }
+-            r_state = r_state | INPUT_EAST | OUTPUT_RAMP | OUTPUT_WEST;
+-        }
+-    }
+-
+-    // update the switch pos0
+-    @bitcast(*u16, translate_word_to_bytes(D2H_COLOR_CONFIG_ADDR) ).* = r_state;
+-
+-    // (2) clear teardown-in-progress bit
+-    // config_reg[c] ^= mask where mask = 1 << 14
++    tile_config.switch_config.clear_current_position(C_ROUTE);
++    tile_config.switch_config.set_invalid_for_all_switch_positions(C_ROUTE);
++    if (last_px) {
++        if (last_py) { tile_config.color_config.reset_routes(C_ROUTE,.{.rx=RAMP,.tx=[2]direction{WEST,NORTH}}); }
++        else if (first_py) { tile_config.color_config.reset_routes(C_ROUTE,.{.rx=SOUTH,.tx=[2]direction{WEST,RAMP}}); }
++        else { tile_config.color_config.reset_routes(C_ROUTE,.{.rx=SOUTH,.tx=[3]direction{WEST,RAMP,NORTH}}); }
++    } else if (first_px) { tile_config.color_config.reset_routes(C_ROUTE,.{.rx=EAST,.tx=RAMP}); }
++    else { tile_config.color_config.reset_routes(C_ROUTE,.{.rx=EAST,.tx=[2]direction{RAMP,WEST}}); }
+     tile_config.teardown.exit(C_ROUTE);
+ }
+ 
+@@ -972,3 +836,17 @@
+ comptime {
+     @initialize_queue(@get_input_queue(queues[0]), .{.color = C_ROUTE} );
+ }
++
++// SDK2.10.1/WSE3: DSD fabric_color cannot select output-queue colors.
++// Internal command loopback has its own queue; data/control train stays on 5.
++comptime {
++    @initialize_queue(@get_output_queue(queues[0]), .{.color=C_ROUTE});
++    @initialize_queue(@get_output_queue(4), .{.color=C_DISPATCH});
++}
++
++// WSE3 control-task payloads still enter through a bound, unblocked input queue.
++// SDK tutorial topic-07-switches-entrypt/recv.csl documents this requirement.
++comptime {
++    @initialize_queue(@get_input_queue(3), .{.color=C_DISPATCH});
++    @unblock(@get_input_queue(3));
++}

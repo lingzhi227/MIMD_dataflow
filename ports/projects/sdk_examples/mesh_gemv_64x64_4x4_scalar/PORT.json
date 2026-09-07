@@ -1,0 +1,12 @@
+{
+  "project": "sdk_examples",
+  "kernel": "mesh_gemv_64x64_4x4_scalar",
+  "origins": [
+    "benchmarks/gemv-collectives_2d/pe.csl",
+    "benchmarks/gemv-collectives_2d/layout.csl"
+  ],
+  "fixture": "mesh_gemv:64:64",
+  "contract": "Distributed f32 GEMV: 2D blocks, top-row scatter, column broadcast, local DSD/FMA or scalar control, row reduction, right-column gather. Explicit relaxed FP; repeated calls reset accumulation. SDK collectives_2d; no bias term.",
+  "partitions": 1,
+  "status": "source_ready"
+}

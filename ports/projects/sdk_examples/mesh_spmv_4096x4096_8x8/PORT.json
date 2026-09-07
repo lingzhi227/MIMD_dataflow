@@ -1,0 +1,16 @@
+{
+  "project": "sdk_examples",
+  "kernel": "mesh_spmv_4096x4096_8x8",
+  "origins": [
+    "benchmarks/spmv-hypersparse/src/layout.csl",
+    "benchmarks/spmv-hypersparse/src/kernel.csl",
+    "benchmarks/spmv-hypersparse/src/hypersparse_spmv/pe.csl",
+    "benchmarks/spmv-hypersparse/src/hypersparse_spmv/layout.csl",
+    "benchmarks/spmv-hypersparse/src/allreduce2R1E/pe.csl",
+    "benchmarks/spmv-hypersparse/src/allreduce2R1E/layout.csl"
+  ],
+  "fixture": "mesh_spmv:4096:4096:32768",
+  "contract": "Canonical CSC f32 SpMV; typed u32 host indices checked to u16 local storage. SDK north/south vector trains and east/west sparse reduction. Warm changing structure/values, empty partitions, explicit zeros, original-entry fsum and bounded pre-reduction witnesses.",
+  "partitions": 1,
+  "status": "source_ready"
+}

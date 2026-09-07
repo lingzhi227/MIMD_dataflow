@@ -1,0 +1,38 @@
+{
+  "passed": true,
+  "new_sdk_execution": false,
+  "scope": "Resident unmasked supplied-Q/K/V single-head score/softmax/value path; same inputs, geometry, half scale and SDK options. Source repairs: max initialization, device V alignment/strided DSD, contiguous right DSD reset at each score entry. HLS SDK map exp versus source scalar; immutable K/V copies plus extra detailed owners/statistics in sampled mode. Counter omits tensor witnesses. Local WSE3 simulator interval, not full prefill/decode/model/hardware performance.",
+  "cases": [
+    {
+      "target_half_bits_exact": true,
+      "partial_history_exact": true,
+      "partial_history_observed": true,
+      "hls_max_local_cycles": 28276,
+      "source_max_local_cycles": 27873,
+      "hls_to_source_ratio": 1.0144584364797473
+    },
+    {
+      "target_half_bits_exact": true,
+      "partial_history_exact": true,
+      "partial_history_observed": true,
+      "hls_max_local_cycles": 28276,
+      "source_max_local_cycles": 27873,
+      "hls_to_source_ratio": 1.0144584364797473
+    },
+    {
+      "target_half_bits_exact": true,
+      "partial_history_exact": true,
+      "partial_history_observed": true,
+      "hls_max_local_cycles": 28276,
+      "source_max_local_cycles": 27873,
+      "hls_to_source_ratio": 1.0144584364797473
+    }
+  ],
+  "hashes": {
+    "projects/waferllm/attention_64x128_8x8/run-20260907T032800549283Z/manifest.json": "1824b6e686c0044f4b32ddce48f67bc7d2c1fc7aed48400c3264fe62fd962d2f",
+    "projects/waferllm/attention_64x128_8x8/run-20260907T032800549283Z/results.json": "6db49862ffffdf29ddf1ecdb3e8da450dede64d6faa1d03d7254a4546895f0e0",
+    "evidence/resident-attention-source-20260907T031519726605Z/provenance.json": "f3f9352af1c8e10fa919f967b5eddf01764f91b03ca9dffbef48aa05c245d081",
+    "evidence/resident-attention-source-20260907T031519726605Z/results.json": "565c1db0d02c1c558b587b05b66cba34e17f75740572f109e9ae32e8ad34b0f4",
+    "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/experiments/compare_attention_source.py": "8de0609cd6ed0d52e5d94ce0b92a815c20fa0f2027e4dcba2ca682e83668019a"
+  }
+}

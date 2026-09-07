@@ -1,0 +1,13 @@
+{
+  "project": "waferllm",
+  "kernel": "device_matmul_128x256_8x8",
+  "origins": [
+    "Prefill/src/prefill.csl output_matmul with device alignment/strided layout"
+  ],
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "status": "source_ready",
+  "partitions": 1,
+  "contract": "Device-aligned half matmul 128x128 times 128x256 on 8x8 PEs; logical column-major inputs, vertical RHS then horizontal LHS alignment, strided RHS access without local transpose allocation. Source-derived overlapped both-axis contraction. Six SDK calls, immutable A/B, exact sampled prefixes and both live operands, alignment/epoch/queue audits and coherent mutations. Actual native/device original-input math.fsum normwise .015L2/.02peak checks. Matching adapted-source control; no full attention/hardware or unmodified-source claim.",
+  "fixture": "device_matmul:128:256",
+  "instrumentation": "sampled"
+}

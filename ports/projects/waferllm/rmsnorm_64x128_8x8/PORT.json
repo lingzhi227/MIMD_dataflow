@@ -1,0 +1,13 @@
+{
+  "project": "waferllm",
+  "kernel": "rmsnorm_64x128_8x8",
+  "origins": [
+    "Prefill/src/prefill.csl rmsnorm_x",
+    "Prefill/src/comm_lib/comm_pe.csl mv_allreduce_add_x"
+  ],
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "contract": "Standard row RMSNorm 64x128 on8x8PEs, six warm SDK calls. Source-inspired bidirectional chain, explicit half accumulation and SDK math. Original feature-indexed scale and weight ownership corrected. Native stdout and device standard normwise checks, exact target half stages/results. Source-overhead control only64x128; larger shapes measured local intervals, no hardware/full-inference claim.",
+  "status": "source_ready",
+  "partitions": 1,
+  "fixture": "distributed_rms:64:128"
+}

@@ -1,0 +1,5356 @@
+{
+  "kind": "qualification_index_of_existing_sdk_runs",
+  "sdk": true,
+  "success": true,
+  "new_sdk_execution": false,
+  "source_controls": [
+    {
+      "path": "evidence/fft-native-20260906T191255216720Z",
+      "comparison_sha256": "1de9e9b597493a8c079f307402aece62d6b96c6424af3388e2d6b79f55a6b147"
+    },
+    {
+      "path": "evidence/fft-native-20260906T203739488954Z",
+      "comparison_sha256": "f983baeb210b5111c011454cbb20e63820f5e349e9c3dafc7460146070129696"
+    },
+    {
+      "path": "evidence/fft-native-20260906T204046111484Z",
+      "comparison_sha256": "cd16aa8235b44a16903d2f5b2a204d62ab345c55b35b0683a33a720352462475"
+    }
+  ],
+  "cases": [
+    {
+      "key": "sdk_examples/fft3d_16_4x4_forward",
+      "artifact": "projects/sdk_examples/fft3d_16_4x4_forward/run-20260906T191005684402Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_fft.v1",
+        "epochs": 6,
+        "actors": 16,
+        "cases": [
+          {
+            "relative_l2_error": 1.1495636044549819e-07,
+            "max_abs_error": 2.2770724242864144e-05,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 104340,
+            "cycles_per_pe": [
+              [
+                104146,
+                104221,
+                104210,
+                104110
+              ],
+              [
+                104237,
+                104340,
+                104273,
+                104184
+              ],
+              [
+                104232,
+                104338,
+                104272,
+                104183
+              ],
+              [
+                104099,
+                104215,
+                104140,
+                104038
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 8.694660148928079e-08,
+            "max_abs_error": 2.1490760323982406e-07,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 104340,
+            "cycles_per_pe": [
+              [
+                104146,
+                104221,
+                104210,
+                104110
+              ],
+              [
+                104237,
+                104340,
+                104273,
+                104184
+              ],
+              [
+                104232,
+                104338,
+                104272,
+                104183
+              ],
+              [
+                104099,
+                104215,
+                104140,
+                104038
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 0.0,
+            "max_abs_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 104340,
+            "cycles_per_pe": [
+              [
+                104146,
+                104221,
+                104210,
+                104110
+              ],
+              [
+                104237,
+                104340,
+                104273,
+                104184
+              ],
+              [
+                104232,
+                104338,
+                104272,
+                104183
+              ],
+              [
+                104099,
+                104215,
+                104140,
+                104038
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 0.0,
+            "max_abs_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 104340,
+            "cycles_per_pe": [
+              [
+                104146,
+                104221,
+                104210,
+                104110
+              ],
+              [
+                104237,
+                104340,
+                104273,
+                104184
+              ],
+              [
+                104232,
+                104338,
+                104272,
+                104183
+              ],
+              [
+                104099,
+                104215,
+                104140,
+                104038
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 1.190831580548557e-07,
+            "max_abs_error": 0.0004133104834130013,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 104340,
+            "cycles_per_pe": [
+              [
+                104146,
+                104221,
+                104210,
+                104110
+              ],
+              [
+                104237,
+                104340,
+                104273,
+                104184
+              ],
+              [
+                104232,
+                104338,
+                104272,
+                104183
+              ],
+              [
+                104099,
+                104215,
+                104140,
+                104038
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 7.409504464331152e-08,
+            "max_abs_error": 2.3171383657053865e-07,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 104340,
+            "cycles_per_pe": [
+              [
+                104146,
+                104221,
+                104210,
+                104110
+              ],
+              [
+                104237,
+                104340,
+                104273,
+                104184
+              ],
+              [
+                104232,
+                104338,
+                104272,
+                104183
+              ],
+              [
+                104099,
+                104215,
+                104140,
+                104038
+              ]
+            ]
+          }
+        ],
+        "internal_phases_observed": false,
+        "contract": "Complete original C2C transform, restored pencil ownership, warm entry/callback and owned-queue checks. SDK internal phases unobserved. Fixed f32 normwise accuracy; simulator local intervals, not global/hardware latency."
+      },
+      "native_application_checks": [
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.5349946053723857e-08,
+          "max_abs_error": 7.372556280592242e-06,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.327139133506806e-08,
+          "max_abs_error": 4.833497905009391e-08,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 3.1744694431994686e-15,
+          "max_abs_error": 2.4129622259645495e-12,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.8545710311675752e-08,
+          "max_abs_error": 7.596322802783109e-05,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.09662509013101e-08,
+          "max_abs_error": 4.9020286963178214e-08,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        }
+      ],
+      "native_application_source": "native-output.txt: actual C++ executable stdout, read-only independent recheck",
+      "device_application_checks": [
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.149563604049903e-07,
+          "max_abs_error": 2.2770724186106516e-05,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 8.694660119106367e-08,
+          "max_abs_error": 2.149076032706161e-07,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 3.1744694431994686e-15,
+          "max_abs_error": 2.4129622259645495e-12,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.1908315791692753e-07,
+          "max_abs_error": 0.00041331048318327785,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 7.409504464447386e-08,
+          "max_abs_error": 2.317138393121739e-07,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        }
+      ],
+      "schedule_phase_count": 7,
+      "qualification_sha256": "75eb7061edb3541a477ae98b87cd58df46196b212a2c343e8bab9626bcfb01e0",
+      "results_sha256": "9428aaa18eb1893552ceb2f050cc132f5aeeee563c28ebff520b82e4f357067c",
+      "numerical_validation": {
+        "contract": "fft-f32-normwise-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "relative_l2_limit": 2e-05,
+        "max_error_over_reference_peak_limit": 3e-05,
+        "zero_reference_requires_exact_zero": true,
+        "per_component_accuracy_not_implied": true
+      }
+    },
+    {
+      "key": "sdk_examples/fft3d_16_4x4_inverse_backward",
+      "artifact": "projects/sdk_examples/fft3d_16_4x4_inverse_backward/run-20260906T191338037614Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_fft.v1",
+        "epochs": 6,
+        "actors": 16,
+        "cases": [
+          {
+            "relative_l2_error": 1.149563604459958e-07,
+            "max_abs_error": 5.55925884488676e-09,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 102701,
+            "cycles_per_pe": [
+              [
+                102508,
+                102583,
+                102572,
+                102472
+              ],
+              [
+                102597,
+                102701,
+                102635,
+                102546
+              ],
+              [
+                102594,
+                102700,
+                102634,
+                102545
+              ],
+              [
+                102460,
+                102577,
+                102502,
+                102400
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 8.694660137019169e-08,
+            "max_abs_error": 5.2467676557187494e-11,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 102701,
+            "cycles_per_pe": [
+              [
+                102508,
+                102583,
+                102572,
+                102472
+              ],
+              [
+                102597,
+                102701,
+                102635,
+                102546
+              ],
+              [
+                102594,
+                102700,
+                102634,
+                102545
+              ],
+              [
+                102460,
+                102577,
+                102502,
+                102400
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 0.0,
+            "max_abs_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 102701,
+            "cycles_per_pe": [
+              [
+                102508,
+                102583,
+                102572,
+                102472
+              ],
+              [
+                102597,
+                102701,
+                102635,
+                102546
+              ],
+              [
+                102594,
+                102700,
+                102634,
+                102545
+              ],
+              [
+                102460,
+                102577,
+                102502,
+                102400
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 0.0,
+            "max_abs_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 102701,
+            "cycles_per_pe": [
+              [
+                102508,
+                102583,
+                102572,
+                102472
+              ],
+              [
+                102597,
+                102701,
+                102635,
+                102546
+              ],
+              [
+                102594,
+                102700,
+                102634,
+                102545
+              ],
+              [
+                102460,
+                102577,
+                102502,
+                102400
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 1.1908315811551927e-07,
+            "max_abs_error": 1.0090587985823125e-07,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 102701,
+            "cycles_per_pe": [
+              [
+                102508,
+                102583,
+                102572,
+                102472
+              ],
+              [
+                102597,
+                102701,
+                102635,
+                102546
+              ],
+              [
+                102594,
+                102700,
+                102634,
+                102545
+              ],
+              [
+                102460,
+                102577,
+                102502,
+                102400
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 7.409504464331218e-08,
+            "max_abs_error": 5.657076088147916e-11,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 102701,
+            "cycles_per_pe": [
+              [
+                102508,
+                102583,
+                102572,
+                102472
+              ],
+              [
+                102597,
+                102701,
+                102635,
+                102546
+              ],
+              [
+                102594,
+                102700,
+                102634,
+                102545
+              ],
+              [
+                102460,
+                102577,
+                102502,
+                102400
+              ]
+            ]
+          }
+        ],
+        "internal_phases_observed": false,
+        "contract": "Complete original C2C transform, restored pencil ownership, warm entry/callback and owned-queue checks. SDK internal phases unobserved. Fixed f32 normwise accuracy; simulator local intervals, not global/hardware latency."
+      },
+      "native_application_checks": [
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.534994591500382e-08,
+          "max_abs_error": 1.7999404302682124e-09,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.3271391142164772e-08,
+          "max_abs_error": 1.180053268300082e-11,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 3.1684719992936445e-15,
+          "max_abs_error": 6.104507686636867e-16,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.8545710089631868e-08,
+          "max_abs_error": 1.8545709745688326e-08,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.09662509013101e-08,
+          "max_abs_error": 1.1967843496869681e-11,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        }
+      ],
+      "native_application_source": "native-output.txt: actual C++ executable stdout, read-only independent recheck",
+      "device_application_checks": [
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.1495636041240648e-07,
+          "max_abs_error": 5.5592588483498724e-09,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 8.694660151857711e-08,
+          "max_abs_error": 5.2467676715056885e-11,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 3.1684719992936445e-15,
+          "max_abs_error": 6.104507686636867e-16,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.1908315776567355e-07,
+          "max_abs_error": 1.009058794760798e-07,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 7.409504464447386e-08,
+          "max_abs_error": 5.6570761550823704e-11,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        }
+      ],
+      "schedule_phase_count": 7,
+      "qualification_sha256": "17a21bea9bc386bedc438d178425cde42c25eb9328551347878b6fc43e17d2af",
+      "results_sha256": "d89c1533603ae322599e9e9566fc8902e2f32f1b5379f629246ced73508d9812",
+      "numerical_validation": {
+        "contract": "fft-f32-normwise-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "relative_l2_limit": 2e-05,
+        "max_error_over_reference_peak_limit": 3e-05,
+        "zero_reference_requires_exact_zero": true,
+        "per_component_accuracy_not_implied": true
+      }
+    },
+    {
+      "key": "sdk_examples/fft3d_16_4x4_forward_ortho",
+      "artifact": "projects/sdk_examples/fft3d_16_4x4_forward_ortho/run-20260906T191339306224Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_fft.v1",
+        "epochs": 6,
+        "actors": 16,
+        "cases": [
+          {
+            "relative_l2_error": 1.1495636044549819e-07,
+            "max_abs_error": 3.5579256629475225e-07,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 109712,
+            "cycles_per_pe": [
+              [
+                109519,
+                109594,
+                109583,
+                109483
+              ],
+              [
+                109608,
+                109712,
+                109646,
+                109557
+              ],
+              [
+                109605,
+                109711,
+                109645,
+                109556
+              ],
+              [
+                109471,
+                109588,
+                109513,
+                109411
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 8.694660148928079e-08,
+            "max_abs_error": 3.357931300622251e-09,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 109712,
+            "cycles_per_pe": [
+              [
+                109519,
+                109594,
+                109583,
+                109483
+              ],
+              [
+                109608,
+                109712,
+                109646,
+                109557
+              ],
+              [
+                109605,
+                109711,
+                109645,
+                109556
+              ],
+              [
+                109471,
+                109588,
+                109513,
+                109411
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 0.0,
+            "max_abs_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 109712,
+            "cycles_per_pe": [
+              [
+                109519,
+                109594,
+                109583,
+                109483
+              ],
+              [
+                109608,
+                109712,
+                109646,
+                109557
+              ],
+              [
+                109605,
+                109711,
+                109645,
+                109556
+              ],
+              [
+                109471,
+                109588,
+                109513,
+                109411
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 0.0,
+            "max_abs_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 109712,
+            "cycles_per_pe": [
+              [
+                109519,
+                109594,
+                109583,
+                109483
+              ],
+              [
+                109608,
+                109712,
+                109646,
+                109557
+              ],
+              [
+                109605,
+                109711,
+                109645,
+                109556
+              ],
+              [
+                109471,
+                109588,
+                109513,
+                109411
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 1.190831580548557e-07,
+            "max_abs_error": 6.457976303328146e-06,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 109712,
+            "cycles_per_pe": [
+              [
+                109519,
+                109594,
+                109583,
+                109483
+              ],
+              [
+                109608,
+                109712,
+                109646,
+                109557
+              ],
+              [
+                109605,
+                109711,
+                109645,
+                109556
+              ],
+              [
+                109471,
+                109588,
+                109513,
+                109411
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 7.409504464331152e-08,
+            "max_abs_error": 3.6205286964146664e-09,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 109712,
+            "cycles_per_pe": [
+              [
+                109519,
+                109594,
+                109583,
+                109483
+              ],
+              [
+                109608,
+                109712,
+                109646,
+                109557
+              ],
+              [
+                109605,
+                109711,
+                109645,
+                109556
+              ],
+              [
+                109471,
+                109588,
+                109513,
+                109411
+              ]
+            ]
+          }
+        ],
+        "internal_phases_observed": false,
+        "contract": "Complete original C2C transform, restored pencil ownership, warm entry/callback and owned-queue checks. SDK internal phases unobserved. Fixed f32 normwise accuracy; simulator local intervals, not global/hardware latency."
+      },
+      "native_application_checks": [
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.5349946053723857e-08,
+          "max_abs_error": 1.1519619188425378e-07,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.327139133506806e-08,
+          "max_abs_error": 7.552340476577174e-10,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 3.1744694431994686e-15,
+          "max_abs_error": 3.7702534780696085e-14,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.8545710311675752e-08,
+          "max_abs_error": 1.1869254379348608e-06,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.09662509013101e-08,
+          "max_abs_error": 7.659419837996596e-10,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        }
+      ],
+      "native_application_source": "native-output.txt: actual C++ executable stdout, read-only independent recheck",
+      "device_application_checks": [
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.149563604049903e-07,
+          "max_abs_error": 3.557925654079143e-07,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 8.694660119106367e-08,
+          "max_abs_error": 3.3579313011033764e-09,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 3.1744694431994686e-15,
+          "max_abs_error": 3.7702534780696085e-14,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.1908315791692753e-07,
+          "max_abs_error": 6.4579762997387164e-06,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 7.409504464447386e-08,
+          "max_abs_error": 3.620528739252717e-09,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        }
+      ],
+      "schedule_phase_count": 7,
+      "qualification_sha256": "d61deebc47b489e089824446651fd58b177b857078e81c222a34f48e481ca69e",
+      "results_sha256": "7ccf5417e0ee0106a575745071d5e36260599ed19a97ac0b566689ed1d1b776d",
+      "numerical_validation": {
+        "contract": "fft-f32-normwise-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "relative_l2_limit": 2e-05,
+        "max_error_over_reference_peak_limit": 3e-05,
+        "zero_reference_requires_exact_zero": true,
+        "per_component_accuracy_not_implied": true
+      }
+    },
+    {
+      "key": "sdk_examples/fft3d_16_4x4_inverse_ortho",
+      "artifact": "projects/sdk_examples/fft3d_16_4x4_inverse_ortho/run-20260906T191340556542Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_fft.v1",
+        "epochs": 6,
+        "actors": 16,
+        "cases": [
+          {
+            "relative_l2_error": 1.149563604459958e-07,
+            "max_abs_error": 3.5579256607275264e-07,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 114470,
+            "cycles_per_pe": [
+              [
+                114277,
+                114352,
+                114341,
+                114241
+              ],
+              [
+                114366,
+                114470,
+                114404,
+                114315
+              ],
+              [
+                114363,
+                114469,
+                114403,
+                114314
+              ],
+              [
+                114229,
+                114346,
+                114271,
+                114169
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 8.694660137019169e-08,
+            "max_abs_error": 3.3579312996599996e-09,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 114470,
+            "cycles_per_pe": [
+              [
+                114277,
+                114352,
+                114341,
+                114241
+              ],
+              [
+                114366,
+                114470,
+                114404,
+                114315
+              ],
+              [
+                114363,
+                114469,
+                114403,
+                114314
+              ],
+              [
+                114229,
+                114346,
+                114271,
+                114169
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 0.0,
+            "max_abs_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 114470,
+            "cycles_per_pe": [
+              [
+                114277,
+                114352,
+                114341,
+                114241
+              ],
+              [
+                114366,
+                114470,
+                114404,
+                114315
+              ],
+              [
+                114363,
+                114469,
+                114403,
+                114314
+              ],
+              [
+                114229,
+                114346,
+                114271,
+                114169
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 0.0,
+            "max_abs_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 114470,
+            "cycles_per_pe": [
+              [
+                114277,
+                114352,
+                114341,
+                114241
+              ],
+              [
+                114366,
+                114470,
+                114404,
+                114315
+              ],
+              [
+                114363,
+                114469,
+                114403,
+                114314
+              ],
+              [
+                114229,
+                114346,
+                114271,
+                114169
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 1.1908315811551927e-07,
+            "max_abs_error": 6.4579763109268e-06,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 114470,
+            "cycles_per_pe": [
+              [
+                114277,
+                114352,
+                114341,
+                114241
+              ],
+              [
+                114366,
+                114470,
+                114404,
+                114315
+              ],
+              [
+                114363,
+                114469,
+                114403,
+                114314
+              ],
+              [
+                114229,
+                114346,
+                114271,
+                114169
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 7.409504464331218e-08,
+            "max_abs_error": 3.6205286964146664e-09,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 114470,
+            "cycles_per_pe": [
+              [
+                114277,
+                114352,
+                114341,
+                114241
+              ],
+              [
+                114366,
+                114470,
+                114404,
+                114315
+              ],
+              [
+                114363,
+                114469,
+                114403,
+                114314
+              ],
+              [
+                114229,
+                114346,
+                114271,
+                114169
+              ]
+            ]
+          }
+        ],
+        "internal_phases_observed": false,
+        "contract": "Complete original C2C transform, restored pencil ownership, warm entry/callback and owned-queue checks. SDK internal phases unobserved. Fixed f32 normwise accuracy; simulator local intervals, not global/hardware latency."
+      },
+      "native_application_checks": [
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.534994591500382e-08,
+          "max_abs_error": 1.151961875371656e-07,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.3271391142164772e-08,
+          "max_abs_error": 7.552340917120525e-10,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 3.1684719992936445e-15,
+          "max_abs_error": 3.906884919447595e-14,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.8545710089631868e-08,
+          "max_abs_error": 1.1869254237240529e-06,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.09662509013101e-08,
+          "max_abs_error": 7.659419837996596e-10,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        }
+      ],
+      "native_application_source": "native-output.txt: actual C++ executable stdout, read-only independent recheck",
+      "device_application_checks": [
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.1495636041240648e-07,
+          "max_abs_error": 3.5579256629439184e-07,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 8.694660151857711e-08,
+          "max_abs_error": 3.3579313097636406e-09,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 3.1684719992936445e-15,
+          "max_abs_error": 3.906884919447595e-14,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.1908315776567355e-07,
+          "max_abs_error": 6.457976286469108e-06,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 7.409504464447386e-08,
+          "max_abs_error": 3.620528739252717e-09,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        }
+      ],
+      "schedule_phase_count": 7,
+      "qualification_sha256": "2a10d203b9ea1f69dd93a56964218e0765d5c4e5b8ab1d1bc8be10d14d359596",
+      "results_sha256": "9340cb02ad99f954e49df90d7aae5c94b50be729021ef0c84c1acf99f12ac086",
+      "numerical_validation": {
+        "contract": "fft-f32-normwise-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "relative_l2_limit": 2e-05,
+        "max_error_over_reference_peak_limit": 3e-05,
+        "zero_reference_requires_exact_zero": true,
+        "per_component_accuracy_not_implied": true
+      }
+    },
+    {
+      "key": "sdk_examples/fft3d_16_4x4_forward_forward",
+      "artifact": "projects/sdk_examples/fft3d_16_4x4_forward_forward/run-20260906T191341856403Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_fft.v1",
+        "epochs": 6,
+        "actors": 16,
+        "cases": [
+          {
+            "relative_l2_error": 1.1495636044549819e-07,
+            "max_abs_error": 5.559258848355504e-09,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 102355,
+            "cycles_per_pe": [
+              [
+                102162,
+                102237,
+                102226,
+                102126
+              ],
+              [
+                102251,
+                102355,
+                102289,
+                102200
+              ],
+              [
+                102248,
+                102354,
+                102288,
+                102199
+              ],
+              [
+                102114,
+                102231,
+                102156,
+                102054
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 8.694660148928079e-08,
+            "max_abs_error": 5.246767657222267e-11,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 102355,
+            "cycles_per_pe": [
+              [
+                102162,
+                102237,
+                102226,
+                102126
+              ],
+              [
+                102251,
+                102355,
+                102289,
+                102200
+              ],
+              [
+                102248,
+                102354,
+                102288,
+                102199
+              ],
+              [
+                102114,
+                102231,
+                102156,
+                102054
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 0.0,
+            "max_abs_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 102355,
+            "cycles_per_pe": [
+              [
+                102162,
+                102237,
+                102226,
+                102126
+              ],
+              [
+                102251,
+                102355,
+                102289,
+                102200
+              ],
+              [
+                102248,
+                102354,
+                102288,
+                102199
+              ],
+              [
+                102114,
+                102231,
+                102156,
+                102054
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 0.0,
+            "max_abs_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 102355,
+            "cycles_per_pe": [
+              [
+                102162,
+                102237,
+                102226,
+                102126
+              ],
+              [
+                102251,
+                102355,
+                102289,
+                102200
+              ],
+              [
+                102248,
+                102354,
+                102288,
+                102199
+              ],
+              [
+                102114,
+                102231,
+                102156,
+                102054
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 1.190831580548557e-07,
+            "max_abs_error": 1.0090587973950227e-07,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 102355,
+            "cycles_per_pe": [
+              [
+                102162,
+                102237,
+                102226,
+                102126
+              ],
+              [
+                102251,
+                102355,
+                102289,
+                102200
+              ],
+              [
+                102248,
+                102354,
+                102288,
+                102199
+              ],
+              [
+                102114,
+                102231,
+                102156,
+                102054
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 7.409504464331152e-08,
+            "max_abs_error": 5.657076088147916e-11,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 102355,
+            "cycles_per_pe": [
+              [
+                102162,
+                102237,
+                102226,
+                102126
+              ],
+              [
+                102251,
+                102355,
+                102289,
+                102200
+              ],
+              [
+                102248,
+                102354,
+                102288,
+                102199
+              ],
+              [
+                102114,
+                102231,
+                102156,
+                102054
+              ]
+            ]
+          }
+        ],
+        "internal_phases_observed": false,
+        "contract": "Complete original C2C transform, restored pencil ownership, warm entry/callback and owned-queue checks. SDK internal phases unobserved. Fixed f32 normwise accuracy; simulator local intervals, not global/hardware latency."
+      },
+      "native_application_checks": [
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.5349946053723857e-08,
+          "max_abs_error": 1.7999404981914654e-09,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.327139133506806e-08,
+          "max_abs_error": 1.1800531994651834e-11,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 3.1744694431994686e-15,
+          "max_abs_error": 5.891021059483763e-16,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.8545710311675752e-08,
+          "max_abs_error": 1.85457099677322e-08,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.09662509013101e-08,
+          "max_abs_error": 1.1967843496869681e-11,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        }
+      ],
+      "native_application_source": "native-output.txt: actual C++ executable stdout, read-only independent recheck",
+      "device_application_checks": [
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.149563604049903e-07,
+          "max_abs_error": 5.559258834498661e-09,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 8.694660119106367e-08,
+          "max_abs_error": 5.2467676579740257e-11,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 3.1744694431994686e-15,
+          "max_abs_error": 5.891021059483763e-16,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.1908315791692753e-07,
+          "max_abs_error": 1.0090587968341744e-07,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 7.409504464447386e-08,
+          "max_abs_error": 5.6570761550823704e-11,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        }
+      ],
+      "schedule_phase_count": 7,
+      "qualification_sha256": "e68377be97e114b0c7276fc28d1fd0dcb25f135a37b27a09539916d68ff8e8ad",
+      "results_sha256": "32a3f834024baff7ea13eff8c95b7f7b5e0374db5f80afcd440753224548cde6",
+      "numerical_validation": {
+        "contract": "fft-f32-normwise-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "relative_l2_limit": 2e-05,
+        "max_error_over_reference_peak_limit": 3e-05,
+        "zero_reference_requires_exact_zero": true,
+        "per_component_accuracy_not_implied": true
+      }
+    },
+    {
+      "key": "sdk_examples/fft3d_16_4x4_inverse_forward",
+      "artifact": "projects/sdk_examples/fft3d_16_4x4_inverse_forward/run-20260906T191343132301Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_fft.v1",
+        "epochs": 6,
+        "actors": 16,
+        "cases": [
+          {
+            "relative_l2_error": 1.149563604459958e-07,
+            "max_abs_error": 2.277072422865617e-05,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 107379,
+            "cycles_per_pe": [
+              [
+                107186,
+                107261,
+                107250,
+                107150
+              ],
+              [
+                107275,
+                107379,
+                107313,
+                107224
+              ],
+              [
+                107272,
+                107378,
+                107312,
+                107223
+              ],
+              [
+                107138,
+                107255,
+                107180,
+                107078
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 8.694660137019169e-08,
+            "max_abs_error": 2.1490760317823998e-07,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 107379,
+            "cycles_per_pe": [
+              [
+                107186,
+                107261,
+                107250,
+                107150
+              ],
+              [
+                107275,
+                107379,
+                107313,
+                107224
+              ],
+              [
+                107272,
+                107378,
+                107312,
+                107223
+              ],
+              [
+                107138,
+                107255,
+                107180,
+                107078
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 0.0,
+            "max_abs_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 107379,
+            "cycles_per_pe": [
+              [
+                107186,
+                107261,
+                107250,
+                107150
+              ],
+              [
+                107275,
+                107379,
+                107313,
+                107224
+              ],
+              [
+                107272,
+                107378,
+                107312,
+                107223
+              ],
+              [
+                107138,
+                107255,
+                107180,
+                107078
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 0.0,
+            "max_abs_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 107379,
+            "cycles_per_pe": [
+              [
+                107186,
+                107261,
+                107250,
+                107150
+              ],
+              [
+                107275,
+                107379,
+                107313,
+                107224
+              ],
+              [
+                107272,
+                107378,
+                107312,
+                107223
+              ],
+              [
+                107138,
+                107255,
+                107180,
+                107078
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 1.1908315811551927e-07,
+            "max_abs_error": 0.0004133104838993152,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 107379,
+            "cycles_per_pe": [
+              [
+                107186,
+                107261,
+                107250,
+                107150
+              ],
+              [
+                107275,
+                107379,
+                107313,
+                107224
+              ],
+              [
+                107272,
+                107378,
+                107312,
+                107223
+              ],
+              [
+                107138,
+                107255,
+                107180,
+                107078
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 7.409504464331218e-08,
+            "max_abs_error": 2.3171383657053865e-07,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 107379,
+            "cycles_per_pe": [
+              [
+                107186,
+                107261,
+                107250,
+                107150
+              ],
+              [
+                107275,
+                107379,
+                107313,
+                107224
+              ],
+              [
+                107272,
+                107378,
+                107312,
+                107223
+              ],
+              [
+                107138,
+                107255,
+                107180,
+                107078
+              ]
+            ]
+          }
+        ],
+        "internal_phases_observed": false,
+        "contract": "Complete original C2C transform, restored pencil ownership, warm entry/callback and owned-queue checks. SDK internal phases unobserved. Fixed f32 normwise accuracy; simulator local intervals, not global/hardware latency."
+      },
+      "native_application_checks": [
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.534994591500382e-08,
+          "max_abs_error": 7.372556002378598e-06,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.3271391142164772e-08,
+          "max_abs_error": 4.833498186957136e-08,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 3.1684719992936445e-15,
+          "max_abs_error": 2.500406348446461e-12,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.8545710089631868e-08,
+          "max_abs_error": 7.596322711833938e-05,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.09662509013101e-08,
+          "max_abs_error": 4.9020286963178214e-08,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        }
+      ],
+      "native_application_source": "native-output.txt: actual C++ executable stdout, read-only independent recheck",
+      "device_application_checks": [
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.1495636041240648e-07,
+          "max_abs_error": 2.2770724242841077e-05,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 8.694660151857711e-08,
+          "max_abs_error": 2.14907603824873e-07,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 3.1684719992936445e-15,
+          "max_abs_error": 2.500406348446461e-12,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.1908315776567355e-07,
+          "max_abs_error": 0.0004133104823340229,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 7.409504464447386e-08,
+          "max_abs_error": 2.317138393121739e-07,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        }
+      ],
+      "schedule_phase_count": 7,
+      "qualification_sha256": "360d0cc488188053acd8ac185bb73b469bc7c6b9fda1441becd39477b54260f5",
+      "results_sha256": "3846f2ae7a6740e408d2bea4da37b3b571e5ad7b04543513ef089c57b26dfc14",
+      "numerical_validation": {
+        "contract": "fft-f32-normwise-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "relative_l2_limit": 2e-05,
+        "max_error_over_reference_peak_limit": 3e-05,
+        "zero_reference_requires_exact_zero": true,
+        "per_component_accuracy_not_implied": true
+      }
+    },
+    {
+      "key": "sdk_examples/fft3d_32_8x8_forward_backward",
+      "artifact": "projects/sdk_examples/fft3d_32_8x8_forward_backward/run-20260906T192937261157Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_fft.v1",
+        "epochs": 6,
+        "actors": 64,
+        "cases": [
+          {
+            "relative_l2_error": 1.436404513554289e-07,
+            "max_abs_error": 8.953431697964044e-05,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 218061,
+            "cycles_per_pe": [
+              [
+                218011,
+                218034,
+                217997,
+                217059,
+                217052,
+                217961,
+                217979,
+                217920
+              ],
+              [
+                218049,
+                218061,
+                218024,
+                217086,
+                217079,
+                217989,
+                217998,
+                217949
+              ],
+              [
+                218029,
+                218041,
+                218004,
+                217066,
+                217060,
+                217970,
+                217979,
+                217930
+              ],
+              [
+                217090,
+                217102,
+                217065,
+                216127,
+                216121,
+                217031,
+                217040,
+                216991
+              ],
+              [
+                217040,
+                217052,
+                217015,
+                216077,
+                216071,
+                216981,
+                216990,
+                216941
+              ],
+              [
+                217949,
+                217961,
+                217924,
+                216986,
+                216980,
+                217890,
+                217899,
+                217850
+              ],
+              [
+                217957,
+                217969,
+                217932,
+                216994,
+                216988,
+                217898,
+                217907,
+                217858
+              ],
+              [
+                217859,
+                217882,
+                217836,
+                216899,
+                216896,
+                217806,
+                217815,
+                217754
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 1.3784608625645267e-07,
+            "max_abs_error": 3.481992379112219e-07,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 218061,
+            "cycles_per_pe": [
+              [
+                218011,
+                218034,
+                217997,
+                217059,
+                217052,
+                217961,
+                217979,
+                217920
+              ],
+              [
+                218049,
+                218061,
+                218024,
+                217086,
+                217079,
+                217989,
+                217998,
+                217949
+              ],
+              [
+                218029,
+                218041,
+                218004,
+                217066,
+                217060,
+                217970,
+                217979,
+                217930
+              ],
+              [
+                217090,
+                217102,
+                217065,
+                216127,
+                216121,
+                217031,
+                217040,
+                216991
+              ],
+              [
+                217040,
+                217052,
+                217015,
+                216077,
+                216071,
+                216981,
+                216990,
+                216941
+              ],
+              [
+                217949,
+                217961,
+                217924,
+                216986,
+                216980,
+                217890,
+                217899,
+                217850
+              ],
+              [
+                217957,
+                217969,
+                217932,
+                216994,
+                216988,
+                217898,
+                217907,
+                217858
+              ],
+              [
+                217859,
+                217882,
+                217836,
+                216899,
+                216896,
+                217806,
+                217815,
+                217754
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 0.0,
+            "max_abs_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 218061,
+            "cycles_per_pe": [
+              [
+                218011,
+                218034,
+                217997,
+                217059,
+                217052,
+                217961,
+                217979,
+                217920
+              ],
+              [
+                218049,
+                218061,
+                218024,
+                217086,
+                217079,
+                217989,
+                217998,
+                217949
+              ],
+              [
+                218029,
+                218041,
+                218004,
+                217066,
+                217060,
+                217970,
+                217979,
+                217930
+              ],
+              [
+                217090,
+                217102,
+                217065,
+                216127,
+                216121,
+                217031,
+                217040,
+                216991
+              ],
+              [
+                217040,
+                217052,
+                217015,
+                216077,
+                216071,
+                216981,
+                216990,
+                216941
+              ],
+              [
+                217949,
+                217961,
+                217924,
+                216986,
+                216980,
+                217890,
+                217899,
+                217850
+              ],
+              [
+                217957,
+                217969,
+                217932,
+                216994,
+                216988,
+                217898,
+                217907,
+                217858
+              ],
+              [
+                217859,
+                217882,
+                217836,
+                216899,
+                216896,
+                217806,
+                217815,
+                217754
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 0.0,
+            "max_abs_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 218061,
+            "cycles_per_pe": [
+              [
+                218011,
+                218034,
+                217997,
+                217059,
+                217052,
+                217961,
+                217979,
+                217920
+              ],
+              [
+                218049,
+                218061,
+                218024,
+                217086,
+                217079,
+                217989,
+                217998,
+                217949
+              ],
+              [
+                218029,
+                218041,
+                218004,
+                217066,
+                217060,
+                217970,
+                217979,
+                217930
+              ],
+              [
+                217090,
+                217102,
+                217065,
+                216127,
+                216121,
+                217031,
+                217040,
+                216991
+              ],
+              [
+                217040,
+                217052,
+                217015,
+                216077,
+                216071,
+                216981,
+                216990,
+                216941
+              ],
+              [
+                217949,
+                217961,
+                217924,
+                216986,
+                216980,
+                217890,
+                217899,
+                217850
+              ],
+              [
+                217957,
+                217969,
+                217932,
+                216994,
+                216988,
+                217898,
+                217907,
+                217858
+              ],
+              [
+                217859,
+                217882,
+                217836,
+                216899,
+                216896,
+                217806,
+                217815,
+                217754
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 1.4150404769561493e-07,
+            "max_abs_error": 0.0033086970116337454,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 218061,
+            "cycles_per_pe": [
+              [
+                218011,
+                218034,
+                217997,
+                217059,
+                217052,
+                217961,
+                217979,
+                217920
+              ],
+              [
+                218049,
+                218061,
+                218024,
+                217086,
+                217079,
+                217989,
+                217998,
+                217949
+              ],
+              [
+                218029,
+                218041,
+                218004,
+                217066,
+                217060,
+                217970,
+                217979,
+                217930
+              ],
+              [
+                217090,
+                217102,
+                217065,
+                216127,
+                216121,
+                217031,
+                217040,
+                216991
+              ],
+              [
+                217040,
+                217052,
+                217015,
+                216077,
+                216071,
+                216981,
+                216990,
+                216941
+              ],
+              [
+                217949,
+                217961,
+                217924,
+                216986,
+                216980,
+                217890,
+                217899,
+                217850
+              ],
+              [
+                217957,
+                217969,
+                217932,
+                216994,
+                216988,
+                217898,
+                217907,
+                217858
+              ],
+              [
+                217859,
+                217882,
+                217836,
+                216899,
+                216896,
+                217806,
+                217815,
+                217754
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 1.0710170143468087e-07,
+            "max_abs_error": 4.0073425868871566e-07,
+            "fixed_accuracy_passed": true,
+            "max_local_cycles": 218061,
+            "cycles_per_pe": [
+              [
+                218011,
+                218034,
+                217997,
+                217059,
+                217052,
+                217961,
+                217979,
+                217920
+              ],
+              [
+                218049,
+                218061,
+                218024,
+                217086,
+                217079,
+                217989,
+                217998,
+                217949
+              ],
+              [
+                218029,
+                218041,
+                218004,
+                217066,
+                217060,
+                217970,
+                217979,
+                217930
+              ],
+              [
+                217090,
+                217102,
+                217065,
+                216127,
+                216121,
+                217031,
+                217040,
+                216991
+              ],
+              [
+                217040,
+                217052,
+                217015,
+                216077,
+                216071,
+                216981,
+                216990,
+                216941
+              ],
+              [
+                217949,
+                217961,
+                217924,
+                216986,
+                216980,
+                217890,
+                217899,
+                217850
+              ],
+              [
+                217957,
+                217969,
+                217932,
+                216994,
+                216988,
+                217898,
+                217907,
+                217858
+              ],
+              [
+                217859,
+                217882,
+                217836,
+                216899,
+                216896,
+                217806,
+                217815,
+                217754
+              ]
+            ]
+          }
+        ],
+        "internal_phases_observed": false,
+        "internal_float_observations": 0,
+        "contract": "Complete original C2C transform, restored pencil ownership, warm entry/callback and owned-queue checks. Optional seven-stage pencil-endpoint samples explicitly scoped by instrumentation; not full internal tensors. Fixed f32 normwise accuracy; simulator local intervals, not global/hardware latency."
+      },
+      "native_application_checks": [
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.5158699806076886e-08,
+          "max_abs_error": 1.73461107049198e-05,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.5867080061863142e-08,
+          "max_abs_error": 4.83349798972639e-08,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 6.0093339539238796e-15,
+          "max_abs_error": 3.3454830053876956e-11,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.835547048076208e-08,
+          "max_abs_error": 0.0006014720456732907,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.10864569954766e-08,
+          "max_abs_error": 4.902031123470536e-08,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        }
+      ],
+      "native_application_source": "native-output.txt: actual C++ executable stdout, read-only independent recheck",
+      "device_application_checks": [
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.4364045126664147e-07,
+          "max_abs_error": 8.953431706480075e-05,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.3784608585976223e-07,
+          "max_abs_error": 3.481992411559574e-07,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 6.0093339539238796e-15,
+          "max_abs_error": 3.3454830053876956e-11,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.4150404753373744e-07,
+          "max_abs_error": 0.003308697009388143,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.0710170134597012e-07,
+          "max_abs_error": 4.007342595381618e-07,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        }
+      ],
+      "schedule_phase_count": 7,
+      "qualification_sha256": "eb93b18a37aad8ab49117f61ef27a8cde1c2406105ee0d7ee1fa04938f1f3409",
+      "results_sha256": "fce969cedc42d68ee4dd9cac8399f57888fb3c674ca8ef96ba088e06b398a082",
+      "numerical_validation": {
+        "contract": "fft-f32-normwise-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "relative_l2_limit": 2e-05,
+        "max_error_over_reference_peak_limit": 3e-05,
+        "zero_reference_requires_exact_zero": true,
+        "per_component_accuracy_not_implied": true
+      }
+    },
+    {
+      "key": "sdk_examples/fft3d_32_8x8_forward_backward_transposed",
+      "artifact": "projects/sdk_examples/fft3d_32_8x8_forward_backward_transposed/run-20260906T195708248348Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_fft.v1",
+        "epochs": 6,
+        "actors": 64,
+        "cases": [
+          {
+            "relative_l2_error": 1.436404513554289e-07,
+            "max_abs_error": 8.953431697964044e-05,
+            "fixed_accuracy_passed": true,
+            "phase_max_abs_errors": [
+              1.9073486328125e-06,
+              9.5367431640625e-07,
+              7.62939453125e-06,
+              9.5367431640625e-06,
+              6.103515625e-05
+            ],
+            "max_local_cycles": 202532,
+            "cycles_per_pe": [
+              [
+                202480,
+                202521,
+                202479,
+                201541,
+                201408,
+                202318,
+                202327,
+                202259
+              ],
+              [
+                202502,
+                202532,
+                202490,
+                201552,
+                201419,
+                202329,
+                202338,
+                202279
+              ],
+              [
+                202464,
+                202494,
+                202456,
+                201518,
+                201385,
+                202295,
+                202304,
+                202235
+              ],
+              [
+                201525,
+                201555,
+                201517,
+                200579,
+                200446,
+                201356,
+                201365,
+                201297
+              ],
+              [
+                201322,
+                201353,
+                201323,
+                200385,
+                200249,
+                201159,
+                201168,
+                201095
+              ],
+              [
+                202230,
+                202262,
+                202232,
+                201294,
+                201158,
+                202068,
+                202077,
+                202004
+              ],
+              [
+                202244,
+                202270,
+                202240,
+                201302,
+                201166,
+                202076,
+                202085,
+                202012
+              ],
+              [
+                202187,
+                202217,
+                202187,
+                201249,
+                201113,
+                202023,
+                202032,
+                201950
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 1.3784608625645267e-07,
+            "max_abs_error": 3.481992379112219e-07,
+            "fixed_accuracy_passed": true,
+            "phase_max_abs_errors": [
+              5.960464477539063e-08,
+              0.0,
+              1.1920928955078125e-07,
+              0.0,
+              2.384185791015625e-07
+            ],
+            "max_local_cycles": 202532,
+            "cycles_per_pe": [
+              [
+                202480,
+                202521,
+                202479,
+                201541,
+                201408,
+                202318,
+                202327,
+                202259
+              ],
+              [
+                202502,
+                202532,
+                202490,
+                201552,
+                201419,
+                202329,
+                202338,
+                202279
+              ],
+              [
+                202464,
+                202494,
+                202456,
+                201518,
+                201385,
+                202295,
+                202304,
+                202235
+              ],
+              [
+                201525,
+                201555,
+                201517,
+                200579,
+                200446,
+                201356,
+                201365,
+                201297
+              ],
+              [
+                201322,
+                201353,
+                201323,
+                200385,
+                200249,
+                201159,
+                201168,
+                201095
+              ],
+              [
+                202230,
+                202262,
+                202232,
+                201294,
+                201158,
+                202068,
+                202077,
+                202004
+              ],
+              [
+                202244,
+                202270,
+                202240,
+                201302,
+                201166,
+                202076,
+                202085,
+                202012
+              ],
+              [
+                202187,
+                202217,
+                202187,
+                201249,
+                201113,
+                202023,
+                202032,
+                201950
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 0.0,
+            "max_abs_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "phase_max_abs_errors": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "max_local_cycles": 202532,
+            "cycles_per_pe": [
+              [
+                202480,
+                202521,
+                202479,
+                201541,
+                201408,
+                202318,
+                202327,
+                202259
+              ],
+              [
+                202502,
+                202532,
+                202490,
+                201552,
+                201419,
+                202329,
+                202338,
+                202279
+              ],
+              [
+                202464,
+                202494,
+                202456,
+                201518,
+                201385,
+                202295,
+                202304,
+                202235
+              ],
+              [
+                201525,
+                201555,
+                201517,
+                200579,
+                200446,
+                201356,
+                201365,
+                201297
+              ],
+              [
+                201322,
+                201353,
+                201323,
+                200385,
+                200249,
+                201159,
+                201168,
+                201095
+              ],
+              [
+                202230,
+                202262,
+                202232,
+                201294,
+                201158,
+                202068,
+                202077,
+                202004
+              ],
+              [
+                202244,
+                202270,
+                202240,
+                201302,
+                201166,
+                202076,
+                202085,
+                202012
+              ],
+              [
+                202187,
+                202217,
+                202187,
+                201249,
+                201113,
+                202023,
+                202032,
+                201950
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 0.0,
+            "max_abs_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "phase_max_abs_errors": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "max_local_cycles": 202532,
+            "cycles_per_pe": [
+              [
+                202480,
+                202521,
+                202479,
+                201541,
+                201408,
+                202318,
+                202327,
+                202259
+              ],
+              [
+                202502,
+                202532,
+                202490,
+                201552,
+                201419,
+                202329,
+                202338,
+                202279
+              ],
+              [
+                202464,
+                202494,
+                202456,
+                201518,
+                201385,
+                202295,
+                202304,
+                202235
+              ],
+              [
+                201525,
+                201555,
+                201517,
+                200579,
+                200446,
+                201356,
+                201365,
+                201297
+              ],
+              [
+                201322,
+                201353,
+                201323,
+                200385,
+                200249,
+                201159,
+                201168,
+                201095
+              ],
+              [
+                202230,
+                202262,
+                202232,
+                201294,
+                201158,
+                202068,
+                202077,
+                202004
+              ],
+              [
+                202244,
+                202270,
+                202240,
+                201302,
+                201166,
+                202076,
+                202085,
+                202012
+              ],
+              [
+                202187,
+                202217,
+                202187,
+                201249,
+                201113,
+                202023,
+                202032,
+                201950
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 1.4150404769561493e-07,
+            "max_abs_error": 0.0033086970116337454,
+            "fixed_accuracy_passed": true,
+            "phase_max_abs_errors": [
+              2.493204718234665e-07,
+              1.9073486328125e-06,
+              5.403166800492542e-14,
+              6.103515625e-05,
+              8.10584570656598e-13
+            ],
+            "max_local_cycles": 202532,
+            "cycles_per_pe": [
+              [
+                202480,
+                202521,
+                202479,
+                201541,
+                201408,
+                202318,
+                202327,
+                202259
+              ],
+              [
+                202502,
+                202532,
+                202490,
+                201552,
+                201419,
+                202329,
+                202338,
+                202279
+              ],
+              [
+                202464,
+                202494,
+                202456,
+                201518,
+                201385,
+                202295,
+                202304,
+                202235
+              ],
+              [
+                201525,
+                201555,
+                201517,
+                200579,
+                200446,
+                201356,
+                201365,
+                201297
+              ],
+              [
+                201322,
+                201353,
+                201323,
+                200385,
+                200249,
+                201159,
+                201168,
+                201095
+              ],
+              [
+                202230,
+                202262,
+                202232,
+                201294,
+                201158,
+                202068,
+                202077,
+                202004
+              ],
+              [
+                202244,
+                202270,
+                202240,
+                201302,
+                201166,
+                202076,
+                202085,
+                202012
+              ],
+              [
+                202187,
+                202217,
+                202187,
+                201249,
+                201113,
+                202023,
+                202032,
+                201950
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 1.0710170143468087e-07,
+            "max_abs_error": 4.0073425868871566e-07,
+            "fixed_accuracy_passed": true,
+            "phase_max_abs_errors": [
+              2.9802322387695312e-08,
+              5.960464477539063e-08,
+              1.7881393432617188e-07,
+              1.7881393432617188e-07,
+              3.5762786865234375e-07
+            ],
+            "max_local_cycles": 202532,
+            "cycles_per_pe": [
+              [
+                202480,
+                202521,
+                202479,
+                201541,
+                201408,
+                202318,
+                202327,
+                202259
+              ],
+              [
+                202502,
+                202532,
+                202490,
+                201552,
+                201419,
+                202329,
+                202338,
+                202279
+              ],
+              [
+                202464,
+                202494,
+                202456,
+                201518,
+                201385,
+                202295,
+                202304,
+                202235
+              ],
+              [
+                201525,
+                201555,
+                201517,
+                200579,
+                200446,
+                201356,
+                201365,
+                201297
+              ],
+              [
+                201322,
+                201353,
+                201323,
+                200385,
+                200249,
+                201159,
+                201168,
+                201095
+              ],
+              [
+                202230,
+                202262,
+                202232,
+                201294,
+                201158,
+                202068,
+                202077,
+                202004
+              ],
+              [
+                202244,
+                202270,
+                202240,
+                201302,
+                201166,
+                202076,
+                202085,
+                202012
+              ],
+              [
+                202187,
+                202217,
+                202187,
+                201249,
+                201113,
+                202023,
+                202032,
+                201950
+              ]
+            ]
+          }
+        ],
+        "internal_phases_observed": true,
+        "internal_float_observations": 122880,
+        "contract": "Complete original C2C transform, declared pencil ownership, warm entry/callback and owned-queue checks. Optional seven-stage pencil-endpoint samples explicitly scoped by instrumentation; not full internal tensors. Fixed f32 normwise accuracy; simulator local intervals, not global/hardware latency."
+      },
+      "native_application_checks": [
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.5158699806076886e-08,
+          "max_abs_error": 1.73461107049198e-05,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.5867080061863142e-08,
+          "max_abs_error": 4.83349798972639e-08,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 6.0093339539238796e-15,
+          "max_abs_error": 3.3454830053876956e-11,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.835547048076208e-08,
+          "max_abs_error": 0.0006014720456732907,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.10864569954766e-08,
+          "max_abs_error": 4.902031123470536e-08,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        }
+      ],
+      "native_application_source": "native-output.txt: actual C++ executable stdout, read-only independent recheck",
+      "device_application_checks": [
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.4364045126664147e-07,
+          "max_abs_error": 8.953431706480075e-05,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.3784608585976223e-07,
+          "max_abs_error": 3.481992411559574e-07,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 6.0093339539238796e-15,
+          "max_abs_error": 3.3454830053876956e-11,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.4150404753373744e-07,
+          "max_abs_error": 0.003308697009388143,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.0710170134597012e-07,
+          "max_abs_error": 4.007342595381618e-07,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        }
+      ],
+      "schedule_phase_count": 5,
+      "qualification_sha256": "458de45fb6eafaa308100c560efbc36e40405e8f96de34ec80218d4a1c70d04d",
+      "results_sha256": "178cb44f2ef6f73f286a3c71540d902cf91ed49ab5d1b0126dc888303b3efbbd",
+      "numerical_validation": {
+        "contract": "fft-f32-normwise-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "relative_l2_limit": 2e-05,
+        "max_error_over_reference_peak_limit": 3e-05,
+        "zero_reference_requires_exact_zero": true,
+        "per_component_accuracy_not_implied": true
+      }
+    },
+    {
+      "key": "sdk_examples/fft3d_32_8x8_inverse_backward",
+      "artifact": "projects/sdk_examples/fft3d_32_8x8_inverse_backward/run-20260906T201357164868Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_fft.v1",
+        "epochs": 6,
+        "actors": 64,
+        "cases": [
+          {
+            "relative_l2_error": 1.4264594996180215e-07,
+            "max_abs_error": 4.0200205964603217e-07,
+            "fixed_accuracy_passed": true,
+            "phase_max_abs_errors": [
+              7.62939453125e-06,
+              7.62939453125e-06,
+              1.9073486328125e-06,
+              2.86102294921875e-06,
+              2.980232238769531e-07,
+              3.5762786865234375e-07,
+              3.5762786865234375e-07
+            ],
+            "max_local_cycles": 221112,
+            "cycles_per_pe": [
+              [
+                221062,
+                221085,
+                221048,
+                220110,
+                220103,
+                221012,
+                221030,
+                220971
+              ],
+              [
+                221100,
+                221112,
+                221075,
+                220137,
+                220130,
+                221040,
+                221049,
+                221000
+              ],
+              [
+                221080,
+                221092,
+                221055,
+                220117,
+                220111,
+                221021,
+                221030,
+                220981
+              ],
+              [
+                220141,
+                220153,
+                220116,
+                219178,
+                219172,
+                220082,
+                220091,
+                220042
+              ],
+              [
+                220091,
+                220103,
+                220066,
+                219128,
+                219122,
+                220032,
+                220041,
+                219992
+              ],
+              [
+                221000,
+                221012,
+                220975,
+                220037,
+                220031,
+                220941,
+                220950,
+                220901
+              ],
+              [
+                221008,
+                221020,
+                220983,
+                220045,
+                220039,
+                220949,
+                220958,
+                220909
+              ],
+              [
+                220910,
+                220933,
+                220887,
+                219950,
+                219947,
+                220857,
+                220866,
+                220805
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 1.6749555838524932e-07,
+            "max_abs_error": 1.3421775717324342e-07,
+            "fixed_accuracy_passed": true,
+            "phase_max_abs_errors": [
+              0.0,
+              1.1920928955078125e-07,
+              1.201960064811658e-08,
+              7.547970071186683e-08,
+              1.9558709263289842e-08,
+              2.8314110500637923e-09,
+              0.0
+            ],
+            "max_local_cycles": 221112,
+            "cycles_per_pe": [
+              [
+                221062,
+                221085,
+                221048,
+                220110,
+                220103,
+                221012,
+                221030,
+                220971
+              ],
+              [
+                221100,
+                221112,
+                221075,
+                220137,
+                220130,
+                221040,
+                221049,
+                221000
+              ],
+              [
+                221080,
+                221092,
+                221055,
+                220117,
+                220111,
+                221021,
+                221030,
+                220981
+              ],
+              [
+                220141,
+                220153,
+                220116,
+                219178,
+                219172,
+                220082,
+                220091,
+                220042
+              ],
+              [
+                220091,
+                220103,
+                220066,
+                219128,
+                219122,
+                220032,
+                220041,
+                219992
+              ],
+              [
+                221000,
+                221012,
+                220975,
+                220037,
+                220031,
+                220941,
+                220950,
+                220901
+              ],
+              [
+                221008,
+                221020,
+                220983,
+                220045,
+                220039,
+                220949,
+                220958,
+                220909
+              ],
+              [
+                220910,
+                220933,
+                220887,
+                219950,
+                219947,
+                220857,
+                220866,
+                220805
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 0.0,
+            "max_abs_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "phase_max_abs_errors": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "max_local_cycles": 221112,
+            "cycles_per_pe": [
+              [
+                221062,
+                221085,
+                221048,
+                220110,
+                220103,
+                221012,
+                221030,
+                220971
+              ],
+              [
+                221100,
+                221112,
+                221075,
+                220137,
+                220130,
+                221040,
+                221049,
+                221000
+              ],
+              [
+                221080,
+                221092,
+                221055,
+                220117,
+                220111,
+                221021,
+                221030,
+                220981
+              ],
+              [
+                220141,
+                220153,
+                220116,
+                219178,
+                219172,
+                220082,
+                220091,
+                220042
+              ],
+              [
+                220091,
+                220103,
+                220066,
+                219128,
+                219122,
+                220032,
+                220041,
+                219992
+              ],
+              [
+                221000,
+                221012,
+                220975,
+                220037,
+                220031,
+                220941,
+                220950,
+                220901
+              ],
+              [
+                221008,
+                221020,
+                220983,
+                220045,
+                220039,
+                220949,
+                220958,
+                220909
+              ],
+              [
+                220910,
+                220933,
+                220887,
+                219950,
+                219947,
+                220857,
+                220866,
+                220805
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 0.0,
+            "max_abs_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "phase_max_abs_errors": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "max_local_cycles": 221112,
+            "cycles_per_pe": [
+              [
+                221062,
+                221085,
+                221048,
+                220110,
+                220103,
+                221012,
+                221030,
+                220971
+              ],
+              [
+                221100,
+                221112,
+                221075,
+                220137,
+                220130,
+                221040,
+                221049,
+                221000
+              ],
+              [
+                221080,
+                221092,
+                221055,
+                220117,
+                220111,
+                221021,
+                221030,
+                220981
+              ],
+              [
+                220141,
+                220153,
+                220116,
+                219178,
+                219172,
+                220082,
+                220091,
+                220042
+              ],
+              [
+                220091,
+                220103,
+                220066,
+                219128,
+                219122,
+                220032,
+                220041,
+                219992
+              ],
+              [
+                221000,
+                221012,
+                220975,
+                220037,
+                220031,
+                220941,
+                220950,
+                220901
+              ],
+              [
+                221008,
+                221020,
+                220983,
+                220045,
+                220039,
+                220949,
+                220958,
+                220909
+              ],
+              [
+                220910,
+                220933,
+                220887,
+                219950,
+                219947,
+                220857,
+                220866,
+                220805
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 9.354878826810391e-08,
+            "max_abs_error": 2.266517302543891e-07,
+            "fixed_accuracy_passed": true,
+            "phase_max_abs_errors": [
+              6.103515625e-05,
+              6.776263578034403e-21,
+              3.814697265625e-06,
+              8.470329472543003e-22,
+              1.7881393432617188e-07,
+              1.7881393432617188e-07,
+              1.7881393432617188e-07
+            ],
+            "max_local_cycles": 221112,
+            "cycles_per_pe": [
+              [
+                221062,
+                221085,
+                221048,
+                220110,
+                220103,
+                221012,
+                221030,
+                220971
+              ],
+              [
+                221100,
+                221112,
+                221075,
+                220137,
+                220130,
+                221040,
+                221049,
+                221000
+              ],
+              [
+                221080,
+                221092,
+                221055,
+                220117,
+                220111,
+                221021,
+                221030,
+                220981
+              ],
+              [
+                220141,
+                220153,
+                220116,
+                219178,
+                219172,
+                220082,
+                220091,
+                220042
+              ],
+              [
+                220091,
+                220103,
+                220066,
+                219128,
+                219122,
+                220032,
+                220041,
+                219992
+              ],
+              [
+                221000,
+                221012,
+                220975,
+                220037,
+                220031,
+                220941,
+                220950,
+                220901
+              ],
+              [
+                221008,
+                221020,
+                220983,
+                220045,
+                220039,
+                220949,
+                220958,
+                220909
+              ],
+              [
+                220910,
+                220933,
+                220887,
+                219950,
+                219947,
+                220857,
+                220866,
+                220805
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 1.1425803135068232e-07,
+            "max_abs_error": 1.0522035593087121e-07,
+            "fixed_accuracy_passed": true,
+            "phase_max_abs_errors": [
+              1.1920928955078125e-07,
+              1.1920928955078125e-07,
+              1.1920928955078125e-07,
+              5.960464477539063e-08,
+              1.1920928955078125e-07,
+              1.1920928955078125e-07,
+              1.1920928955078125e-07
+            ],
+            "max_local_cycles": 221112,
+            "cycles_per_pe": [
+              [
+                221062,
+                221085,
+                221048,
+                220110,
+                220103,
+                221012,
+                221030,
+                220971
+              ],
+              [
+                221100,
+                221112,
+                221075,
+                220137,
+                220130,
+                221040,
+                221049,
+                221000
+              ],
+              [
+                221080,
+                221092,
+                221055,
+                220117,
+                220111,
+                221021,
+                221030,
+                220981
+              ],
+              [
+                220141,
+                220153,
+                220116,
+                219178,
+                219172,
+                220082,
+                220091,
+                220042
+              ],
+              [
+                220091,
+                220103,
+                220066,
+                219128,
+                219122,
+                220032,
+                220041,
+                219992
+              ],
+              [
+                221000,
+                221012,
+                220975,
+                220037,
+                220031,
+                220941,
+                220950,
+                220901
+              ],
+              [
+                221008,
+                221020,
+                220983,
+                220045,
+                220039,
+                220949,
+                220958,
+                220909
+              ],
+              [
+                220910,
+                220933,
+                220887,
+                219950,
+                219947,
+                220857,
+                220866,
+                220805
+              ]
+            ]
+          }
+        ],
+        "internal_phases_observed": true,
+        "internal_float_observations": 172032,
+        "contract": "Complete original C2C transform, declared pencil ownership, warm entry/callback and owned-queue checks. Optional seven-stage pencil-endpoint samples explicitly scoped by instrumentation; not full internal tensors. Fixed f32 normwise accuracy; simulator local intervals, not global/hardware latency."
+      },
+      "native_application_checks": [
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.2557562425790997e-08,
+          "max_abs_error": 4.2046019360376984e-08,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.889077916878013e-09,
+          "max_abs_error": 3.230086924758014e-09,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.0715627651579938e-08,
+          "max_abs_error": 4.1083403175430096e-08,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.0235862770332281e-08,
+          "max_abs_error": 1.4103920142905787e-08,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        }
+      ],
+      "native_application_source": "native-output.txt: actual C++ executable stdout, read-only independent recheck",
+      "device_application_checks": [
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.426459499770429e-07,
+          "max_abs_error": 4.020020588521561e-07,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.6749555839770078e-07,
+          "max_abs_error": 1.3421775683688558e-07,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 9.354878824700992e-08,
+          "max_abs_error": 2.2665173056939337e-07,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.1425803098383574e-07,
+          "max_abs_error": 1.0522035514341867e-07,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        }
+      ],
+      "schedule_phase_count": 7,
+      "qualification_sha256": "fbeb1f44d758e4429126397ece0c7daa924b0e89a5ea81d2932d4a72a4f5252b",
+      "results_sha256": "f750f5be1ad93127e01335d3307b75a5111d06f4e9206c22a213c095ce0fcf11",
+      "numerical_validation": {
+        "contract": "fft-f32-normwise-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "relative_l2_limit": 2e-05,
+        "max_error_over_reference_peak_limit": 3e-05,
+        "zero_reference_requires_exact_zero": true,
+        "per_component_accuracy_not_implied": true
+      }
+    },
+    {
+      "key": "sdk_examples/fft3d_64_16x16_forward_backward",
+      "artifact": "projects/sdk_examples/fft3d_64_16x16_forward_backward/run-20260906T192439114535Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_fft.v1",
+        "epochs": 4,
+        "actors": 256,
+        "cases": [
+          {
+            "relative_l2_error": 1.6224945788445055e-07,
+            "max_abs_error": 0.0003150614532120017,
+            "fixed_accuracy_passed": true,
+            "phase_max_abs_errors": [
+              3.814697265625e-06,
+              1.9073486328125e-06,
+              2.288818359375e-05,
+              3.0517578125e-05,
+              0.000244140625,
+              0.000244140625,
+              0.000244140625
+            ],
+            "max_local_cycles": 519498,
+            "cycles_per_pe": [
+              [
+                519443,
+                519466,
+                519429,
+                517467,
+                515505,
+                513543,
+                511581,
+                509619,
+                509607,
+                511540,
+                513473,
+                515406,
+                517339,
+                519272,
+                519290,
+                519231
+              ],
+              [
+                519487,
+                519498,
+                519461,
+                517499,
+                515537,
+                513575,
+                511613,
+                509651,
+                509628,
+                511562,
+                513496,
+                515430,
+                517364,
+                519298,
+                519307,
+                519259
+              ],
+              [
+                519445,
+                519456,
+                519419,
+                517457,
+                515495,
+                513533,
+                511571,
+                509609,
+                509616,
+                511550,
+                513484,
+                515418,
+                517352,
+                519286,
+                519295,
+                519247
+              ],
+              [
+                517482,
+                517493,
+                517456,
+                515494,
+                513532,
+                511570,
+                509608,
+                507646,
+                507653,
+                509587,
+                511521,
+                513455,
+                515389,
+                517323,
+                517332,
+                517284
+              ],
+              [
+                515519,
+                515530,
+                515493,
+                513531,
+                511569,
+                509607,
+                507645,
+                505683,
+                505690,
+                507624,
+                509558,
+                511492,
+                513426,
+                515360,
+                515369,
+                515321
+              ],
+              [
+                513556,
+                513567,
+                513530,
+                511568,
+                509606,
+                507644,
+                505682,
+                503720,
+                503727,
+                505661,
+                507595,
+                509529,
+                511463,
+                513397,
+                513406,
+                513358
+              ],
+              [
+                511593,
+                511604,
+                511567,
+                509605,
+                507643,
+                505681,
+                503719,
+                501757,
+                501764,
+                503698,
+                505632,
+                507566,
+                509500,
+                511434,
+                511443,
+                511395
+              ],
+              [
+                509630,
+                509641,
+                509604,
+                507642,
+                505680,
+                503718,
+                501756,
+                499794,
+                499801,
+                501735,
+                503669,
+                505603,
+                507537,
+                509471,
+                509480,
+                509432
+              ],
+              [
+                509648,
+                509659,
+                509622,
+                507660,
+                505698,
+                503736,
+                501774,
+                499812,
+                499817,
+                501751,
+                503685,
+                505619,
+                507553,
+                509487,
+                509496,
+                509448
+              ],
+              [
+                511581,
+                511592,
+                511555,
+                509593,
+                507631,
+                505669,
+                503707,
+                501745,
+                501750,
+                503684,
+                505618,
+                507552,
+                509486,
+                511420,
+                511429,
+                511381
+              ],
+              [
+                513514,
+                513525,
+                513488,
+                511526,
+                509564,
+                507602,
+                505640,
+                503678,
+                503683,
+                505617,
+                507551,
+                509485,
+                511419,
+                513353,
+                513362,
+                513314
+              ],
+              [
+                515447,
+                515458,
+                515421,
+                513459,
+                511497,
+                509535,
+                507573,
+                505611,
+                505616,
+                507550,
+                509484,
+                511418,
+                513352,
+                515286,
+                515295,
+                515247
+              ],
+              [
+                517380,
+                517391,
+                517354,
+                515392,
+                513430,
+                511468,
+                509506,
+                507544,
+                507549,
+                509483,
+                511417,
+                513351,
+                515285,
+                517219,
+                517228,
+                517180
+              ],
+              [
+                519313,
+                519324,
+                519287,
+                517325,
+                515363,
+                513401,
+                511439,
+                509477,
+                509482,
+                511416,
+                513350,
+                515284,
+                517218,
+                519152,
+                519161,
+                519113
+              ],
+              [
+                519321,
+                519332,
+                519295,
+                517333,
+                515371,
+                513409,
+                511447,
+                509485,
+                509490,
+                511424,
+                513358,
+                515292,
+                517226,
+                519160,
+                519169,
+                519121
+              ],
+              [
+                519234,
+                519257,
+                519211,
+                517250,
+                515289,
+                513328,
+                511367,
+                509406,
+                509393,
+                511327,
+                513261,
+                515195,
+                517129,
+                519063,
+                519072,
+                519011
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 1.5932464635329312e-07,
+            "max_abs_error": 4.5628192563177366e-07,
+            "fixed_accuracy_passed": true,
+            "phase_max_abs_errors": [
+              5.960464477539063e-08,
+              0.0,
+              2.384185791015625e-07,
+              0.0,
+              4.172325134277344e-07,
+              3.5762786865234375e-07,
+              3.5762786865234375e-07
+            ],
+            "max_local_cycles": 519498,
+            "cycles_per_pe": [
+              [
+                519443,
+                519466,
+                519429,
+                517467,
+                515505,
+                513543,
+                511581,
+                509619,
+                509607,
+                511540,
+                513473,
+                515406,
+                517339,
+                519272,
+                519290,
+                519231
+              ],
+              [
+                519487,
+                519498,
+                519461,
+                517499,
+                515537,
+                513575,
+                511613,
+                509651,
+                509628,
+                511562,
+                513496,
+                515430,
+                517364,
+                519298,
+                519307,
+                519259
+              ],
+              [
+                519445,
+                519456,
+                519419,
+                517457,
+                515495,
+                513533,
+                511571,
+                509609,
+                509616,
+                511550,
+                513484,
+                515418,
+                517352,
+                519286,
+                519295,
+                519247
+              ],
+              [
+                517482,
+                517493,
+                517456,
+                515494,
+                513532,
+                511570,
+                509608,
+                507646,
+                507653,
+                509587,
+                511521,
+                513455,
+                515389,
+                517323,
+                517332,
+                517284
+              ],
+              [
+                515519,
+                515530,
+                515493,
+                513531,
+                511569,
+                509607,
+                507645,
+                505683,
+                505690,
+                507624,
+                509558,
+                511492,
+                513426,
+                515360,
+                515369,
+                515321
+              ],
+              [
+                513556,
+                513567,
+                513530,
+                511568,
+                509606,
+                507644,
+                505682,
+                503720,
+                503727,
+                505661,
+                507595,
+                509529,
+                511463,
+                513397,
+                513406,
+                513358
+              ],
+              [
+                511593,
+                511604,
+                511567,
+                509605,
+                507643,
+                505681,
+                503719,
+                501757,
+                501764,
+                503698,
+                505632,
+                507566,
+                509500,
+                511434,
+                511443,
+                511395
+              ],
+              [
+                509630,
+                509641,
+                509604,
+                507642,
+                505680,
+                503718,
+                501756,
+                499794,
+                499801,
+                501735,
+                503669,
+                505603,
+                507537,
+                509471,
+                509480,
+                509432
+              ],
+              [
+                509648,
+                509659,
+                509622,
+                507660,
+                505698,
+                503736,
+                501774,
+                499812,
+                499817,
+                501751,
+                503685,
+                505619,
+                507553,
+                509487,
+                509496,
+                509448
+              ],
+              [
+                511581,
+                511592,
+                511555,
+                509593,
+                507631,
+                505669,
+                503707,
+                501745,
+                501750,
+                503684,
+                505618,
+                507552,
+                509486,
+                511420,
+                511429,
+                511381
+              ],
+              [
+                513514,
+                513525,
+                513488,
+                511526,
+                509564,
+                507602,
+                505640,
+                503678,
+                503683,
+                505617,
+                507551,
+                509485,
+                511419,
+                513353,
+                513362,
+                513314
+              ],
+              [
+                515447,
+                515458,
+                515421,
+                513459,
+                511497,
+                509535,
+                507573,
+                505611,
+                505616,
+                507550,
+                509484,
+                511418,
+                513352,
+                515286,
+                515295,
+                515247
+              ],
+              [
+                517380,
+                517391,
+                517354,
+                515392,
+                513430,
+                511468,
+                509506,
+                507544,
+                507549,
+                509483,
+                511417,
+                513351,
+                515285,
+                517219,
+                517228,
+                517180
+              ],
+              [
+                519313,
+                519324,
+                519287,
+                517325,
+                515363,
+                513401,
+                511439,
+                509477,
+                509482,
+                511416,
+                513350,
+                515284,
+                517218,
+                519152,
+                519161,
+                519113
+              ],
+              [
+                519321,
+                519332,
+                519295,
+                517333,
+                515371,
+                513409,
+                511447,
+                509485,
+                509490,
+                511424,
+                513358,
+                515292,
+                517226,
+                519160,
+                519169,
+                519121
+              ],
+              [
+                519234,
+                519257,
+                519211,
+                517250,
+                515289,
+                513328,
+                511367,
+                509406,
+                509393,
+                511327,
+                513261,
+                515195,
+                517129,
+                519063,
+                519072,
+                519011
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 0.0,
+            "max_abs_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "phase_max_abs_errors": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "max_local_cycles": 519498,
+            "cycles_per_pe": [
+              [
+                519443,
+                519466,
+                519429,
+                517467,
+                515505,
+                513543,
+                511581,
+                509619,
+                509607,
+                511540,
+                513473,
+                515406,
+                517339,
+                519272,
+                519290,
+                519231
+              ],
+              [
+                519487,
+                519498,
+                519461,
+                517499,
+                515537,
+                513575,
+                511613,
+                509651,
+                509628,
+                511562,
+                513496,
+                515430,
+                517364,
+                519298,
+                519307,
+                519259
+              ],
+              [
+                519445,
+                519456,
+                519419,
+                517457,
+                515495,
+                513533,
+                511571,
+                509609,
+                509616,
+                511550,
+                513484,
+                515418,
+                517352,
+                519286,
+                519295,
+                519247
+              ],
+              [
+                517482,
+                517493,
+                517456,
+                515494,
+                513532,
+                511570,
+                509608,
+                507646,
+                507653,
+                509587,
+                511521,
+                513455,
+                515389,
+                517323,
+                517332,
+                517284
+              ],
+              [
+                515519,
+                515530,
+                515493,
+                513531,
+                511569,
+                509607,
+                507645,
+                505683,
+                505690,
+                507624,
+                509558,
+                511492,
+                513426,
+                515360,
+                515369,
+                515321
+              ],
+              [
+                513556,
+                513567,
+                513530,
+                511568,
+                509606,
+                507644,
+                505682,
+                503720,
+                503727,
+                505661,
+                507595,
+                509529,
+                511463,
+                513397,
+                513406,
+                513358
+              ],
+              [
+                511593,
+                511604,
+                511567,
+                509605,
+                507643,
+                505681,
+                503719,
+                501757,
+                501764,
+                503698,
+                505632,
+                507566,
+                509500,
+                511434,
+                511443,
+                511395
+              ],
+              [
+                509630,
+                509641,
+                509604,
+                507642,
+                505680,
+                503718,
+                501756,
+                499794,
+                499801,
+                501735,
+                503669,
+                505603,
+                507537,
+                509471,
+                509480,
+                509432
+              ],
+              [
+                509648,
+                509659,
+                509622,
+                507660,
+                505698,
+                503736,
+                501774,
+                499812,
+                499817,
+                501751,
+                503685,
+                505619,
+                507553,
+                509487,
+                509496,
+                509448
+              ],
+              [
+                511581,
+                511592,
+                511555,
+                509593,
+                507631,
+                505669,
+                503707,
+                501745,
+                501750,
+                503684,
+                505618,
+                507552,
+                509486,
+                511420,
+                511429,
+                511381
+              ],
+              [
+                513514,
+                513525,
+                513488,
+                511526,
+                509564,
+                507602,
+                505640,
+                503678,
+                503683,
+                505617,
+                507551,
+                509485,
+                511419,
+                513353,
+                513362,
+                513314
+              ],
+              [
+                515447,
+                515458,
+                515421,
+                513459,
+                511497,
+                509535,
+                507573,
+                505611,
+                505616,
+                507550,
+                509484,
+                511418,
+                513352,
+                515286,
+                515295,
+                515247
+              ],
+              [
+                517380,
+                517391,
+                517354,
+                515392,
+                513430,
+                511468,
+                509506,
+                507544,
+                507549,
+                509483,
+                511417,
+                513351,
+                515285,
+                517219,
+                517228,
+                517180
+              ],
+              [
+                519313,
+                519324,
+                519287,
+                517325,
+                515363,
+                513401,
+                511439,
+                509477,
+                509482,
+                511416,
+                513350,
+                515284,
+                517218,
+                519152,
+                519161,
+                519113
+              ],
+              [
+                519321,
+                519332,
+                519295,
+                517333,
+                515371,
+                513409,
+                511447,
+                509485,
+                509490,
+                511424,
+                513358,
+                515292,
+                517226,
+                519160,
+                519169,
+                519121
+              ],
+              [
+                519234,
+                519257,
+                519211,
+                517250,
+                515289,
+                513328,
+                511367,
+                509406,
+                509393,
+                511327,
+                513261,
+                515195,
+                517129,
+                519063,
+                519072,
+                519011
+              ]
+            ]
+          },
+          {
+            "relative_l2_error": 1.545507292741658e-07,
+            "max_abs_error": 0.029200721212891544,
+            "fixed_accuracy_passed": true,
+            "phase_max_abs_errors": [
+              4.700882207941959e-07,
+              5.06079589968067e-06,
+              1.4816171352606002e-13,
+              0.000244140625,
+              4.793281609572365e-12,
+              4.793281609572365e-12,
+              0.0012946093978375272
+            ],
+            "max_local_cycles": 519498,
+            "cycles_per_pe": [
+              [
+                519443,
+                519466,
+                519429,
+                517467,
+                515505,
+                513543,
+                511581,
+                509619,
+                509607,
+                511540,
+                513473,
+                515406,
+                517339,
+                519272,
+                519290,
+                519231
+              ],
+              [
+                519487,
+                519498,
+                519461,
+                517499,
+                515537,
+                513575,
+                511613,
+                509651,
+                509628,
+                511562,
+                513496,
+                515430,
+                517364,
+                519298,
+                519307,
+                519259
+              ],
+              [
+                519445,
+                519456,
+                519419,
+                517457,
+                515495,
+                513533,
+                511571,
+                509609,
+                509616,
+                511550,
+                513484,
+                515418,
+                517352,
+                519286,
+                519295,
+                519247
+              ],
+              [
+                517482,
+                517493,
+                517456,
+                515494,
+                513532,
+                511570,
+                509608,
+                507646,
+                507653,
+                509587,
+                511521,
+                513455,
+                515389,
+                517323,
+                517332,
+                517284
+              ],
+              [
+                515519,
+                515530,
+                515493,
+                513531,
+                511569,
+                509607,
+                507645,
+                505683,
+                505690,
+                507624,
+                509558,
+                511492,
+                513426,
+                515360,
+                515369,
+                515321
+              ],
+              [
+                513556,
+                513567,
+                513530,
+                511568,
+                509606,
+                507644,
+                505682,
+                503720,
+                503727,
+                505661,
+                507595,
+                509529,
+                511463,
+                513397,
+                513406,
+                513358
+              ],
+              [
+                511593,
+                511604,
+                511567,
+                509605,
+                507643,
+                505681,
+                503719,
+                501757,
+                501764,
+                503698,
+                505632,
+                507566,
+                509500,
+                511434,
+                511443,
+                511395
+              ],
+              [
+                509630,
+                509641,
+                509604,
+                507642,
+                505680,
+                503718,
+                501756,
+                499794,
+                499801,
+                501735,
+                503669,
+                505603,
+                507537,
+                509471,
+                509480,
+                509432
+              ],
+              [
+                509648,
+                509659,
+                509622,
+                507660,
+                505698,
+                503736,
+                501774,
+                499812,
+                499817,
+                501751,
+                503685,
+                505619,
+                507553,
+                509487,
+                509496,
+                509448
+              ],
+              [
+                511581,
+                511592,
+                511555,
+                509593,
+                507631,
+                505669,
+                503707,
+                501745,
+                501750,
+                503684,
+                505618,
+                507552,
+                509486,
+                511420,
+                511429,
+                511381
+              ],
+              [
+                513514,
+                513525,
+                513488,
+                511526,
+                509564,
+                507602,
+                505640,
+                503678,
+                503683,
+                505617,
+                507551,
+                509485,
+                511419,
+                513353,
+                513362,
+                513314
+              ],
+              [
+                515447,
+                515458,
+                515421,
+                513459,
+                511497,
+                509535,
+                507573,
+                505611,
+                505616,
+                507550,
+                509484,
+                511418,
+                513352,
+                515286,
+                515295,
+                515247
+              ],
+              [
+                517380,
+                517391,
+                517354,
+                515392,
+                513430,
+                511468,
+                509506,
+                507544,
+                507549,
+                509483,
+                511417,
+                513351,
+                515285,
+                517219,
+                517228,
+                517180
+              ],
+              [
+                519313,
+                519324,
+                519287,
+                517325,
+                515363,
+                513401,
+                511439,
+                509477,
+                509482,
+                511416,
+                513350,
+                515284,
+                517218,
+                519152,
+                519161,
+                519113
+              ],
+              [
+                519321,
+                519332,
+                519295,
+                517333,
+                515371,
+                513409,
+                511447,
+                509485,
+                509490,
+                511424,
+                513358,
+                515292,
+                517226,
+                519160,
+                519169,
+                519121
+              ],
+              [
+                519234,
+                519257,
+                519211,
+                517250,
+                515289,
+                513328,
+                511367,
+                509406,
+                509393,
+                511327,
+                513261,
+                515195,
+                517129,
+                519063,
+                519072,
+                519011
+              ]
+            ]
+          }
+        ],
+        "internal_phases_observed": true,
+        "internal_float_observations": 458752,
+        "contract": "Complete original C2C transform, restored pencil ownership, warm entry/callback and owned-queue checks. Optional seven-stage pencil-endpoint samples explicitly scoped by instrumentation; not full internal tensors. Fixed f32 normwise accuracy; simulator local intervals, not global/hardware latency."
+      },
+      "native_application_checks": [
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.5366224282748133e-08,
+          "max_abs_error": 6.16741475754098e-05,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 2.724313574795709e-08,
+          "max_abs_error": 5.54751828743009e-08,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 7.821022890548067e-09,
+          "max_abs_error": 0.0020502342085819726,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        }
+      ],
+      "native_application_source": "native-output.txt: actual C++ executable stdout, read-only independent recheck",
+      "device_application_checks": [
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.6224945784862516e-07,
+          "max_abs_error": 0.00031506145554914517,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.5932464611186387e-07,
+          "max_abs_error": 4.562819322348988e-07,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        },
+        {
+          "contract": "fft-f32-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 1.545507288168099e-07,
+          "max_abs_error": 0.02920072112411209,
+          "per_component_accuracy_not_implied": true,
+          "reference": "independent separable direct complex128 DFT"
+        }
+      ],
+      "schedule_phase_count": 7,
+      "qualification_sha256": "720bc8d71be1d9706471299cdced7613327ab05ddf9903accb8ba4ce81cb8f3d",
+      "results_sha256": "c0947d39ca868691fe71be29d4135fa74d3bef025e45fd220b578d48e94826b9",
+      "numerical_validation": {
+        "contract": "fft-f32-normwise-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "relative_l2_limit": 2e-05,
+        "max_error_over_reference_peak_limit": 3e-05,
+        "zero_reference_requires_exact_zero": true,
+        "per_component_accuracy_not_implied": true
+      }
+    }
+  ]
+}

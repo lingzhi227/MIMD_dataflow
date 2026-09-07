@@ -1,0 +1,12 @@
+{
+  "project": "matrix_algorithms",
+  "kernel": "lu_no_pivot",
+  "origins": [
+    "lu_factorization/one_element_per_pe/pe_program.csl",
+    "lu_factorization/many_elements_per_pe/pe_program.csl"
+  ],
+  "fixture": "lu",
+  "contract": "No-pivot elimination with packed L/U; 4x4. Two original layouts share equation coverage, not route equivalence.",
+  "partitions": 1,
+  "status": "source_ready"
+}

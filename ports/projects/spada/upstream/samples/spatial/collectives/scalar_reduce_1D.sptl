@@ -1,0 +1,54 @@
+/**
+ * Simple 1D scalar chain reduction
+ * N is the number of PEs in the first row.
+ * Root is 0,0
+ * Receiving and sending share channel 0, so every middle PE's router switches between the
+ * two configurations. See tests/csl_runtime/test_scalar_reduce_1d.sh
+ * 
+ * This sample does not compile for the Cerebras WSE because of the reuse of
+ * the same channel for both sending and receiving in the middle PEs.
+ **/
+ kernel @reduce<N>(stream<f32, 1>[N] readonly inp, stream<f32, 1> writeonly out) {
+
+    // Shared Place
+    place u16 i, u16 j in [N-1:N, 0:1] {
+        f32 local
+    }
+
+    // Shared Dataflow
+    dataflow u16 i, u16 j in [0:N, 0:1] {
+        stream<f32> westwards = relative_stream(-1, 0) {
+            hops = [(-1, 0)],
+            channel = 0
+        }
+    }
+
+    // Start
+    compute u16 i, u16 j in [N-1:N, 0:1] {
+        await receive(local, inp[i])
+        await send(local, westwards)
+    }
+
+    // Middle
+    place u16 i, u16 j in [1:N-1, 0:1] {
+        f32 local
+        f32 rcv_val
+    }
+    compute u16 i, u16 j in [1:N-1, 0:1] {
+        await receive(local, inp[i])
+        await receive(rcv_val, westwards)
+        rcv_val = rcv_val + local
+        await send(rcv_val, westwards)
+    }
+    // End
+    place u16 i, u16 j in [0:1, 0:1] {
+        f32 local
+        f32 rcv_val
+    }
+    compute u16 i, u16 j in [0:1, 0:1] {
+        await receive(local, inp[i])
+        await receive(rcv_val, westwards)
+        rcv_val = rcv_val + local
+        await send(rcv_val, out)
+    }
+}

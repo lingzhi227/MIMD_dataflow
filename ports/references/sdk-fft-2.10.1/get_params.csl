@@ -1,0 +1,39 @@
+// 3D FFT has same width and height
+param width: i16;
+
+const Params = struct {
+  width: i16,
+  first_pe: bool,
+  second_pe: bool,
+  second_to_last_pe: bool,
+  last_pe: bool,
+  v_first_pe: bool,
+  v_second_pe: bool,
+  v_second_to_last_pe: bool,
+  v_last_pe: bool,
+  tensor_type: type,
+};
+
+fn get_params(px:i16, py:i16, tensor_type: type) Params {
+  const first_pe: bool = (0 == px);
+  const last_pe: bool = ((width - 1) == px);
+  const second_pe: bool = (1 == px) and !last_pe;
+  const second_to_last_pe: bool = ((width - 2) == px) and !last_pe and !first_pe;
+  const v_first_pe: bool = (0 == py);
+  const v_last_pe: bool = ((width - 1) == py);
+  const v_second_to_last_pe: bool = ((width - 2) == py) and !v_last_pe and !v_first_pe;
+  const v_second_pe: bool = (1 == py) and !v_last_pe;
+
+  return Params{
+    .width = width,
+    .first_pe = first_pe,
+    .second_pe = second_pe,
+    .second_to_last_pe = second_to_last_pe,
+    .last_pe = last_pe,
+    .v_first_pe = v_first_pe,
+    .v_second_pe = v_second_pe,
+    .v_second_to_last_pe = v_second_to_last_pe,
+    .v_last_pe = v_last_pe,
+    .tensor_type = tensor_type,
+  };
+}

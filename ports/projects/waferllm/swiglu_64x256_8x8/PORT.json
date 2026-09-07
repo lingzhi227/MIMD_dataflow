@@ -1,0 +1,12 @@
+{
+  "project": "waferllm",
+  "kernel": "swiglu_64x256_8x8",
+  "origins": [
+    "Prefill/src/prefill.csl silu_kernel/z3_comp"
+  ],
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "contract": "Gated SiLU 64x256 on 8x8 PEs; six SDK calls, exact activation/product half bits, immutable inputs, phase/epoch audit and independent actual native/device standard composition. Finite magnitude <=8; component error <=.004*abs(reference)+2^-24*(1+abs(up)), not uniform relative/f32 accuracy. Isolated original source control at64x256; no full MLP/inference or hardware claim.",
+  "status": "source_ready",
+  "partitions": 1,
+  "fixture": "gated_silu:64:256"
+}

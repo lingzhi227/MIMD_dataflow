@@ -1,0 +1,12 @@
+{
+  "project": "waferllm",
+  "kernel": "softmax_64x64_8x8",
+  "origins": [
+    "Prefill/src/prefill.csl softmax_score",
+    "Prefill/src/comm_lib/comm_pe.csl"
+  ],
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "contract": "Stable row softmax; correct all-negative maximum initialization, SDK exp and source-inspired max/sum row chains.",
+  "status": "development",
+  "partitions": 1
+}

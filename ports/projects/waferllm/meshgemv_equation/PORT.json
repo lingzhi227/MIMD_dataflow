@@ -1,0 +1,11 @@
+{
+  "project": "waferllm",
+  "kernel": "meshgemv_equation",
+  "origins": [
+    "MeshGEMV/src/meshgemv.csl"
+  ],
+  "fixture": "gemv",
+  "contract": "Matrix-vector equation; f32 instead of WaferLLM original half profile where applicable.",
+  "partitions": 2,
+  "status": "source_ready"
+}

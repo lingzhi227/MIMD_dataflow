@@ -1,0 +1,79 @@
+{
+  "passed": true,
+  "source_bundle": "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/projects/sdk_examples/mesh_power_512_4x4/run-20260906T161021057910Z",
+  "source_results_sha256": "e646bb3691678287478a800668dce99ba2cec5e8a80c19ca2c67164eef5a2c6d",
+  "auditor_snapshot": "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/evidence/power-audit-mutations-20260906T161704205254Z",
+  "rejected": [
+    {
+      "case": "zero_operator_false_completion",
+      "rejected": true,
+      "diagnostic": "power attempt accounting"
+    },
+    {
+      "case": "zero_step_changed_vector",
+      "rejected": true,
+      "diagnostic": "\nNot equal to tolerance rtol=3e-05, atol=3e-06\n\nMismatched elements: 1 / 512 (0.195%)\nMismatch at index:\n [0]: 99.0 (ACTUAL), -0.75 (DESIRED)\nMax absolute difference among violations: 99.75\nMax relative difference among violations: 133.\n ACTUAL: array([99.  , -0.5 , -0.25,  0.  ,  0.25,  0.5 ,  0.75"
+    },
+    {
+      "case": "coherent_wrong_vector",
+      "rejected": true,
+      "diagnostic": "\nNot equal to tolerance rtol=3e-05, atol=3e-06\n\nMismatched elements: 1 / 512 (0.195%)\nMismatch at index:\n [0]: 99.0 (ACTUAL), 1.52587890625e-05 (DESIRED)\nMax absolute difference among violations: 98.99998474\nMax relative difference among violations: 6488063.\n ACTUAL: array([9.900000e+01, 1.525879e-0"
+    },
+    {
+      "case": "tiny_norm_lost",
+      "rejected": true,
+      "diagnostic": "\nNot equal to tolerance rtol=3e-05, atol=0\n\nMismatched elements: 1 / 1 (100%)\nMax absolute difference among violations: 2.26274171e-29\nMax relative difference among violations: 1.\n ACTUAL: array(0.)\n DESIRED: array(2.262742e-29)"
+    },
+    {
+      "case": "wrong_reciprocal",
+      "rejected": true,
+      "diagnostic": "\nNot equal to tolerance rtol=3e-06, atol=0\n\nMismatched elements: 1 / 1 (100%)\nMax absolute difference among violations: 98.95593473\nMax relative difference among violations: 2245.66750336\n ACTUAL: array(99.)\n DESIRED: array(0.044065)"
+    },
+    {
+      "case": "unused_history",
+      "rejected": true,
+      "diagnostic": "\nArrays are not equal\n\nMismatched elements: 1 / 17 (5.88%)\nMismatch at index:\n [15]: 1.0 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1.\nMax relative difference among violations: inf\n ACTUAL: array([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0.])\n DESIRED: arr"
+    },
+    {
+      "case": "history_padding",
+      "rejected": true,
+      "diagnostic": "\nArrays are not equal\n\nMismatched elements: 1 / 17 (5.88%)\nMismatch at index:\n [16]: 1.0 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1.\nMax relative difference among violations: inf\n ACTUAL: array([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1.])\n DESIRED: arr"
+    },
+    {
+      "case": "unused_inverse",
+      "rejected": true,
+      "diagnostic": "\nArrays are not equal\n\nMismatched elements: 1 / 16 (6.25%)\nMismatch at index:\n [15]: 1.0 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1.\nMax relative difference among violations: inf\n ACTUAL: array([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1.])\n DESIRED: array(0"
+    },
+    {
+      "case": "wrong_attempts",
+      "rejected": true,
+      "diagnostic": "power attempt accounting"
+    },
+    {
+      "case": "missing_reduction",
+      "rejected": true,
+      "diagnostic": "\nArrays are not equal\n\nMismatched elements: 1 / 6 (16.7%)\nMismatch at index:\n [2]: 0 (ACTUAL), 32 (DESIRED)\nMax absolute difference among violations: 32\nMax relative difference among violations: 1.\n ACTUAL: array([16, 16,  0, 16,  1, 49])\n DESIRED: array([16, 16, 32, 16,  1, 49])"
+    },
+    {
+      "case": "undrained_queue",
+      "rejected": true,
+      "diagnostic": "resident drained shared queues"
+    },
+    {
+      "case": "wrong_operator_witness",
+      "rejected": true,
+      "diagnostic": "\nNot equal to tolerance rtol=3e-05, atol=3e-06\n\nMismatched elements: 1 / 512 (0.195%)\nMismatch at index:\n [160]: 99.0 (ACTUAL), 3.0517574487021193e-05 (DESIRED)\nMax absolute difference among violations: 98.99996948\nMax relative difference among violations: 3244031.3867188\n ACTUAL: array([3.051757e-0"
+    },
+    {
+      "case": "wrong_partial_witness",
+      "rejected": true,
+      "diagnostic": "\nNot equal to tolerance rtol=3e-05, atol=3e-06\n\nMismatched elements: 1 / 2 (50%)\nMismatch at index:\n [0]: 99.0 (ACTUAL), 3.0517574487021193e-05 (DESIRED)\nMax absolute difference among violations: 98.99996948\nMax relative difference among violations: 3244031.3867188\n ACTUAL: array([9.900000e+01, 3.05"
+    },
+    {
+      "case": "missing_launch",
+      "rejected": true,
+      "diagnostic": "resident lifecycle"
+    }
+  ],
+  "inactive_zero_step_witness_accepted": true
+}

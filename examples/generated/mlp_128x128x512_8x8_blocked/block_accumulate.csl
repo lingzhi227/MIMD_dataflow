@@ -1,0 +1,22 @@
+// Two-level accumulator using SDK vector conversion and arithmetic primitives.
+// Caller completes the local half partial before merge; communication leases
+// remain separate. Reset is mandatory before each logical contraction.
+param length:i16;
+const ops=@import_module("<dsd_ops>");
+var accumulator=@zeros([length]f32);
+var widened=@zeros([length]f32);
+const dummy=@zeros([1]f16);
+const half_view=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{length}->dummy[i]});
+const acc=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{length}->accumulator[i]});
+const tmp=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{length}->widened[i]});
+var readout=@zeros([length]u32);
+const readout_dsd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{length}->readout[i]});
+const words:[*]u32=&readout;
+fn snapshot() void {@mov32(readout_dsd,acc);}
+fn reset() void {ops.mov(f32,acc,0.0,.{});}
+fn merge(partial:[*]f16) void {
+ const h=@set_dsd_base_addr(half_view,partial);
+ ops.convert(f32,f16,tmp,h,.{});
+ ops.add(f32,f32,acc,acc,tmp,.{});
+ ops.convert(f16,f32,h,acc,.{});
+}

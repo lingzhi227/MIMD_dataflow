@@ -1,0 +1,13 @@
+{
+  "project": "waferllm",
+  "kernel": "score_128x256_8x8",
+  "origins": [
+    "Prefill/src/prefill.csl score_matmul/matmul_T_compute"
+  ],
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "status": "source_ready",
+  "partitions": 1,
+  "contract": "QK-transpose 128x256 on 8x8 PEs, typed transpose view and original vertical K exchange/horizontal EAST-first rotating-root reduction. Six SDK calls with changed dense Q/K, immutable inputs, exact target half outputs and sampled per-round partial/live K ownership, root/epoch/queue audits. Actual native/device independent math.fsum checks under .015L2/.02peak normwise policy, input<=1. Small counter control measures local simulator overhead separately from tensor observations; larger sampled comparison includes unequal live-owner observer costs. Not full attention or hardware performance.",
+  "fixture": "score:128:256",
+  "instrumentation": "sampled"
+}

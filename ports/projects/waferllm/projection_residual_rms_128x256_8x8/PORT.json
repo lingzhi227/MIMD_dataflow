@@ -1,0 +1,11 @@
+{
+  "project": "waferllm",
+  "kernel": "projection_residual_rms_128x256_8x8",
+  "status": "development",
+  "partitions": 1,
+  "origins": [
+    "Prefill/src/prefill.csl h1_matmul/z_add/rmsnorm_z"
+  ],
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "contract": "Supplied activation, square projection weights, residual and feature gamma; resident projection/add/RMS composition under development. No full Prefill or hardware qualification."
+}

@@ -1,0 +1,1669 @@
+const internal = @import_module("<math/internal>");
+const types = @import_module("<types>");
+
+const PI = 3.1415926535897932384;
+const E  = 2.7182818284590452354;
+
+// ----------------------------------------------------------------
+// Generic floating point constants and IEEE utils
+// ----------------------------------------------------------------
+
+const POSITIVE_INF = internal.POSITIVE_INF;
+const NEGATIVE_INF = internal.NEGATIVE_INF;
+const NaN = internal.NaN;
+
+// Implements check for NaN
+fn isNaN(x : anytype) bool {
+  const T = @type_of(x);
+  @comptime_assert(types.is_float(T));
+
+  comptime var uint = types.bits_type_of(T);
+  const u = @bitcast(uint, x);
+  const mask = @as(uint, comptime internal.sign_bit(T) - 1);
+  // NaN if all exponent bits are 1, and *any* fraction bit is one.
+  // Signed bit is ignored.
+  return (u & mask) > @bitcast(uint, POSITIVE_INF(T));
+}
+
+// Implements check for Inf
+fn isInf(x : anytype) bool {
+  const T = @type_of(x);
+  @comptime_assert(types.is_float(T));
+
+  comptime var uint = types.bits_type_of(T);
+  return @bitcast(uint, POSITIVE_INF(T)) == @bitcast(uint, x) or
+    @bitcast(uint, NEGATIVE_INF(T)) == @bitcast(uint, x);
+}
+
+// Implements check for non NaN, non Inf, number.
+fn isFinite(x : anytype) bool {
+  const T = @type_of(x);
+  @comptime_assert(types.is_float(T));
+
+  return !isNaN(x) and !isInf(x);
+}
+
+// Checks if x is a signaling NaN (i.e. the highest bit of the mantissa is zero).
+fn isSignaling(x : anytype) bool {
+  const T = @type_of(x);
+  @comptime_assert(types.is_float(T));
+
+  comptime var uint = types.bits_type_of(T);
+  const inf_bits = @bitcast(uint, POSITIVE_INF(T));
+  const mask = inf_bits | comptime internal.mantissa_mask(T);
+  const bits = @bitcast(uint, x);
+  return (bits & mask) > inf_bits and
+    (bits & comptime internal.HIGH_MANT_BIT(T)) == 0;
+}
+
+fn signbit(x : anytype) bool {
+  const T = @type_of(x);
+  @comptime_assert(types.is_float(T));
+
+  comptime var uint = types.bits_type_of(T);
+  const bit = @as(uint, comptime internal.sign_bit(T));
+  return bit & @bitcast(uint, x) == bit;
+}
+
+// ----------------------------------------------------------------
+// 16 bit math constants and IEEE utils
+// ----------------------------------------------------------------
+
+const POSITIVE_INF_f16 = POSITIVE_INF(@fp16());
+const NEGATIVE_INF_f16 = NEGATIVE_INF(@fp16());
+const NaN_f16 = NaN(@fp16());
+
+// Implements check for NaN
+fn isNaN_f16(x : @fp16()) bool {
+  return isNaN(x);
+}
+
+// Implements check for Inf
+fn isInf_f16(x : @fp16()) bool {
+  return isInf(x);
+}
+
+// Implements check for non NaN, non Inf, number.
+fn isFinite_f16(x : @fp16()) bool {
+  return isFinite(x);
+}
+
+// Checks if x is a signaling NaN (i.e. the highest bit of the mantissa is zero).
+fn isSignaling_f16(x : @fp16()) bool {
+  return isSignaling(x);
+}
+
+fn issignalingh(x : anytype) bool {
+  return isNaN(x) and !isSignaling(x);
+}
+
+fn signbit_f16(x : @fp16()) bool {
+  return signbit(x);
+}
+
+// ----------------------------------------------------------------
+// 32 bit constants and IEEE utils
+// ----------------------------------------------------------------
+
+const POSITIVE_INF_f32 = POSITIVE_INF(f32);
+const NEGATIVE_INF_f32 = NEGATIVE_INF(f32);
+const NaN_f32 = NaN(f32);
+
+// Implements check for NaN
+fn isNaN_f32(x : f32) bool {
+  return isNaN(x);
+}
+
+// Implements check for Inf
+fn isInf_f32(x : f32) bool {
+  return isInf(x);
+}
+
+// Implements check for non NaN, non Inf, number.
+fn isFinite_f32(x : f32) bool {
+  return isFinite(x);
+}
+
+// Checks if x is a signaling NaN (i.e. the highest bit of the mantissa is zero).
+fn isSignaling_f32(x : f32) bool {
+  return isSignaling(x);
+}
+
+fn signbit_f32(x : f32) bool {
+  return signbit(x);
+}
+
+// ----------------------------------------------------------------
+// rounding functions
+// ----------------------------------------------------------------
+
+// Implements the ceiling function for a floating point value.
+fn ceil(x: anytype) @type_of(x) {
+  const T = @type_of(x);
+  @comptime_assert(types.is_float(T));
+
+  comptime var uint = types.bits_type_of(T);
+  var i = @bitcast(uint, x);
+
+  const shifted: uint = i >> comptime internal.mantissa_len(T);
+  const masked: i32 = @as(i32, shifted & comptime internal.exp_mask(T));
+  const e: i32 = masked - comptime internal.default_bias(T);
+
+  if (e >= comptime internal.mantissa_len(T)) {
+    // "x" is a positive integer
+    return x;
+  }
+
+  if (e >= 0) {
+    // "x" is a positive integer
+    const m: uint = @as(uint, comptime internal.mantissa_mask(T)) >> @as(uint, e);
+
+    if (i & m == 0) {
+      return x;
+    }
+
+    // Update "x" by adding "m" to it if it is positive
+    // Note that "m" is almost equal to 1 when interpreting it as a float
+    if (i >> (comptime types.bit_size_of(T) - 1) == 0) {
+      i += m;
+    }
+
+    // Remove the fractional part of "x"
+    i &= ~m;
+    return @bitcast(T, i);
+  }
+
+  // "x" is in (-1, 1)
+  if (i >> (comptime types.bit_size_of(T) - 1) != 0) {
+    // "x" is negative
+    return @as(T, -0.0);
+  }
+
+  if (i << 1 != 0) {
+    // "x" is positive but non-zero
+    return @as(T, 1.0);
+  }
+
+  return x;
+}
+
+/// Implements the ceiling function for a half-precision float value.
+fn ceil_f16(x: @fp16()) @fp16() {
+  return ceil(x);
+}
+
+/// Implements the ceiling function for a single-precision float value.
+fn ceil_f32(x: f32) f32 {
+  return ceil(x);
+}
+
+/// Implements the floor function for a floating point value.
+fn floor(x: anytype) @type_of(x) {
+  const T = @type_of(x);
+  @comptime_assert(types.is_float(T));
+
+  comptime var uint = types.bits_type_of(T);
+  var i = @bitcast(uint, x);
+
+  const shifted: uint = i >> comptime internal.mantissa_len(T);
+  const masked: i32 = @as(i32, shifted & comptime internal.exp_mask(T));
+  const e: i32 = masked - comptime internal.default_bias(T);
+
+  if (e >= comptime internal.mantissa_len(T)) {
+    // "x" is a positive integer
+    return x;
+  }
+
+  if (e >= 0) {
+    // "x" is a positive integer
+    const m: uint = @as(uint, comptime internal.mantissa_mask(T)) >> @as(uint, e);
+
+    if (i & m == 0) {
+      return x;
+    }
+
+    // Update "x" by adding "m" to its absolute value if it is negative
+    // Note that "m" is almost equal to 1 when interpreting it as a float
+    if (i >> (comptime types.bit_size_of(T) - 1) == 1) {
+      i += m;
+    }
+
+    // Remove the fractional part of "x"
+    i &= ~m;
+    return @bitcast(T, i);
+  }
+
+  // "x" is in (-1, 1)
+  if ((i >> (comptime types.bit_size_of(T) - 1)) == 0) {
+    // "x" is non-negative
+    return @as(T, 0.0);
+  }
+
+  if (i << 1 != 0) {
+    // "x" is negative but non-zero
+    return @as(T, -1.0);
+  }
+
+  return x;
+}
+
+
+/// Implements the floor function for a half-precision float value.
+fn floor_f16(x: @fp16()) @fp16() {
+  return floor(x);
+}
+
+fn floor_f32(x : f32) f32 {
+  return floor(x);
+}
+
+// ----------------------------------------------------------------
+// trig functions
+// ----------------------------------------------------------------
+
+const TWO_OVER_PI = 0x3F22F983;
+
+const _PI = [4]u32{0x3FC90000, 0x39FDA000, 0x33A22000,
+                               0x2C346000};
+const SIN_P = [4]u32{0xB94C8383, 0x3C08834C, 0xBE2AAAA2,
+                                  0x3F800000};
+const COS_P = [5]u32{0x37CD37AA, 0xBAB6072E, 0x3D2AAAA7,
+                                  0xBF000000, 0x3F800000};
+
+const PI_OVER_2: u32 = 0x3FC90FDB;
+
+// Taylor series approximation: sin(x) ~= x - (1/3!)x³ + (1/5!)x⁵
+// SIN_P[0] (the next term in the Taylor series) is not needed here
+// but it is used in sin_reduced_f32
+fn sin_reduced_f16(x : f32) @fp16() {
+  const x_squared : f32 = x * x;
+  var y0 : f32 = (@bitcast(f32, SIN_P[2]) +
+                            @bitcast(f32, SIN_P[1]) * x_squared);
+  y0 = internal.fmac(f32, @bitcast(f32, SIN_P[3]), y0, x_squared);
+  y0 = x * y0;
+  return @as(@fp16(), y0);
+}
+
+// Taylor series approximation: cos(x) ~= 1 - (1/2!)x² + (1/4!)x⁴ - (1/6!)x⁶
+// COS_P[0] (the next term in the Taylor series) is not needed here but it is
+// used in cos_reduced_f32
+fn cos_reduced_f16(x : f32) @fp16() {
+  const x_squared : f32 = x * x;
+  var y0 : f32 = (@bitcast(f32, COS_P[2]) +
+                            @bitcast(f32, COS_P[1]) * x_squared);
+  y0 = internal.fmac(f32, @bitcast(f32, COS_P[3]), y0, x_squared);
+  y0 = internal.fmac(f32, @bitcast(f32, COS_P[4]), y0, x_squared);
+  return @as(@fp16(), y0);
+}
+
+fn sin_f16(x : @fp16()) @fp16() {
+  const x_wide = @as(f32, x);
+  // n = round(x * 2/π)
+  // If n overflows i16 (around |x| = 51472), all bets are off! However, at that
+  // point, f16 ULP is 32, i.e. ~5 periods of the sin function, so in practice,
+  // sin_f16(51472) wouldn't be very meaningful regardless. (For cb16 and bf16,
+  // meaningful precision is lost at even smaller magnitudes.)
+  const n : i16 = internal.fs2xp16(x_wide * @bitcast(f32, @as(u32, TWO_OVER_PI)));
+  const modulo : i16 = n & 0x0003;
+
+  // xred = x - n * π/2
+  // Results in -π/4 <= xred < π/4
+  var xred : f32 = internal.fmac(f32, x_wide, @as(f32, -n), @bitcast(f32, PI_OVER_2));
+
+  // Exploit sin(x + π) = -sin(x), sin(x + π/2) = cos(x) to get a smaller range
+  // over which the actual approximations of sin and cos need to be accurate
+  if (modulo == 0) {
+    return sin_reduced_f16(xred);
+  } else if (modulo == 1) {
+    return cos_reduced_f16(xred);
+  } else if (modulo == 2) {
+    return -sin_reduced_f16(xred);
+  } else if (modulo == 3) {
+    return -cos_reduced_f16(xred);
+  }
+  return NaN_f16;
+}
+
+fn cos_f16(x : @fp16()) @fp16() {
+  // Works the same as sin_f16. See comments there for a description
+  const x_wide = @as(f32, x);
+  const n : i16 = internal.fs2xp16(x_wide * @bitcast(f32, @as(u32, TWO_OVER_PI)));
+
+  const modulo : i16 = n & 0x0003;
+
+  var xred : f32 = internal.fmac(f32, x_wide, @as(f32, -n), @bitcast(f32, PI_OVER_2));
+
+  if (modulo == 0) {
+    return cos_reduced_f16(xred);
+  } else if (modulo == 1) {
+    return -sin_reduced_f16(xred);
+  } else if (modulo == 2) {
+    return -cos_reduced_f16(xred);
+  } else if (modulo == 3) {
+    return sin_reduced_f16(xred);
+  }
+  return NaN_f16;
+}
+
+fn sin_reduced_f32(x : f32) f32 {
+  const x_squared : f32 = x * x;
+  var y0 : f32 = (@bitcast(f32, SIN_P[1]) +
+                            @bitcast(f32, SIN_P[0]) * x_squared);
+  y0 = internal.fmac(f32, @bitcast(f32, SIN_P[2]), y0, x_squared);
+  y0 = internal.fmac(f32, @bitcast(f32, SIN_P[3]), y0, x_squared);
+  y0 = x * y0;
+  return y0;
+}
+
+fn cos_reduced_f32(x : f32) f32 {
+  const x_squared : f32 = x * x;
+  var y0 : f32 = (@bitcast(f32, COS_P[1]) +
+                            @bitcast(f32, COS_P[0]) * x_squared);
+  y0 = internal.fmac(f32, @bitcast(f32, COS_P[2]), y0, x_squared);
+  y0 = internal.fmac(f32, @bitcast(f32, COS_P[3]), y0, x_squared);
+  y0 = internal.fmac(f32, @bitcast(f32, COS_P[4]), y0, x_squared);
+  return y0;
+}
+
+fn sin_f32(x : f32) f32 {
+  const n : i16 = internal.fs2xp16(x * @bitcast(f32, @as(u32, TWO_OVER_PI)));
+
+  const modulo : i16 = n & 0x0003;
+
+  var xred : f32 = internal.fmac(f32, x, @as(f32,-n), @bitcast(f32, _PI[0]));
+  xred = internal.fmac(f32, xred, @as(f32,-n), @bitcast(f32, _PI[1]));
+  xred = internal.fmac(f32, xred, @as(f32,-n), @bitcast(f32, _PI[2]));
+  xred = internal.fmac(f32, xred, @as(f32,-n), @bitcast(f32, _PI[3]));
+
+  if (modulo == 0) {
+    return sin_reduced_f32(xred);
+  } else if (modulo == 1) {
+    return cos_reduced_f32(xred);
+  } else if (modulo == 2) {
+    return -sin_reduced_f32(xred);
+  } else if (modulo == 3) {
+    return -cos_reduced_f32(xred);
+  }
+  return NaN_f32;
+}
+
+fn cos_f32(x : f32) f32 {
+  const n : i16 = internal.fs2xp16(x * @bitcast(f32, @as(u32, TWO_OVER_PI)));
+
+  const modulo : i16 = n & 0x0003;
+
+  var xred : f32 = internal.fmac(f32, x, @as(f32,-n), @bitcast(f32, _PI[0]));
+  xred = internal.fmac(f32, xred, @as(f32,-n), @bitcast(f32, _PI[1]));
+  xred = internal.fmac(f32, xred, @as(f32,-n), @bitcast(f32, _PI[2]));
+  xred = internal.fmac(f32, xred, @as(f32,-n), @bitcast(f32, _PI[3]));
+
+  if (modulo == 0) {
+    return cos_reduced_f32(xred);
+  } else if (modulo == 1) {
+    return -sin_reduced_f32(xred);
+  } else if (modulo == 2) {
+    return -cos_reduced_f32(xred);
+  } else if (modulo == 3) {
+    return sin_reduced_f32(xred);
+  }
+  return NaN_f32;
+}
+
+fn sin(x: anytype) @type_of(x) {
+  const T = @type_of(x);
+  @comptime_assert(types.is_enabled_float(T));
+  if (T == @fp16()) {
+    return sin_f16(x);
+  }
+  return sin_f32(x);
+}
+
+fn cos(x: anytype) @type_of(x) {
+  const T = @type_of(x);
+  @comptime_assert(types.is_enabled_float(T));
+  if (T == @fp16()) {
+    return cos_f16(x);
+  }
+  return cos_f32(x);
+}
+
+fn tanh_fp16_impl(x_arg: anytype) @type_of(x_arg) {
+  const T = @type_of(x_arg);
+  @comptime_assert(types.is_float16(T));
+
+  const tanh_brk = [3]T {0.843750, 2.343750, 4.16};
+
+  const tanh_Q0 = if (T == f16)
+                    [4]f16 {1.0, -0.332764, 0.127319, -0.0344543}
+                  else if (T == cb16)
+                    [4]cb16 {1.0, -0.33252, 0.126221, -0.0338135}
+                  else
+                    [4]bf16 {1.0, -0.330078, 0.116211, -0.0303955};
+  const tanh_Q1 = if (T == f16)
+                    [5]f16 {0.687988, 0.52832, -0.382812, 0.138306, -0.0205841}
+                  else if (T == cb16)
+                    [5]cb16 {0.6875, 0.530273, -0.385254, 0.13916, -0.0205383}
+                  else
+                    [5]bf16 {0.6875, 0.527344, -0.378906, 0.133789, -0.0187988};
+  const tanh_Q2 = if (T == f16)
+                    [5]f16 {0.981934, 0.0346375, -0.030304, 0.0134506, -0.00236511}
+                  else if (T == cb16)
+                    [5]cb16 {0.981445, 0.0352173, -0.0300293, 0.0132904, -0.00240326}
+                  else
+                    [5]bf16 {0.980469, 0.036377, -0.027832, 0.012207, -0.00256348};
+
+  var res : T = 0.0;
+
+  if (isNaN(x_arg))
+    return x_arg;
+
+  var x = abs(x_arg);
+
+  var y0 : T = 0.0;
+  if (x < tanh_brk[1]) {
+    if (x < tanh_brk[0]) {
+      const x_squared : T = x * x;
+      y0 = internal.fmac(T, tanh_Q0[2] , tanh_Q0[3] , x_squared);
+      y0 = internal.fmac(T, tanh_Q0[1] , y0 , x_squared);
+      y0 = internal.fmac(T, tanh_Q0[0] , y0 , x_squared);
+      y0 = x * y0;
+      res = y0;
+    } else {
+      x = x - tanh_brk[0];
+      y0 = internal.fmac(T, tanh_Q1[3] , tanh_Q1[4] , x);
+      y0 = internal.fmac(T, tanh_Q1[2] , y0 , x);
+      y0 = internal.fmac(T, tanh_Q1[1] , y0 , x);
+      y0 = internal.fmac(T, tanh_Q1[0] , y0 , x);
+      res = y0;
+    }
+  } else {
+    if (x < tanh_brk[2]) {
+      x = x - tanh_brk[1];
+      y0 = internal.fmac(T, tanh_Q2[3] , tanh_Q2[4] , x);
+      y0 = internal.fmac(T, tanh_Q2[2] , y0 , x);
+      y0 = internal.fmac(T, tanh_Q2[1] , y0 , x);
+      y0 = internal.fmac(T, tanh_Q2[0] , y0 , x);
+      res = y0;
+    } else {
+      res = 1.0;
+    }
+  }
+
+  return @bitcast(T, (@bitcast(u16, res) & 0x7fff) |
+                     (@bitcast(u16, x_arg) & 0x8000));
+}
+
+fn tanh_f16(x: @fp16()) @fp16() {
+  return tanh_fp16_impl(x);
+}
+
+fn tanh_f32(x_arg : f32) f32 {
+  const BRK = [5]u32{0x3f4abedd, 0x3fde9a25, 0x404a32f1, 0x40abaf12, 0x41255da4};
+  const Q0 = [7]u32{0x3aff171d, 0xbc032d14, 0x3cb17113, 0xbd5cf6d2, 0x3e088855, 0xbeaaaaab, 0x3f800000};
+  const Q1 = [8]u32{0xbb81bd1f, 0x3c68f1be, 0xbc92eb9b, 0xbc646e13, 0x3ddc2434, 0xbe6e701f, 0x3e8bd490, 0x3f5a42bb};
+  const Q2 = [8]u32{0x375d88d3, 0xba2f6443, 0x3b4b0c6b, 0xbc10ae0b, 0x3c996dc2, 0xbced30f3, 0x3cf0c94a, 0x3f7c35ab};
+  const Q3 = [8]u32{0x373d092b, 0xb82f92de, 0x38d9fb15, 0xb9870f1e, 0x3a0aac5c, 0xba50835e, 0x3a501ae9, 0x3f7fe5fd};
+  const Q4 = [8]u32{0x328b1768, 0xb3928de5, 0x33289597, 0x31913438, 0x34fbfab0, 0xb579573b, 0x351eb8c5, 0x3f7ffffc};
+
+  const XHICUTOFF : u32 = 0x41102d0e;
+
+  var res : f32 = 0.0;
+
+  if (isNaN_f32(x_arg))
+    return x_arg;
+
+  const x = abs_f32(x_arg);
+  var y0 : f32 = 0.0;
+  var mid : f32 = 0.0;
+  var x_sub_mid : f32 = 0.0;
+
+  if (x < @bitcast(f32, BRK[2])) {
+    if (x < @bitcast(f32, BRK[0])) {
+      const x_squared : f32 = x * x;
+      y0 = (@bitcast(f32, Q0[1]) + @bitcast(f32, Q0[0]) * x_squared);
+      y0 = (@bitcast(f32, Q0[2]) + y0 * x_squared);
+      y0 = (@bitcast(f32, Q0[3]) + y0 * x_squared);
+      y0 = (@bitcast(f32, Q0[4]) + y0 * x_squared);
+      y0 = (@bitcast(f32, Q0[5]) + y0 * x_squared);
+      y0 = (@bitcast(f32, Q0[6]) + y0 * x_squared);
+      y0 = x * y0;
+      res = y0;
+
+    } else if (x < @bitcast(f32, BRK[1])) {
+      mid = 0.5 * (@bitcast(f32, BRK[0]) + @bitcast(f32, BRK[1]));
+      x_sub_mid = x - mid;
+
+      y0 = (@bitcast(f32, Q1[1]) + @bitcast(f32, Q1[0]) *
+                          x_sub_mid);
+      y0 = (@bitcast(f32, Q1[2]) + y0 * x_sub_mid);
+      y0 = (@bitcast(f32, Q1[3]) + y0 * x_sub_mid);
+      y0 = (@bitcast(f32, Q1[4]) + y0 * x_sub_mid);
+      y0 = (@bitcast(f32, Q1[5]) + y0 * x_sub_mid);
+      y0 = (@bitcast(f32, Q1[6]) + y0 * x_sub_mid);
+      y0 = (@bitcast(f32, Q1[7]) + y0 * x_sub_mid);
+      res = y0;
+    } else {
+      mid = 0.5 * (@bitcast(f32, BRK[1]) + @bitcast(f32, BRK[2]));
+      x_sub_mid = x - mid;
+
+      y0 = (@bitcast(f32, Q2[1]) + @bitcast(f32, Q2[0]) * x_sub_mid);
+      y0 = (@bitcast(f32, Q2[2]) + y0 * x_sub_mid);
+      y0 = (@bitcast(f32, Q2[3]) + y0 * x_sub_mid);
+      y0 = (@bitcast(f32, Q2[4]) + y0 * x_sub_mid);
+      y0 = (@bitcast(f32, Q2[5]) + y0 * x_sub_mid);
+      y0 = (@bitcast(f32, Q2[6]) + y0 * x_sub_mid);
+      y0 = (@bitcast(f32, Q2[7]) + y0 * x_sub_mid);
+      res = y0;
+    }
+  } else {
+    if (x < @bitcast(f32, XHICUTOFF)) {
+      if (x < @bitcast(f32, BRK[3])) {
+        mid = 0.5 * (@bitcast(f32, BRK[2]) + @bitcast(f32, BRK[3]));
+        x_sub_mid = x - mid;
+
+        y0 = (@bitcast(f32, Q3[1]) + @bitcast(f32, Q3[0]) *
+                            x_sub_mid);
+        y0 = (@bitcast(f32, Q3[2]) + y0 * x_sub_mid);
+        y0 = (@bitcast(f32, Q3[3]) + y0 * x_sub_mid);
+        y0 = (@bitcast(f32, Q3[4]) + y0 * x_sub_mid);
+        y0 = (@bitcast(f32, Q3[5]) + y0 * x_sub_mid);
+        y0 = (@bitcast(f32, Q3[6]) + y0 * x_sub_mid);
+        y0 = (@bitcast(f32, Q3[7]) + y0 * x_sub_mid);
+        res = y0;
+      } else {
+        mid = 0.5 * (@bitcast(f32, BRK[3]) + @bitcast(f32, BRK[4]));
+        x_sub_mid = x - mid;
+
+        y0 = (@bitcast(f32, Q4[1]) + @bitcast(f32, Q4[0]) *
+                            x_sub_mid);
+        y0 = (@bitcast(f32, Q4[2]) + y0 * x_sub_mid);
+        y0 = (@bitcast(f32, Q4[3]) + y0 * x_sub_mid);
+        y0 = (@bitcast(f32, Q4[4]) + y0 * x_sub_mid);
+        y0 = (@bitcast(f32, Q4[5]) + y0 * x_sub_mid);
+        y0 = (@bitcast(f32, Q4[6]) + y0 * x_sub_mid);
+        y0 = (@bitcast(f32, Q4[7]) + y0 * x_sub_mid);
+        res = y0;
+      }
+    } else {
+      res = 1.0;
+    }
+  }
+  return @bitcast(f32, (@bitcast(u32, res) & 0x7fffffff) |
+                       (@bitcast(u32, x_arg) & 0x80000000));
+}
+
+fn tanh(x: anytype) @type_of(x) {
+  const T = @type_of(x);
+  @comptime_assert(types.is_float(T));
+  if (types.is_float16(T)) {
+    return tanh_fp16_impl(x);
+  }
+  return tanh_f32(x);
+}
+
+fn sig(x: anytype) @type_of(x) {
+  const T = @type_of(x);
+  @comptime_assert(types.is_float(T));
+
+  const half = @as(T, 0.5);
+  return half * tanh(half * x) + half;
+}
+
+fn sig_f16(x : @fp16()) @fp16() {
+  return sig(x);
+}
+
+fn sig_f32(x : f32) f32 {
+  return sig(x);
+}
+
+// ----------------------------------------------------------------
+// exponent (and square root) functions
+// ----------------------------------------------------------------
+
+
+fn exp_f16(x: @fp16()) @fp16() {
+  const NEGDEL : u32 = 0xbe317218;
+  const RECIPDEL : u32 = 0x40b8aa3b;
+
+  const TABLE_VALS = [4]u32{0x3F800000, 0x3F9837F0, 0x3FB504F3,
+                                        0x3FD744FD};
+  // if (isNaN_f16(x)) {
+  //   return x;
+  // }
+  // if x > EXP_MAX_LN_H, exp(x) = Inf
+  if (x > @bitcast(@fp16(), internal.EXP_MAX_LN_f16))
+    return POSITIVE_INF_f16;
+  // if x < EXP_MIN_LN_H, exp(x) = 0.0
+  if (x < @bitcast(@fp16(), internal.EXP_MIN_LN_f16))
+    return 0.0;
+  const fat_x : f32 = @as(f32,x);
+  const n : i16 = internal.fs2xp16(fat_x * @bitcast(f32, RECIPDEL));
+  const r = @as(@fp16(), internal.fmac(f32, fat_x ,@as(f32,n) , @bitcast(f32, NEGDEL)));
+
+  const j : i16 = n & 0x0003;
+  const m : i16 = (n - j) >> 2;
+
+  const poly_r = internal.fmac(@fp16(), 1.0 ,0.5 , r);
+  const poly_r_f32 : f32 = internal.fmac(f32, 1.0, @as(f32,poly_r), @as(f32,r));
+
+  var expn : f32 = 0.0;
+  @fscales(&expn, @bitcast(f32, TABLE_VALS[j]), m);
+//  fscale_f32(@bitcast(f32, TABLE_VALS[j]), m);
+  return @as(@fp16(),expn * poly_r_f32);
+}
+
+/// Implements the exponentiation function for a single-precision float value.
+fn exp_f32(x: f32) f32 {
+  const zero = @as(f32, 0.0);
+
+  const max_ln: u32 = 0x42b17218;
+  const min_ln: u32 = 0xc2cff1b4;
+
+  const p_inf: u32 = 0x7f800000;
+  const l_left: u32 = 0x3e317218;
+  const l_right: u32 = 0x3002e300;
+  const recip_del: u32 = 0x40b8aa3b;
+
+  const exp_table_vals = [4]u32 {
+    0x3f800000,
+    0x3f9837f0,
+    0x3fb504f3,
+    0x3fd744fd
+  };
+
+  if (!isFinite_f32(x)) {
+    if (isInf_f32(x) and x < 0.0) {
+      return 0.0;
+    }
+    return x;
+  }
+
+  // if x > MAXLN, exp(x) = Inf
+  if (x > @bitcast(f32, max_ln)) {
+    return @bitcast(f32, p_inf);
+  }
+
+  // if x < MINLN, exp(x) = 0.0
+  if (x < @bitcast(f32, min_ln)) {
+    return zero;
+  }
+
+  const n: i16 = @as(i16, x * @bitcast(f32, recip_del));
+  const r1: f32 = x + @as(f32, -n) * @bitcast(f32, l_left);
+  var r: f32 = r1 + @as(f32, n) * @bitcast(f32, l_right);
+
+  const j : i16 = n & 3;
+  const m : i16 = n >> 2;
+
+  var y0 = @bitcast(f32, @as(u32, 0x3d2ab856));
+  y0 = @bitcast(f32, @as(u32, 0x3e2abf2b)) + y0 * r;
+  y0 = @bitcast(f32, @as(u32, 0x3effffff)) + y0 * r;
+  y0 = @bitcast(f32, @as(u32, 0x3f7fffff)) + y0 * r;
+  y0 = @bitcast(f32, @as(u32, 0x3f800000)) + y0 * r;
+
+  return fscale_f32(@bitcast(f32, exp_table_vals[j]) * y0, m);
+}
+
+fn exp(x: anytype) @type_of(x) {
+  const T = @type_of(x);
+  @comptime_assert(types.is_enabled_float(T));
+  if (T == @fp16()) {
+    return exp_f16(x);
+  }
+  return exp_f32(x);
+}
+
+const CHECKINT16_NOT_INT : u16 = 0;
+const CHECKINT16_INT_ODD : u16 = 1;
+const CHECKINT16_INT_EVE : u16 = 2;
+
+// Returns 0 if not int, 1 if odd int, 2 if even int.  The argument is
+//  the bit representation of a non-zero finite floating-point value.
+fn checkinth(iy : u16) u16 {
+  const e : u16 = (iy >> internal.mantissa_len_f16) & internal.exp_mask_f16; // grab the exponent.
+
+  if (e < internal.default_bias_f16)
+    return CHECKINT16_NOT_INT;
+  if (e > internal.default_bias_f16 + internal.mantissa_len_f16)
+    return CHECKINT16_INT_EVE;
+  if (iy & ((@as(u16,1) << (@as(u16, internal.default_bias_f16 + internal.mantissa_len_f16) - e)) - 1) != 0)
+    return CHECKINT16_NOT_INT;
+  if (iy & ((@as(u16,1) << (@as(u16, internal.default_bias_f16 + internal.mantissa_len_f16)) - e)) != 0)
+    return CHECKINT16_INT_ODD;
+  return CHECKINT16_INT_EVE;
+}
+
+fn pow_f16(x : @fp16(), y : @fp16()) @fp16() {
+  var sign_bias : u16 = 0;
+  var ix = @bitcast(u16, x);
+  var iy = @bitcast(u16, y);
+
+  const one  = @bitcast(u16, @as(@fp16(), 1.0));
+
+  // Either (x < 0x1p-126 or inf or nan) or (y is 0 or inf or nan).
+  if ((ix - internal.LOW_EXP_BIT_f16) >= (@bitcast(u16, POSITIVE_INF_f16) - internal.LOW_EXP_BIT_f16) or y == 0.0 or !isFinite_f16(y)) {
+    if (y == 0.0 or !isFinite_f16(y)) {
+      if ((iy << 1) == 0) { // Y is legitimately zero (removed the sign bit)
+         return if (issignalingh(x)) x + y else 1.0;
+      }
+      if (ix == one) { // X is legitimately one
+        return if (issignalingh(y)) x + y else 1.0;
+      }
+      if ((ix << 1) > (@bitcast(u16, POSITIVE_INF_f16) << 1) or (iy << 1) > (@bitcast(u16, POSITIVE_INF_f16) << 1)) {
+        return x + y;
+      }
+      if ((ix << 1) == (one << 1)) {
+        return 1.0;
+      }
+      if (((ix << 1) < (one << 1)) == ((iy & 0x8000) != 0x8000))  {
+          //|x|<1 && y==inf or |x|>1 && y==-inf.
+        return 0.0;
+      }
+      return y * y;
+     }
+     if (x == 0.0 or !isFinite_f16(x)) {
+      var x2 : @fp16() = x * x;
+      if ((ix & 0x8000) != 0x0000 and checkinth(iy) == CHECKINT16_INT_ODD) {
+        x2 = -x2;
+      }
+      return if (iy & 0x8000 != 0x0) 1.0 / x2 else x2;
+     }
+  //   // x and y are non-zero finite.
+    if (ix & 0x8000 != 0x0000) {
+      // Finite x < 0.
+      const yint : u16 = checkinth(iy);
+      if (yint == CHECKINT16_NOT_INT) {
+        return NaN_f16;
+      }
+      if (yint == CHECKINT16_INT_ODD) {
+        sign_bias = 0x8000;
+      }
+      ix &= 0x7fff;
+    }
+    if (ix < internal.LOW_EXP_BIT_f16) {
+      // Handle subnormal x
+      const r : f32 = pow_f32(@as(f32, x), @as(f32, y));
+      return @as(@fp16(), r);
+    }
+  }
+
+  // Using a float for extended precision, we can compute pow(half, half)
+  // in the following way:
+  //
+  //  a^b = exp(b*log(a)) ;;base of log and exp are the same,
+  //  However, we use float precision when computing the log, mult and exp.
+  const logx : f32 = log_f32(@as(f32, @bitcast(@fp16(), ix)));
+  const ylogx : f32 = @as(f32, y) * logx;
+  const exp = @as(@fp16(), exp_f32(ylogx));
+  return @bitcast(@fp16(), @bitcast(u16, exp) | sign_bias);
+}
+
+fn pow_f32(x : f32, y : f32) f32 {
+  // Original heading on powf.c has been preserved here,
+  // and is for the pow_f32 function only.
+  //
+  // /*
+  //  * Conversion to float originally by Ian Lance Taylor, Cygnus Support,
+  //  * ian@cygnus.com.
+  //  *
+  //  * Taken from:
+  //  * https://github.com/freebsd/freebsd/blob/master/lib/msun/src/e_powf.c
+  //  * Modified by Nicholas Giamblanco.
+  //  *
+  //  * ====================================================
+  //  * Copyright (C) 1993 by Sun Microsystems, Inc. All rights reserved.
+  //  *
+  //  * Developed at SunPro, a Sun Microsystems, Inc. business.
+  //  * Permission to use, copy, modify, and distribute this
+  //  * software is freely granted, provided that this notice
+  //  * is preserved.
+  //  * ====================================================
+  //  */
+
+  const bp = [2]f32{1.0, 1.5};
+  const dp_h = [2]f32{0.0, 5.84960938e-01}; //* 0x3f15c000 */
+  const dp_l = [2]f32{0.0, 1.56322085e-06}; //* 0x35d1cfdc */
+
+  const zero : f32 = 0.0;
+  const halff : f32 = 0.5;
+  const qrtr : f32 = 0.25;
+  const thrd : f32 = 3.33333343e-01; //* 0x3eaaaaab */
+  const one : f32 = 1.0;
+  const two : f32 = 2.0;
+  const two24 : f32 = 16777216.0; //* 0x4b800000 */
+  const huge : f32 = 1.0e30;
+  const tiny : f32 = 1.0e-30;
+  //* poly coefs for (3/2)*(log(x)-2s-2/3*s**3 */
+  const L1 : f32 = 6.0000002384e-01;      //* 0x3f19999a */
+  const L2 : f32 = 4.2857143283e-01;      //* 0x3edb6db7 */
+  const L3 : f32 = 3.3333334327e-01;      //* 0x3eaaaaab */
+  const L4 : f32 = 2.7272811532e-01;      //* 0x3e8ba305 */
+  const L5 : f32 = 2.3066075146e-01;      //* 0x3e6c3255 */
+  const L6 : f32 = 2.0697501302e-01;      //* 0x3e53f142 */
+  const P1 : f32 = 1.6666667163e-01;      //* 0x3e2aaaab */
+  const P2 : f32 = -2.7777778450e-03;     //* 0xbb360b61 */
+  const P3 : f32 = 6.6137559770e-05;      //* 0x388ab355 */
+  const P4 : f32 = -1.6533901999e-06;     //* 0xb5ddea0e */
+  const P5 : f32 = 4.1381369442e-08;      //* 0x3331bb4c */
+  const lg2 : f32 = 6.9314718246e-01;     //* 0x3f317218 */
+  const lg2_h : f32 = 6.93145752e-01;     //* 0x3f317200 */
+  const lg2_l : f32 = 1.42860654e-06;     //* 0x35bfbe8c */
+  const ovt : f32 = 4.2995665694e-08;     //* -(128-log2(ovfl+.5ulp)) */
+  const cp : f32 = 9.6179670095e-01;      //* 0x3f76384f =2/(3ln2) */
+  const cp_h : f32 = 9.6191406250e-01;    //* 0x3f764000 =12b cp */
+  const cp_l : f32 = -1.1736857402e-04;   //* 0xb8f623c6 =tail of cp_h */
+  const ivln2 : f32 = 1.4426950216e+00;   //* 0x3fb8aa3b =1/ln2 */
+  const ivln2_h : f32 = 1.4426879883e+00; //* 0x3fb8aa00 =16b 1/ln2*/
+  const ivln2_l : f32 = 7.0526075433e-06; //* 0x36eca570 =1/ln2 tail*/
+
+  var z : f32 = 0.0;
+  var ax : f32 = 0.0;
+  var z_h : f32 = 0.0;
+  var z_l : f32 = 0.0;
+  var p_h : f32 = 0.0;
+  var p_l : f32 = 0.0;
+  var y1 : f32 = 0.0;
+  var t1 : f32 = 0.0;
+  var t2 : f32 = 0.0;
+  var r : f32 = 0.0;
+  var s : f32 = 0.0;
+  var sn : f32 = 0.0;
+  var t : f32 = 0.0;
+  var u : f32 = 0.0;
+  var v : f32 = 0.0;
+  var w : f32 = 0.0;
+
+  var i : i32 = 0;
+  var j : i32 = 0;
+  var k : i32 = 0;
+  var yisint : i32 = 0;
+  var n : i32 = 0;
+  var hx : i32 = @bitcast(i32, x);
+  var hy : i32 = @bitcast(i32, y);
+  var ix : i32 = 0;
+  var iy : i32 = 0;
+  var is : i32 = 0;
+
+  ix = hx & 0x7fffffff;
+  iy = hy & 0x7fffffff;
+
+  //* y==zero: x**0 = 1 */
+  if (iy == 0)
+    return one;
+
+  //* x==1: 1**y = 1, even if y is NaN */
+  if (hx == 0x3f800000)
+    return one;
+
+  //* y!=zero: result is NaN if either arg is NaN */
+  if (ix > 0x7f800000 or iy > 0x7f800000)
+    return x + y;
+
+  // /* determine if y is an odd int when x < 0
+  //  * yisint = 0   ... y is not an integer
+  //  * yisint = 1   ... y is an odd int
+  //  * yisint = 2   ... y is an even int
+  //  */
+  yisint = 0;
+  if (hx < 0) {
+    if (iy >= 0x4b800000) {
+      yisint = 2; //* even integer y */
+    } else if (iy >= 0x3f800000) {
+      k = (iy >> 23) - 0x7f; //* exponent */
+      j = iy >> @as(u32, 23 - k);
+      if ((j << @as(u32, 23 - k)) == iy) {
+        yisint = 2 - (j & 1);
+      }
+    }
+  }
+
+  //* special value of y */
+  if (iy == 0x7f800000) { //* y is +-inf */
+    if (ix == 0x3f800000) {
+      return one;             //* (-1)**+-inf is NaN */
+    } else if (ix > 0x3f800000) { //* (|x|>1)**+-inf = inf,0 */
+      return if (hy >= 0) y else zero;
+    } else { //* (|x|<1)**-,+inf = inf,0 */
+      return if (hy < 0) -y else zero;
+    }
+  }
+  if (iy == 0x3f800000) { //* y is  +-1 */
+    if (hy < 0) {
+      return one / x;
+    } else {
+      return x;
+    }
+  }
+  if (hy == 0x40000000) {
+    return x * x;         //* y is  2 */
+  }
+
+  if (hy == 0x3f000000) { //* y is  0.5 */
+    if (hx >= 0) {        //* x >= +0 */
+      return sqrt_f32(x);
+    }
+  }
+
+  ax = if (x >= 0.0) x else -x;
+  //* special value of x */
+  if (ix == 0x7f800000 or ix == 0 or ix == 0x3f800000) {
+    z = ax; //*x is +-0,+-inf,+-1*/
+    if (hy < 0) {
+      z = one / z; //* z = (1/|x|) */
+    }
+    if (hx < 0) {
+      if (((ix - 0x3f800000) | yisint) == 0) {
+        z = (z - z) / (z - z); //* (-1)**non-int is NaN */
+      } else if (yisint == 1) {
+        z = -z; //* (x<0)**odd = -(|x|**odd) */
+      }
+    }
+    return z;
+   }
+
+   n = (hx >> 31) - 1;
+
+  //* (x<0)**(non-int) is NaN */
+  if ((n | yisint) == 0) {
+    return (x - x) / (x - x);
+  }
+
+  sn = one; //* s (sign of result -ve**odd) = -1 else = 1 */
+  if ((n | (yisint - 1)) == 0) {
+    sn = -one; //* (-ve)**(odd int) */
+  }
+
+  //* |y| is huge */
+  if (iy > 0x4d000000) { //* if |y| > 2**27 */
+                         //* over/underflow if x is not close to one */
+    if (ix < 0x3f7ffff8) {
+      return if (hy < 0) sn * huge * huge else sn * tiny * tiny;
+    }
+    if (ix > 0x3f800007) {
+      return if (hy > 0) sn * huge * huge else sn * tiny * tiny;
+    }
+    //* now |1-x| is tiny <= 2**-20, suffice to compute
+    //   log(x) by x-x^2/2+x^3/3-x^4/4 */
+    t = ax - 1.0; //* t has 20 trailing zeros */
+    w = (t * t) * (halff - t * (thrd - t * qrtr));
+    u = ivln2_h * t; //* ivln2_h has 16 sig. bits */
+    v = t * ivln2_l - w * ivln2;
+    t1 = u + v;
+    is = @bitcast(i32, t1);
+    t1 = @bitcast(f32, @as(u32, is) & @as(u32, 0xfffff000));
+    t2 = v - (t1 - u);
+  } else {
+    var s2 : f32 = 0.0;
+    var s_h : f32 = 0.0;
+    var s_l : f32 = 0.0;
+    var t_h : f32 = 0.0;
+    var t_l : f32 = 0.0;
+    n = 0;
+    //* take care subnormal number */
+    if (ix < 0x00800000) {
+      ax *= two24;
+      n -= 24;
+      ix = @bitcast(i32, ax);
+    }
+    n += ((ix) >> 23) - 0x7f;
+    j = ix & 0x007fffff;
+    //* determine interval */
+    ix = j | 0x3f800000; //* normalize ix */
+    if (j <= 0x1cc471) {
+      k = 0; //* |x|<sqrt(3/2) */
+    } else if (j < 0x5db3d7) {
+      k = 1; //* |x|<sqrt(3)   */
+    } else {
+      k = 0;
+      n += 1;
+      ix -= 0x00800000;
+    }
+    ax = @bitcast(f32, ix);
+
+    //* compute s = s_h+s_l = (x-1)/(x+1) or (x-1.5)/(x+1.5) */
+    u = ax - bp[k]; //* bp[0]=1.0, bp[1]=1.5 */
+    v = one / (ax + bp[k]);
+    s = u * v;
+    s_h = s;
+    is = @bitcast(i32, s_h);
+    s_h = @bitcast(f32, @as(u32,is) & 0xfffff000);
+    //* t_h=ax+bp[k] High */
+    is = @as(i32, (@as(u32, ix >> 1) & 0xfffff000) | 0x20000000);
+    t_h = @bitcast(f32, is + 0x00400000 + (k << 21));
+    t_l = ax - (t_h - bp[k]);
+    s_l = v * ((u - s_h * t_h) - s_h * t_l);
+    //* compute log(ax) */
+    s2 = s * s;
+    r = s2 * s2 *
+        (L1 + s2 * (L2 + s2 * (L3 + s2 * (L4 + s2 * (L5 + s2 * L6)))));
+    r += s_l * (s_h + s);
+    s2 = s_h * s_h;
+    t_h = 3.0 + s2 + r;
+    is = @bitcast(i32, t_h);
+    t_h = @bitcast(f32, @as(u32, is) & 0xfffff000);
+    t_l = r - ((t_h - 3.0) - s2);
+    //* u+v = s*(1+...) */
+    u = s_h * t_h;
+    v = s_l * t_h + t_l * s;
+    //* 2/(3log2)*(s+...) */
+    p_h = u + v;
+    is = @bitcast(i32, p_h);
+    p_h = @bitcast(f32, @as(u32, is) & 0xfffff000);
+    p_l = v - (p_h - u);
+    z_h = cp_h * p_h; //* cp_h+cp_l = 2/(3*log2) */
+    z_l = cp_l * p_h + p_l * cp + dp_l[k];
+    //* log2(ax) = (s+..)*2/(3*log2) = n + dp_h + z_h + z_l */
+    t = @as(f32, n);
+    t1 = (((z_h + z_l) + dp_h[k]) + t);
+    is = @bitcast(i32, t1);
+    t1 = @bitcast(f32,  @as(u32, is) & 0xfffff000);
+    t2 = z_l - (((t1 - t) - dp_h[k]) - z_h);
+  }
+
+  //* split up y into y1+y2 and compute (y1+y2)*(t1+t2) */
+  is = @bitcast(i32, y);
+  y1 = @bitcast(f32,  @as(u32, is) & 0xfffff000);
+  p_l = (y - y1) * t1 + y * t2;
+  p_h = y1 * t1;
+  z = p_l + p_h;
+  j = @bitcast(i32, z);
+  if (j > 0x43000000) {         //* if z > 128 */
+    return sn * huge * huge;    //* overflow */
+  } else if (j == 0x43000000) { //* if z == 128 */
+    if (p_l + ovt > z - p_h)
+      return sn * huge * huge;                //* overflow */
+  } else if ((j & 0x7fffffff) > 0x43160000) { //* z <= -150 */
+    return sn * tiny * tiny;                  //* underflow */
+  } else if (@as(u32, j) == 0xc3160000) {               //* z == -150 */
+    if (p_l <= z - p_h) {
+      return sn * tiny * tiny; //* underflow */
+    }
+  }
+  // /*
+  //  * compute 2**(p_h+p_l)
+  //  */
+  i = j & 0x7fffffff;
+  k = (i >> 23) - 0x7f;
+  n = 0;
+  if (i > 0x3f000000) { //* if |z| > 0.5, set n = [z+0.5] */
+    n = j + (@as(i32, 0x00800000) >> @as(u32, k + 1));
+    k = ((n & 0x7fffffff) >> 23) - 0x7f; //* new k for n */
+    t = @bitcast(f32, n & ~(@as(i32, 0x007fffff) >> @as(u32, k)));
+    n = ((n & 0x007fffff) | 0x00800000) >> @as(u32, 23 - k);
+    if (j < 0) {
+      n = -n;
+    }
+    p_h -= t;
+  }
+  t = p_l + p_h;
+  is = @bitcast(i32, t);
+  t = @bitcast(f32, @as(u32, is) & 0xffff8000);
+  u = t * lg2_h;
+  v = (p_l - (t - p_h)) * lg2 + t * lg2_l;
+  z = u + v;
+  w = v - (z - u);
+  t = z * z;
+  t1 = z - t * (P1 + t * (P2 + t * (P3 + t * (P4 + t * P5))));
+  r = (z * t1) / (t1 - two) - (w + z * w);
+  z = one - (r - z);
+  j = @bitcast(i32, z);
+  j += (n << 23);
+  if ((j >> 23) <= 0) {
+    @fscales(&z, z, @as(i16, n)); //* subnormal output */
+  } else {
+    z = @bitcast(f32, j);
+  }
+  return sn * z;
+}
+
+fn pow(x: anytype, y: @type_of(x)) @type_of(x) {
+  const T = @type_of(x);
+  @comptime_assert(types.is_enabled_float(T));
+  if (T == @fp16()) {
+    return pow_f16(x, y);
+  }
+  return pow_f32(x, y);
+}
+
+// sqrt_f16(x) is obtained by computing first inv_sqrt(x)
+// and multiplying the result by x
+fn sqrt_f16(x : @fp16()) @fp16() {
+  var res : @fp16() = 0.0;
+
+  if (x < 0.0)
+    return NaN_f16;
+
+  if (x == 0.0 or isNaN_f16(x))
+   return x;
+
+  var special_case_ret : @fp16() = 0.0;
+  if (internal.fdivs(@fp16(), &special_case_ret, x, 1.0))
+    return special_case_ret;
+
+  var exp : i16 = @as(i16, @bitcast(u16, special_case_ret));
+
+  var x_norm : @fp16() = 0.0;
+  x_norm = internal.fnorm(@fp16(), x);
+
+  // make exponent even, so x_norm in [1,4)
+  if ((exp & 0x0001) == 0x0001) {
+    exp = exp - 1;
+    x_norm = x_norm * 2.0;
+  }
+
+  // initial guess
+  res = @bitcast(@fp16(), internal.INV_SQRT_MAGIC - (@bitcast(u16, x_norm) >> 1));
+
+  const z : @fp16() = -0.5 * x_norm;
+
+  // Start by approximating 1/sqrt(x).
+
+  // Solving for t: f(t) = x - 1/t^2 = 0.
+  // Newton's iter 1
+  var y_squared : @fp16() = res * res;
+  var neg_err = internal.fmac(@fp16(), 0.5, z, y_squared);
+  res = internal.fmac(@fp16(), res, res, neg_err);
+
+  // Newton's iter 2
+  y_squared = res * res;
+  neg_err = internal.fmac(@fp16(), 0.5, z, y_squared);
+  res = internal.fmac(@fp16(), res, res, neg_err);
+
+  // res was approx 1/sqrt(x_norm), now res is approx sqrt(x_norm).
+  res = res * x_norm;
+
+  // Further adjustment
+  // do res := res + 0.25(x - res^2)
+  //         = res + 0.25(sqrt(x) + res) (sqrt(x) - res)
+  // Serves as a "nudge". Constant -0.25 is what worked best.
+  // by Philippe Vandermersch
+
+  neg_err = -x_norm;
+  neg_err = internal.fmac(@fp16(), neg_err, res, res);
+  res = internal.fmac(@fp16(), res, neg_err, -0.25);
+
+  return fscale_f16(res, exp >> 1);
+}
+
+fn sqrt_f32(x : f32) f32 {
+  const MAGIC = @as(i32,0x5F3759DF);
+
+  if (x < 0.0)
+    return NaN_f32;
+
+  if (x == 0.0 or isNaN_f32(x))
+   return x;
+
+  var special_case_ret : f32 = 0.0;
+  if (internal.fdivs(f32, &special_case_ret, x, 1.0))
+    return special_case_ret;
+
+  const exp : i16 = @as(i16, @bitcast(u32, special_case_ret));
+  const x_norm : f32 = fscale_f32(internal.fnorm(f32, x), exp & 1);
+
+  const intx_norm : i32 = @bitcast(i32, x_norm);
+  const shifted : i32 = intx_norm >> 1;
+  var y : f32 = @bitcast(f32, MAGIC - shifted);
+
+  const z : f32 = -0.5 * x_norm;
+  y = y + y * (0.5 + z * y * y);
+  y = y + y * (0.5 + z * y * y);
+
+  var a : f32 = x_norm * y;
+  const smyy : f32 = x_norm - a * a;
+  a = a + fscale_f32(y, -1) * smyy;
+  return fscale_f32(a, exp >> 1);
+}
+
+fn sqrt(x: anytype) @type_of(x) {
+  const T = @type_of(x);
+  @comptime_assert(types.is_enabled_float(T));
+  if (T == @fp16()) {
+    return sqrt_f16(x);
+  }
+  return sqrt_f32(x);
+}
+
+fn invsqrt_f16(x : @fp16()) @fp16() {
+  var res : @fp16() = 0.0;
+  if (x < 0.0)
+    return NaN_f16;
+
+  var special_case_ret : @fp16() = 0.0;
+  if (internal.fdivs(@fp16(), &special_case_ret, 1.0, x))
+    return special_case_ret;
+
+  var exp : i16 = -@as(i16, @bitcast(u16, special_case_ret));
+
+  var x_norm = internal.fnorm(@fp16(), x);
+
+  // make exponent even, so x_norm in [1,4)
+  if ((exp & 0x0001) == 0x0001) {
+    exp = exp - 1;
+    x_norm = x_norm * 2.0;
+  }
+
+  // initial guess
+  res = @bitcast(@fp16(), internal.INV_SQRT_MAGIC - (@bitcast(u16, x_norm) >> 1));
+
+  const z : @fp16() = -0.5 * x_norm;
+
+  // Solving for t: f(t) = x - 1/t^2 = 0.
+  // Newton's iter 1
+  var y_squared : @fp16() = res * res;
+  var neg_err = internal.fmac(@fp16(), 0.5, z, y_squared);
+  res = internal.fmac(@fp16(), res, res, neg_err);
+
+  // Newton's iter 2
+  y_squared = res * res;
+  neg_err = internal.fmac(@fp16(), 0.5, z, y_squared);
+  res = internal.fmac(@fp16(), res, res, neg_err);
+
+  // Re-factor exponent as appropriate.
+  return fscale_f16(res, -(exp >> 1));
+}
+
+fn invsqrt_f32(x : f32) f32 {
+  const MAGIC = 0x5F3759DF;
+
+  if (x < 0.0)
+    return NaN_f32;
+  if (@bitcast(u32, x) == 0x00000000)
+    return POSITIVE_INF_f32;
+  if (@bitcast(u32, x) == 0x80000000)
+    return NEGATIVE_INF_f32;
+  if (isNaN_f32(x))
+    return x;
+  if (isInf_f32(x))
+    return 0.0;
+
+  var special_case_ret : f32 = 0.0;
+  if (internal.fdivs(f32, &special_case_ret, x, 1.0)) // x/1.0 is fed to divsh
+    return special_case_ret;
+
+  var exp : i16 = @as(i16, @bitcast(u32, special_case_ret));
+  var x_norm : f32 = internal.fnorm(f32, x);
+
+  if (exp & 1 != 0) {
+    exp = exp - 1;
+    x_norm = x_norm * 2.0;
+  }
+
+  // fast invsqrt
+  const intx_norm : u32 = @bitcast(u32, x_norm);
+
+  const shifted : u32 = intx_norm >> 1;
+  const fisqrx32 : f32 = @bitcast(f32, MAGIC - shifted);
+  var y : f32 = fisqrx32;
+
+  const z : f32 = -0.5 * x_norm;
+
+  var yy32 : f32 = y * y;
+  var negeps : f32 = internal.fmac(f32, 0.5, z, yy32);
+  y = internal.fmac(f32, y, y, negeps);
+
+  yy32 = y * y;
+  negeps = internal.fmac(f32, 0.5, z, yy32);
+  y = internal.fmac(f32, y, y, negeps);
+
+  yy32 = y * y;
+  negeps = internal.fmac(f32, 0.5, z, yy32);
+  y = internal.fmac(f32, y, y, negeps);
+
+  const nres : f32 = fscale_f32(y, (-(exp >> 1)));
+  return nres;
+}
+
+fn invsqrt(x: anytype) @type_of(x) {
+  const T = @type_of(x);
+  @comptime_assert(types.is_enabled_float(T));
+  if (T == @fp16()) {
+    return invsqrt_f16(x);
+  }
+  return invsqrt_f32(x);
+}
+
+fn fscale_f32(f : f32, s : i16) f32 {
+  if (@is_comptime()) {
+    return f * internal.pow2i_f32(s);
+  } else {
+    var r : f32 = 0.0;
+    @fscales(&r, f, s);
+    return r;
+ }
+}
+
+fn fscale_f16(f: @fp16(), s: i16) @fp16() {
+  return fscale_fp16_impl(f, s);
+}
+
+fn fscale_fp16_impl(f : anytype, s : i16) @type_of(f) {
+  const T = @type_of(f);
+  @comptime_assert(types.is_float16(T));
+  if (@is_comptime()) {
+    return @as(T, @as(f32,f) * internal.pow2i_f32(s));
+  } else {
+    var r : T = 0.0;
+    @fscaleh(&r, f, s);
+    return r;
+  }
+}
+
+fn fscale(f: anytype, s: i16) @type_of(f) {
+  const T = @type_of(f);
+  @comptime_assert(types.is_float(T));
+  if (types.is_float16(T)) {
+    return fscale_fp16_impl(f, s);
+  }
+  return fscale_f32(f, s);
+}
+
+// ----------------------------------------------------------------
+// log functions
+// ----------------------------------------------------------------
+
+fn log_f16(x : @fp16()) @fp16() {
+  const LN2 : u32 = 0x3F317218;
+
+  const POLY = [6]u32{0xBC8EA7F8, 0x3DAAA9B1, 0xBE449622,
+                                  0x3EA2679F, 0xBEFEED62, 0x3F7FFA8C};
+
+  if (x < 0.0) {
+    return NaN_f16;
+  }
+  if (x == 0.0) {
+    return NEGATIVE_INF_f16;
+  }
+
+  var special_case_ret : @fp16() = 0.0;
+  // Note that this time x/1.0h is fed to divsh unlike reciprocal function.
+  if (internal.fdivs(@fp16(), &special_case_ret, x, 1.0))
+    return special_case_ret;
+
+  var exp : i16 = @as(i16, @bitcast(u16, special_case_ret));
+  const z : f32 = internal.fnorm(f32, @as(f32, x)) - 1.0;
+  var y0 : f32 = 0.0;
+  y0 = internal.fmac(f32, @bitcast(f32, POLY[1]), @bitcast(f32, POLY[0]), z);
+  y0 = internal.fmac(f32, @bitcast(f32, POLY[2]), y0, z);
+  y0 = internal.fmac(f32, @bitcast(f32, POLY[3]), y0, z);
+  y0 = internal.fmac(f32, @bitcast(f32, POLY[4]), y0, z);
+  y0 = internal.fmac(f32, @bitcast(f32, POLY[5]), y0, z);
+  y0 = y0 * z;
+  return @as(@fp16(), internal.fmac(f32, y0, @as(f32, exp), @bitcast(f32, LN2)));
+}
+
+fn log_f32(x : f32) f32 {
+  const LN2 : u32 = 0x3F317218;
+
+  const POLY1 = [8]u32{0xBAC21449, 0x36627BB7, 0xBB52A2A9,
+                                    0xBBC6CD1F, 0xBC804082, 0xBD2AA7CE,
+                                    0xBE000007, 0xBF000000};
+
+  const POLY2 = [7]u32{0x3D62AB11, 0xBE077290, 0x3E44EC09,
+                                    0xBE7F0156, 0x3EAAA222, 0xBEFFFFBE,
+                                    0x3F800000};
+
+  const POLY3 = [8]u32{0x3B98519A, 0xBCA663DF, 0x3D4094DC,
+                                    0xBDAF5060, 0x3E1B0FFB, 0xBE977803,
+                                    0x3F44EC48, 0x3E86549C};
+
+  if (x < 0.0) {
+    return NaN_f32;
+  }
+  if (x == 0.0) {
+    return NEGATIVE_INF_f32;
+  }
+
+  var special_case_ret : f32 = 0.0;
+  // Note that this time x/1.0h is fed to divsh unlike reciprocal function.
+  if (internal.fdivs(f32, &special_case_ret, x, 1.0))
+    return special_case_ret;
+
+  var exp : i16 = @as(i16, @bitcast(u32, special_case_ret));
+  const x_norm : f32 = internal.fnorm(f32, x);
+  var y0 : f32 = 0.0;
+  var z : f32 = 0.0;
+
+  if ((exp == -1) and (x_norm >= 1.5)) {
+    exp += 1;
+    z = 2.0 - x_norm;
+    y0 = internal.fmac(f32, @bitcast(f32, POLY1[1]), @bitcast(f32, POLY1[0]),
+                        z);
+    y0 = internal.fmac(f32, @bitcast(f32, POLY1[2]), y0, z);
+    y0 = internal.fmac(f32, @bitcast(f32, POLY1[3]), y0, z);
+    y0 = internal.fmac(f32, @bitcast(f32, POLY1[4]), y0, z);
+    y0 = internal.fmac(f32, @bitcast(f32, POLY1[5]), y0, z);
+    y0 = internal.fmac(f32, @bitcast(f32, POLY1[6]), y0, z);
+    y0 = internal.fmac(f32, @bitcast(f32, POLY1[7]), y0, z);
+    y0 = z * y0;
+
+  }
+
+  else {
+    if (x_norm <= 1.3) {
+
+      z = x_norm - 1.0;
+      y0 = internal.fmac(f32, @bitcast(f32, POLY2[1]),
+                          @bitcast(f32, POLY2[0]), z);
+      y0 = internal.fmac(f32, @bitcast(f32, POLY2[2]), y0, z);
+      y0 = internal.fmac(f32, @bitcast(f32, POLY2[3]), y0, z);
+      y0 = internal.fmac(f32, @bitcast(f32, POLY2[4]), y0, z);
+      y0 = internal.fmac(f32, @bitcast(f32, POLY2[5]), y0, z);
+      y0 = internal.fmac(f32, @bitcast(f32, POLY2[6]), y0, z);
+      y0 = z * y0;
+    } else {
+      z = x_norm - 1.3;
+      y0 = internal.fmac(f32, @bitcast(f32, POLY3[1]),
+                          @bitcast(f32, POLY3[0]), z);
+      y0 = internal.fmac(f32, @bitcast(f32, POLY3[2]), y0, z);
+      y0 = internal.fmac(f32, @bitcast(f32, POLY3[3]), y0, z);
+      y0 = internal.fmac(f32, @bitcast(f32, POLY3[4]), y0, z);
+      y0 = internal.fmac(f32, @bitcast(f32, POLY3[5]), y0, z);
+      y0 = internal.fmac(f32, @bitcast(f32, POLY3[6]), y0, z);
+      y0 = internal.fmac(f32, @bitcast(f32, POLY3[7]), y0, z);
+    }
+  }
+
+  return internal.fmac(f32, y0, @as(f32, exp), @bitcast(f32, LN2));
+}
+
+fn log(x: anytype) @type_of(x) {
+  const T = @type_of(x);
+  @comptime_assert(types.is_enabled_float(T));
+  if (T == @fp16()) {
+    return log_f16(x);
+  }
+  return log_f32(x);
+}
+
+// ----------------------------------------------------------------
+// utility functions
+// ----------------------------------------------------------------
+
+fn max(x: anytype, y: @type_of(x)) @type_of(x) {
+  const T = @type_of(x);
+  @comptime_assert(types.is_numeric(T));
+  if (x > y) {
+    return x;
+  }
+  return y;
+}
+
+fn min(x: anytype, y: @type_of(x)) @type_of(x) {
+  const T = @type_of(x);
+  @comptime_assert(types.is_numeric(T));
+  if (x < y) {
+    return x;
+  }
+  return y;
+}
+
+fn min_f16(x : @fp16(), y : @fp16()) @fp16() {
+  return min(x, y);
+}
+
+fn max_f16(x : @fp16(), y : @fp16()) @fp16() {
+  return max(x, y);
+}
+
+fn min_f32(x : f32, y : f32) f32 {
+  return min(x, y);
+}
+
+fn max_f32(x : f32, y : f32) f32 {
+  return max(x, y);
+}
+
+fn abs(x : anytype) @type_of(x) {
+  const T = @type_of(x);
+  if (comptime types.is_signed(T)) {
+    if (x < @as(T, 0)) {
+      return -x;
+    }
+  }
+  @comptime_assert(types.is_numeric(T));
+  return x;
+}
+
+fn abs_f16(x : @fp16()) @fp16() {
+  return abs(x);
+}
+
+fn abs_f32(x : f32) f32 {
+  return abs(x);
+}
+
+fn sign(x : anytype) @type_of(x) {
+  const T = @type_of(x);
+  if (comptime types.is_signed(T)) {
+    if (x < @as(T, 0)) {
+      return @as(T, -1);
+    }
+  }
+  @comptime_assert(types.is_numeric(T));
+  if (x > @as(T, 0)) {
+    return @as(T, 1);
+  }
+  return x;
+}
+
+fn sign_f16(x : @fp16()) @fp16() {
+  return sign(x);
+}
+
+fn sign_f32(x : f32) f32 {
+  return sign(x);
+}
+
+// ----------------------------------------------------------------
+// specialized arithmetic functions
+// ----------------------------------------------------------------
+
+fn inv_f16(x : @fp16()) @fp16() {
+  const P = [3]u32{0x3EA57EB5, 0xBFBA2E8C, 0x4007D20C};
+
+  var special_case_ret : @fp16() = 0.0;
+  if (internal.fdivs(@fp16(), &special_case_ret, 1.0, x))
+    return special_case_ret;
+
+  // Use inline assembly until a cbfloat intrinsic is available.
+  const abs_x = abs_f16(x);
+
+  var exp : i16 = @as(i16, @bitcast(u16, special_case_ret));
+  const x_reduced : f32 = fscale_f32(@as(f32, abs_x), exp);
+
+  var y0 : f32 =
+      internal.fmac(f32, @bitcast(f32, P[1]), @bitcast(f32, P[0]), x_reduced);
+  y0 = internal.fmac(f32, @bitcast(f32, P[2]), y0, x_reduced);
+  var y_old : f32 = y0;
+
+  const y_new : f32 =
+      internal.fmac(f32, y_old, y_old, internal.fmac(f32, 1.0, x_reduced, -y_old));
+  y_old = y_new;
+
+  const oneminus : f32 = internal.fmac(f32, 1.0, x_reduced, -y_old);
+  y_old = fscale_f32(y_old, exp);
+
+  if (y_old == y_old) {
+    y_old = internal.fmac(f32, y_old, y_old, oneminus);
+  }
+
+  const ret = @as(@fp16(), y_old);
+  return @bitcast(@fp16(), (@bitcast(u16, ret) & 0x7fff) |
+                           (@bitcast(u16, x) & 0x8000));
+}
+
+
+fn inv_f32(x_arg : f32) f32 {
+  const P = [3]u32{0x3EA57EB5, 0xBFBA2E8C, 0x4007D20C};
+
+  var x = x_arg;
+
+  var special_case_ret : f32 = 0.0;
+  if (internal.fdivs(f32, &special_case_ret, 1.0, x))
+    return special_case_ret;
+
+  x = abs_f32(x);
+
+  const exp : i16 = @as(i16, @bitcast(u32, special_case_ret));
+  const x_reduced : f32 = internal.fnorm(f32, x);
+
+  // fix for the three numbers that are bigger than 1.97 to get 0 ulp.
+  // Otherwise, 1 ulp error.
+  if (@bitcast(u32, x_reduced) >= @as(u32,0x3FFC3237)) {
+
+    if (@bitcast(u32, x_reduced) == @as(u32,0x3FFC3237))
+      return fscale_f32(@bitcast(f32, @as(u32,0x3F01EE3D)), exp);
+
+    if (@bitcast(u32, x_reduced) == 0x3FFE01FF)
+      return fscale_f32(@bitcast(f32, @as(u32,0x3F010101)), exp);
+
+    if (@bitcast(u32, x_reduced) == 0x3FFFFFFF)
+      return fscale_f32(@bitcast(f32, @as(u32,0x3F000001)), exp);
+  }
+
+  var y0 : f32 =
+      internal.fmac(f32, @bitcast(f32, P[1]), @bitcast(f32, P[0]), x_reduced);
+  y0 = internal.fmac(f32, @bitcast(f32, P[2]), y0, x_reduced);
+  var y_old : f32 = y0;
+
+  var y_new : f32 =
+      internal.fmac(f32, y_old, y_old, internal.fmac(f32, 1.0, x_reduced, -y_old));
+  y_old = y_new;
+
+  y_new = internal.fmac(f32, y_old, y_old, internal.fmac(f32, 1.0, x_reduced, -y_old));
+  y_old = y_new;
+
+  const oneminus : f32 = internal.fmac(f32, 1.0, x_reduced, -y_old);
+  y_old = fscale_f32(y_old, exp);
+
+  if (!isInf_f32(y_old)) {
+    y_old = internal.fmac(f32, y_old, y_old, oneminus);
+  }
+
+  return @bitcast(f32, (@bitcast(u32, y_old) & 0x7fffffff) |
+                       (@bitcast(u32, x_arg) & 0x80000000));
+}
+
+fn inv(x: anytype) @type_of(x) {
+  const T = @type_of(x);
+  @comptime_assert(types.is_enabled_float(T));
+  if (T == @fp16()) {
+    return inv_f16(x);
+  }
+  return inv_f32(x);
+}
+
+fn subsat(x: anytype, y: @type_of(x)) @type_of(x) {
+  const T = @type_of(x);
+  return if (y > x) @as(T, 0) else x - y;
+}
+
+fn subsat_f16(x: @fp16(), y: @fp16()) @fp16() {
+  return subsat(x, y);
+}
+
+fn subsat_f32(x: f32, y: f32) f32 {
+  return subsat(x, y);
+}

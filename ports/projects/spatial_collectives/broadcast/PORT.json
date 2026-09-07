@@ -1,0 +1,11 @@
+{
+  "project": "spatial_collectives",
+  "kernel": "broadcast",
+  "origins": [
+    "modules/broadcast.csl"
+  ],
+  "fixture": "broadcast",
+  "contract": "Four receiver ports; compiler fanout tree and owned-transfer runtime. Multicast routing policy not identical to upstream.",
+  "partitions": 1,
+  "status": "source_ready"
+}

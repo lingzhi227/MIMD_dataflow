@@ -1,0 +1,11 @@
+{
+  "project": "sdk_examples",
+  "kernel": "gemm",
+  "origins": [
+    "benchmarks/gemm-collectives_2d/pe.csl"
+  ],
+  "fixture": "gemm",
+  "contract": "Matrix product equation, f32 4x4. Split-K is our schedule; named upstream Cannon/MeshGEMM schedules remain unported.",
+  "partitions": 2,
+  "status": "source_ready"
+}

@@ -1,0 +1,13 @@
+{
+  "project": "waferllm",
+  "kernel": "softmax_128x1024_8x8",
+  "origins": [
+    "Prefill/src/prefill.csl softmax_score",
+    "Prefill/src/comm_lib/comm_pe.csl"
+  ],
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "contract": "Stable scaled row softmax 128x1024 on 8x8 PEs, six warm SDK calls. Source-inspired max/sum chains with finite negative maximum initialization, explicit half accumulation, SDK exp, and scalar elementwise lowering. Native stdout and device independent standard-math checks; exact target half stages/results. Matched scalar/map simulator interval controls; original-source overhead control only 64x64. No hardware or full-inference claim.",
+  "status": "source_ready",
+  "partitions": 1,
+  "fixture": "distributed_softmax:128:1024"
+}

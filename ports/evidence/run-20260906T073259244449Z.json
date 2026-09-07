@@ -1,0 +1,35 @@
+{
+  "run": "run-20260906T073259244449Z",
+  "sdk": true,
+  "success": true,
+  "cases": [
+    {
+      "key": "sdk_examples/stencil_7pt_grid",
+      "passed": true,
+      "artifact": "projects/sdk_examples/stencil_7pt_grid/run-20260906T073259244449Z",
+      "audit": {
+        "passed": true,
+        "output_values": 64,
+        "internal_observations": 818,
+        "epochs": 4,
+        "actors": 18,
+        "source_sha256": "681e1ecc086ab046d6fdf43c338857cb09b4897110699c34ae8475f36c9b745a"
+      },
+      "level": "sdk_simulator"
+    }
+  ],
+  "oracle": {
+    "python": "3.13.11",
+    "numpy": "2.2.6",
+    "rtol": 3e-05,
+    "atol": 3e-06,
+    "input_seed_base": 911,
+    "sources": {
+      "fixtures.py": "4f3b0de9f18000e00449dfda30e8d7c29585b09b5aadc869c16e2376b858ec23",
+      "import_stencil.py": "2876a4bd5c9f83d8cbeea161b92157379381d74c42105d63ab20d8cb1314221f",
+      "catalog.json": "10b20c9e722cb020857b4401329eb2aaa3618c7f3650e367c04fa7e39c84a4b7",
+      "run_ports.py": "185de9ca70fe721b739652c8283eaab47308418a23f4db570f00a817e7483a15"
+    }
+  },
+  "sdk_sha256": "fff17e81c61dcb6012bdee2941a6fdc570f5c8604967530e7b7108651258193d"
+}

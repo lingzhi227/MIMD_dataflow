@@ -1,0 +1,15 @@
+{
+  "project": "sdk_examples",
+  "kernel": "mesh_cg_512_4x4",
+  "origins": [
+    "benchmarks/conjugate-gradient/src/kernel_cg.csl",
+    "benchmarks/conjugate-gradient/src/blas.csl",
+    "benchmarks/spmv-hypersparse/src/hypersparse_spmv/pe.csl"
+  ],
+  "contract": "Resident f32 CG over canonical CSC512/4608entries on4x4 PEs; SDK train SpMV, SDK row/column collectives, PE transpose, DSD/FMA recurrence, supplied initial guess, u32 iteration budget, stable true residual, explicit termination reasons. General sparse operator; not original SDK seven-point schedule parity.",
+  "status": "source_ready",
+  "remaining": "Larger resource-feasible shapes, broad nonfinite failure trajectories and original seven-point solver schedule/performance parity. Static footprint is not runtime stack evidence.",
+  "fixture": "mesh_cg:512",
+  "partitions": 1,
+  "validation": "Eight SDK2.10.1 warm calls and independent supplemental corrected audit; original audit underflow-oracle failure retained. All reason0 cases meet strict requested residual threshold. Two-case diagnostic-store control ~0.83\u20130.97% max-local overhead; no hardware/global latency or original full CG performance parity claim."
+}

@@ -1,0 +1,11 @@
+{
+  "project": "sdk_examples",
+  "kernel": "conjugate_gradient",
+  "origins": [
+    "benchmarks/conjugate-gradient/src/kernel_cg.csl"
+  ],
+  "fixture": "cg",
+  "contract": "CG recurrence on dense representation of a small SPD operator, maximum eight iterations, squared residual threshold 1e-12, zero initial guess. Original distributed 7-point storage and global-reduction schedule remain pending.",
+  "partitions": 1,
+  "status": "source_ready"
+}

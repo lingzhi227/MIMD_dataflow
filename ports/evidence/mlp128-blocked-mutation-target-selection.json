@@ -1,0 +1,15 @@
+{
+  "kind": "mutation_fixture_adjustment",
+  "new_sdk_execution": false,
+  "initial_offset": 0,
+  "initial_narrowed_half_words": [
+    38040,
+    38041
+  ],
+  "reason": "Initial word lies on a half rounding midpoint; a low f32 bit changes the half result. Select a dense word whose low-bit flip is hidden by final half rounding to specifically exercise wide-state validation.",
+  "selected_offset": 1,
+  "mutation_report": "evidence/mlp-audit-mutations-20260907T072254376004Z.json",
+  "mutation_report_sha256": "176439aee59d5311edd47350c7ae8928a400df038a1f20cb6663914c18e4a51e",
+  "total_rejected_mutations": 30,
+  "target_csl_changed": false
+}

@@ -1,0 +1,11 @@
+{
+  "project": "annealing",
+  "kernel": "acceptance",
+  "origins": [
+    "src/pe_program.csl"
+  ],
+  "fixture": "accept",
+  "contract": "prepare_do_flip conditional acceptance with explicit supplied uniform draws; not a replacement PRNG or full annealer.",
+  "partitions": 1,
+  "status": "source_ready"
+}

@@ -1,0 +1,11 @@
+{
+  "project": "spada",
+  "kernel": "tree_reduce",
+  "origins": [
+    "samples/spatial/collectives/tree_reduce_1D.sptl"
+  ],
+  "fixture": "collective",
+  "contract": "Four-participant balanced binary vector sum; no performance-equivalence claim.",
+  "partitions": 1,
+  "status": "source_ready"
+}

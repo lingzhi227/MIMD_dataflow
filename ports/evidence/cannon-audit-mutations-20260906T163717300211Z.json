@@ -1,0 +1,69 @@
+{
+  "passed": true,
+  "source_bundle": "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/projects/matrix_algorithms/mesh_cannon_64_4x4_vector/run-20260906T162846797553Z",
+  "frozen_auditor": "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/projects/matrix_algorithms/mesh_cannon_64_4x4_vector/run-20260906T162846797553Z/implementation",
+  "source_results_sha256": "9ca8fa20f5377e93c2151c7dcfc1cc50030506a0042769c8dbe88e96f7f99ac2",
+  "driver_sha256": "0a4d7885ec03117479ef26bf14eac53cea1fb71a27de9efac837d50818dc96bf",
+  "rejected": [
+    {
+      "case": "coherent_wrong_final",
+      "rejected": true,
+      "diagnostic": "dot-product rounding envelope exceeded: {'policy': 'componentwise-f32-dot-v1', 'K': 64, 'operations_bound': 129, 'gamma': 7.689058297188302e-06, 'reference_is_f32': True, 'max_abs_error': 95.17940425872803, 'max_error_over_bound': 366138.3139963216, 'old_fixed_tolerance_passed': False}"
+    },
+    {
+      "case": "zero_epoch_stale_result",
+      "rejected": true,
+      "diagnostic": "dot-product rounding envelope exceeded: {'policy': 'componentwise-f32-dot-v1', 'K': 64, 'operations_bound': 129, 'gamma': 7.689058297188302e-06, 'reference_is_f32': True, 'max_abs_error': 1.0, 'max_error_over_bound': 3.297284405692274e+35, 'old_fixed_tolerance_passed': False}"
+    },
+    {
+      "case": "wrong_partial_round",
+      "rejected": true,
+      "diagnostic": "dot-product rounding envelope exceeded: {'policy': 'componentwise-f32-dot-v1', 'K': 16, 'operations_bound': 33, 'gamma': 1.966957146500697e-06, 'reference_is_f32': False, 'max_abs_error': 97.19761027830347, 'max_error_over_bound': 12887472.128173912, 'old_fixed_tolerance_passed': False}"
+    },
+    {
+      "case": "wrong_A_block",
+      "rejected": true,
+      "diagnostic": "\nArrays are not equal\n\nMismatched elements: 1 / 4 (25%)\nMismatch at index:\n [0]: 99.0 (ACTUAL), -0.26952797174453735 (DESIRED)\nMax absolute difference among violations: 99.26952797\nMax relative difference among violations: 368.30881533\n ACTUAL: array([99.      , -0.123818,  0.55886 , -0.324987])\n DE"
+    },
+    {
+      "case": "wrong_B_block",
+      "rejected": true,
+      "diagnostic": "\nArrays are not equal\n\nMismatched elements: 1 / 4 (25%)\nMismatch at index:\n [2]: 99.0 (ACTUAL), 0.11209331452846527 (DESIRED)\nMax absolute difference among violations: 98.88790669\nMax relative difference among violations: 882.19272578\n ACTUAL: array([ 0.911515, -0.417305, 99.      , -0.180883])\n DES"
+    },
+    {
+      "case": "missing_A_shift",
+      "rejected": true,
+      "diagnostic": "\nArrays are not equal\n\nMismatched elements: 1 / 64 (1.56%)\nMismatch at index:\n [1, 1, 1]: 2 (ACTUAL), 3 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.33333333\n ACTUAL: array([[[4, 3, 3, 1],\n        [4, 3, 3, 1],\n        [4, 3, 3, 1],...\n DESIRED: a"
+    },
+    {
+      "case": "missing_B_shift",
+      "rejected": true,
+      "diagnostic": "\nArrays are not equal\n\nMismatched elements: 1 / 64 (1.56%)\nMismatch at index:\n [1, 1, 2]: 2 (ACTUAL), 3 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.33333333\n ACTUAL: array([[[4, 3, 3, 1],\n        [4, 3, 3, 1],\n        [4, 3, 3, 1],...\n DESIRED: a"
+    },
+    {
+      "case": "wrong_invocation",
+      "rejected": true,
+      "diagnostic": "\nArrays are not equal\n\nMismatched elements: 1 / 64 (1.56%)\nMismatch at index:\n [1, 1, 3]: 1 (ACTUAL), 2 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.5\n ACTUAL: array([[[4, 3, 3, 2],\n        [4, 3, 3, 2],\n        [4, 3, 3, 2],...\n DESIRED: array([["
+    },
+    {
+      "case": "undrained_queue",
+      "rejected": true,
+      "diagnostic": "Cannon queues drained"
+    },
+    {
+      "case": "bad_total_timestamp",
+      "rejected": true,
+      "diagnostic": "Cannon total timestamp words"
+    },
+    {
+      "case": "missing_host_launch",
+      "rejected": true,
+      "diagnostic": "Cannon lifecycle"
+    },
+    {
+      "case": "wrong_runtime_instances",
+      "rejected": true,
+      "diagnostic": "Cannon lifecycle"
+    }
+  ]
+}

@@ -1,0 +1,730 @@
+{
+  "kind": "qualification_index_of_existing_sdk_runs",
+  "sdk": true,
+  "success": true,
+  "new_sdk_execution": false,
+  "source_controls": [
+    {
+      "path": "evidence/swiglu64x256-sampled-source-comparison.json",
+      "sha256": "e57d909c48bcc387487dd9341b15fd3d120d259b39e0bdbd81f4b688f1d4a96e"
+    },
+    {
+      "path": "evidence/swiglu64x256-counter-source-comparison.json",
+      "sha256": "faef6d9d0ff73dd339b8ce11e003dae034522ae45fdca0d5ce9fe823df0db5a1"
+    }
+  ],
+  "cases": [
+    {
+      "key": "waferllm/swiglu_128x1024_8x8",
+      "artifact": "projects/waferllm/swiglu_128x1024_8x8/run-20260907T001500115050Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_swiglu.v1",
+        "epochs": 6,
+        "actors": 64,
+        "instrumentation": "sampled",
+        "internal_half_observations": 786432,
+        "cases": [
+          {
+            "target_bits_exact": true,
+            "numerical": {
+              "contract": "gated-activation-half-v1",
+              "fixed_accuracy_passed": true,
+              "max_abs_error": 0.011492931567033793,
+              "max_error_over_allowance": 0.4415372102872784,
+              "componentwise_relative_term": 0.004,
+              "absolute_rounding_term": "2^-24*(1+abs(up))",
+              "standard_reference": "unrounded stable mathematical SiLU times up; allowance includes stored half activation and final half product"
+            },
+            "max_local_cycles": 224048,
+            "cycles_per_pe": [
+              [
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048
+              ],
+              [
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048
+              ],
+              [
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048
+              ],
+              [
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048
+              ],
+              [
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048
+              ],
+              [
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048
+              ],
+              [
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048
+              ],
+              [
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "numerical": {
+              "contract": "gated-activation-half-v1",
+              "fixed_accuracy_passed": true,
+              "max_abs_error": 0.0053656020874619514,
+              "max_error_over_allowance": 0.33288949060007955,
+              "componentwise_relative_term": 0.004,
+              "absolute_rounding_term": "2^-24*(1+abs(up))",
+              "standard_reference": "unrounded stable mathematical SiLU times up; allowance includes stored half activation and final half product"
+            },
+            "max_local_cycles": 213828,
+            "cycles_per_pe": [
+              [
+                213793,
+                213793,
+                213828,
+                213828,
+                213793,
+                213793,
+                213828,
+                213793
+              ],
+              [
+                213828,
+                213828,
+                213793,
+                213793,
+                213828,
+                213793,
+                213793,
+                213828
+              ],
+              [
+                213793,
+                213793,
+                213828,
+                213793,
+                213793,
+                213828,
+                213828,
+                213793
+              ],
+              [
+                213828,
+                213793,
+                213793,
+                213828,
+                213828,
+                213793,
+                213793,
+                213828
+              ],
+              [
+                213793,
+                213828,
+                213828,
+                213793,
+                213793,
+                213828,
+                213793,
+                213793
+              ],
+              [
+                213828,
+                213793,
+                213793,
+                213828,
+                213793,
+                213793,
+                213828,
+                213828
+              ],
+              [
+                213793,
+                213828,
+                213793,
+                213793,
+                213828,
+                213828,
+                213793,
+                213793
+              ],
+              [
+                213793,
+                213793,
+                213828,
+                213828,
+                213793,
+                213793,
+                213828,
+                213793
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "numerical": {
+              "contract": "gated-activation-half-v1",
+              "fixed_accuracy_passed": true,
+              "max_abs_error": 0.0,
+              "max_error_over_allowance": 0.0,
+              "componentwise_relative_term": 0.004,
+              "absolute_rounding_term": "2^-24*(1+abs(up))",
+              "standard_reference": "unrounded stable mathematical SiLU times up; allowance includes stored half activation and final half product"
+            },
+            "max_local_cycles": 224048,
+            "cycles_per_pe": [
+              [
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048
+              ],
+              [
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048
+              ],
+              [
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048
+              ],
+              [
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048
+              ],
+              [
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048
+              ],
+              [
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048
+              ],
+              [
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048
+              ],
+              [
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "numerical": {
+              "contract": "gated-activation-half-v1",
+              "fixed_accuracy_passed": true,
+              "max_abs_error": 0.021462408349847806,
+              "max_error_over_allowance": 0.4436557363573357,
+              "componentwise_relative_term": 0.004,
+              "absolute_rounding_term": "2^-24*(1+abs(up))",
+              "standard_reference": "unrounded stable mathematical SiLU times up; allowance includes stored half activation and final half product"
+            },
+            "max_local_cycles": 213828,
+            "cycles_per_pe": [
+              [
+                213793,
+                213793,
+                213828,
+                213828,
+                213793,
+                213793,
+                213828,
+                213793
+              ],
+              [
+                213828,
+                213828,
+                213793,
+                213793,
+                213828,
+                213793,
+                213793,
+                213828
+              ],
+              [
+                213793,
+                213793,
+                213828,
+                213793,
+                213793,
+                213828,
+                213828,
+                213793
+              ],
+              [
+                213828,
+                213793,
+                213793,
+                213828,
+                213828,
+                213793,
+                213793,
+                213828
+              ],
+              [
+                213793,
+                213828,
+                213828,
+                213793,
+                213793,
+                213828,
+                213793,
+                213793
+              ],
+              [
+                213828,
+                213793,
+                213793,
+                213828,
+                213793,
+                213793,
+                213828,
+                213828
+              ],
+              [
+                213793,
+                213828,
+                213793,
+                213793,
+                213828,
+                213828,
+                213793,
+                213793
+              ],
+              [
+                213793,
+                213793,
+                213828,
+                213828,
+                213793,
+                213793,
+                213828,
+                213793
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "numerical": {
+              "contract": "gated-activation-half-v1",
+              "fixed_accuracy_passed": true,
+              "max_abs_error": 2.384186430504087e-07,
+              "max_error_over_allowance": 0.4436557363573357,
+              "componentwise_relative_term": 0.004,
+              "absolute_rounding_term": "2^-24*(1+abs(up))",
+              "standard_reference": "unrounded stable mathematical SiLU times up; allowance includes stored half activation and final half product"
+            },
+            "max_local_cycles": 213828,
+            "cycles_per_pe": [
+              [
+                213793,
+                213793,
+                213828,
+                213828,
+                213793,
+                213793,
+                213828,
+                213793
+              ],
+              [
+                213828,
+                213828,
+                213793,
+                213793,
+                213828,
+                213793,
+                213793,
+                213828
+              ],
+              [
+                213793,
+                213793,
+                213828,
+                213793,
+                213793,
+                213828,
+                213828,
+                213793
+              ],
+              [
+                213828,
+                213793,
+                213793,
+                213828,
+                213828,
+                213793,
+                213793,
+                213828
+              ],
+              [
+                213793,
+                213828,
+                213828,
+                213793,
+                213793,
+                213828,
+                213793,
+                213793
+              ],
+              [
+                213828,
+                213793,
+                213793,
+                213828,
+                213793,
+                213793,
+                213828,
+                213828
+              ],
+              [
+                213793,
+                213828,
+                213793,
+                213793,
+                213828,
+                213828,
+                213793,
+                213793
+              ],
+              [
+                213793,
+                213793,
+                213828,
+                213828,
+                213793,
+                213793,
+                213828,
+                213793
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "numerical": {
+              "contract": "gated-activation-half-v1",
+              "fixed_accuracy_passed": true,
+              "max_abs_error": 0.04438597172867276,
+              "max_error_over_allowance": 0.36177793433386424,
+              "componentwise_relative_term": 0.004,
+              "absolute_rounding_term": "2^-24*(1+abs(up))",
+              "standard_reference": "unrounded stable mathematical SiLU times up; allowance includes stored half activation and final half product"
+            },
+            "max_local_cycles": 224048,
+            "cycles_per_pe": [
+              [
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048
+              ],
+              [
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048
+              ],
+              [
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048
+              ],
+              [
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048
+              ],
+              [
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048
+              ],
+              [
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048
+              ],
+              [
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048
+              ],
+              [
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048,
+                224048
+              ]
+            ]
+          }
+        ],
+        "performance_scope": "WSE3 simulator local PE interval; no global latency or hardware throughput claim"
+      },
+      "native_application_checks": [
+        {
+          "contract": "gated-activation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.007492177230751906,
+          "max_error_over_allowance": 0.4415372102872784,
+          "componentwise_relative_term": 0.004,
+          "absolute_rounding_term": "2^-24*(1+abs(up))",
+          "reference": "independent stable math.exp SiLU times up; unrounded mathematical composition"
+        },
+        {
+          "contract": "gated-activation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0024468979125380486,
+          "max_error_over_allowance": 0.3328894707847407,
+          "componentwise_relative_term": 0.004,
+          "absolute_rounding_term": "2^-24*(1+abs(up))",
+          "reference": "independent stable math.exp SiLU times up; unrounded mathematical composition"
+        },
+        {
+          "contract": "gated-activation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0,
+          "max_error_over_allowance": 0.0,
+          "componentwise_relative_term": 0.004,
+          "absolute_rounding_term": "2^-24*(1+abs(up))",
+          "reference": "independent stable math.exp SiLU times up; unrounded mathematical composition"
+        },
+        {
+          "contract": "gated-activation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.009787591650152194,
+          "max_error_over_allowance": 0.44365570996032183,
+          "componentwise_relative_term": 0.004,
+          "absolute_rounding_term": "2^-24*(1+abs(up))",
+          "reference": "independent stable math.exp SiLU times up; unrounded mathematical composition"
+        },
+        {
+          "contract": "gated-activation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 2.3841857199613514e-07,
+          "max_error_over_allowance": 0.44365570996032183,
+          "componentwise_relative_term": 0.004,
+          "absolute_rounding_term": "2^-24*(1+abs(up))",
+          "reference": "independent stable math.exp SiLU times up; unrounded mathematical composition"
+        },
+        {
+          "contract": "gated-activation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.029846897638073244,
+          "max_error_over_allowance": 0.3134454099979788,
+          "componentwise_relative_term": 0.004,
+          "absolute_rounding_term": "2^-24*(1+abs(up))",
+          "reference": "independent stable math.exp SiLU times up; unrounded mathematical composition"
+        }
+      ],
+      "device_application_checks": [
+        {
+          "contract": "gated-activation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.011492931567033793,
+          "max_error_over_allowance": 0.4415372102872784,
+          "componentwise_relative_term": 0.004,
+          "absolute_rounding_term": "2^-24*(1+abs(up))",
+          "reference": "independent stable math.exp SiLU times up; unrounded mathematical composition"
+        },
+        {
+          "contract": "gated-activation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0053656020874619514,
+          "max_error_over_allowance": 0.33288949060007955,
+          "componentwise_relative_term": 0.004,
+          "absolute_rounding_term": "2^-24*(1+abs(up))",
+          "reference": "independent stable math.exp SiLU times up; unrounded mathematical composition"
+        },
+        {
+          "contract": "gated-activation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0,
+          "max_error_over_allowance": 0.0,
+          "componentwise_relative_term": 0.004,
+          "absolute_rounding_term": "2^-24*(1+abs(up))",
+          "reference": "independent stable math.exp SiLU times up; unrounded mathematical composition"
+        },
+        {
+          "contract": "gated-activation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.021462408349847806,
+          "max_error_over_allowance": 0.4436557363573357,
+          "componentwise_relative_term": 0.004,
+          "absolute_rounding_term": "2^-24*(1+abs(up))",
+          "reference": "independent stable math.exp SiLU times up; unrounded mathematical composition"
+        },
+        {
+          "contract": "gated-activation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 2.384186430504087e-07,
+          "max_error_over_allowance": 0.4436557363573357,
+          "componentwise_relative_term": 0.004,
+          "absolute_rounding_term": "2^-24*(1+abs(up))",
+          "reference": "independent stable math.exp SiLU times up; unrounded mathematical composition"
+        },
+        {
+          "contract": "gated-activation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.04438597172867276,
+          "max_error_over_allowance": 0.36177793433386424,
+          "componentwise_relative_term": 0.004,
+          "absolute_rounding_term": "2^-24*(1+abs(up))",
+          "reference": "independent stable math.exp SiLU times up; unrounded mathematical composition"
+        }
+      ],
+      "native_application_source": "native-output.txt: actual C++ stdout, independent stable math.exp review",
+      "qualification_sha256": "e25bf850e110e47153c9d84b15cc1cb012faa06ff289ea88fa5f6c3e2b1b120a",
+      "results_sha256": "5d953c3d2bb5ad0c0644be3376b0ee441226fe6f513402b3f26615ce2b1fc607",
+      "numerical_validation": {
+        "contract": "gated-activation-half-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "componentwise_relative_term": 0.004,
+        "absolute_rounding_term": "2^-24*(1+abs(up))",
+        "scope": "bounded half gating, including stored activation and final product rounding; no f32 tolerance claim"
+      }
+    }
+  ]
+}

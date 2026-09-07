@@ -1,0 +1,14 @@
+{
+  "scope": "Review of preserved semantic-verification rejection; no SDK execution implied for failed build.",
+  "failed_build": "projects/waferllm/normalized_matmul_128x512_8x8/run-20260906T233929092738Z",
+  "successful_native_build": "projects/waferllm/normalized_matmul_128x512_8x8/run-20260906T234028422262Z",
+  "failure": "resident PE memory budget",
+  "cause": "Build applied explicit instrumentation only after verify(), but verify() already invoked the resource planner using default sampled mode.",
+  "fix": "Pass requested observation mode into semantic verification before planning; preserve original frontend IR and record build-configuration.json.",
+  "sampled_required_bytes": 61600,
+  "counter_required_bytes": 43172,
+  "budget_bytes": 49152,
+  "source_unchanged": true,
+  "source_sha256": "d82bec185aecb039a4f43a9eb9f63dacf5fc72ff68e1d8c0a5f364a170029808",
+  "new_sdk_status": "pending at review time"
+}

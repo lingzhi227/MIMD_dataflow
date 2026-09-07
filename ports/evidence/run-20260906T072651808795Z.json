@@ -1,0 +1,568 @@
+{
+  "run": "run-20260906T072651808795Z",
+  "sdk": true,
+  "success": true,
+  "cases": [
+    {
+      "key": "sdk_examples/cholesky",
+      "passed": true,
+      "artifact": "projects/sdk_examples/cholesky/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 64,
+        "internal_observations": 207,
+        "epochs": 4,
+        "actors": 3,
+        "source_sha256": "fb2dbec207076d72aaa219649222c85d31f5db0b67e67dbbf1c4d306e79a9611"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "matrix_algorithms/lu_no_pivot",
+      "passed": true,
+      "artifact": "projects/matrix_algorithms/lu_no_pivot/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 64,
+        "internal_observations": 207,
+        "epochs": 4,
+        "actors": 3,
+        "source_sha256": "d496e57dccec70ed66b8e02f321ec6df3c6107ef38feb11736f30b47a5b66fb5"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "matrix_algorithms/qr_givens",
+      "passed": true,
+      "artifact": "projects/matrix_algorithms/qr_givens/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 128,
+        "internal_observations": 335,
+        "epochs": 4,
+        "actors": 3,
+        "source_sha256": "53ca8943484c6f192842cb879d8af733f3bf90be5a21883b3afd31e97d886d04"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "sdk_examples/gemm",
+      "passed": true,
+      "artifact": "projects/sdk_examples/gemm/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 64,
+        "internal_observations": 565,
+        "epochs": 4,
+        "actors": 10,
+        "source_sha256": "7e977a1940ae7bc71331c1d78c2f2b8871cc195f82f2844b347d5209ce9a6fe4"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "waferllm/summa_equation",
+      "passed": true,
+      "artifact": "projects/waferllm/summa_equation/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 64,
+        "internal_observations": 565,
+        "epochs": 4,
+        "actors": 10,
+        "source_sha256": "7e977a1940ae7bc71331c1d78c2f2b8871cc195f82f2844b347d5209ce9a6fe4"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "waferllm/meshgemm_equation",
+      "passed": true,
+      "artifact": "projects/waferllm/meshgemm_equation/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 64,
+        "internal_observations": 565,
+        "epochs": 4,
+        "actors": 10,
+        "source_sha256": "7e977a1940ae7bc71331c1d78c2f2b8871cc195f82f2844b347d5209ce9a6fe4"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "matrix_algorithms/cannon_equation",
+      "passed": true,
+      "artifact": "projects/matrix_algorithms/cannon_equation/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 64,
+        "internal_observations": 565,
+        "epochs": 4,
+        "actors": 10,
+        "source_sha256": "7e977a1940ae7bc71331c1d78c2f2b8871cc195f82f2844b347d5209ce9a6fe4"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "sdk_examples/gemv",
+      "passed": true,
+      "artifact": "projects/sdk_examples/gemv/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 16,
+        "internal_observations": 277,
+        "epochs": 4,
+        "actors": 10,
+        "source_sha256": "e6550736c832a1f7a427fa31f3ddf33b9d29c018827bd169ccb380abe0168bb1"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "waferllm/meshgemv_equation",
+      "passed": true,
+      "artifact": "projects/waferllm/meshgemv_equation/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 16,
+        "internal_observations": 277,
+        "epochs": 4,
+        "actors": 10,
+        "source_sha256": "e6550736c832a1f7a427fa31f3ddf33b9d29c018827bd169ccb380abe0168bb1"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "spada/gemv",
+      "passed": true,
+      "artifact": "projects/spada/gemv/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 16,
+        "internal_observations": 277,
+        "epochs": 4,
+        "actors": 10,
+        "source_sha256": "e6550736c832a1f7a427fa31f3ddf33b9d29c018827bd169ccb380abe0168bb1"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "spada/axpy",
+      "passed": true,
+      "artifact": "projects/spada/axpy/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 16,
+        "internal_observations": 106,
+        "epochs": 4,
+        "actors": 5,
+        "source_sha256": "b0085e6540cb035e397a4fdbc3f0580fe63fc72404b6c12bee064c4fbf8f425d"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "sdk_examples/residual",
+      "passed": true,
+      "artifact": "projects/sdk_examples/residual/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 16,
+        "internal_observations": 197,
+        "epochs": 4,
+        "actors": 7,
+        "source_sha256": "df47381161cc917dbe222ca7f5c02059e71650552c1f02937b4f124a9fdffb31"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "spatial_collectives/chain_reduce",
+      "passed": true,
+      "artifact": "projects/spatial_collectives/chain_reduce/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 16,
+        "internal_observations": 171,
+        "epochs": 4,
+        "actors": 8,
+        "source_sha256": "b9214ab10ebd09735e8c38aae265f7403b977c87c26e22d7c192c6d354eff55e"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "spatial_collectives/tree_reduce",
+      "passed": true,
+      "artifact": "projects/spatial_collectives/tree_reduce/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 16,
+        "internal_observations": 171,
+        "epochs": 4,
+        "actors": 8,
+        "source_sha256": "755d6ed606f6791eb6847afab0badcbf13df3efbba08e9229eece17079d13387"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "spada/chain_reduce",
+      "passed": true,
+      "artifact": "projects/spada/chain_reduce/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 16,
+        "internal_observations": 171,
+        "epochs": 4,
+        "actors": 8,
+        "source_sha256": "b9214ab10ebd09735e8c38aae265f7403b977c87c26e22d7c192c6d354eff55e"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "spada/tree_reduce",
+      "passed": true,
+      "artifact": "projects/spada/tree_reduce/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 16,
+        "internal_observations": 171,
+        "epochs": 4,
+        "actors": 8,
+        "source_sha256": "755d6ed606f6791eb6847afab0badcbf13df3efbba08e9229eece17079d13387"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "spatial_collectives/broadcast",
+      "passed": true,
+      "artifact": "projects/spatial_collectives/broadcast/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 64,
+        "internal_observations": 147,
+        "epochs": 4,
+        "actors": 7,
+        "source_sha256": "725a80c0aa45c0e17ff77cfeed8c44ad9b85d027abf7825631096c9b8695142c"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "spada/broadcast",
+      "passed": true,
+      "artifact": "projects/spada/broadcast/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 64,
+        "internal_observations": 147,
+        "epochs": 4,
+        "actors": 7,
+        "source_sha256": "725a80c0aa45c0e17ff77cfeed8c44ad9b85d027abf7825631096c9b8695142c"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "sdk_examples/broadcast",
+      "passed": true,
+      "artifact": "projects/sdk_examples/broadcast/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 64,
+        "internal_observations": 147,
+        "epochs": 4,
+        "actors": 7,
+        "source_sha256": "725a80c0aa45c0e17ff77cfeed8c44ad9b85d027abf7825631096c9b8695142c"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "spada/allreduce",
+      "passed": true,
+      "artifact": "projects/spada/allreduce/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 64,
+        "internal_observations": 276,
+        "epochs": 4,
+        "actors": 13,
+        "source_sha256": "c75fadecd14ef00114cbc7a613aefac58775a761abf4c41c12c4025b4f227b10"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "waferllm/rmsnorm",
+      "passed": true,
+      "artifact": "projects/waferllm/rmsnorm/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 32,
+        "internal_observations": 133,
+        "epochs": 4,
+        "actors": 4,
+        "source_sha256": "64720742fe85ea0b8db4b1c01c0c3fa01221b24d5ba78af58747fee32547e4c7"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "waferllm/softmax",
+      "passed": true,
+      "artifact": "projects/waferllm/softmax/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 32,
+        "internal_observations": 111,
+        "epochs": 4,
+        "actors": 3,
+        "source_sha256": "b0012a4637f6fcfb9ae3efddbbb4c8e40fab3bd193d5cb1398982d2553c725ea"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "waferllm/gated_silu",
+      "passed": true,
+      "artifact": "projects/waferllm/gated_silu/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 32,
+        "internal_observations": 149,
+        "epochs": 4,
+        "actors": 4,
+        "source_sha256": "45ef35bad70a2738c40682df0f2348515e4b34eeb4f0f8210bca064ea8b1b687"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "waferllm/rope",
+      "passed": true,
+      "artifact": "projects/waferllm/rope/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 32,
+        "internal_observations": 133,
+        "epochs": 4,
+        "actors": 4,
+        "source_sha256": "a74c3a4055ff9e3bda17f1e71cf4e4c24a4a2e5378640d30b15cc87f8158570c"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "wse_stencil/25-point-stencil-small-apply0",
+      "passed": true,
+      "artifact": "projects/wse_stencil/25-point-stencil-small-apply0/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 4,
+        "internal_observations": 123,
+        "epochs": 4,
+        "actors": 3,
+        "source_sha256": "93428c7e78df0db3234d3626b17257234fa011bb49058f684468c2e0875184e4"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "wse_stencil/acoustic-small-apply0",
+      "passed": true,
+      "artifact": "projects/wse_stencil/acoustic-small-apply0/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 4,
+        "internal_observations": 79,
+        "epochs": 4,
+        "actors": 3,
+        "source_sha256": "18b67ce8f51ed87cd7bbc89cb317c84d794658a7ba3b05f269e3d03da1e4e4dd"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "wse_stencil/diffusion-small-apply0",
+      "passed": true,
+      "artifact": "projects/wse_stencil/diffusion-small-apply0/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 4,
+        "internal_observations": 75,
+        "epochs": 4,
+        "actors": 3,
+        "source_sha256": "0858351e17239ebe96405a5eaa9ec6092cda5def3c7272eb869c487f20c7f85b"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "wse_stencil/loop-kernel-small-apply0",
+      "passed": true,
+      "artifact": "projects/wse_stencil/loop-kernel-small-apply0/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 4,
+        "internal_observations": 47,
+        "epochs": 4,
+        "actors": 3,
+        "source_sha256": "18fe4d5f0b3e1d239355b236a2ab01c43068cada3e7393042ca64e9da7c2967a"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "wse_stencil/uvbke-small-apply0",
+      "passed": true,
+      "artifact": "projects/wse_stencil/uvbke-small-apply0/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 4,
+        "internal_observations": 47,
+        "epochs": 4,
+        "actors": 3,
+        "source_sha256": "4eec8162ee081f5e7341d2dbf608461139b8b41f2ef9904424f4f7d83d55dc36"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "wse_stencil/uvbke-small-apply1",
+      "passed": true,
+      "artifact": "projects/wse_stencil/uvbke-small-apply1/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 4,
+        "internal_observations": 47,
+        "epochs": 4,
+        "actors": 3,
+        "source_sha256": "4eec8162ee081f5e7341d2dbf608461139b8b41f2ef9904424f4f7d83d55dc36"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "mc_transport/linear_xs_lookup",
+      "passed": true,
+      "artifact": "projects/mc_transport/linear_xs_lookup/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 96,
+        "internal_observations": 509,
+        "epochs": 4,
+        "actors": 4,
+        "source_sha256": "39d0f3e7fb27963775a76999e37d7fb7b4d0ceebb5af1ffbd44abffbe8472f5a"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "annealing/flip_energy",
+      "passed": true,
+      "artifact": "projects/annealing/flip_energy/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 16,
+        "internal_observations": 133,
+        "epochs": 4,
+        "actors": 4,
+        "source_sha256": "e29a26279d60f5de112aa638f3ae9c7fedaea7599a8a9008ba05f84af1eb0a97"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "annealing/acceptance",
+      "passed": true,
+      "artifact": "projects/annealing/acceptance/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 16,
+        "internal_observations": 95,
+        "epochs": 4,
+        "actors": 3,
+        "source_sha256": "cb008fd3fc7d94f2ecdd080ffd7caae54489ba41c9824b491ac29cc3c9a6b248"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "sdk_examples/conjugate_gradient",
+      "passed": true,
+      "artifact": "projects/sdk_examples/conjugate_gradient/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 16,
+        "internal_observations": 133,
+        "epochs": 4,
+        "actors": 4,
+        "source_sha256": "445ab4a2eb915698f39f10fde26d37551bfdca14dd99aa67f1947382a29feabd"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "sdk_examples/fft_1d",
+      "passed": true,
+      "artifact": "projects/sdk_examples/fft_1d/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 32,
+        "internal_observations": 133,
+        "epochs": 4,
+        "actors": 4,
+        "source_sha256": "eb2d128538dfc8cf6e9bc31e2896cc825241fee6a9aaf2217dbc33ac23db6391"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "sdk_examples/fft_2d",
+      "passed": true,
+      "artifact": "projects/sdk_examples/fft_2d/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 128,
+        "internal_observations": 421,
+        "epochs": 4,
+        "actors": 4,
+        "source_sha256": "4a97ec320a938f5d3b8278e57f1298957ed51ac118d1534d3b26af9b2b699293"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "sdk_examples/fft_3d",
+      "passed": true,
+      "artifact": "projects/sdk_examples/fft_3d/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 512,
+        "internal_observations": 1573,
+        "epochs": 4,
+        "actors": 4,
+        "source_sha256": "4103021e7ab3224424bdb9e65997cd1b00d5fe160ea73e09f4cef2b3cc5b084f"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "sdk_examples/pcg_jacobi",
+      "passed": true,
+      "artifact": "projects/sdk_examples/pcg_jacobi/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 16,
+        "internal_observations": 133,
+        "epochs": 4,
+        "actors": 4,
+        "source_sha256": "76c702ad95c19e4e12b8b7a67b4cb9213846e61c21db033fa75da9e894781ad1"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "sdk_examples/power_method",
+      "passed": true,
+      "artifact": "projects/sdk_examples/power_method/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 16,
+        "internal_observations": 133,
+        "epochs": 4,
+        "actors": 4,
+        "source_sha256": "7dbde85d245242a99f5c488a44ccb5946e3162fee000509d04b1b9763989b8a9"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "sdk_examples/bicgstab",
+      "passed": true,
+      "artifact": "projects/sdk_examples/bicgstab/run-20260906T072651808795Z",
+      "audit": {
+        "passed": true,
+        "output_values": 16,
+        "internal_observations": 133,
+        "epochs": 4,
+        "actors": 4,
+        "source_sha256": "3ad60e571c94c6ed0eb19bcd041c69bde44335c4b91fbf5d8eb78b14d50e0dbc"
+      },
+      "level": "sdk_simulator"
+    }
+  ],
+  "sdk_sha256": "fff17e81c61dcb6012bdee2941a6fdc570f5c8604967530e7b7108651258193d"
+}

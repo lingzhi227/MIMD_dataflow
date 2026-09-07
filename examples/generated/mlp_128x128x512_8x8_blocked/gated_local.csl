@@ -1,0 +1,13 @@
+// Synchronous local stage, source-derived WaferLLM Prefill z3_comp (Apache-2.0).
+// Caller leases DSR1 after all asynchronous projection activity joins.
+param length:i16;
+const math=@import_module("<math>");
+const dummy=@zeros([1]f16);
+const view=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{length}->dummy[i]});
+const dest=@get_dsr(dsr_dest,1);const src0=@get_dsr(dsr_src0,1);const src1=@get_dsr(dsr_src1,1);
+fn silu_value(x:f16) f16 {return x/(@as(f16,1.0)+math.exp_f16(-x));}
+fn apply(up:[*]f16,gate:[*]f16) void {
+ const u=@set_dsd_base_addr(view,up);const g=@set_dsd_base_addr(view,gate);
+ @map(silu_value,g,g);
+ @load_to_dsr(dest,u);@load_to_dsr(src0,u);@load_to_dsr(src1,g);@fmulh(dest,src0,src1);
+}

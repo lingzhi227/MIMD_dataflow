@@ -1,0 +1,17 @@
+{
+  "project": "waferllm",
+  "kernel": "mlp_64x64x128_4x4",
+  "origins": [
+    "Prefill/src/prefill.csl z1_matmul/z2_matmul/z3_comp/h2_matmul"
+  ],
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "status": "source_ready",
+  "partitions": 1,
+  "contract": "Resident supplied bounded X/U/G/D rectangular gated MLP 64x64\u2192128\u219264 on 4x4 PEs. Typed three-matmul/SiLU/multiply graph; forward aligned two-hop projections, explicit gate-left carry, joined task resources, SDK map/DSR gating, immutable inputs and last-use buffer reuse. No intermediate host transfer. Six SDK calls, exact target outputs; sampled mode additionally observes projection prefixes/gate/hidden/first operands, counter mode omits internal tensor observations. Corruption rejection, actual C++/device independent fsum/exp checks, matched adapted-source control and static ELF memory. No RMS/residual/full-model or hardware claim.",
+  "fixture": "mlp:64:64:128",
+  "instrumentation": "sampled",
+  "source_control_correction": {
+    "path": "evidence/mlp-p4-fabric-correction.json",
+    "sha256": "7d8608f658306bc92b4aa6fbc74463bdb6f87c0f06f3c7cbb774bc41b89d898f"
+  }
+}

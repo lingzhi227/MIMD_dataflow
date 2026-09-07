@@ -1,0 +1,235 @@
+diff --git a/lu_factorization/many_elements_per_pe/layout.csl b/lu_factorization/many_elements_per_pe/layout.csl
+index f87ed47..0d8b232 100644
+--- a/lu_factorization/many_elements_per_pe/layout.csl
++++ b/lu_factorization/many_elements_per_pe/layout.csl
+@@ -11,14 +11,13 @@ const LAUNCH: color = @get_color(8); // Color used by memcpy for kernel launch
+ 
+ 
+ // Task IDs
+-const send_row_to_south_task_id: data_task_id = @get_data_task_id(send_row_signal_color);
+-const division_step_task_id: data_task_id = @get_data_task_id(division_color);
++const send_row_to_south_task_id: data_task_id = @get_data_task_id(@get_input_queue(4));
++const division_step_task_id: data_task_id = @get_data_task_id(@get_input_queue(5));
+ 
+ 
+ const memcpy = @import_module("<memcpy/get_params>", .{
+   .width = grid_size,
+-  .height = grid_size,
+-  .LAUNCH = LAUNCH
++  .height = grid_size
+ });
+ 
+ layout {
+@@ -26,8 +25,6 @@ layout {
+   @set_rectangle(grid_size, grid_size);
+   const M_per_pe: u16 = @as(u16, M/@as(u32, grid_size));
+   
+-  const switch_TX_S = .{.pos1 = .{ .tx = SOUTH}, .ring_mode = true, .current_switch_pos = 1};
+-  const switch_TX_E = .{.pos1 = .{ .tx = EAST}, .ring_mode = true, .current_switch_pos = 1};
+ 
+   for (@range(u16, grid_size)) |pe_x| {
+     for (@range(u16, grid_size)) |pe_y| {
+@@ -47,8 +44,8 @@ layout {
+       });
+       const RX_W_TX_RE_or_R = .{ .rx = .{WEST}, .tx = if (pe_x < grid_size - 1) .{RAMP, EAST} else .{RAMP}};
+       const RX_N_TX_RS_or_R = .{ .rx = .{NORTH}, .tx = if (pe_y < grid_size - 1) .{RAMP, SOUTH} else .{RAMP}};
+-      const RX_RW_TX_RE_or_R = .{ .rx = .{RAMP, WEST}, .tx = if (pe_x < grid_size - 1) .{RAMP, EAST} else .{RAMP}};
+-      const RX_RN_TX_RS_or_R = .{ .rx = .{RAMP, NORTH}, .tx = if (pe_y < grid_size - 1) .{RAMP, SOUTH} else .{RAMP}};
++      const RX_RW_TX_RE_or_R = .{ .rx = .{WEST}, .tx = if (pe_x < grid_size - 1) .{RAMP, EAST} else .{RAMP}};
++      const RX_RN_TX_RS_or_R = .{ .rx = .{NORTH}, .tx = if (pe_y < grid_size - 1) .{RAMP, SOUTH} else .{RAMP}};
+ 
+       if (pe_x == pe_y) {
+         @set_color_config(pe_x, pe_y, send_row_signal_color, .{.routes = .{ .rx = .{RAMP}, .tx = .{EAST}}});
+@@ -63,12 +60,10 @@ layout {
+         }
+         else {
+           @set_color_config(pe_x, pe_y, horizontal_elimination_color,.{
+-            .routes = RX_RW_TX_RE_or_R,
+-            .switches = switch_TX_E
++            .routes = RX_RW_TX_RE_or_R
+           });
+           @set_color_config(pe_x, pe_y, vertical_elimination_color, .{
+-            .routes = RX_RN_TX_RS_or_R,
+-            .switches = switch_TX_S
++            .routes = RX_RN_TX_RS_or_R
+             });
+         }
+       }
+@@ -81,8 +76,7 @@ layout {
+         } 
+         else {
+           @set_color_config(pe_x, pe_y, horizontal_elimination_color, .{
+-            .routes = RX_RW_TX_RE_or_R,
+-            .switches = switch_TX_E
++            .routes = RX_RW_TX_RE_or_R
+           });
+         }
+         @set_color_config(pe_x, pe_y, vertical_elimination_color, .{.routes = RX_N_TX_RS_or_R});
+@@ -97,8 +91,7 @@ layout {
+         }
+         else {
+           @set_color_config(pe_x, pe_y, vertical_elimination_color, .{
+-            .routes = RX_RN_TX_RS_or_R,
+-            .switches = switch_TX_S
++            .routes = RX_RN_TX_RS_or_R
+           });
+         }
+       }
+@@ -108,4 +101,4 @@ layout {
+   // export symbol names
+   @export_name("A", [*]f32, true);
+   @export_name("start", fn()void);
+-}
+\ No newline at end of file
++}
+diff --git a/lu_factorization/many_elements_per_pe/pe_program.csl b/lu_factorization/many_elements_per_pe/pe_program.csl
+index d8bbd7f..98dd423 100644
+--- a/lu_factorization/many_elements_per_pe/pe_program.csl
++++ b/lu_factorization/many_elements_per_pe/pe_program.csl
+@@ -1,4 +1,4 @@
+-param memcpy_params: comptime_struct;
++param memcpy_params;
+ 
+ // Matrix dimensions
+ param M: u16;
+@@ -20,6 +20,7 @@ const compute_task_id: local_task_id = @get_local_task_id(10);
+ 
+ const sys_mod = @import_module("<memcpy/memcpy>", memcpy_params);
+ const layout_mod = @import_module("<layout>");
++const tile_config = @import_module("<tile_config>");
+ 
+ var A: [M_per_pe*N_per_pe]f32;
+ var A_ptr: [*]f32 = &A;
+@@ -27,12 +28,6 @@ var A_ptr: [*]f32 = &A;
+ var row_dsd = @get_dsd(mem1d_dsd, .{.tensor_access = |i|{N_per_pe} -> A[i]});
+ var col_dsd = @get_dsd(mem1d_dsd, .{.tensor_access = |i|{M_per_pe} -> A[i*@as(i16, N_per_pe)]});
+ 
+-const opcode_switch_advance = 1;
+-
+-fn ctrl(ce_filter: bool, opcode: i16, color_id: u16) u32 {
+-  return @as(u32, color_id) << 16 | @as(u32, opcode) << 22 | @as(u32, ce_filter) << 24;
+-}
+-
+ fn is_right_col() bool {
+   return(layout_mod.get_x_coord() == grid_size-1);
+ }
+@@ -62,42 +57,32 @@ fn is_under_diagonal_element() bool {
+ }
+ 
+ var out_dsd_south_elimination = @get_dsd(fabout_dsd, .{
+-                      .fabric_color = vertical_elimination_color, .extent = N_per_pe,
+-                      .output_queue = @get_output_queue(0)
+-                    });
+-var out_dsd_south_elimination_control = @get_dsd(fabout_dsd, .{
+-                      .fabric_color = vertical_elimination_color, .extent = 1,
+-                      .output_queue = @get_output_queue(0),
+-                      .control = true
++                      .extent = N_per_pe,
++                      .output_queue = @get_output_queue(4)
+                     });
+ 
+ const out_dsd_south_division = @get_dsd(fabout_dsd, .{
+-                      .fabric_color = division_color, .extent = 1,
+-                      .output_queue = @get_output_queue(1)
++                      .extent = 1,
++                      .output_queue = @get_output_queue(7)
+                     });
+ 
+ const out_dsd_east_signal = @get_dsd(fabout_dsd, .{
+-                      .fabric_color = send_row_signal_color, .extent = 1,
+-                      .output_queue = @get_output_queue(2)
++                      .extent = 1,
++                      .output_queue = @get_output_queue(6)
+                     });
+ 
+ var out_dsd_east_elimination = @get_dsd(fabout_dsd, .{
+-                      .fabric_color = horizontal_elimination_color, .extent = M_per_pe,
+-                      .output_queue = @get_output_queue(3)
+-                    });
+-var out_dsd_east_elimination_control = @get_dsd(fabout_dsd, .{
+-                      .fabric_color = horizontal_elimination_color, .extent = 1,
+-                      .output_queue = @get_output_queue(3),
+-                      .control = true
++                      .extent = M_per_pe,
++                      .output_queue = @get_output_queue(5)
+                     });
+                     
+ var in_dsd_north_elimination = @get_dsd(fabin_dsd, .{
+-                      .fabric_color = vertical_elimination_color, .extent = N_per_pe,
+-                      .input_queue = @get_input_queue(0)
++                      .extent = N_per_pe,
++                      .input_queue = @get_input_queue(2)
+                     });
+ 
+ var in_dsd_west_elimination = @get_dsd(fabin_dsd, .{
+-                      .fabric_color = horizontal_elimination_color, .extent = M_per_pe,
++                      .extent = M_per_pe,
+                       .input_queue = @get_input_queue(3)
+                     });
+ 
+@@ -150,35 +135,25 @@ task compute() void {
+ }
+ 
+ fn elimination_step() void {
+-  for (@range(u16, if (is_over_diagonal_element()) layout_mod.get_y_coord() else layout_mod.get_x_coord())) |i| {
+-    if (layout_mod.get_x_coord() == i + 1) {
+-      @mov32(out_dsd_east_elimination_control, comptime ctrl(true, opcode_switch_advance, @get_int(horizontal_elimination_color)));
+-    }
+-    if (layout_mod.get_y_coord() == i + 1) {
+-      @mov32(out_dsd_south_elimination_control, comptime ctrl(true, opcode_switch_advance, @get_int(vertical_elimination_color)));
+-    }
+-    for (@range(u16, M_per_pe)) |j| {
++  // Consume the same complete prefix of prior block pivots. Routes retain
++  // WEST/NORTH input until that prefix is consumed; no self-loop is injected.
++  for (@range(u16, if (is_over_diagonal_element()) layout_mod.get_y_coord() else layout_mod.get_x_coord())) |_| {
++    for (@range(u16, M_per_pe)) |_| {
+       @fmovs(east_recvd_col_dsd, in_dsd_west_elimination);
+       @fmovs(north_recvd_row_dsd, in_dsd_north_elimination);
+       update_sub_matrix(N_per_pe, 0, &east_recvd_col, 1, 0, north_recvd_row_dsd, false);
+     }
+   }
+-  if (is_diagonal_element() and !is_bottom_row()) {
+-    @mov32(out_dsd_east_elimination_control, comptime ctrl(true, opcode_switch_advance, @get_int(horizontal_elimination_color)));
+-    @mov32(out_dsd_south_elimination_control, comptime ctrl(true, opcode_switch_advance, @get_int(vertical_elimination_color)));
+-  }
+-  else if (is_over_diagonal_element()) {
+-    @mov32(out_dsd_south_elimination_control, comptime ctrl(true, opcode_switch_advance, @get_int(vertical_elimination_color)));
++  if (!is_over_diagonal_element() and !is_right_col()) {
++    tile_config.color_config.reset_routes(horizontal_elimination_color, .{.rx = RAMP, .tx = EAST});
+   }
+-  else {
+-    @mov32(out_dsd_east_elimination_control, comptime ctrl(true, opcode_switch_advance, @get_int(horizontal_elimination_color)));
++  if (!is_under_diagonal_element() and !is_bottom_row()) {
++    tile_config.color_config.reset_routes(vertical_elimination_color, .{.rx = RAMP, .tx = SOUTH});
+   }
+-
+   if (is_diagonal_element()) {
+     count = 1;
+     @activate(compute_task_id);
+-  }
+-  else if (is_over_diagonal_element()) {
++  } else if (is_over_diagonal_element()) {
+     count = 0;
+   }
+ }
+@@ -242,10 +217,17 @@ fn start() void {
+ }
+ 
+ comptime {
++  @initialize_queue(@get_input_queue(2), .{.color = vertical_elimination_color});
++  @initialize_queue(@get_input_queue(3), .{.color = horizontal_elimination_color});
++  @initialize_queue(@get_input_queue(4), .{.color = send_row_signal_color});
++  @initialize_queue(@get_input_queue(5), .{.color = division_color});
++  @initialize_queue(@get_output_queue(4), .{.color = vertical_elimination_color});
++  @initialize_queue(@get_output_queue(5), .{.color = horizontal_elimination_color});
++  @initialize_queue(@get_output_queue(6), .{.color = send_row_signal_color});
++  @initialize_queue(@get_output_queue(7), .{.color = division_color});
+   @bind_data_task(send_row_to_south, send_row_to_south_task_id);
+   @bind_data_task(division_step, division_step_task_id);
+   @bind_local_task(compute, compute_task_id);
+   @export_symbol(A_ptr, "A");
+   @export_symbol(start);
+-  @rpc(@get_data_task_id(sys_mod.LAUNCH));
+-}
+\ No newline at end of file
++}

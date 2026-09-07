@@ -1,0 +1,16 @@
+param length: u16;
+param offset: u16;
+param delay: u16;
+param exact_length: u16;
+const memcpy = @import_module("<memcpy/get_params>", .{.width=2,.height=1});
+layout {
+ @set_rectangle(2,1);
+ for (@range(u16,2)) |x| {
+  @set_tile_code(x,0,"pe.csl",.{.memcpy_params=memcpy.get_params(x),.sender=x==0,.length=length,.offset=offset,.delay=delay,.exact_length=exact_length});
+  if (x==0) { @set_color_config(x,0,@get_color(3),.{.routes=.{.rx=.{RAMP},.tx=.{EAST}}}); }
+  else { @set_color_config(x,0,@get_color(3),.{.routes=.{.rx=.{WEST},.tx=.{RAMP}}}); }
+ }
+ @export_name("main",fn()void);
+ @export_name("received",[*]u16,true);
+ @export_name("sentinel",[*]f32,true);
+}

@@ -1,0 +1,9 @@
+{
+  "new_sdk_execution": false,
+  "analysis_passed": false,
+  "bundle": "evidence/prefill-rms-20260906T210620408155Z",
+  "assumption": "Root receives western chain before eastern chain, inferred from source comment",
+  "failure": "40 of512reduced half words differ by1ULP in first input;5logical row values replicated across8PEcolumns",
+  "correction_evidence": "Source first uses mv_left_recv; its c_left_recv queue is routed from EAST in layout.csl. The root therefore combines eastern chain before western chain.",
+  "analyzer_sha256": "47b63bbbfbd5710c1399f71e2b60ab44a6f0f7f69c2882746961ab5b704a39a3"
+}

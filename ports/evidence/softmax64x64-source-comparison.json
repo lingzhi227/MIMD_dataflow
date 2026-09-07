@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "new_sdk_execution": false,
+  "scope": "Generated softmax against pinned Prefill with explicit maximum-initializer correction. Same inputs, SDK runtime options and dimensions. HLS phase/progress wrapper differs. WSE3 simulator local intervals, not hardware throughput or unmodified upstream performance.",
+  "cases": [
+    {
+      "packed_half_bits_exact": true,
+      "hls_max_local_cycles": 4990,
+      "corrected_source_max_local_cycles": 4996,
+      "hls_to_source_ratio": 0.9987990392313851
+    },
+    {
+      "packed_half_bits_exact": true,
+      "hls_max_local_cycles": 4990,
+      "corrected_source_max_local_cycles": 4996,
+      "hls_to_source_ratio": 0.9987990392313851
+    }
+  ],
+  "hashes": {
+    "projects/waferllm/softmax_64x64_8x8/run-20260906T221829699155Z/results.json": "c141afd5e960d92542088225c993247a0c78212c58907eadaa8900d4a2496b3a",
+    "projects/waferllm/softmax_64x64_8x8/run-20260906T221829699155Z/manifest.json": "a6a14d244f694450713b382c82f3e5301591a750ee2b3c03c9c5ad7e01edfbc1",
+    "evidence/softmax-corrected-source-20260906T221936176666Z/results.json": "22a7d150189dfdec87a3e98103b48ed570cefe4dc2f2300f7bc26496e63d1a11",
+    "evidence/softmax-corrected-source-20260906T221936176666Z/provenance.json": "be316d490de13c13d721366a18c0ee6ab2e31a58382211584030627cdb90f883",
+    "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/experiments/compare_softmax_source_control.py": "6d1a997880446fe53ae21a98667eb25748a959881ebe715adf6e4ecb5857c074"
+  }
+}

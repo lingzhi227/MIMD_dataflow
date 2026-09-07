@@ -1,0 +1,192 @@
+{
+  "run": "run-20260906T113414066686Z",
+  "sdk": true,
+  "instrumentation": null,
+  "sdk_runtime_options": {
+    "suppress_trace": true,
+    "num_threads": 16,
+    "dump_core": true
+  },
+  "sdk_timeout_seconds": 900,
+  "success": true,
+  "cases": [
+    {
+      "key": "sdk_examples/mesh_cholesky_32x32_4x4",
+      "passed": true,
+      "artifact": "projects/sdk_examples/mesh_cholesky_32x32_4x4/run-20260906T113414066686Z",
+      "native_application_checks": [
+        {
+          "contract": "fixed-cholesky-factor-and-LLT-v1",
+          "fixed_accuracy_passed": true,
+          "max_factor_abs_error": 5.827823974513535e-07,
+          "relative_infinity_residual": 3.758781880292413e-07,
+          "residual_limit": 3e-05
+        },
+        {
+          "contract": "fixed-cholesky-factor-and-LLT-v1",
+          "fixed_accuracy_passed": true,
+          "max_factor_abs_error": 0.0,
+          "relative_infinity_residual": 0.0,
+          "residual_limit": 3e-05
+        },
+        {
+          "contract": "fixed-cholesky-factor-and-LLT-v1",
+          "fixed_accuracy_passed": true,
+          "max_factor_abs_error": 8.709600018974584e-08,
+          "relative_infinity_residual": 1.2576621041502138e-07,
+          "residual_limit": 3e-05
+        },
+        {
+          "contract": "fixed-cholesky-factor-and-LLT-v1",
+          "fixed_accuracy_passed": true,
+          "max_factor_abs_error": 5.135884983964445e-08,
+          "relative_infinity_residual": 5.459641183591657e-08,
+          "residual_limit": 3e-05
+        }
+      ],
+      "numerical_validation": {
+        "contract": "fixed-cholesky-factor-and-LLT-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_fixed_accuracy_passed": true,
+        "fixed_accuracy_passed": true,
+        "rtol": 3e-05,
+        "atol": 3e-06
+      },
+      "audit": {
+        "passed": true,
+        "fixed_accuracy_passed": true,
+        "actors": 10,
+        "epochs": 4,
+        "output_values": 4096,
+        "factor_checks": [
+          {
+            "contract": "fixed-cholesky-factor-and-LLT-v1",
+            "fixed_accuracy_passed": true,
+            "max_factor_abs_error": 5.827823974513535e-07,
+            "relative_infinity_residual": 3.737009808714351e-07,
+            "residual_limit": 3e-05
+          },
+          {
+            "contract": "fixed-cholesky-factor-and-LLT-v1",
+            "fixed_accuracy_passed": true,
+            "max_factor_abs_error": 0.0,
+            "relative_infinity_residual": 0.0,
+            "residual_limit": 3e-05
+          },
+          {
+            "contract": "fixed-cholesky-factor-and-LLT-v1",
+            "fixed_accuracy_passed": true,
+            "max_factor_abs_error": 1.4113864965636935e-07,
+            "relative_infinity_residual": 2.0938503351646262e-07,
+            "residual_limit": 3e-05
+          },
+          {
+            "contract": "fixed-cholesky-factor-and-LLT-v1",
+            "fixed_accuracy_passed": true,
+            "max_factor_abs_error": 8.138283469349972e-08,
+            "relative_infinity_residual": 1.0472197568371182e-07,
+            "residual_limit": 3e-05
+          }
+        ],
+        "internal_observations": 1280,
+        "max_checkpoint_abs_error": 1.5480426061031949e-06,
+        "checkpoint_scope": "Two tile corners after each active global pivot; inactive/unexecuted entries checked against zero",
+        "per_pe_factor_cycles": [
+          2904,
+          4411,
+          7026,
+          4410,
+          8728,
+          11377,
+          4546,
+          8733,
+          13087,
+          15264,
+          2898,
+          4415,
+          7030,
+          4418,
+          8736,
+          11385,
+          4556,
+          8743,
+          13097,
+          15275,
+          2904,
+          4416,
+          7031,
+          4419,
+          8737,
+          11386,
+          4557,
+          8744,
+          13098,
+          15277,
+          2897,
+          4416,
+          7031,
+          4419,
+          8737,
+          11386,
+          4557,
+          8744,
+          13098,
+          15274
+        ],
+        "max_pe_factor_cycles": 15277,
+        "timing_scope": "Per-PE SDK simulator factorization including communication; excludes host prepare and I/O. No hardware or speedup claim.",
+        "source_sha256": "bd7bca47f84a4169c2b445272bb3214d126bb2c4c5735ed06e3fe10230be6644"
+      },
+      "device_application_checks": [
+        {
+          "contract": "fixed-cholesky-factor-and-LLT-v1",
+          "fixed_accuracy_passed": true,
+          "max_factor_abs_error": 5.827823974513535e-07,
+          "relative_infinity_residual": 3.737009808714351e-07,
+          "residual_limit": 3e-05
+        },
+        {
+          "contract": "fixed-cholesky-factor-and-LLT-v1",
+          "fixed_accuracy_passed": true,
+          "max_factor_abs_error": 0.0,
+          "relative_infinity_residual": 0.0,
+          "residual_limit": 3e-05
+        },
+        {
+          "contract": "fixed-cholesky-factor-and-LLT-v1",
+          "fixed_accuracy_passed": true,
+          "max_factor_abs_error": 1.4113864965636935e-07,
+          "relative_infinity_residual": 2.0938503351646262e-07,
+          "residual_limit": 3e-05
+        },
+        {
+          "contract": "fixed-cholesky-factor-and-LLT-v1",
+          "fixed_accuracy_passed": true,
+          "max_factor_abs_error": 8.138283469349972e-08,
+          "relative_infinity_residual": 1.0472197568371182e-07,
+          "residual_limit": 3e-05
+        }
+      ],
+      "level": "sdk_simulator"
+    }
+  ],
+  "oracle": {
+    "python": "3.13.11",
+    "numpy": "2.2.6",
+    "rtol": 3e-05,
+    "atol": 3e-06,
+    "input_seed_base": 911,
+    "additional_contract_by_fixture_prefix": {
+      "mesh_gemm:": "componentwise-f32-dot-v1; fixed accuracy reported separately"
+    },
+    "sources": {
+      "fixtures.py": "96b8f21961994641ad74cf686e936b79205ba7a86fa21b5841990791bfdebc30",
+      "toolchain/roundoff.py": "4bc4e693d456bdf39dee4ac6774a545f812c085aacc7ec4d2244e583fcb935b5",
+      "import_stencil.py": "9a4dfd60f39c9ee90f056f1f07391ba8e361030067c380a85b99241ae09e5bc3",
+      "catalog.json": "4c209036463f6cb0e177695e3c583d2cd33ad3beed930ecbfd1b4d61ac7cac4b",
+      "run_ports.py": "19fedb9db7d8eef862158fde64fdd32ec785b13c571eeff8996cd001b674af99"
+    }
+  },
+  "sdk_sha256": "fff17e81c61dcb6012bdee2941a6fdc570f5c8604967530e7b7108651258193d"
+}

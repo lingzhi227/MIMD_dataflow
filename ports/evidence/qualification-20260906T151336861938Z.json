@@ -1,0 +1,135 @@
+{
+  "kind": "qualification_index_of_existing_sdk_run",
+  "sdk": true,
+  "success": true,
+  "source_execution_report": "evidence/run-20260906T145939542536Z.json",
+  "source_execution_report_sha256": "acb9b95d58cd7b86d1ae18e523ea6579fc4fc80a65511cbc178b7f64b41d0300",
+  "cases": [
+    {
+      "key": "sdk_examples/mesh_pcg_512_4x4",
+      "artifact": "projects/sdk_examples/mesh_pcg_512_4x4/run-20260906T145939542536Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "actors": 16,
+        "epochs": 9,
+        "output_values": 5220,
+        "solver_checks": [
+          {
+            "reason": 0,
+            "iterations": 8,
+            "true_residual": 0.0005390543963285402,
+            "requested_threshold": 0.0013356971295926123,
+            "strict_requested_tolerance_met": true,
+            "rounding_allowance": 6.812055364296577e-05,
+            "original_residual_within_rounding_allowance": true,
+            "spmv_calls": 10,
+            "scalar_collectives": 31
+          },
+          {
+            "reason": 0,
+            "iterations": 0,
+            "true_residual": 0.0,
+            "requested_threshold": 0.0,
+            "strict_requested_tolerance_met": true,
+            "rounding_allowance": 0.0,
+            "original_residual_within_rounding_allowance": true,
+            "spmv_calls": 2,
+            "scalar_collectives": 7
+          },
+          {
+            "reason": 0,
+            "iterations": 0,
+            "true_residual": 0.0,
+            "requested_threshold": 0.002262741642635289,
+            "strict_requested_tolerance_met": true,
+            "rounding_allowance": 0.00011539982383156143,
+            "original_residual_within_rounding_allowance": true,
+            "spmv_calls": 2,
+            "scalar_collectives": 7
+          },
+          {
+            "reason": 1,
+            "iterations": 1,
+            "true_residual": 2.842634369479179,
+            "requested_threshold": 0.0012760567692621926,
+            "strict_requested_tolerance_met": false,
+            "rounding_allowance": 6.507889526460773e-05,
+            "original_residual_within_rounding_allowance": false,
+            "spmv_calls": 3,
+            "scalar_collectives": 10
+          },
+          {
+            "reason": 2,
+            "iterations": 0,
+            "true_residual": 22.627416997969522,
+            "requested_threshold": 0.002262741642635289,
+            "strict_requested_tolerance_met": false,
+            "rounding_allowance": 0.00011539982383156143,
+            "original_residual_within_rounding_allowance": false,
+            "spmv_calls": 3,
+            "scalar_collectives": 9
+          },
+          {
+            "reason": 1,
+            "iterations": 0,
+            "true_residual": 13.501050127697985,
+            "requested_threshold": 0.0013501049786632771,
+            "strict_requested_tolerance_met": false,
+            "rounding_allowance": 6.885535394593366e-05,
+            "original_residual_within_rounding_allowance": false,
+            "spmv_calls": 2,
+            "scalar_collectives": 7
+          },
+          {
+            "reason": 0,
+            "iterations": 8,
+            "true_residual": 0.0005337002856976598,
+            "requested_threshold": 0.001322145838592701,
+            "strict_requested_tolerance_met": true,
+            "rounding_allowance": 6.742943780162797e-05,
+            "original_residual_within_rounding_allowance": true,
+            "spmv_calls": 10,
+            "scalar_collectives": 31
+          },
+          {
+            "reason": 3,
+            "iterations": 0,
+            "true_residual": 2.2627417069722799e-29,
+            "requested_threshold": 2.2627416498106165e-33,
+            "strict_requested_tolerance_met": false,
+            "rounding_allowance": 1.153998241975031e-34,
+            "original_residual_within_rounding_allowance": false,
+            "spmv_calls": 2,
+            "scalar_collectives": 7
+          },
+          {
+            "reason": 0,
+            "iterations": 1,
+            "true_residual": 0.0,
+            "requested_threshold": 0.002262741642635289,
+            "strict_requested_tolerance_met": true,
+            "rounding_allowance": 0.00011539982383156143,
+            "original_residual_within_rounding_allowance": true,
+            "spmv_calls": 3,
+            "scalar_collectives": 12
+          }
+        ],
+        "max_local_cycles": [
+          746608,
+          151280,
+          150955,
+          221581,
+          215686,
+          156128,
+          698652,
+          153927,
+          226939
+        ],
+        "timing_scope": "Maximum local interval of one resident solver launch, excludes host copies; simulator only, not synchronized global latency",
+        "source_sha256": "c346fc5812d857834eed0c2f0c357b45686e4cf5a28d21c07c00a2cf3298282b"
+      }
+    }
+  ]
+}

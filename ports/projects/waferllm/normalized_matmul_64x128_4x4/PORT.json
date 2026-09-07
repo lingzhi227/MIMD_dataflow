@@ -1,0 +1,13 @@
+{
+  "project": "waferllm",
+  "kernel": "normalized_matmul_64x128_4x4",
+  "origins": [
+    "Prefill/src/prefill.csl rmsnorm_x/xq_matmul/matmul_compute",
+    "Prefill/src/comm_lib/comm_pe.csl"
+  ],
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "contract": "Resident row RMSNorm -> projection 64x128 on 4x4 PEs; explicit half accumulation, SDK sqrt, forward two-hop communication and local DSR FMA. Six warm SDK calls, exact normalized tensor/contraction prefixes/results, actual C++ stdout and independent standard mathematical composition checks. Source-compatible shared resources and destructive private alignment, no intermediate host transfer. Matched original-source comparison; counter overhead measured separately at64x128/8x8. Bounded two-operation subgraph, not full QKV/inference or hardware performance.",
+  "status": "source_ready",
+  "partitions": 1,
+  "fixture": "normalized_matmul:64:128"
+}

@@ -1,0 +1,33 @@
+param N:i16;
+param memcpy_params;
+const sys=@import_module("<memcpy/memcpy>",memcpy_params);
+const math=@import_module("<math>");
+var x=@zeros([N]f16);
+var sdk_exp=@zeros([N]f16);
+var source_exp=@zeros([N]f16);
+var sdk_sqrt=@zeros([N]f16);
+var progress=@zeros([1]u16);
+var px:[*]f16=&x;
+var pe:[*]f16=&sdk_exp;
+var ps:[*]f16=&source_exp;
+var pq:[*]f16=&sdk_sqrt;
+var pp:[*]u16=&progress;
+
+// Verbatim function extracted from the read-only pinned Decode source.
+@SOURCE_FAST_EXP@
+
+fn main() void {
+ for(@range(i16,N)) |i| {
+  sdk_exp[i]=math.exp_f16(x[i]);
+  source_exp[i]=fast_exp(x[i]);
+  const positive=if(x[i]<0.0) -x[i] else x[i];
+  sdk_sqrt[i]=math.sqrt_f16(positive);
+ }
+ progress[0]+=1;
+ sys.unblock_cmd_stream();
+}
+comptime {
+ @export_symbol(px,"x");@export_symbol(pe,"sdk_exp");
+ @export_symbol(ps,"source_exp");@export_symbol(pq,"sdk_sqrt");
+ @export_symbol(pp,"progress");@export_symbol(main);
+}

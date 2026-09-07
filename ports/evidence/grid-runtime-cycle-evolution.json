@@ -1,0 +1,36 @@
+{
+  "grid": "4x4x128",
+  "steps": 16,
+  "epochs": 2,
+  "all_step_bits_identical": true,
+  "runs": [
+    {
+      "run": "run-20260906T075007087391Z",
+      "cycles": 1340685,
+      "io_tiles": 32,
+      "fabric": [
+        14,
+        32
+      ]
+    },
+    {
+      "run": "run-20260906T080212071292Z",
+      "cycles": 975565,
+      "io_tiles": 8,
+      "fabric": [
+        14,
+        14
+      ]
+    },
+    {
+      "run": "run-20260906T081445392252Z",
+      "cycles": 393458,
+      "io_tiles": 8,
+      "fabric": [
+        14,
+        14
+      ]
+    }
+  ],
+  "scope": "Total simulator cycles including input/output and instrumentation; multiple runtime changes; not a hand-written SDK baseline."
+}

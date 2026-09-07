@@ -1,0 +1,182 @@
+{
+  "passed": true,
+  "completed_calls_valid": true,
+  "complete": true,
+  "snapshot_only": false,
+  "blocked_down_accumulation": true,
+  "shared_precision_library": true,
+  "preserve_completed_left_ownership": true,
+  "cases": [
+    {
+      "epoch": 0,
+      "target_half_mismatches": {
+        "up": 0,
+        "activated_gate": 0,
+        "output": 0,
+        "gate": 0,
+        "hidden": 0,
+        "up_history": 0,
+        "gate_history": 0,
+        "down_history": 0,
+        "gate_left_owner": 0
+      },
+      "target_f32_accumulator_mismatches": 0,
+      "internal_tensors_observed": true,
+      "gate_abs_max": 0.1683349609375,
+      "standard_relative_l2": 0.0019552703474424466,
+      "standard_peak_scaled_error": 0.002319688044081494,
+      "mathematical_accuracy_passed": true
+    },
+    {
+      "epoch": 1,
+      "target_half_mismatches": {
+        "up": 0,
+        "activated_gate": 0,
+        "output": 0,
+        "gate": 0,
+        "hidden": 0,
+        "up_history": 0,
+        "gate_history": 0,
+        "down_history": 0,
+        "gate_left_owner": 0
+      },
+      "target_f32_accumulator_mismatches": 0,
+      "internal_tensors_observed": true,
+      "gate_abs_max": 0.2083740234375,
+      "standard_relative_l2": 0.0019189879196295815,
+      "standard_peak_scaled_error": 0.001779620675344438,
+      "mathematical_accuracy_passed": true
+    },
+    {
+      "epoch": 2,
+      "target_half_mismatches": {
+        "up": 0,
+        "activated_gate": 0,
+        "output": 0,
+        "gate": 0,
+        "hidden": 0,
+        "up_history": 0,
+        "gate_history": 0,
+        "down_history": 0,
+        "gate_left_owner": 0
+      },
+      "target_f32_accumulator_mismatches": 0,
+      "internal_tensors_observed": true,
+      "gate_abs_max": 0.0,
+      "standard_relative_l2": 0.0,
+      "standard_peak_scaled_error": 0.0,
+      "mathematical_accuracy_passed": true
+    },
+    {
+      "epoch": 3,
+      "target_half_mismatches": {
+        "up": 0,
+        "activated_gate": 0,
+        "output": 0,
+        "gate": 0,
+        "hidden": 0,
+        "up_history": 0,
+        "gate_history": 0,
+        "down_history": 0,
+        "gate_left_owner": 0
+      },
+      "target_f32_accumulator_mismatches": 0,
+      "internal_tensors_observed": true,
+      "gate_abs_max": 1.0,
+      "standard_relative_l2": 0.0014813284992389619,
+      "standard_peak_scaled_error": 0.0021464934537904047,
+      "mathematical_accuracy_passed": true
+    },
+    {
+      "epoch": 4,
+      "target_half_mismatches": {
+        "up": 0,
+        "activated_gate": 0,
+        "output": 0,
+        "gate": 0,
+        "hidden": 0,
+        "up_history": 0,
+        "gate_history": 0,
+        "down_history": 0,
+        "gate_left_owner": 0
+      },
+      "target_f32_accumulator_mismatches": 0,
+      "internal_tensors_observed": true,
+      "gate_abs_max": 0.1610107421875,
+      "standard_relative_l2": 0.0,
+      "standard_peak_scaled_error": 0.0,
+      "mathematical_accuracy_passed": true
+    },
+    {
+      "epoch": 5,
+      "target_half_mismatches": {
+        "up": 0,
+        "activated_gate": 0,
+        "output": 0,
+        "gate": 0,
+        "hidden": 0,
+        "up_history": 0,
+        "gate_history": 0,
+        "down_history": 0,
+        "gate_left_owner": 0
+      },
+      "target_f32_accumulator_mismatches": 0,
+      "internal_tensors_observed": true,
+      "gate_abs_max": 1.0,
+      "standard_relative_l2": 0.002532734960124453,
+      "standard_peak_scaled_error": 0.0025327349601244518,
+      "mathematical_accuracy_passed": true
+    },
+    {
+      "epoch": 6,
+      "target_half_mismatches": {
+        "up": 0,
+        "activated_gate": 0,
+        "output": 0,
+        "gate": 0,
+        "hidden": 0,
+        "up_history": 0,
+        "gate_history": 0,
+        "down_history": 0,
+        "gate_left_owner": 0
+      },
+      "target_f32_accumulator_mismatches": 0,
+      "internal_tensors_observed": true,
+      "gate_abs_max": 1.0,
+      "standard_relative_l2": 0.002532734960124453,
+      "standard_peak_scaled_error": 0.0025327349601244518,
+      "mathematical_accuracy_passed": true
+    },
+    {
+      "epoch": 7,
+      "target_half_mismatches": {
+        "up": 0,
+        "activated_gate": 0,
+        "output": 0,
+        "gate": 0,
+        "hidden": 0,
+        "up_history": 0,
+        "gate_history": 0,
+        "down_history": 0,
+        "gate_left_owner": 0
+      },
+      "target_f32_accumulator_mismatches": 0,
+      "internal_tensors_observed": true,
+      "gate_abs_max": 0.1651611328125,
+      "standard_relative_l2": 0.0,
+      "standard_peak_scaled_error": 0.0,
+      "mathematical_accuracy_passed": true
+    }
+  ],
+  "new_sdk_execution": false,
+  "scope": "Supplied bounded activations and independent rectangular weights. Target half staged contractions/source SiLU checked separately from original-input math.fsum/exp arithmetic. No RMS/residual/full-model or HLS qualification. Original unmodified gate-branch pointer reset may fail; optional repair is explicit.",
+  "hashes": {
+    "evidence/mlp-source-20260907T060650517341Z/provenance.json": "d4bf1e45bffa92a8c405154461f8e573551c8100ce33d74e02961cf4b24411ef",
+    "evidence/mlp-source-20260907T060650517341Z/results.json": "866a6ce926d2041b02d196d74f5c8fea5e6c6d86a66d51cb203a9073d3f97f9f",
+    "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/experiments/analyze_mlp_source.py": "4b165c38cb1f9604b9b6e47ea179cbcb159f62d53f601527d777a0119cdc7acb",
+    "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/toolchain/mesh_twohop.py": "40f0b965109631e0dabe209a82839071653caab9957b8f7bf10713db42c2a9a8",
+    "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/toolchain/mesh_common.py": "e14c281e1757b53e19724d7a65680d5bb780faad10d671c5c52100778363dfb5",
+    "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/toolchain/sdk_math_reference.py": "147102208ff4b9040fcf2ae141319e94d1eb195fe7f4ff15be200504141e30bc",
+    "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/toolchain/binary16.py": "a5de435c8609116a494bf13a387d5d598f239eb250a2504e5c949b4ee15ee431"
+  }
+}

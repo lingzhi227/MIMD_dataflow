@@ -1,0 +1,11 @@
+{
+  "project": "wse_stencil",
+  "kernel": "uvbke-small-apply1",
+  "origins": [
+    "uvbke-small.mlir"
+  ],
+  "fixture": "mlir:uvbke-small-apply1",
+  "contract": "Original stencil.apply scalar expression and offsets; constant integer powers folded. Surrounding distributed field and temporal loop remain unported.",
+  "partitions": 1,
+  "status": "source_ready"
+}

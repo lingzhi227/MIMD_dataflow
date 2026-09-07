@@ -1,0 +1,11 @@
+{
+  "project": "sdk_examples",
+  "kernel": "fft3d_16_4x4_inverse_forward",
+  "origins": [
+    "benchmarks/fft-3d/layout.csl"
+  ],
+  "fixture": "distributed_fft:16:inverse:forward",
+  "partitions": 1,
+  "status": "source_ready",
+  "contract": "SDK-native C2C 16\u00b3 inverse/forward on4x4PEs; 6warm SDK calls, input_layout ownership, 7stages. Native stdout/directDFT and full device normwise/peak-scaled checks; per-component accuracy not implied. Source controls cover forward/backward-norm at16/32/64; other modes have measured local intervals, not individual source-overhead controls. Not full wsFFT/SlideFFT reproduction or hardware performance."
+}

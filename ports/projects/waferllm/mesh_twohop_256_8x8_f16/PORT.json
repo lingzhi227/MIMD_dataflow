@@ -1,0 +1,13 @@
+{
+  "project": "waferllm",
+  "kernel": "mesh_twohop_256_8x8_f16",
+  "origins": [
+    "MeshGEMM/src/meshgemm.csl",
+    "MeshGEMM/src/comm_lib/comm_pe.csl",
+    "MeshGEMM/src/layout.csl"
+  ],
+  "fixture": "half_gemm:256:256:256",
+  "status": "source_ready",
+  "partitions": 1,
+  "contract": "256x256 binary16 fused contraction on8x8 PEs; original two-hop double-buffer/DSR schedule. Six SDK warm calls and3158016 internal half observations pass exact scheduled-bit/ownership/protocol audit; two source-native controls are bit-identical with ~3.25% sampled max-local simulator overhead. Relaxed native K order; not full LLM inference or hardware performance."
+}

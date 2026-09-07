@@ -1,0 +1,12 @@
+{
+  "project": "waferllm",
+  "kernel": "rmsnorm",
+  "origins": [
+    "Prefill/src/prefill.csl",
+    "Decode/src/decode.csl"
+  ],
+  "fixture": "rmsnorm",
+  "contract": "Per-row RMS normalization with weight feature axis and epsilon 1e-6; f32 mathematical profile.",
+  "partitions": 1,
+  "status": "source_ready"
+}

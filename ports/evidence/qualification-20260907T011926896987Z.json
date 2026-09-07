@@ -1,0 +1,690 @@
+{
+  "kind": "qualification_index_of_existing_sdk_runs",
+  "sdk": true,
+  "success": true,
+  "new_sdk_execution": false,
+  "source_controls": [
+    {
+      "path": "evidence/pair-rotation64x128-source-three-call-comparison.json",
+      "sha256": "bea715cb57a1ed4044e3081209adc4da0fa030e68635c9cb0dc8c4a796c6a6f7"
+    }
+  ],
+  "cases": [
+    {
+      "key": "waferllm/pair_rotation_128x1024_8x8_token_even_odd",
+      "artifact": "projects/waferllm/pair_rotation_128x1024_8x8_token_even_odd/run-20260907T003658307965Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_pair_rotation.v1",
+        "epochs": 6,
+        "actors": 64,
+        "instrumentation": "sampled",
+        "internal_half_observations": 1572864,
+        "cases": [
+          {
+            "target_half_bits_exact": true,
+            "numerical": {
+              "contract": "pair-rotation-half-v1",
+              "fixed_accuracy_passed": true,
+              "max_abs_error": 0.0,
+              "max_error_over_allowance": 0.0,
+              "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware, not uniform relative error"
+            },
+            "max_local_cycles": 11036,
+            "cycles_per_pe": [
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ]
+            ]
+          },
+          {
+            "target_half_bits_exact": true,
+            "numerical": {
+              "contract": "pair-rotation-half-v1",
+              "fixed_accuracy_passed": true,
+              "max_abs_error": 0.0,
+              "max_error_over_allowance": 0.0,
+              "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware, not uniform relative error"
+            },
+            "max_local_cycles": 11036,
+            "cycles_per_pe": [
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ]
+            ]
+          },
+          {
+            "target_half_bits_exact": true,
+            "numerical": {
+              "contract": "pair-rotation-half-v1",
+              "fixed_accuracy_passed": true,
+              "max_abs_error": 0.0018558502197265625,
+              "max_error_over_allowance": 0.6156072100546033,
+              "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware, not uniform relative error"
+            },
+            "max_local_cycles": 11036,
+            "cycles_per_pe": [
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ]
+            ]
+          },
+          {
+            "target_half_bits_exact": true,
+            "numerical": {
+              "contract": "pair-rotation-half-v1",
+              "fixed_accuracy_passed": true,
+              "max_abs_error": 0.0,
+              "max_error_over_allowance": 0.0,
+              "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware, not uniform relative error"
+            },
+            "max_local_cycles": 11036,
+            "cycles_per_pe": [
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ]
+            ]
+          },
+          {
+            "target_half_bits_exact": true,
+            "numerical": {
+              "contract": "pair-rotation-half-v1",
+              "fixed_accuracy_passed": true,
+              "max_abs_error": 0.0,
+              "max_error_over_allowance": 0.0,
+              "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware, not uniform relative error"
+            },
+            "max_local_cycles": 11036,
+            "cycles_per_pe": [
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ]
+            ]
+          },
+          {
+            "target_half_bits_exact": true,
+            "numerical": {
+              "contract": "pair-rotation-half-v1",
+              "fixed_accuracy_passed": true,
+              "max_abs_error": 0.0077419281005859375,
+              "max_error_over_allowance": 0.6463111449635253,
+              "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware, not uniform relative error"
+            },
+            "max_local_cycles": 11036,
+            "cycles_per_pe": [
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ],
+              [
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036,
+                11036
+              ]
+            ]
+          }
+        ],
+        "performance_scope": "Local WSE3 simulator interval, no global latency/hardware throughput claim"
+      },
+      "native_application_checks": [
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0,
+          "max_error_over_allowance": 0.0,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        },
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0,
+          "max_error_over_allowance": 0.0,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        },
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0009763240814208984,
+          "max_error_over_allowance": 0.32522995503315594,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        },
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0,
+          "max_error_over_allowance": 0.0,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        },
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0,
+          "max_error_over_allowance": 0.0,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        },
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.00390625,
+          "max_error_over_allowance": 0.32395163631725915,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        }
+      ],
+      "device_application_checks": [
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0,
+          "max_error_over_allowance": 0.0,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        },
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0,
+          "max_error_over_allowance": 0.0,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        },
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0018558502197265625,
+          "max_error_over_allowance": 0.6156072100546033,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        },
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0,
+          "max_error_over_allowance": 0.0,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        },
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0,
+          "max_error_over_allowance": 0.0,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        },
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0077419281005859375,
+          "max_error_over_allowance": 0.6463111449635253,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        }
+      ],
+      "native_application_source": "native-output.txt: actual C++ stdout, independent math.fsum pair-formula review",
+      "qualification_sha256": "fbcda98e5c9e6d0f524db2a03f4425c1240262b595c93543ccc641ceba835a91",
+      "results_sha256": "2dfef818f920169e5ef29b220c4459b1788180e820f6b34cb2b0de587d2cdf54",
+      "numerical_validation": {
+        "contract": "pair-rotation-half-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "componentwise_product_magnitude_term": 0.0015,
+        "absolute_rounding_term": 1.1920928955078125e-07,
+        "scope": "Per output: .0015*(abs(product0)+abs(product1))+2^-23; cancellation-aware, not output-relative or f32 tolerance"
+      }
+    }
+  ]
+}

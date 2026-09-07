@@ -1,0 +1,13 @@
+{
+  "project": "waferllm",
+  "kernel": "score_softmax_64x128_8x8",
+  "origins": [
+    "Prefill/src/prefill.csl score_matmul/matmul_T_compute"
+  ],
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "status": "source_ready",
+  "partitions": 1,
+  "contract": "Resident QK-transpose then stable softmax 64x128 on 8x8 PEs, scale=0.08838834764831845. Typed view/graph composition, vertical K/root reduction followed by row max/sum, shared CSL queues/DSRs/UTs and completed-partial storage reused for exponents. SDK map exp local library; six warm calls, final target half bits and sampled partial/live-owner/logit/exp/statistic audits, immutable inputs and protocol mutations. Actual native/device math.fsum/exp checks under .015L2/.02peak/.01row-mass. Source comparison scoped to matched local simulator interval; no complete attention/hardware claim.",
+  "fixture": "score_softmax:64:128:0.08838834764831845",
+  "instrumentation": "sampled"
+}

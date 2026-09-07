@@ -1,0 +1,11 @@
+{
+  "project": "spada",
+  "kernel": "broadcast",
+  "origins": [
+    "samples/spatial/collectives/broadcast_1D.sptl"
+  ],
+  "fixture": "broadcast",
+  "contract": "Four receiver ports; compiler fanout tree and owned-transfer runtime. Multicast routing policy not identical to upstream.",
+  "partitions": 1,
+  "status": "source_ready"
+}

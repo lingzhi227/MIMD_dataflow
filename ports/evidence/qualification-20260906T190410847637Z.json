@@ -1,0 +1,875 @@
+{
+  "kind": "qualification_index_of_existing_sdk_runs",
+  "sdk": true,
+  "success": true,
+  "cases": [
+    {
+      "key": "waferllm/mesh_grouped_gemv_512_8x8_g4_f16",
+      "artifact": "projects/waferllm/mesh_grouped_gemv_512_8x8_g4_f16/run-20260906T184909163273Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_grouped_gemv.v1",
+        "instrumentation": "counters",
+        "phase_records_observed": false,
+        "compute_timing_observed": false,
+        "epochs": 8,
+        "actors": 64,
+        "internal_half_observations": 0,
+        "cases": [
+          {
+            "final_bits_exact": true,
+            "active_phase_bits_exact": null,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.008618465479230508,
+              "max_error_over_bound": 0.0002613825015970765,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.027765228878706694,
+              "max_error_over_bound": 0.0008246328939412772,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": false,
+            "max_native_abs_difference": 0.03125,
+            "max_local_cycles": 1445,
+            "compute_cycles_median": null,
+            "total_cycles_per_pe": [
+              [
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441
+              ],
+              [
+                1432,
+                1432,
+                1432,
+                1432,
+                1432,
+                1432,
+                1432,
+                1432
+              ],
+              [
+                1431,
+                1431,
+                1431,
+                1431,
+                1431,
+                1431,
+                1431,
+                1431
+              ],
+              [
+                1426,
+                1426,
+                1426,
+                1426,
+                1426,
+                1426,
+                1426,
+                1426
+              ],
+              [
+                1421,
+                1421,
+                1421,
+                1421,
+                1421,
+                1421,
+                1421,
+                1421
+              ],
+              [
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441
+              ],
+              [
+                1445,
+                1445,
+                1445,
+                1445,
+                1445,
+                1445,
+                1445,
+                1445
+              ],
+              [
+                1440,
+                1440,
+                1440,
+                1440,
+                1440,
+                1440,
+                1440,
+                1440
+              ]
+            ]
+          },
+          {
+            "final_bits_exact": true,
+            "active_phase_bits_exact": null,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 1445,
+            "compute_cycles_median": null,
+            "total_cycles_per_pe": [
+              [
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441
+              ],
+              [
+                1432,
+                1432,
+                1432,
+                1432,
+                1432,
+                1432,
+                1432,
+                1432
+              ],
+              [
+                1431,
+                1431,
+                1431,
+                1431,
+                1431,
+                1431,
+                1431,
+                1431
+              ],
+              [
+                1426,
+                1426,
+                1426,
+                1426,
+                1426,
+                1426,
+                1426,
+                1426
+              ],
+              [
+                1421,
+                1421,
+                1421,
+                1421,
+                1421,
+                1421,
+                1421,
+                1421
+              ],
+              [
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441
+              ],
+              [
+                1445,
+                1445,
+                1445,
+                1445,
+                1445,
+                1445,
+                1445,
+                1445
+              ],
+              [
+                1440,
+                1440,
+                1440,
+                1440,
+                1440,
+                1440,
+                1440,
+                1440
+              ]
+            ]
+          },
+          {
+            "final_bits_exact": true,
+            "active_phase_bits_exact": null,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 1445,
+            "compute_cycles_median": null,
+            "total_cycles_per_pe": [
+              [
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441
+              ],
+              [
+                1432,
+                1432,
+                1432,
+                1432,
+                1432,
+                1432,
+                1432,
+                1432
+              ],
+              [
+                1431,
+                1431,
+                1431,
+                1431,
+                1431,
+                1431,
+                1431,
+                1431
+              ],
+              [
+                1426,
+                1426,
+                1426,
+                1426,
+                1426,
+                1426,
+                1426,
+                1426
+              ],
+              [
+                1421,
+                1421,
+                1421,
+                1421,
+                1421,
+                1421,
+                1421,
+                1421
+              ],
+              [
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441
+              ],
+              [
+                1445,
+                1445,
+                1445,
+                1445,
+                1445,
+                1445,
+                1445,
+                1445
+              ],
+              [
+                1440,
+                1440,
+                1440,
+                1440,
+                1440,
+                1440,
+                1440,
+                1440
+              ]
+            ]
+          },
+          {
+            "final_bits_exact": true,
+            "active_phase_bits_exact": null,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 1445,
+            "compute_cycles_median": null,
+            "total_cycles_per_pe": [
+              [
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441
+              ],
+              [
+                1432,
+                1432,
+                1432,
+                1432,
+                1432,
+                1432,
+                1432,
+                1432
+              ],
+              [
+                1431,
+                1431,
+                1431,
+                1431,
+                1431,
+                1431,
+                1431,
+                1431
+              ],
+              [
+                1426,
+                1426,
+                1426,
+                1426,
+                1426,
+                1426,
+                1426,
+                1426
+              ],
+              [
+                1421,
+                1421,
+                1421,
+                1421,
+                1421,
+                1421,
+                1421,
+                1421
+              ],
+              [
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441
+              ],
+              [
+                1445,
+                1445,
+                1445,
+                1445,
+                1445,
+                1445,
+                1445,
+                1445
+              ],
+              [
+                1440,
+                1440,
+                1440,
+                1440,
+                1440,
+                1440,
+                1440,
+                1440
+              ]
+            ]
+          },
+          {
+            "final_bits_exact": true,
+            "active_phase_bits_exact": null,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 1445,
+            "compute_cycles_median": null,
+            "total_cycles_per_pe": [
+              [
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441
+              ],
+              [
+                1432,
+                1432,
+                1432,
+                1432,
+                1432,
+                1432,
+                1432,
+                1432
+              ],
+              [
+                1431,
+                1431,
+                1431,
+                1431,
+                1431,
+                1431,
+                1431,
+                1431
+              ],
+              [
+                1426,
+                1426,
+                1426,
+                1426,
+                1426,
+                1426,
+                1426,
+                1426
+              ],
+              [
+                1421,
+                1421,
+                1421,
+                1421,
+                1421,
+                1421,
+                1421,
+                1421
+              ],
+              [
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441
+              ],
+              [
+                1445,
+                1445,
+                1445,
+                1445,
+                1445,
+                1445,
+                1445,
+                1445
+              ],
+              [
+                1440,
+                1440,
+                1440,
+                1440,
+                1440,
+                1440,
+                1440,
+                1440
+              ]
+            ]
+          },
+          {
+            "final_bits_exact": true,
+            "active_phase_bits_exact": null,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 1445,
+            "compute_cycles_median": null,
+            "total_cycles_per_pe": [
+              [
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441
+              ],
+              [
+                1432,
+                1432,
+                1432,
+                1432,
+                1432,
+                1432,
+                1432,
+                1432
+              ],
+              [
+                1431,
+                1431,
+                1431,
+                1431,
+                1431,
+                1431,
+                1431,
+                1431
+              ],
+              [
+                1426,
+                1426,
+                1426,
+                1426,
+                1426,
+                1426,
+                1426,
+                1426
+              ],
+              [
+                1421,
+                1421,
+                1421,
+                1421,
+                1421,
+                1421,
+                1421,
+                1421
+              ],
+              [
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441
+              ],
+              [
+                1445,
+                1445,
+                1445,
+                1445,
+                1445,
+                1445,
+                1445,
+                1445
+              ],
+              [
+                1440,
+                1440,
+                1440,
+                1440,
+                1440,
+                1440,
+                1440,
+                1440
+              ]
+            ]
+          },
+          {
+            "final_bits_exact": true,
+            "active_phase_bits_exact": null,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.000244140625,
+              "max_error_over_bound": 8.117847659422437e-05,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": false,
+            "max_native_abs_difference": 0.000244140625,
+            "max_local_cycles": 1445,
+            "compute_cycles_median": null,
+            "total_cycles_per_pe": [
+              [
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441
+              ],
+              [
+                1432,
+                1432,
+                1432,
+                1432,
+                1432,
+                1432,
+                1432,
+                1432
+              ],
+              [
+                1431,
+                1431,
+                1431,
+                1431,
+                1431,
+                1431,
+                1431,
+                1431
+              ],
+              [
+                1426,
+                1426,
+                1426,
+                1426,
+                1426,
+                1426,
+                1426,
+                1426
+              ],
+              [
+                1421,
+                1421,
+                1421,
+                1421,
+                1421,
+                1421,
+                1421,
+                1421
+              ],
+              [
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441
+              ],
+              [
+                1445,
+                1445,
+                1445,
+                1445,
+                1445,
+                1445,
+                1445,
+                1445
+              ],
+              [
+                1440,
+                1440,
+                1440,
+                1440,
+                1440,
+                1440,
+                1440,
+                1440
+              ]
+            ]
+          },
+          {
+            "final_bits_exact": true,
+            "active_phase_bits_exact": null,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 1.0019550342130987,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 1445,
+            "compute_cycles_median": null,
+            "total_cycles_per_pe": [
+              [
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441
+              ],
+              [
+                1432,
+                1432,
+                1432,
+                1432,
+                1432,
+                1432,
+                1432,
+                1432
+              ],
+              [
+                1431,
+                1431,
+                1431,
+                1431,
+                1431,
+                1431,
+                1431,
+                1431
+              ],
+              [
+                1426,
+                1426,
+                1426,
+                1426,
+                1426,
+                1426,
+                1426,
+                1426
+              ],
+              [
+                1421,
+                1421,
+                1421,
+                1421,
+                1421,
+                1421,
+                1421,
+                1421
+              ],
+              [
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441,
+                1441
+              ],
+              [
+                1445,
+                1445,
+                1445,
+                1445,
+                1445,
+                1445,
+                1445,
+                1445
+              ],
+              [
+                1440,
+                1440,
+                1440,
+                1440,
+                1440,
+                1440,
+                1440,
+                1440
+              ]
+            ]
+          }
+        ],
+        "contract": "Exact local fused half contraction, active group/global root half addition records and every replicated final result; non-root phase records inactive; relaxed high-level order plus original-product bound"
+      },
+      "qualification_sha256": "816057681d5d0c4b764986da5c93fd01fb5b65a5fd0657a2d5d98afb083708e9"
+    }
+  ]
+}

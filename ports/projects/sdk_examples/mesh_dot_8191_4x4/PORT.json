@@ -1,0 +1,12 @@
+{
+  "project": "sdk_examples",
+  "kernel": "mesh_dot_8191_4x4",
+  "origins": [
+    "benchmarks/conjugate-gradient/src/blas.csl",
+    "benchmarks/conjugate-gradient/src/kernel_cg.csl"
+  ],
+  "fixture": "mesh_reduction:dot:8191",
+  "contract": "dot over 8191 original f32 elements with contiguous 4x4 distribution, zero tail padding, SDK map local arithmetic and replicated SDK row/column scalar collective; standalone reduction, not full CG.",
+  "partitions": 1,
+  "status": "source_ready"
+}

@@ -1,0 +1,50 @@
+{
+  "passed": true,
+  "new_sdk_execution": false,
+  "scope": "Resident corrected RMSNorm -> original Q projection versus HLS composition. Matching inputs, precision, geometry, runtime options and pinned source. HLS prefix observation adds work; original control observes normalized tile but no prefixes. Local WSE3 simulator intervals, no hardware claim.",
+  "cases": [
+    {
+      "target_half_bits_exact": true,
+      "hls_max_local_cycles": 17716,
+      "source_max_local_cycles": 19517,
+      "hls_to_source_ratio": 0.9077214735871292
+    },
+    {
+      "target_half_bits_exact": true,
+      "hls_max_local_cycles": 17721,
+      "source_max_local_cycles": 19522,
+      "hls_to_source_ratio": 0.9077451080831882
+    },
+    {
+      "target_half_bits_exact": true,
+      "hls_max_local_cycles": 17716,
+      "source_max_local_cycles": 19517,
+      "hls_to_source_ratio": 0.9077214735871292
+    },
+    {
+      "target_half_bits_exact": true,
+      "hls_max_local_cycles": 17716,
+      "source_max_local_cycles": 19517,
+      "hls_to_source_ratio": 0.9077214735871292
+    },
+    {
+      "target_half_bits_exact": true,
+      "hls_max_local_cycles": 17716,
+      "source_max_local_cycles": 19517,
+      "hls_to_source_ratio": 0.9077214735871292
+    },
+    {
+      "target_half_bits_exact": true,
+      "hls_max_local_cycles": 17716,
+      "source_max_local_cycles": 19517,
+      "hls_to_source_ratio": 0.9077214735871292
+    }
+  ],
+  "hashes": {
+    "projects/waferllm/normalized_matmul_64x128_8x8/run-20260906T230645382091Z/manifest.json": "873187de5a3941220bf6ebe2721bdf0544f3ce846fb033cd6150f25fbd0b8814",
+    "projects/waferllm/normalized_matmul_64x128_8x8/run-20260906T230645382091Z/results.json": "898d661cef72a5b042e948d81b542b17ec8737ab71f318aec751fec5b0688b47",
+    "evidence/prefill-rms-projection-20260906T225814493888Z/provenance.json": "8ec9bd45733fec29ae07231a6015db5ec2e190aee59b33f01eb45813c6f71fdd",
+    "evidence/prefill-rms-projection-20260906T225814493888Z/results.json": "b5e8ed59462895c8cdd54a78ea3d8ccf74f1ac10c8a386b85d35e0c0d039780f",
+    "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/experiments/compare_normalized_matmul_source.py": "161d11fc94eaa5087b796918edda6cdc0c5658ddd0a63a8f964e1387002d4ec8"
+  }
+}

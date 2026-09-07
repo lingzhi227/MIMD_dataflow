@@ -1,0 +1,12 @@
+{
+  "project": "matrix_algorithms",
+  "kernel": "mesh_qr_128x128_8x8",
+  "origins": [
+    "QR_factorization/many_elements_per_pe/pe_program.csl",
+    "QR_factorization/many_elements_per_pe/layout.csl"
+  ],
+  "fixture": "mesh_qr:128:128",
+  "contract": "Blocked neighboring-row Givens QR with east coefficient broadcast; R-only upper trapezoid with unspecified row signs. Full column rank, cond2<=10000 and native pivot margin required before SDK. Original directed SDK2.10.1 migration plus warm reset and sampled rotation witnesses. Q is not a device output.",
+  "partitions": 1,
+  "status": "source_ready"
+}

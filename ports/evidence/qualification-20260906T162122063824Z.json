@@ -1,0 +1,251 @@
+{
+  "kind": "qualification_index_of_existing_sdk_run",
+  "sdk": true,
+  "success": true,
+  "source_execution_report": "evidence/run-20260906T161021057910Z.json",
+  "source_execution_report_sha256": "1a1d25ce696c04b9c0d5a1fe4fb830b386b07e743d2239a77acc281f4a281caa",
+  "cases": [
+    {
+      "key": "sdk_examples/mesh_power_512_4x4",
+      "artifact": "projects/sdk_examples/mesh_power_512_4x4/run-20260906T161021057910Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_power.v1",
+        "epochs": 8,
+        "cases": [
+          {
+            "reason": 0,
+            "completed_steps": 16,
+            "attempts": 16,
+            "operator_witness_active": true,
+            "cycles": 1119183,
+            "rayleigh_quotient": 1.9999998810235553,
+            "eigen_residual": 0.0003449296228968038,
+            "dominance_certified": false
+          },
+          {
+            "reason": 1,
+            "completed_steps": 0,
+            "attempts": 1,
+            "operator_witness_active": true,
+            "cycles": 67183,
+            "rayleigh_quotient": 0.0,
+            "eigen_residual": 0.0,
+            "dominance_certified": false
+          },
+          {
+            "reason": 1,
+            "completed_steps": 0,
+            "attempts": 1,
+            "operator_witness_active": true,
+            "cycles": 66991,
+            "rayleigh_quotient": null,
+            "eigen_residual": null,
+            "dominance_certified": false
+          },
+          {
+            "reason": 0,
+            "completed_steps": 0,
+            "attempts": 0,
+            "operator_witness_active": false,
+            "cycles": 2446,
+            "rayleigh_quotient": 2.226832683877253,
+            "eigen_residual": 7.510895646188408,
+            "dominance_certified": false
+          },
+          {
+            "reason": 0,
+            "completed_steps": 3,
+            "attempts": 3,
+            "operator_witness_active": true,
+            "cycles": 196373,
+            "rayleigh_quotient": -2.0,
+            "eigen_residual": 0.0,
+            "dominance_certified": false
+          },
+          {
+            "reason": 0,
+            "completed_steps": 4,
+            "attempts": 4,
+            "operator_witness_active": true,
+            "cycles": 271562,
+            "rayleigh_quotient": -2.0,
+            "eigen_residual": 0.0,
+            "dominance_certified": false
+          },
+          {
+            "reason": 0,
+            "completed_steps": 2,
+            "attempts": 2,
+            "operator_witness_active": true,
+            "cycles": 132428,
+            "rayleigh_quotient": 1.0,
+            "eigen_residual": 0.0,
+            "dominance_certified": false
+          },
+          {
+            "reason": 0,
+            "completed_steps": 4,
+            "attempts": 4,
+            "operator_witness_active": true,
+            "cycles": 281588,
+            "rayleigh_quotient": 3.530719369219698,
+            "eigen_residual": 0.47077523135718813,
+            "dominance_certified": false
+          }
+        ],
+        "contract": "fixed steps; completion does not certify eigenpair convergence"
+      },
+      "native_application_checks": [
+        {
+          "contract": "original-CSC-fixed-power-v1",
+          "passed": true,
+          "reason": 0,
+          "completed_steps": 16,
+          "rayleigh_quotient": 1.9999998810235553,
+          "eigen_residual": 0.00034492962289680386,
+          "dominance_certified": false
+        },
+        {
+          "contract": "original-CSC-fixed-power-v1",
+          "passed": true,
+          "reason": 1,
+          "completed_steps": 0,
+          "rayleigh_quotient": 0.0,
+          "eigen_residual": 0.0,
+          "dominance_certified": false
+        },
+        {
+          "contract": "original-CSC-fixed-power-v1",
+          "passed": true,
+          "reason": 1,
+          "completed_steps": 0,
+          "rayleigh_quotient": null,
+          "eigen_residual": null,
+          "dominance_certified": false
+        },
+        {
+          "contract": "original-CSC-fixed-power-v1",
+          "passed": true,
+          "reason": 0,
+          "completed_steps": 0,
+          "rayleigh_quotient": 2.226832683877253,
+          "eigen_residual": 7.510895646188408,
+          "dominance_certified": false
+        },
+        {
+          "contract": "original-CSC-fixed-power-v1",
+          "passed": true,
+          "reason": 0,
+          "completed_steps": 3,
+          "rayleigh_quotient": -2.0,
+          "eigen_residual": 0.0,
+          "dominance_certified": false
+        },
+        {
+          "contract": "original-CSC-fixed-power-v1",
+          "passed": true,
+          "reason": 0,
+          "completed_steps": 4,
+          "rayleigh_quotient": -2.0,
+          "eigen_residual": 0.0,
+          "dominance_certified": false
+        },
+        {
+          "contract": "original-CSC-fixed-power-v1",
+          "passed": true,
+          "reason": 0,
+          "completed_steps": 2,
+          "rayleigh_quotient": 1.0,
+          "eigen_residual": 0.0,
+          "dominance_certified": false
+        },
+        {
+          "contract": "original-CSC-fixed-power-v1",
+          "passed": true,
+          "reason": 0,
+          "completed_steps": 4,
+          "rayleigh_quotient": 3.530719368117103,
+          "eigen_residual": 0.4707752277909196,
+          "dominance_certified": false
+        }
+      ],
+      "device_application_checks": [
+        {
+          "contract": "original-CSC-fixed-power-v1",
+          "passed": true,
+          "reason": 0,
+          "completed_steps": 16,
+          "rayleigh_quotient": 1.9999998810235553,
+          "eigen_residual": 0.00034492962289680386,
+          "dominance_certified": false
+        },
+        {
+          "contract": "original-CSC-fixed-power-v1",
+          "passed": true,
+          "reason": 1,
+          "completed_steps": 0,
+          "rayleigh_quotient": 0.0,
+          "eigen_residual": 0.0,
+          "dominance_certified": false
+        },
+        {
+          "contract": "original-CSC-fixed-power-v1",
+          "passed": true,
+          "reason": 1,
+          "completed_steps": 0,
+          "rayleigh_quotient": null,
+          "eigen_residual": null,
+          "dominance_certified": false
+        },
+        {
+          "contract": "original-CSC-fixed-power-v1",
+          "passed": true,
+          "reason": 0,
+          "completed_steps": 0,
+          "rayleigh_quotient": 2.226832683877253,
+          "eigen_residual": 7.510895646188408,
+          "dominance_certified": false
+        },
+        {
+          "contract": "original-CSC-fixed-power-v1",
+          "passed": true,
+          "reason": 0,
+          "completed_steps": 3,
+          "rayleigh_quotient": -2.0,
+          "eigen_residual": 0.0,
+          "dominance_certified": false
+        },
+        {
+          "contract": "original-CSC-fixed-power-v1",
+          "passed": true,
+          "reason": 0,
+          "completed_steps": 4,
+          "rayleigh_quotient": -2.0,
+          "eigen_residual": 0.0,
+          "dominance_certified": false
+        },
+        {
+          "contract": "original-CSC-fixed-power-v1",
+          "passed": true,
+          "reason": 0,
+          "completed_steps": 2,
+          "rayleigh_quotient": 1.0,
+          "eigen_residual": 0.0,
+          "dominance_certified": false
+        },
+        {
+          "contract": "original-CSC-fixed-power-v1",
+          "passed": true,
+          "reason": 0,
+          "completed_steps": 4,
+          "rayleigh_quotient": 3.530719369219698,
+          "eigen_residual": 0.47077523135718813,
+          "dominance_certified": false
+        }
+      ]
+    }
+  ]
+}

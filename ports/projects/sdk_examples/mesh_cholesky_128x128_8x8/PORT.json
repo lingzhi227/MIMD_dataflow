@@ -1,0 +1,13 @@
+{
+  "project": "sdk_examples",
+  "kernel": "mesh_cholesky_128x128_8x8",
+  "origins": [
+    "benchmarks/cholesky/pe.csl",
+    "benchmarks/cholesky/layout.csl",
+    "benchmarks/cholesky/launch.csl"
+  ],
+  "fixture": "mesh_cholesky:128",
+  "contract": "Lower SPD right-looking distributed Cholesky; native SDK DSD rank-1 updates, row switches and column multicast. Same runtime prepare barrier resets switches and DSDs. Fixed factor and LLT residual checks. No pivoting or ill-conditioned accuracy guarantee.",
+  "partitions": 1,
+  "status": "source_ready"
+}

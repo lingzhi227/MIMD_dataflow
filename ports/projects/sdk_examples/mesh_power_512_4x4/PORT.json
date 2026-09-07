@@ -1,0 +1,14 @@
+{
+  "project": "sdk_examples",
+  "kernel": "mesh_power_512_4x4",
+  "origins": [
+    "benchmarks/power-method/src/kernel_power.csl",
+    "benchmarks/spmv-hypersparse/src/hypersparse_spmv/pe.csl"
+  ],
+  "status": "source_ready",
+  "contract": "SDK-style fixed-step normalized power iteration on general CSC512/4608stored entries/4x4 PEs,32step capacity. Resident train SpMV, transpose, stable global norm and DSD scaling. Zero steps preserves initial vector; zero norm preserves last completed iterate. Completion is not eigenpair convergence.",
+  "fixture": "mesh_power:512",
+  "partitions": 1,
+  "validation": "Eight native/SDK2.10.1 warm calls pass original-CSC step replay, stable normalization and protocol audit.14 coherent mutations rejected. Same-schedule scalar normalization control ratios1.00916 and1.00908, maximum-local simulator intervals only.",
+  "remaining": "Original seven-point schedule, larger extents, overflow trajectories, hardware/global performance.43632static bytes is not stack high-water."
+}

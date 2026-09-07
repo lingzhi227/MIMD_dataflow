@@ -1,0 +1,11 @@
+{
+  "project": "sdk_examples",
+  "kernel": "pcg_jacobi",
+  "origins": [
+    "benchmarks/preconditioned-conjugate-gradient/src/kernel_pcg.csl"
+  ],
+  "fixture": "cg",
+  "contract": "Source Jacobi-PCG recurrence, zero initial x, at most eight iterations, small tridiagonal specialization of structured operator. Distributed SpMV/reduction scheduling pending.",
+  "partitions": 1,
+  "status": "source_ready"
+}

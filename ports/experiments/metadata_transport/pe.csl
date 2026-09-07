@@ -1,0 +1,63 @@
+param memcpy_params;
+param sender: bool;
+param length: u16;
+param offset: u16;
+param delay: u16;
+param exact_length: u16;
+const stage_mod=@import_module("u16_transport.csl",.{.capacity=64});
+const sys = @import_module("<memcpy/memcpy>",memcpy_params);
+const step = @get_local_task_id(10);
+var state: u16 = 0;
+var header = [1]u16{length};
+var markers = @zeros([64]u16);
+var received = @zeros([64]u16);
+var payload = [3]f32{1.25,-2.5,7.75};
+var sentinel = @zeros([3]f32);
+var p_received:[*]u16=&received;
+var p_sentinel:[*]f32=&sentinel;
+var spins: u16 = 0;
+var wire = @zeros([32]u32);
+const wd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{(length+1)/2}->wire[i]});
+const tx=@get_dsd(fabout_dsd,.{.extent=1,.output_queue=@get_output_queue(3)});
+const rx=@get_dsd(fabin_dsd,.{.extent=1,.input_queue=@get_input_queue(2)});
+const td=@get_dsr(dsr_dest,2);
+const ts=@get_dsr(dsr_src1,3);
+const rd=@get_dsr(dsr_dest,4);
+const rs=@get_dsr(dsr_src1,2);
+const hd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{1}->header[i]});
+const md=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{length}->markers[i]});
+const od=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{64}->received[i]});
+const pd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{3}->payload[i]});
+const sd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{3}->sentinel[i]});
+fn main() void {
+ for (@range(u16,64)) |i| { markers[i]=1000+i; }
+ stage_mod.stage(&markers,offset,length,&wire);
+ state=0;spins=0;@activate(step);
+}
+task advance() void {
+ if (!sender and spins<delay) { spins+=1;@activate(step);return; }
+ if (state==3) {
+ if(!sender and exact_length==2) {for(@range(u16,length)) |i| {received[i]=@as(u16,wire[i/2] >> (16*(i%2)));}}
+ sys.unblock_cmd_stream();return;}
+ if (sender) {
+  @load_to_dsr(td,tx,.{.ut_id=@get_ut_id(3),.async=true,.activate=step});
+  if (state==0) { @load_to_dsr(ts,hd);state=1;@mov16(td,ts,.{.async=true}); }
+  else if (state==1 and exact_length==3) {const a=@set_dsd_base_addr(md,@ptrcast([*]u16,&wire));@load_to_dsr(ts,a);state=2;@mov16(td,ts,.{.async=true});}
+  else if (state==1 and exact_length==2) {@load_to_dsr(ts,wd);state=2;@mov32(td,ts,.{.async=true});}
+  else if (state==1) {if(exact_length != 0){const t=@set_dsd_length(tx,length);@load_to_dsr(td,t,.{.ut_id=@get_ut_id(3),.async=true,.activate=step});}const d=@increment_dsd_offset(md,@as(i16,offset),u16);@load_to_dsr(ts,d);state=2;@mov16(td,ts,.{.async=true});}
+  else {@load_to_dsr(ts,pd);state=3;@mov32(td,ts,.{.async=true});}
+ } else {
+  if (state==0) {@load_to_dsr(rs,rx,.{.async=true,.activate=step});@load_to_dsr(rd,hd);state=1;@mov16(rd,rs,.{.async=true});}
+  else if(state==1 and exact_length==2) {const d=@set_dsd_length(rx,(header[0]+1)/2);@load_to_dsr(rs,d,.{.async=true,.activate=step});@load_to_dsr(rd,wd);state=2;@mov32(rd,rs,.{.async=true});}
+  else if(state==1) {const d=@set_dsd_length(rx,header[0]);@load_to_dsr(rs,d,.{.async=true,.activate=step});@load_to_dsr(rd,od);state=2;@mov16(rd,rs,.{.async=true});}
+  else {const d=@set_dsd_length(rx,3);@load_to_dsr(rs,d,.{.async=true,.activate=step});@load_to_dsr(rd,sd);state=3;@mov32(rd,rs,.{.async=true});}
+ }
+}
+comptime {
+ @initialize_queue(@get_output_queue(3),.{.color=@get_color(3)});
+ @initialize_queue(@get_input_queue(2),.{.color=@get_color(3)});
+ @bind_local_task(advance,step);
+ @export_symbol(main);
+ @export_symbol(p_received,"received");
+ @export_symbol(p_sentinel,"sentinel");
+}

@@ -1,0 +1,73 @@
+{
+  "passed": true,
+  "new_sdk_execution": false,
+  "source_bundle": "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/projects/waferllm/rmsnorm_128x2048_8x16/run-20260906T214710421604Z",
+  "results_sha256": "07e38420a635b6b7124deb53a63e8181fe44a0ce9dad11294c5a013d4bfe6b05",
+  "mutations": [
+    {
+      "name": "coherent_result",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 262144 (0.000381%)\nMismatch at index:\n [0, 0]: 15076 (ACTUAL), 15077 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 6.63261922e-05\n ACTUAL: array([[15076, 48512, 44887, ..., 46804, 46835,  9169],\n       [48177, 15171, 46042, ..., 44227, 13132, 12513],\n       [47960, 14834, 14315, ...,  6455, 43757, 43123],...\n DESIRED: array([[15077, 48512, 44887, ..., 46804, 46835,  9169],\n       [48177, 15171, 46042, ..., 44227, 13132, 12513],\n       [47960, 14834, 14315, ...,  6455, 43757, 43123],..."
+    },
+    {
+      "name": "stale_zero",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 262144 (0.000381%)\nMismatch at index:\n [0, 0]: 32769 (ACTUAL), 32768 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 3.05175781e-05\n ACTUAL: array([[32769, 32768, 32768, ..., 32768, 32768, 32768],\n       [32768, 32768, 32768, ..., 32768, 32768, 32768],\n       [32768, 32768, 32768, ..., 32768, 32768, 32768],...\n DESIRED: array([[32768, 32768, 32768, ..., 32768, 32768, 32768],\n       [32768, 32768, 32768, ..., 32768, 32768, 32768],\n       [32768, 32768, 32768, ..., 32768, 32768, 32768],..."
+    },
+    {
+      "name": "input_corruption",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 262144 (0.000381%)\nMismatch at index:\n [0, 0, 0]: 0 (ACTUAL), 46057 (DESIRED)\nMax absolute difference among violations: 19479\nMax relative difference among violations: 0.42293245\n ACTUAL: array([[[    0, 13536, 13377, ..., 12903, 46957, 11129],\n        [13952, 12454, 47016, ..., 10268, 13331, 46816],\n        [14013, 13366, 46832, ..., 12699, 14273,  9259],...\n DESIRED: array([[[46057, 13536, 13377, ..., 12903, 46957, 11129],\n        [13952, 12454, 47016, ..., 10268, 13331, 46816],\n        [14013, 13366, 46832, ..., 12699, 14273,  9259],..."
+    },
+    {
+      "name": "weight_axis",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 16384 (0.0061%)\nMismatch at index:\n [0, 1, 0]: 48128 (ACTUAL), 12288 (DESIRED)\nMax absolute difference among violations: 29696\nMax relative difference among violations: 2.41666667\n ACTUAL: array([[[48128, 47872, 47616, ..., 46080, 45056,     0],\n        [48128, 13312, 13824, ..., 15104, 15360, 48128],\n        [47872, 47616, 47360, ..., 45056,     0, 12288],...\n DESIRED: array([[[48128, 47872, 47616, ..., 46080, 45056,     0],\n        [12288, 13312, 13824, ..., 15104, 15360, 48128],\n        [47872, 47616, 47360, ..., 45056,     0, 12288],..."
+    },
+    {
+      "name": "missing_phase",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 640 (0.156%)\nMismatch at index:\n [0, 0, 1]: 0 (ACTUAL), 1 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 1.\n ACTUAL: array([[[1, 0, 1, 1, 1],\n        [1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1],...\n DESIRED: array([[[1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1],..."
+    },
+    {
+      "name": "stale_epoch",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 640 (0.156%)\nMismatch at index:\n [0, 0, 4]: 1 (ACTUAL), 2 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.5\n ACTUAL: array([[[1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 2],\n        [1, 1, 1, 1, 2],...\n DESIRED: array([[[1, 1, 1, 1, 2],\n        [1, 1, 1, 1, 2],\n        [1, 1, 1, 1, 2],..."
+    },
+    {
+      "name": "undrained_queue",
+      "rejected": true,
+      "error": "RMS drained owned queues"
+    },
+    {
+      "name": "bad_timestamp",
+      "rejected": true,
+      "error": "RMS bounded local interval"
+    },
+    {
+      "name": "missing_call",
+      "rejected": true,
+      "error": "RMS lifecycle"
+    },
+    {
+      "name": "invalid_half_word",
+      "rejected": true,
+      "error": "RMS diagnostic words result"
+    },
+    {
+      "name": "bad_statistic_0",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 6144 (0.0163%)\nMismatch at index:\n [0, 0, 0, 0]: 65535 (ACTUAL), 18766 (DESIRED)\nMax absolute difference among violations: 18767\nMax relative difference among violations: 1.00005329\n ACTUAL: array([[[[65535, 18686, 18839, ..., 18677, 18661, 18846],\n         [22851, 22890, 22878, ..., 22881, 22883, 22868],\n         [17145, 17121, 17128, ..., 17127, 17125, 17134]],...\n DESIRED: array([[[[18766, 18686, 18839, ..., 18677, 18661, 18846],\n         [22851, 22890, 22878, ..., 22881, 22883, 22868],\n         [17145, 17121, 17128, ..., 17127, 17125, 17134]],..."
+    },
+    {
+      "name": "bad_statistic_1",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 6144 (0.0163%)\nMismatch at index:\n [0, 0, 1, 0]: 65535 (ACTUAL), 22851 (DESIRED)\nMax absolute difference among violations: 22852\nMax relative difference among violations: 1.00004376\n ACTUAL: array([[[[18766, 18686, 18839, ..., 18677, 18661, 18846],\n         [65535, 22890, 22878, ..., 22881, 22883, 22868],\n         [17145, 17121, 17128, ..., 17127, 17125, 17134]],...\n DESIRED: array([[[[18766, 18686, 18839, ..., 18677, 18661, 18846],\n         [22851, 22890, 22878, ..., 22881, 22883, 22868],\n         [17145, 17121, 17128, ..., 17127, 17125, 17134]],..."
+    },
+    {
+      "name": "bad_statistic_2",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 6144 (0.0163%)\nMismatch at index:\n [0, 0, 2, 0]: 65535 (ACTUAL), 17145 (DESIRED)\nMax absolute difference among violations: 17146\nMax relative difference among violations: 1.00005833\n ACTUAL: array([[[[18766, 18686, 18839, ..., 18677, 18661, 18846],\n         [22851, 22890, 22878, ..., 22881, 22883, 22868],\n         [65535, 17121, 17128, ..., 17127, 17125, 17134]],...\n DESIRED: array([[[[18766, 18686, 18839, ..., 18677, 18661, 18846],\n         [22851, 22890, 22878, ..., 22881, 22883, 22868],\n         [17145, 17121, 17128, ..., 17127, 17125, 17134]],..."
+    }
+  ]
+}

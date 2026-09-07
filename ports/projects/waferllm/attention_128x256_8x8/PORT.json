@@ -1,0 +1,13 @@
+{
+  "project": "waferllm",
+  "kernel": "attention_128x256_8x8",
+  "origins": [
+    "Prefill/src/prefill.csl score_matmul/matmul_T_compute"
+  ],
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "status": "source_ready",
+  "partitions": 1,
+  "contract": "Resident supplied-Q/K/V unmasked single-head attention 128x256 on 8x8 PEs. Typed transpose/matmul/softmax/matmul composition; no intermediate host transfer. Source-derived score root reduction, SDK map normalization, device V prealignment/strided DSD. Explicit descriptor reset and completed-storage reuse. Six SDK calls, immutable inputs, exact score/probability/value-prefix and live-owner witnesses in sampled mode; counter mode omits internal tensor observations, coherent mutation rejections, actual native/device independent original-input math. Matching adapted-source control; no full prefill/decode/model/hardware claim.",
+  "fixture": "attention:128:256:0.0625",
+  "instrumentation": "counters"
+}

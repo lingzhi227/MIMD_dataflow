@@ -1,0 +1,155 @@
+{
+  "version": "hls.ports.f32.v1",
+  "nodes": [
+    {
+      "id": "q",
+      "op": "input",
+      "shape": [
+        64,
+        128
+      ],
+      "inputs": [],
+      "line": 3,
+      "dtype": "f16",
+      "host": "q"
+    },
+    {
+      "id": "k",
+      "op": "input",
+      "shape": [
+        64,
+        128
+      ],
+      "inputs": [],
+      "line": 4,
+      "dtype": "f16",
+      "host": "k"
+    },
+    {
+      "id": "v",
+      "op": "input",
+      "shape": [
+        64,
+        128
+      ],
+      "inputs": [],
+      "line": 5,
+      "dtype": "f16",
+      "host": "v"
+    },
+    {
+      "id": "kt",
+      "op": "transpose",
+      "shape": [
+        128,
+        64
+      ],
+      "inputs": [
+        "k"
+      ],
+      "line": 6,
+      "dtype": "f16"
+    },
+    {
+      "id": "score",
+      "op": "matmul",
+      "shape": [
+        64,
+        64
+      ],
+      "inputs": [
+        "q",
+        "kt"
+      ],
+      "line": 8,
+      "dtype": "f16",
+      "dataflow": {
+        "rows": 8,
+        "cols": 8,
+        "exchange": "vertical_two_hop",
+        "reduce": "rotating_root",
+        "order": "east_first",
+        "overlap": "double_buffer",
+        "compute": "dsr",
+        "fp": "relaxed"
+      }
+    },
+    {
+      "id": "probability",
+      "op": "softmax",
+      "shape": [
+        64,
+        64
+      ],
+      "inputs": [
+        "score"
+      ],
+      "line": 10,
+      "dtype": "f16",
+      "scale": 0.08838834764831845,
+      "dataflow": {
+        "rows": 8,
+        "cols": 8,
+        "partition": "tiles",
+        "reduce": "max_sum",
+        "accumulation": "f16",
+        "math": "sdk_half",
+        "compute": "dsr",
+        "fp": "relaxed",
+        "elementwise": "map"
+      }
+    },
+    {
+      "id": "output",
+      "op": "matmul",
+      "shape": [
+        64,
+        128
+      ],
+      "inputs": [
+        "probability",
+        "v"
+      ],
+      "line": 12,
+      "dtype": "f16",
+      "dataflow": {
+        "rows": 8,
+        "cols": 8,
+        "exchange": "two_hop",
+        "initial_align": "both_axes",
+        "reduce": "local",
+        "overlap": "double_buffer",
+        "fp": "relaxed",
+        "compute": "dsr"
+      }
+    },
+    {
+      "id": "sink7",
+      "op": "output",
+      "shape": null,
+      "inputs": [
+        "output"
+      ],
+      "line": 13,
+      "host": "output"
+    }
+  ],
+  "states": {},
+  "source": "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/projects/waferllm/attention_64x128_8x8/hls.cpp",
+  "source_sha256": "ca28ec37863a60b23391ada5e218f5e396a5d67c16a83fb6bf3edaae0d07cdfc",
+  "frontend_command": [
+    "clang++",
+    "-std=c++17",
+    "-Werror",
+    "-Wno-unknown-pragmas",
+    "-I",
+    "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/toolchain/include",
+    "-Xclang",
+    "-ast-dump=json",
+    "-Xclang",
+    "-ast-dump-filter=design",
+    "-fsyntax-only",
+    "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/projects/waferllm/attention_64x128_8x8/hls.cpp"
+  ],
+  "clang_version": "Apple clang version 21.0.0 (clang-2100.1.1.101)"
+}

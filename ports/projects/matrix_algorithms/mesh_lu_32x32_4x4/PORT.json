@@ -1,0 +1,12 @@
+{
+  "project": "matrix_algorithms",
+  "kernel": "mesh_lu_32x32_4x4",
+  "origins": [
+    "lu_factorization/many_elements_per_pe/pe_program.csl",
+    "lu_factorization/many_elements_per_pe/layout.csl"
+  ],
+  "fixture": "mesh_lu:32",
+  "contract": "Blocked distributed no-pivot LU with packed multipliers/U; requires strictly row diagonally dominant finite input. Original prefix elimination, division/signal data tasks, SDK2.10.1 single-RX route migration and explicit warm reset. No hidden diagonal adjustment.",
+  "partitions": 1,
+  "status": "source_ready"
+}

@@ -1,0 +1,122 @@
+{
+  "scope": "linked static SRAM sections by ELF class; not runtime stack usage",
+  "elf_classes": 3,
+  "max_static_high_water_bytes": 9472,
+  "min_unallocated_static_bytes": 39680,
+  "classes": [
+    {
+      "elf": "out_0_0.elf",
+      "sha256": "1baa98143224513ccec510769ff0d6a4f7492dece53135f023f927f0d30e6a7a",
+      "sections": [
+        {
+          "name": ".data.lo",
+          "start": 0,
+          "size": 96
+        },
+        {
+          "name": ".text",
+          "start": 96,
+          "size": 3504
+        },
+        {
+          "name": ".data",
+          "start": 3600,
+          "size": 68
+        },
+        {
+          "name": ".bss",
+          "start": 3668,
+          "size": 4780
+        },
+        {
+          "name": ".task_table",
+          "start": 8448,
+          "size": 1024
+        },
+        {
+          "name": ".data.hi",
+          "start": 9472,
+          "size": 0
+        }
+      ],
+      "static_high_water_bytes": 9472,
+      "unallocated_static_bytes": 39680
+    },
+    {
+      "elf": "out_1_0.elf",
+      "sha256": "e3fb0c2e526a82d22769139dc1a6f2cd8e95ff6f7c2281820b83d978c3cd2c85",
+      "sections": [
+        {
+          "name": ".data.lo",
+          "start": 0,
+          "size": 96
+        },
+        {
+          "name": ".text",
+          "start": 96,
+          "size": 3504
+        },
+        {
+          "name": ".data",
+          "start": 3600,
+          "size": 68
+        },
+        {
+          "name": ".bss",
+          "start": 3668,
+          "size": 4780
+        },
+        {
+          "name": ".task_table",
+          "start": 8448,
+          "size": 1024
+        },
+        {
+          "name": ".data.hi",
+          "start": 9472,
+          "size": 0
+        }
+      ],
+      "static_high_water_bytes": 9472,
+      "unallocated_static_bytes": 39680
+    },
+    {
+      "elf": "out_2_0.elf",
+      "sha256": "cbf5f33e857f091afcd34c24fdeef427d39c2ff3c7f5ca5aaf00ef702fea5054",
+      "sections": [
+        {
+          "name": ".data.lo",
+          "start": 0,
+          "size": 96
+        },
+        {
+          "name": ".text",
+          "start": 96,
+          "size": 3504
+        },
+        {
+          "name": ".data",
+          "start": 3600,
+          "size": 68
+        },
+        {
+          "name": ".bss",
+          "start": 3668,
+          "size": 4780
+        },
+        {
+          "name": ".task_table",
+          "start": 8448,
+          "size": 1024
+        },
+        {
+          "name": ".data.hi",
+          "start": 9472,
+          "size": 0
+        }
+      ],
+      "static_high_water_bytes": 9472,
+      "unallocated_static_bytes": 39680
+    }
+  ]
+}

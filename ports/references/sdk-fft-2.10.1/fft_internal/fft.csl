@@ -1,0 +1,191 @@
+const fft_normalization = enum(i16){backward, ortho, forward};
+const fft_direction = enum(i16){CSFFT_FORWARD, CSFFT_INVERSE};
+
+param tensor_type: type;
+
+// Problem size
+param N: u16;
+const N_signed: i16 = @as(i16, N);
+
+const dsd_ops = @import_module("<dsd_ops>");
+const math = @import_module("<math>");
+
+// How many 1D FFT pencils in array
+param NUM_PENCILS: u16;
+
+//This is required because the import of reshape is difference in WS mode
+param ws_mode: bool = false;
+const reshape_module = if (ws_mode) "<ws-modules/fft/reshape>" else "<kernels/fft/fft_internal/reshape>";
+const reshape = @import_module(reshape_module, .{
+  .N = N,
+  .tensor_type = tensor_type,
+  .src_dsr = imag_src_dsr,
+  .dest_dsr = imag_dst_dsr
+});
+
+param X_s0_dsr: dsr_src0;
+param Xaux_dest_dsr: dsr_dest;
+param imag_dst_dsr: dsr_dest;
+param real_dst_dsr: dsr_dest;
+param imag_s0_dsr: dsr_src0;
+param real_s0_dsr: dsr_src0;
+param real_src_dsr: dsr_src1;
+param imag_src_dsr: dsr_src1;
+
+var X_addr: [*]tensor_type;
+var Xaux_addr: [*]tensor_type;
+var Xodd_addr: [*]tensor_type;
+var Xodd_orig_addr: [*]tensor_type;
+
+fn normalize(X_addr: [*]tensor_type, norm: fft_normalization, comptime inverse: bool) void {
+  var scale_factor: tensor_type = 1.0;
+  switch (norm) {
+    fft_normalization.forward => {
+      if (comptime !inverse) {
+        scale_factor = @as(tensor_type, 1.0) / @as(tensor_type, N);
+      }
+    },
+    fft_normalization.ortho => {
+      scale_factor = @as(tensor_type, 1.0) / math.sqrt(@as(tensor_type, N));
+    },
+    else => {
+      // default is fft_normalization.backward
+      if (comptime inverse) {
+        scale_factor = @as(tensor_type, 1.0) / @as(tensor_type, N);
+      }
+    }
+  }
+
+  //now do the scaling
+  var resultDSD = @get_dsd(mem1d_dsd, .{ .base_address = X_addr, .extent = 2*N});
+  const result_dsr = real_s0_dsr;
+  @load_to_dsr(result_dsr, resultDSD);
+
+  dsd_ops.mul(tensor_type, result_dsr, result_dsr, scale_factor, .{});
+}
+
+
+fn _fft(X_addr: [*]tensor_type, aXaux_addr: [*]tensor_type, f_twiddle: *[2*N]tensor_type) void {
+  var subproblems = N;
+  var Xaux_addr = aXaux_addr;
+  Xodd_addr = @ptrcast([*]tensor_type, &X_addr[N]);
+  Xodd_orig_addr = Xodd_addr;
+
+  var stride = subproblems;
+  while (subproblems > 1) {
+    stride = subproblems;
+    subproblems >>= 1;
+
+    var sourceDSD = @get_dsd(mem1d_dsd, .{ .base_address = Xodd_addr, .extent = stride });
+    var resultDSD = @get_dsd(mem1d_dsd, .{ .base_address = Xaux_addr, .extent = stride });
+
+    var real_srcDSD = @get_dsd(mem1d_dsd, .{ .base_address = Xodd_addr, .extent = subproblems, .stride = 2 });
+    var imag_srcDSD = @increment_dsd_offset(real_srcDSD, 1, tensor_type);
+
+    var real_dstDSD = @get_dsd(mem1d_dsd, .{ .base_address = Xaux_addr, .extent = subproblems, .stride = 2 });
+    var imag_dstDSD = @increment_dsd_offset(real_dstDSD, 1, tensor_type);
+
+    @load_to_dsr(X_s0_dsr, sourceDSD, .{ .save_address = true });
+    @load_to_dsr(Xaux_dest_dsr, resultDSD, .{ .save_address = true });
+
+    var offset: u16 = 0;
+    while (offset < N) : (offset += stride) {
+      @load_to_dsr(real_src_dsr, real_srcDSD);
+      @load_to_dsr(imag_src_dsr, imag_srcDSD);
+      @load_to_dsr(real_s0_dsr, real_dstDSD);
+      @load_to_dsr(imag_s0_dsr, imag_dstDSD);
+
+      var c1a: tensor_type = @as(tensor_type, 0.0);
+      var c1b: tensor_type = @as(tensor_type, 0.0);
+      c1a = (f_twiddle.*)[offset];
+      c1b = (f_twiddle.*)[offset+1];
+
+      // Twiddling Factors application to the ODD part of the array (second half)
+      // Complex number multiplication broken down into Real Add and Mul.
+      dsd_ops.mul(tensor_type, Xaux_dest_dsr, X_s0_dsr, c1a, .{});
+      // Calculate the Real part of the complex multiplication.
+      dsd_ops.fmac(tensor_type, tensor_type, real_s0_dsr, real_s0_dsr, imag_src_dsr,  c1b, .{});
+      // Calculate the Imaginary part of the complex multiplication.
+      dsd_ops.fmac(tensor_type, tensor_type, imag_s0_dsr, imag_s0_dsr, real_src_dsr, -c1b, .{});
+
+      real_srcDSD = @increment_dsd_offset(real_srcDSD, @as(i16, stride), tensor_type);
+      imag_srcDSD = @increment_dsd_offset(imag_srcDSD, @as(i16, stride), tensor_type);
+      real_dstDSD = @increment_dsd_offset(real_dstDSD, @as(i16, stride), tensor_type);
+      imag_dstDSD = @increment_dsd_offset(imag_dstDSD, @as(i16, stride), tensor_type);
+    }
+
+
+    /////////// APPLY EVEN/ODD ///////////
+    //now we can reuse previously used dsrs
+    var X_even_DSD = @get_dsd(mem1d_dsd, .{ .base_address = X_addr, .extent = N});
+    var X_odd_DSD = @get_dsd(mem1d_dsd, .{ .base_address = Xodd_addr, .extent = N});
+    var Xaux_sourceDSD = @get_dsd(mem1d_dsd, .{ .base_address = Xaux_addr, .extent = N});
+
+    const X_even_dsr = X_s0_dsr;
+    const X_odd_dsr = Xaux_dest_dsr;
+    const Xaux_dsr = real_src_dsr;
+    @load_to_dsr(X_even_dsr, X_even_DSD);
+    @load_to_dsr(X_odd_dsr, X_odd_DSD);
+    @load_to_dsr(Xaux_dsr, Xaux_sourceDSD);
+
+    dsd_ops.sub(tensor_type,              X_odd_dsr,  X_even_dsr, Xaux_dsr, .{});
+    dsd_ops.add(tensor_type, tensor_type, X_even_dsr, X_even_dsr, Xaux_dsr, .{});
+
+    if (subproblems > 1) {
+      //Swap pointers between Xaux and Xodd
+      var tmp = Xaux_addr;
+      Xaux_addr = Xodd_addr;
+      Xodd_addr = tmp;
+      // Fill Right part of the array
+      var baseB: u16 = subproblems;
+      var baseA: u16 = 0;
+      reshape.reshape(&baseA, &baseB, subproblems, stride, X_addr, Xodd_addr);
+      baseB = subproblems;
+      reshape.reshape(&baseA, &baseB, subproblems, stride, Xaux_addr, Xodd_addr);
+      // Fill Left part of the array
+      baseA = 0;
+      baseB = 0;
+      reshape.reshape(&baseA, &baseB, subproblems, stride, X_addr, X_addr);
+      baseB = 0;
+      reshape.reshape(&baseA, &baseB, subproblems, stride, Xaux_addr, X_addr);
+    } // end if
+
+  } // end while subproblems
+
+  if (@ptrcast(*u16, &Xodd_orig_addr).* != @ptrcast(*u16,&Xodd_addr).*) {
+    var X_odd_orig_DSD = @get_dsd(mem1d_dsd, .{ .base_address = Xodd_orig_addr, .extent = N});
+    var X_odd_DSD = @get_dsd(mem1d_dsd, .{ .base_address = Xodd_addr, .extent = N});
+
+    @load_to_dsr(real_src_dsr, X_odd_DSD);
+    @load_to_dsr(real_dst_dsr, X_odd_orig_DSD);
+
+    dsd_ops.mov(tensor_type, real_dst_dsr, real_src_dsr, .{});
+  }
+}
+
+
+
+
+fn fft(X_addr: [*]tensor_type, aXaux_addr: [*]tensor_type, f_twiddle: *[2*N]tensor_type, norm: fft_normalization) void {
+  _fft(X_addr, aXaux_addr, f_twiddle);
+  normalize(X_addr, norm, false);
+}
+
+fn ifft(X_addr: [*]tensor_type, aXaux_addr: [*]tensor_type, f_twiddle: *[2*N]tensor_type, norm: fft_normalization) void {
+  //apply @fnegh|s to the complex part of the twiddle factors to get their complex conjugate
+  var fDSD = @get_dsd(mem1d_dsd, .{ .base_address = &f_twiddle.*[1], .extent = N, .stride = 2 });
+  @load_to_dsr(imag_dst_dsr, fDSD);
+  @load_to_dsr(imag_src_dsr, fDSD);
+
+  dsd_ops.neg(tensor_type, imag_dst_dsr, imag_src_dsr, .{});
+
+  //call fft without normalization
+  _fft(X_addr, aXaux_addr, f_twiddle);
+  normalize(X_addr, norm, true);
+
+  //reapply @fnegh|s to the complex part of the twiddle factors to restore
+  @load_to_dsr(imag_dst_dsr, fDSD);
+  @load_to_dsr(imag_src_dsr, fDSD);
+
+  dsd_ops.neg(tensor_type, imag_dst_dsr, imag_src_dsr, .{});
+}

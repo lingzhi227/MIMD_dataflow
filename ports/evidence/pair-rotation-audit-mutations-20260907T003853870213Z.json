@@ -1,0 +1,68 @@
+{
+  "passed": true,
+  "new_sdk_execution": false,
+  "source_bundle": "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/projects/waferllm/pair_rotation_64x128_8x8_token_even_odd/run-20260907T003252357798Z",
+  "results_sha256": "f3dc9c7bd639e28b7dc88b053b0fb3e936940b128c7c74a7f0f81b3300915128",
+  "mutations": [
+    {
+      "name": "coherent_product",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 8192 (0.0122%)\nMismatch at index:\n [0, 0]: 47475 (ACTUAL), 47474 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 2.10641614e-05\n ACTUAL: array([[47475, 16370, 15457, ..., 13603, 49085, 48585],\n       [16331, 46527, 16364, ..., 48961, 15478, 47794],\n       [48774, 48146, 13632, ..., 47915, 47605, 48572],...\n DESIRED: array([[47474, 16370, 15457, ..., 13603, 49085, 48585],\n       [16331, 46527, 16364, ..., 48961, 15478, 47794],\n       [48774, 48146, 13632, ..., 47915, 47605, 48572],..."
+    },
+    {
+      "name": "changed_gate_regression",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 8192 (0.0122%)\nMismatch at index:\n [0, 0]: 49139 (ACTUAL), 49138 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 2.03508486e-05\n ACTUAL: array([[49139, 47474, 43269, ..., 47828, 15817, 49085],\n       [13759, 16331, 13535, ..., 13765, 15026, 15478],\n       [15378, 48774, 48971, ..., 14796, 15804, 47605],...\n DESIRED: array([[49138, 47474, 43269, ..., 47828, 15817, 49085],\n       [13759, 16331, 13535, ..., 13765, 15026, 15478],\n       [15378, 48774, 48971, ..., 14796, 15804, 47605],..."
+    },
+    {
+      "name": "zero_input_regression",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 8192 (0.0122%)\nMismatch at index:\n [0, 0]: 47475 (ACTUAL), 47474 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 2.10641614e-05\n ACTUAL: array([[47475, 16370, 15451, ..., 14775, 48019, 16498],\n       [47474, 49009, 47086, ..., 16154, 47496, 15575],\n       [16256, 14014, 47710, ..., 10448, 14943, 48544],...\n DESIRED: array([[47474, 16370, 15451, ..., 14775, 48019, 16498],\n       [47474, 49009, 47086, ..., 16154, 47496, 15575],\n       [16256, 14014, 47710, ..., 10448, 14943, 48544],..."
+    },
+    {
+      "name": "input_corruption",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 8192 (0.0122%)\nMismatch at index:\n [0, 0, 0]: 0 (ACTUAL), 47474 (DESIRED)\nMax absolute difference among violations: 18062\nMax relative difference among violations: 0.38046088\n ACTUAL: array([[[    0, 16331, 48774, ..., 14850, 16171, 48151],\n        [14825, 46590, 15476, ..., 15025, 47247, 13658],\n        [14518, 48681, 15541, ..., 15189, 48048, 14968],...\n DESIRED: array([[[47474, 16331, 48774, ..., 14850, 16171, 48151],\n        [14825, 46590, 15476, ..., 15025, 47247, 13658],\n        [14518, 48681, 15541, ..., 15189, 48048, 14968],..."
+    },
+    {
+      "name": "missing_phase",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 192 (0.521%)\nMismatch at index:\n [0, 0, 1]: 0 (ACTUAL), 1 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 1.\n ACTUAL: array([[[8, 0, 1],\n        [8, 1, 1],\n        [8, 1, 1],...\n DESIRED: array([[[8, 1, 1],\n        [8, 1, 1],\n        [8, 1, 1],..."
+    },
+    {
+      "name": "stale_epoch",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 192 (0.521%)\nMismatch at index:\n [0, 0, 2]: 1 (ACTUAL), 2 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.5\n ACTUAL: array([[[8, 1, 1],\n        [8, 1, 2],\n        [8, 1, 2],...\n DESIRED: array([[[8, 1, 2],\n        [8, 1, 2],\n        [8, 1, 2],..."
+    },
+    {
+      "name": "bad_timestamp",
+      "rejected": true,
+      "error": "pair rotation bounded timestamps"
+    },
+    {
+      "name": "missing_call",
+      "rejected": true,
+      "error": "pair rotation lifecycle"
+    },
+    {
+      "name": "invalid_word",
+      "rejected": true,
+      "error": "pair rotation raw words result"
+    },
+    {
+      "name": "wrong_cosine_input",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 4096 (0.0244%)\nMismatch at index:\n [0, 0, 0]: 65535 (ACTUAL), 15360 (DESIRED)\nMax absolute difference among violations: 15361\nMax relative difference among violations: 1.0000651\n ACTUAL: array([[[65535, 15360, 15360, ..., 15360, 15360, 15360],\n        [15360, 15360, 15360, ..., 15360, 15360, 15360],\n        [15360, 15360, 15360, ..., 15360, 15360, 15360],...\n DESIRED: array([[[15360, 15360, 15360, ..., 15360, 15360, 15360],\n        [15360, 15360, 15360, ..., 15360, 15360, 15360],\n        [15360, 15360, 15360, ..., 15360, 15360, 15360],..."
+    },
+    {
+      "name": "wrong_product_history",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 16384 (0.0061%)\nMismatch at index:\n [0, 0, 0]: 65535 (ACTUAL), 47474 (DESIRED)\nMax absolute difference among violations: 18061\nMax relative difference among violations: 0.38043982\n ACTUAL: array([[[65535, 16331, 48774, ...,     0, 32768,     0],\n        [14825, 46590, 15476, ..., 32768, 32768, 32768],\n        [14518, 48681, 15541, ..., 32768,     0, 32768],...\n DESIRED: array([[[47474, 16331, 48774, ...,     0, 32768,     0],\n        [14825, 46590, 15476, ..., 32768, 32768, 32768],\n        [14518, 48681, 15541, ..., 32768,     0, 32768],..."
+    },
+    {
+      "name": "wrong_sine_input",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 4096 (0.0244%)\nMismatch at index:\n [0, 0, 0]: 65535 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACTUAL: array([[[65535,     0,     0, ...,     0,     0,     0],\n        [    0,     0,     0, ...,     0,     0,     0],\n        [    0,     0,     0, ...,     0,     0,     0],...\n DESIRED: array([[[0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],\n        [0, 0, 0, ..., 0, 0, 0],..."
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "project": "spada",
+  "kernel": "chain_reduce",
+  "origins": [
+    "samples/spatial/collectives/chain_reduce_1D.sptl"
+  ],
+  "fixture": "collective",
+  "contract": "Four-participant right-to-left ordered vector sum; intermediate actors separate transport from numerical stage.",
+  "partitions": 1,
+  "status": "source_ready"
+}

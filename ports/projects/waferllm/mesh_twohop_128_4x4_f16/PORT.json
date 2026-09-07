@@ -1,0 +1,13 @@
+{
+  "project": "waferllm",
+  "kernel": "mesh_twohop_128_4x4_f16",
+  "origins": [
+    "MeshGEMM/src/meshgemm.csl",
+    "MeshGEMM/src/comm_lib/comm_pe.csl",
+    "MeshGEMM/src/layout.csl"
+  ],
+  "fixture": "half_gemm:128:128:128",
+  "status": "source_ready",
+  "partitions": 1,
+  "contract": "128x128 binary16 fused matrix contraction on 4x4 PEs; source two-hop cycle, bidirectional device alignment, double-buffer DSR overlap. Six changed warm SDK calls; exact scheduled prefix/final bits and protocol witnesses; relaxed native K order may round differently. Simulator source comparison, not hardware or full LLM inference."
+}

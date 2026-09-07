@@ -1,0 +1,11 @@
+{
+  "project": "sdk_examples",
+  "kernel": "fft_2d",
+  "origins": [
+    "benchmarks/fft-1d-2d/fft.csl"
+  ],
+  "fixture": "fft:2",
+  "contract": "Length four per axis, radix-2 local pencils and explicit axis traversal; unnormalized forward transform with supplied twiddles. Multi-PE transpose/routing and larger sizes remain pending.",
+  "partitions": 1,
+  "status": "source_ready"
+}

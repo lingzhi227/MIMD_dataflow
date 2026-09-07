@@ -1,0 +1,74 @@
+const fabric = @import_module("<layout>");
+param fft_params;
+param memcpy_params;
+
+// Problem size
+param N: u16;
+
+// System resources
+param colors: [4]color = [4]color {@get_color(4), @get_color(5), @get_color(6), @get_color(7)};
+param dsr_ids: [3]u16 = [3]u16 {1, 2, 3};
+param ut_ids: [2]ut_id = [2]ut_id {@get_ut_id(2), @get_ut_id(3)};
+param iq_ids: [2]input_queue = [2]input_queue {@get_input_queue(2), @get_input_queue(4)};
+param oq_ids: [2]output_queue = [2]output_queue {@get_output_queue(3), @get_output_queue(5)};
+param local_task_ids: [3]local_task_id = [3]local_task_id
+  {@get_local_task_id(11), @get_local_task_id(12), @get_local_task_id(13)};
+
+const tensor_type = fft_params.tensor_type;
+
+const timer = @import_module("<timer>", .{ .timerCount = 1 } );
+const sys_mod = @import_module("<memcpy/memcpy>", memcpy_params);
+const fft3d_mod = @import_module("<kernels/fft/fft3d>", .{
+  .fft_params = fft_params,
+  .colors = colors,
+  .dsr_ids = dsr_ids,
+  .ut_ids = ut_ids,
+  .iq_ids = iq_ids,
+  .oq_ids = oq_ids,
+  .local_task_ids = local_task_ids,
+  .callback = exit_function,
+  .N = N,
+  .WIDTH = fft_params.width,
+});
+
+export var X = @zeros([fft3d_mod.ARRAY_LEN]tensor_type);
+var ptr_X : [*]tensor_type = &X;
+var Xaux = @zeros([N]tensor_type);
+
+
+fn csfftExecR2C(anorm: i16) void {
+  timer.enable();
+  timer.start(0);
+  fft3d_mod.csfftExecR2C(&X, &X, &Xaux, @as(fft3d_mod.fft.fft_normalization, anorm));
+}
+
+fn csfftExecC2R(anorm: i16) void {
+  timer.enable();
+  timer.start(0);
+  fft3d_mod.csfftExecC2R(&X, &X, &Xaux, @as(fft3d_mod.fft.fft_normalization, anorm));
+}
+
+fn csfftExecC2C(anorm: i16, inverse: i16) void {
+  timer.enable();
+  timer.start(0);
+  fft3d_mod.csfftExecC2C(&X, &X, &Xaux, @as(fft3d_mod.fft.fft_normalization, anorm), @as(fft3d_mod.fft.fft_direction, inverse));
+}
+
+var fft_time = @zeros(timer.timerType32); //+1 to make it a multiple of 32 bits for memcpy
+var ptr_fft_time : [*]u16 = &fft_time;
+
+fn exit_function() void {
+  timer.stop(0);
+  timer.elapsed(0, @ptrcast(*[timer.timestamp_size]u16, &fft_time));
+  // the user must unblock cmd color for every PE
+  sys_mod.unblock_cmd_stream();
+}
+
+comptime {
+  @export_symbol(ptr_X, "X");
+  @export_symbol(csfftExecR2C);
+  @export_symbol(csfftExecC2R);
+  @export_symbol(csfftExecC2C);
+  @export_symbol(fft3d_mod.ptr_twiddle, "twiddle_array");
+  @export_symbol(ptr_fft_time, "fft_time");
+}

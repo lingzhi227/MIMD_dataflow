@@ -1,0 +1,11 @@
+{
+  "project": "spatial_collectives",
+  "kernel": "chain_reduce",
+  "origins": [
+    "modules/chain.csl"
+  ],
+  "fixture": "collective",
+  "contract": "Four-participant right-to-left ordered vector sum; intermediate actors separate transport from numerical stage.",
+  "partitions": 1,
+  "status": "source_ready"
+}

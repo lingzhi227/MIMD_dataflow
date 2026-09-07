@@ -1,0 +1,1198 @@
+{
+  "kind": "qualification_index_of_existing_sdk_runs",
+  "sdk": true,
+  "success": true,
+  "cases": [
+    {
+      "key": "waferllm/mesh_grouped_gemv_128_4x4_g2_f16",
+      "artifact": "projects/waferllm/mesh_grouped_gemv_128_4x4_g2_f16/run-20260906T182031000643Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_grouped_gemv.v1",
+        "epochs": 8,
+        "actors": 16,
+        "internal_half_observations": 7168,
+        "cases": [
+          {
+            "final_and_active_phase_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.002522401511669159,
+              "max_error_over_bound": 0.0024538424961927743,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.00513968215091154,
+              "max_error_over_bound": 0.004762138264096787,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": false,
+            "max_native_abs_difference": 0.0048828125,
+            "max_local_cycles": 594,
+            "compute_cycles_median": 311.0,
+            "total_cycles_per_pe": [
+              [
+                594,
+                594,
+                594,
+                594
+              ],
+              [
+                585,
+                585,
+                585,
+                585
+              ],
+              [
+                584,
+                584,
+                584,
+                584
+              ],
+              [
+                570,
+                570,
+                570,
+                570
+              ]
+            ]
+          },
+          {
+            "final_and_active_phase_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 594,
+            "compute_cycles_median": 311.0,
+            "total_cycles_per_pe": [
+              [
+                594,
+                594,
+                594,
+                594
+              ],
+              [
+                585,
+                585,
+                585,
+                585
+              ],
+              [
+                584,
+                584,
+                584,
+                584
+              ],
+              [
+                570,
+                570,
+                570,
+                570
+              ]
+            ]
+          },
+          {
+            "final_and_active_phase_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 594,
+            "compute_cycles_median": 311.0,
+            "total_cycles_per_pe": [
+              [
+                594,
+                594,
+                594,
+                594
+              ],
+              [
+                585,
+                585,
+                585,
+                585
+              ],
+              [
+                584,
+                584,
+                584,
+                584
+              ],
+              [
+                570,
+                570,
+                570,
+                570
+              ]
+            ]
+          },
+          {
+            "final_and_active_phase_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 594,
+            "compute_cycles_median": 311.0,
+            "total_cycles_per_pe": [
+              [
+                594,
+                594,
+                594,
+                594
+              ],
+              [
+                585,
+                585,
+                585,
+                585
+              ],
+              [
+                584,
+                584,
+                584,
+                584
+              ],
+              [
+                570,
+                570,
+                570,
+                570
+              ]
+            ]
+          },
+          {
+            "final_and_active_phase_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 594,
+            "compute_cycles_median": 311.0,
+            "total_cycles_per_pe": [
+              [
+                594,
+                594,
+                594,
+                594
+              ],
+              [
+                585,
+                585,
+                585,
+                585
+              ],
+              [
+                584,
+                584,
+                584,
+                584
+              ],
+              [
+                570,
+                570,
+                570,
+                570
+              ]
+            ]
+          },
+          {
+            "final_and_active_phase_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 594,
+            "compute_cycles_median": 311.0,
+            "total_cycles_per_pe": [
+              [
+                594,
+                594,
+                594,
+                594
+              ],
+              [
+                585,
+                585,
+                585,
+                585
+              ],
+              [
+                584,
+                584,
+                584,
+                584
+              ],
+              [
+                570,
+                570,
+                570,
+                570
+              ]
+            ]
+          },
+          {
+            "final_and_active_phase_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.000244140625,
+              "max_error_over_bound": 0.0008503290336561958,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": false,
+            "max_native_abs_difference": 0.000244140625,
+            "max_local_cycles": 594,
+            "compute_cycles_median": 311.0,
+            "total_cycles_per_pe": [
+              [
+                594,
+                594,
+                594,
+                594
+              ],
+              [
+                585,
+                585,
+                585,
+                585
+              ],
+              [
+                584,
+                584,
+                584,
+                584
+              ],
+              [
+                570,
+                570,
+                570,
+                570
+              ]
+            ]
+          },
+          {
+            "final_and_active_phase_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 594,
+            "compute_cycles_median": 311.0,
+            "total_cycles_per_pe": [
+              [
+                594,
+                594,
+                594,
+                594
+              ],
+              [
+                585,
+                585,
+                585,
+                585
+              ],
+              [
+                584,
+                584,
+                584,
+                584
+              ],
+              [
+                570,
+                570,
+                570,
+                570
+              ]
+            ]
+          }
+        ],
+        "contract": "Exact local fused half contraction, active group/global root half addition records and every replicated final result; non-root phase records inactive; relaxed high-level order plus original-product bound"
+      },
+      "qualification_sha256": "3c1c6d842d070bb59936521111153f7fb2a6457c2618918a4b754839239ba6ac",
+      "native_application_checks": [
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.00513968215091154,
+          "max_error_over_bound": 0.004762138264096787,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": []
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_zero_reset"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "fused_not_split_half_rounding"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "minimum_half_subnormal_preserved",
+            "distributed_signed_column_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": []
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "distributed_signed_column_selection"
+          ]
+        }
+      ],
+      "device_application_checks": [
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.002522401511669159,
+          "max_error_over_bound": 0.0024538424961927743,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": []
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_zero_reset"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "fused_not_split_half_rounding"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "minimum_half_subnormal_preserved",
+            "distributed_signed_column_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.000244140625,
+          "max_error_over_bound": 0.0008503290336561958,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": []
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "distributed_signed_column_selection"
+          ]
+        }
+      ],
+      "numerical_validation": {
+        "contract": "binary16-fma-relaxed-v1",
+        "native_forward_bound_passed": true,
+        "device_forward_bound_passed": true,
+        "device_scheduled_bits_passed": true,
+        "native_f32_accuracy_not_implied": true
+      }
+    },
+    {
+      "key": "waferllm/mesh_grouped_gemv_128_4x4_g2_f16",
+      "artifact": "projects/waferllm/mesh_grouped_gemv_128_4x4_g2_f16/run-20260906T183531848896Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_grouped_gemv.v1",
+        "instrumentation": "counters",
+        "phase_records_observed": false,
+        "compute_timing_observed": false,
+        "epochs": 8,
+        "actors": 16,
+        "internal_half_observations": 0,
+        "cases": [
+          {
+            "final_bits_exact": true,
+            "active_phase_bits_exact": null,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.002522401511669159,
+              "max_error_over_bound": 0.0024538424961927743,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.00513968215091154,
+              "max_error_over_bound": 0.004762138264096787,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": false,
+            "max_native_abs_difference": 0.0048828125,
+            "max_local_cycles": 521,
+            "compute_cycles_median": null,
+            "total_cycles_per_pe": [
+              [
+                521,
+                521,
+                521,
+                521
+              ],
+              [
+                512,
+                512,
+                512,
+                512
+              ],
+              [
+                511,
+                511,
+                511,
+                511
+              ],
+              [
+                497,
+                497,
+                497,
+                497
+              ]
+            ]
+          },
+          {
+            "final_bits_exact": true,
+            "active_phase_bits_exact": null,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 521,
+            "compute_cycles_median": null,
+            "total_cycles_per_pe": [
+              [
+                521,
+                521,
+                521,
+                521
+              ],
+              [
+                512,
+                512,
+                512,
+                512
+              ],
+              [
+                511,
+                511,
+                511,
+                511
+              ],
+              [
+                497,
+                497,
+                497,
+                497
+              ]
+            ]
+          },
+          {
+            "final_bits_exact": true,
+            "active_phase_bits_exact": null,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 521,
+            "compute_cycles_median": null,
+            "total_cycles_per_pe": [
+              [
+                521,
+                521,
+                521,
+                521
+              ],
+              [
+                512,
+                512,
+                512,
+                512
+              ],
+              [
+                511,
+                511,
+                511,
+                511
+              ],
+              [
+                497,
+                497,
+                497,
+                497
+              ]
+            ]
+          },
+          {
+            "final_bits_exact": true,
+            "active_phase_bits_exact": null,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 521,
+            "compute_cycles_median": null,
+            "total_cycles_per_pe": [
+              [
+                521,
+                521,
+                521,
+                521
+              ],
+              [
+                512,
+                512,
+                512,
+                512
+              ],
+              [
+                511,
+                511,
+                511,
+                511
+              ],
+              [
+                497,
+                497,
+                497,
+                497
+              ]
+            ]
+          },
+          {
+            "final_bits_exact": true,
+            "active_phase_bits_exact": null,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 521,
+            "compute_cycles_median": null,
+            "total_cycles_per_pe": [
+              [
+                521,
+                521,
+                521,
+                521
+              ],
+              [
+                512,
+                512,
+                512,
+                512
+              ],
+              [
+                511,
+                511,
+                511,
+                511
+              ],
+              [
+                497,
+                497,
+                497,
+                497
+              ]
+            ]
+          },
+          {
+            "final_bits_exact": true,
+            "active_phase_bits_exact": null,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 521,
+            "compute_cycles_median": null,
+            "total_cycles_per_pe": [
+              [
+                521,
+                521,
+                521,
+                521
+              ],
+              [
+                512,
+                512,
+                512,
+                512
+              ],
+              [
+                511,
+                511,
+                511,
+                511
+              ],
+              [
+                497,
+                497,
+                497,
+                497
+              ]
+            ]
+          },
+          {
+            "final_bits_exact": true,
+            "active_phase_bits_exact": null,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.000244140625,
+              "max_error_over_bound": 0.0008503290336561958,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": false,
+            "max_native_abs_difference": 0.000244140625,
+            "max_local_cycles": 521,
+            "compute_cycles_median": null,
+            "total_cycles_per_pe": [
+              [
+                521,
+                521,
+                521,
+                521
+              ],
+              [
+                512,
+                512,
+                512,
+                512
+              ],
+              [
+                511,
+                511,
+                511,
+                511
+              ],
+              [
+                497,
+                497,
+                497,
+                497
+              ]
+            ]
+          },
+          {
+            "final_bits_exact": true,
+            "active_phase_bits_exact": null,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "max_local_cycles": 521,
+            "compute_cycles_median": null,
+            "total_cycles_per_pe": [
+              [
+                521,
+                521,
+                521,
+                521
+              ],
+              [
+                512,
+                512,
+                512,
+                512
+              ],
+              [
+                511,
+                511,
+                511,
+                511
+              ],
+              [
+                497,
+                497,
+                497,
+                497
+              ]
+            ]
+          }
+        ],
+        "contract": "Exact local fused half contraction, active group/global root half addition records and every replicated final result; non-root phase records inactive; relaxed high-level order plus original-product bound"
+      },
+      "qualification_sha256": "39f57247da21aff2b93fa58a8fc1a1776e96411234df01278fe4d760baa290cb",
+      "native_application_checks": [
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.00513968215091154,
+          "max_error_over_bound": 0.004762138264096787,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": []
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_zero_reset"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "fused_not_split_half_rounding"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "minimum_half_subnormal_preserved",
+            "distributed_signed_column_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": []
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "distributed_signed_column_selection"
+          ]
+        }
+      ],
+      "device_application_checks": [
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.002522401511669159,
+          "max_error_over_bound": 0.0024538424961927743,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": []
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_zero_reset"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "fused_not_split_half_rounding"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "minimum_half_subnormal_preserved",
+            "distributed_signed_column_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.000244140625,
+          "max_error_over_bound": 0.0008503290336561958,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": []
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "distributed_signed_column_selection"
+          ]
+        }
+      ],
+      "numerical_validation": {
+        "contract": "binary16-fma-relaxed-v1",
+        "native_forward_bound_passed": true,
+        "device_forward_bound_passed": true,
+        "device_scheduled_bits_passed": true,
+        "native_f32_accuracy_not_implied": true
+      }
+    }
+  ]
+}

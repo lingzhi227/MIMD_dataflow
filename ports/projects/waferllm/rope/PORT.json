@@ -1,0 +1,12 @@
+{
+  "project": "waferllm",
+  "kernel": "rope",
+  "origins": [
+    "Prefill/src/prefill.csl",
+    "Decode/src/decode.csl"
+  ],
+  "fixture": "rope",
+  "contract": "Supplied rotary coefficients; intended even/odd mathematics, not erroneous original scratch/index behavior.",
+  "partitions": 1,
+  "status": "source_ready"
+}

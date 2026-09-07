@@ -1,0 +1,16 @@
+// Aligned staging for a contiguous logical u16 payload on WSE3.
+// Backing words enforce 32-bit alignment. The caller sends exactly `count`
+// halfwords, never the padded backing extent, and owns staging until send
+// completion. Source backing must contain capacity u16 elements.
+// Runtime probes cover source offsets and mixed u16/f32 framing.
+param capacity: u16;
+const words: u16 = (capacity + 1) / 2;
+fn stage(src: [*]u16, offset: u16, count: u16, dst: *[words]u32) void {
+    @assert(@as(u32, offset) + @as(u32, count) <= @as(u32, capacity));
+    var i: u16 = 0;
+    while (i < count) : (i += 2) {
+        var value: u32 = @as(u32, src[offset+i]);
+        if (i+1 < count) { value |= @as(u32, src[offset+i+1]) << 16; }
+        (dst.*)[i/2] = value;
+    }
+}

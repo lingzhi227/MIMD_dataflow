@@ -1,0 +1,117 @@
+"""Register executed resident normalization/projection profiles after independent native/device review."""
+
+import argparse, datetime, hashlib, json, subprocess, sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path[:0] = [str(ROOT), str(ROOT / "toolchain")]
+from normalized_matmul_fixtures import check, batches as fixtures
+from native_transport import parse_outputs
+from run_ports import numerical_summary
+
+
+def read(p):
+    return json.loads(p.read_text())
+
+
+def sha(p):
+    return hashlib.sha256(p.read_bytes()).hexdigest()
+
+
+def main():
+    p = argparse.ArgumentParser()
+    p.add_argument("bundles", type=Path, nargs=3)
+    a = p.parse_args()
+    required = {
+        "normalized_matmul_64x128_8x8",
+        "normalized_matmul_128x256_8x8",
+        "normalized_matmul_64x128_4x4",
+    }
+    assert {b.parent.name for b in a.bundles} == required
+    controls = [
+        ROOT / "evidence" / n
+        for n in (
+            "normalized-matmul64x128-counter-source-comparison.json",
+            "normalized-matmul128x256-source-comparison.json",
+            "normalized-matmul64x128-4x4-source-comparison.json",
+            "normalized-matmul64x128-instrumentation-comparison.json",
+        )
+    ]
+    for path in controls:
+        assert read(path)["passed"]
+    catalog = read(ROOT / "catalog.json")
+    assert not any(
+        v["project"] == "waferllm" and v["kernel"] in required for v in catalog
+    ), "preserve existing registration"
+    cases = []
+    additions = []
+    for bundle in a.bundles:
+        bundle = bundle.resolve()
+        q = read(bundle / "qualification.json")
+        assert q["success"]
+        code = 'import json,sys;from pathlib import Path;p=Path(sys.argv[1]);sys.path.insert(0,str(p/"implementation"));from validate import audit;print(json.dumps(audit(p)))'
+        audit = json.loads(
+            subprocess.check_output(
+                [sys.executable, "-c", code, str(bundle)], text=True
+            )
+        )
+        assert audit["passed"]
+        s = read(bundle / "schedule.json")
+        b = read(bundle / "batches.json")
+        native = parse_outputs((bundle / "native-output.txt").read_text())
+        device = read(bundle / "results.json")["cases"]
+        assert (
+            b == fixtures(s["M"], s["N"]) and len(native) == len(device) == len(b) == 6
+        )
+        checks = lambda outputs: [
+            check(s["M"], s["N"], x, y) for x, y in zip(b, outputs)
+        ]
+        case = dict(
+            key="waferllm/" + bundle.parent.name,
+            artifact=str(bundle.relative_to(ROOT)),
+            passed=True,
+            level="sdk_simulator",
+            audit=audit,
+            native_application_checks=checks(native),
+            native_application_source="native-output.txt: actual C++ executable stdout, independent math.fsum recheck",
+            device_application_checks=checks(device),
+            qualification_sha256=sha(bundle / "qualification.json"),
+            results_sha256=sha(bundle / "results.json"),
+        )
+        case["numerical_validation"] = numerical_summary(case)
+        cases.append(case)
+        item = read(bundle.parent / "PORT.json")
+        item.update(
+            fixture=f"normalized_matmul:{s['M']}:{s['N']}",
+            status="source_ready",
+            contract=f"Resident row RMSNorm -> projection {s['M']}x{s['N']} on {s['P']}x{s['P']} PEs; explicit half accumulation, SDK sqrt, forward two-hop communication and local DSR FMA. Six warm SDK calls, exact normalized tensor/contraction prefixes/results, actual C++ stdout and independent standard mathematical composition checks. Source-compatible shared resources and destructive private alignment, no intermediate host transfer. Matched original-source comparison; counter overhead measured separately at64x128/8x8. Bounded two-operation subgraph, not full QKV/inference or hardware performance.",
+        )
+        additions.append((bundle.parent, item))
+    stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
+    path = ROOT / "evidence" / ("qualification-" + stamp + ".json")
+    assert not path.exists()
+    path.write_text(
+        json.dumps(
+            dict(
+                kind="qualification_index_of_existing_sdk_runs",
+                sdk=True,
+                success=True,
+                new_sdk_execution=False,
+                source_controls=[
+                    dict(path=str(p.relative_to(ROOT)), sha256=sha(p)) for p in controls
+                ],
+                cases=cases,
+            ),
+            indent=2,
+        )
+        + "\n"
+    )
+    for folder, item in additions:
+        (folder / "PORT.json").write_text(json.dumps(item, indent=2) + "\n")
+        catalog.append(item)
+    (ROOT / "catalog.json").write_text(json.dumps(catalog, indent=2) + "\n")
+    print(path.relative_to(ROOT), len(additions))
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,52 @@
+{
+  "source_bundle": "projects/matrix_algorithms/mesh_cannon_128_8x8_vector/run-20260906T163023774095Z",
+  "passed": false,
+  "observations": [
+    {
+      "epoch": 0,
+      "max_abs_error": 6.604012938282722e-06,
+      "wrong_block_witnesses": 0,
+      "first_pe_first_round": [
+        0.3540616035461426,
+        -0.44001543521881104,
+        0.4465474486351013,
+        0.9820650815963745
+      ]
+    },
+    {
+      "epoch": 1,
+      "max_abs_error": 14.78777027130127,
+      "wrong_block_witnesses": 512,
+      "first_pe_first_round": [
+        0.0,
+        0.11810302734375,
+        -0.4158875346183777,
+        -0.37407809495925903
+      ]
+    },
+    {
+      "epoch": 2,
+      "max_abs_error": 15.62613582611084,
+      "wrong_block_witnesses": 512,
+      "first_pe_first_round": [
+        -0.3702920377254486,
+        -0.4139091968536377,
+        0.9265674352645874,
+        -0.3520129323005676
+      ]
+    },
+    {
+      "epoch": 3,
+      "max_abs_error": 6.212915360927582,
+      "wrong_block_witnesses": 512,
+      "first_pe_first_round": [
+        1.0,
+        0.0,
+        0.4471866488456726,
+        -0.5779442191123962
+      ]
+    }
+  ],
+  "diagnosis": "Working A/B pointers are exported and rotate at runtime. After P-1 exchanges their storage permutation has period3. P4 returns to original storage; P8 does not. In second epoch host B is written through current B_ptr into Matrix_1, then main resets A_ptr to Matrix_1 and observes new B as A. All512 block witnesses wrong after the first call. Keep host export pointers invariant and separate from working pointers.",
+  "fix_pending_sdk": true
+}

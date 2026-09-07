@@ -1,0 +1,57 @@
+[
+  {
+    "original_path": "projects/waferllm/attention_64x128_8x8/run-20260907T032800549283Z/01_frontend_ir.json",
+    "fixture": "tests/fixtures/legacy-attention-frontend.json",
+    "sha256": "12531170518d36751e10e0ec79c57f027b250ffa9059a936db0d300424504e88"
+  },
+  {
+    "original_path": "evidence/attention-value-source-20260907T022427483584Z/prefill.csl",
+    "fixture": "tests/fixtures/verified-attention-prefill.csl",
+    "sha256": "3b52fecac62e00bc6c1b995c67219b87d484cbf79105d704b4ba8ab6360ebd7a"
+  },
+  {
+    "original_path": "projects/waferllm/mlp_64x64x256_8x8/run-20260907T044447648813Z/inference_routes.csl",
+    "fixture": "tests/fixtures/mlp-dsr-regression/inference_routes.csl",
+    "sha256": "18752c755a4f29e3dfaa9afccd2f0094f79ab11edfdbe8581847a69c9ae0152a"
+  },
+  {
+    "original_path": "projects/waferllm/mlp_64x64x256_8x8/run-20260907T044447648813Z/gated_local.csl",
+    "fixture": "tests/fixtures/mlp-dsr-regression/gated_local.csl",
+    "sha256": "dc77f8a5d6745a30568754f771fdb3f9693f1521b794181a1b6ded7f5b6dd347"
+  },
+  {
+    "original_path": "projects/waferllm/mlp_64x64x256_8x8/run-20260907T044447648813Z/layout.csl",
+    "fixture": "tests/fixtures/mlp-dsr-regression/layout.csl",
+    "sha256": "e99de90468055a4641bde3a08138558eff041bfa3874488241a6a2bc00ccbb21"
+  },
+  {
+    "original_path": "projects/waferllm/mlp_64x64x256_8x8/run-20260907T044447648813Z/pe.csl",
+    "fixture": "tests/fixtures/mlp-dsr-regression/pe.csl",
+    "sha256": "e57fee1d2c47bb8153135d4dbd54f8b179000e2382cf73502399d522b5afa726"
+  },
+  {
+    "original_path": "projects/waferllm/mlp_64x64x256_8x8/run-20260907T044447648813Z/semantic.json",
+    "fixture": "tests/fixtures/mlp-dsr-regression/semantic.json",
+    "sha256": "c48710257a67ea5f0113cb64cb911d3bb74de8f101d7d6021715f1a356b62a40"
+  },
+  {
+    "original_path": "projects/waferllm/mlp_64x64x256_8x8/run-20260907T044447648813Z/schedule.json",
+    "fixture": "tests/fixtures/mlp-dsr-regression/schedule.json",
+    "sha256": "1518d3c9676626567d3301422e8cdc345db911faa5cbc7f87f29a342fba1983f"
+  },
+  {
+    "original_path": "projects/waferllm/mlp_64x64x256_8x8/run-20260907T044447648813Z/inference_comm.csl",
+    "fixture": "tests/fixtures/mlp-dsr-regression/inference_comm.csl",
+    "sha256": "47396d629f6850be2933589950bf81765ff7895e3d3fe0a24386fe38aa3ef7b3"
+  },
+  {
+    "original_path": "projects/waferllm/mlp_64x64x256_8x8/run-20260907T044447648813Z/SOURCE-NOTICE.txt",
+    "fixture": "tests/fixtures/mlp-dsr-regression/SOURCE-NOTICE.txt",
+    "sha256": "c49e2b29e450e0fc595ffdd123f367b3b6a0b6835e32b290f4e1a80591cfe244"
+  },
+  {
+    "original_path": "projects/waferllm/mlp_64x64x256_8x8/run-20260907T044447648813Z/WaferLLM-LICENSE.txt",
+    "fixture": "tests/fixtures/mlp-dsr-regression/WaferLLM-LICENSE.txt",
+    "sha256": "97038949ed441253e13c970a411f4aa821826ddf45502ddf31cc183b88024ede"
+  }
+]

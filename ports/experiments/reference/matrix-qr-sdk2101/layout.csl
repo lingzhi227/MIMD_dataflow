@@ -1,0 +1,49 @@
+param M: u32;
+param N: u32;
+param grid_height: u16;
+param grid_width: u16;
+const up_colors = [2]color{@get_color(0), @get_color(3)};
+const down_colors = [2]color{@get_color(4), @get_color(5)};
+const sin_cos_horizontal_color = @get_color(2);
+const memcpy = @import_module("<memcpy/get_params>", .{.width = grid_width, .height = grid_height});
+
+layout {
+  @set_rectangle(grid_width, grid_height);
+  const N_per_pe = @as(u16, N / @as(u32, grid_width));
+  const M_per_pe = @as(u16, M / @as(u32, grid_height));
+  for (@range(u16, grid_width)) |x| {
+    for (@range(u16, grid_height)) |y| {
+      @set_tile_code(x, y, "pe_program.csl", .{
+        .memcpy_params = memcpy.get_params(x),
+        .M_per_pe = M_per_pe, .N_per_pe = N_per_pe,
+        .grid_width = grid_width, .grid_height = grid_height,
+        .A_up_send_color = up_colors[y % 2],
+        .A_up_recv_color = up_colors[1 - y % 2],
+        .A_down_send_color = down_colors[y % 2],
+        .A_down_recv_color = down_colors[1 - y % 2],
+        .sin_cos_horizontal_color = sin_cos_horizontal_color,
+      });
+      for (@range(u16, 2)) |parity| {
+        if (y % 2 == parity and y > 0) {
+          @set_color_config(x, y, up_colors[parity], .{.routes = .{.rx = .{RAMP}, .tx = .{NORTH}}});
+        } else if (y % 2 != parity and y < grid_height-1) {
+          @set_color_config(x, y, up_colors[parity], .{.routes = .{.rx = .{SOUTH}, .tx = .{RAMP}}});
+        }
+        if (y % 2 == parity and y < grid_height-1) {
+          @set_color_config(x, y, down_colors[parity], .{.routes = .{.rx = .{RAMP}, .tx = .{SOUTH}}});
+        } else if (y % 2 != parity and y > 0) {
+          @set_color_config(x, y, down_colors[parity], .{.routes = .{.rx = .{NORTH}, .tx = .{RAMP}}});
+        }
+      }
+      if (x == 0 and grid_width > 1) {
+        @set_color_config(x, y, sin_cos_horizontal_color, .{.routes = .{.rx = .{RAMP}, .tx = .{EAST}}});
+      } else if (x > 0 and x == grid_width-1) {
+        @set_color_config(x, y, sin_cos_horizontal_color, .{.routes = .{.rx = .{WEST}, .tx = .{RAMP}}});
+      } else if (x > 0) {
+        @set_color_config(x, y, sin_cos_horizontal_color, .{.routes = .{.rx = .{WEST}, .tx = .{RAMP, EAST}}});
+      }
+    }
+  }
+  @export_name("A", [*]f32, true);
+  @export_name("start", fn()void);
+}

@@ -1,0 +1,228 @@
+{
+  "run": "run-20260906T113445371586Z",
+  "sdk": true,
+  "instrumentation": null,
+  "sdk_runtime_options": {
+    "suppress_trace": true,
+    "num_threads": 16,
+    "dump_core": true
+  },
+  "sdk_timeout_seconds": 900,
+  "success": true,
+  "cases": [
+    {
+      "key": "matrix_algorithms/mesh_lu_32x32_4x4",
+      "passed": true,
+      "artifact": "projects/matrix_algorithms/mesh_lu_32x32_4x4/run-20260906T113445371586Z",
+      "native_application_checks": [
+        {
+          "contract": "fixed-packed-LU-and-reconstruction-v1",
+          "fixed_accuracy_passed": true,
+          "max_factor_abs_error": 1.2435332941151955e-06,
+          "relative_infinity_residual": 1.5905431922648344e-07,
+          "residual_limit": 3e-05,
+          "L_diagonal": "implicit exact unit diagonal; not a stored device field"
+        },
+        {
+          "contract": "fixed-packed-LU-and-reconstruction-v1",
+          "fixed_accuracy_passed": true,
+          "max_factor_abs_error": 0.0,
+          "relative_infinity_residual": 0.0,
+          "residual_limit": 3e-05,
+          "L_diagonal": "implicit exact unit diagonal; not a stored device field"
+        },
+        {
+          "contract": "fixed-packed-LU-and-reconstruction-v1",
+          "fixed_accuracy_passed": true,
+          "max_factor_abs_error": 1.854915480103969e-07,
+          "relative_infinity_residual": 1.7425216434853611e-07,
+          "residual_limit": 3e-05,
+          "L_diagonal": "implicit exact unit diagonal; not a stored device field"
+        },
+        {
+          "contract": "fixed-packed-LU-and-reconstruction-v1",
+          "fixed_accuracy_passed": true,
+          "max_factor_abs_error": 5.779844336473161e-08,
+          "relative_infinity_residual": 2.7093020352450283e-08,
+          "residual_limit": 3e-05,
+          "L_diagonal": "implicit exact unit diagonal; not a stored device field"
+        }
+      ],
+      "numerical_validation": {
+        "contract": "fixed-packed-LU-and-reconstruction-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_fixed_accuracy_passed": true,
+        "fixed_accuracy_passed": true,
+        "rtol": 3e-05,
+        "atol": 3e-06
+      },
+      "audit": {
+        "passed": true,
+        "fixed_accuracy_passed": true,
+        "actors": 16,
+        "epochs": 4,
+        "output_values": 4096,
+        "factor_checks": [
+          {
+            "contract": "fixed-packed-LU-and-reconstruction-v1",
+            "fixed_accuracy_passed": true,
+            "max_factor_abs_error": 1.2435332941151955e-06,
+            "relative_infinity_residual": 1.5890861889827167e-07,
+            "residual_limit": 3e-05,
+            "L_diagonal": "implicit exact unit diagonal; not a stored device field"
+          },
+          {
+            "contract": "fixed-packed-LU-and-reconstruction-v1",
+            "fixed_accuracy_passed": true,
+            "max_factor_abs_error": 0.0,
+            "relative_infinity_residual": 0.0,
+            "residual_limit": 3e-05,
+            "L_diagonal": "implicit exact unit diagonal; not a stored device field"
+          },
+          {
+            "contract": "fixed-packed-LU-and-reconstruction-v1",
+            "fixed_accuracy_passed": true,
+            "max_factor_abs_error": 1.854915480103969e-07,
+            "relative_infinity_residual": 1.7552332455683084e-07,
+            "residual_limit": 3e-05,
+            "L_diagonal": "implicit exact unit diagonal; not a stored device field"
+          },
+          {
+            "contract": "fixed-packed-LU-and-reconstruction-v1",
+            "fixed_accuracy_passed": true,
+            "max_factor_abs_error": 5.779844336473161e-08,
+            "relative_infinity_residual": 2.7093020352450283e-08,
+            "residual_limit": 3e-05,
+            "L_diagonal": "implicit exact unit diagonal; not a stored device field"
+          }
+        ],
+        "internal_observations": 1920,
+        "max_checkpoint_abs_error": 1.3878757414431675e-06,
+        "per_pe_factor_cycles": [
+          5998,
+          7751,
+          7751,
+          7751,
+          10300,
+          16713,
+          18466,
+          18466,
+          10299,
+          21012,
+          27425,
+          29178,
+          10304,
+          21017,
+          31730,
+          37665,
+          3814,
+          4089,
+          4089,
+          4089,
+          5395,
+          9624,
+          9899,
+          9899,
+          5398,
+          11201,
+          15430,
+          15705,
+          5405,
+          11208,
+          17011,
+          20762,
+          5998,
+          7751,
+          7751,
+          7751,
+          10305,
+          16718,
+          18471,
+          18471,
+          10308,
+          21021,
+          27434,
+          29187,
+          10315,
+          21028,
+          31741,
+          37676,
+          4360,
+          4380,
+          4380,
+          4380,
+          5629,
+          10404,
+          10424,
+          10424,
+          5554,
+          11669,
+          16444,
+          16464,
+          5561,
+          11598,
+          17713,
+          22010
+        ],
+        "max_pe_factor_cycles": 37676,
+        "checkpoint_scope": "Two tile corners after each active pivot; unexecuted entries zero",
+        "timing_scope": "Per-PE SDK simulator factorization including communication, excluding prepare/host I/O; no hardware claim",
+        "source_sha256": "8c2638d2b2335b5ca86b768d4a186f7e385edd28f5c008bc6502d38c8a4df2a2"
+      },
+      "device_application_checks": [
+        {
+          "contract": "fixed-packed-LU-and-reconstruction-v1",
+          "fixed_accuracy_passed": true,
+          "max_factor_abs_error": 1.2435332941151955e-06,
+          "relative_infinity_residual": 1.5890861889827167e-07,
+          "residual_limit": 3e-05,
+          "L_diagonal": "implicit exact unit diagonal; not a stored device field"
+        },
+        {
+          "contract": "fixed-packed-LU-and-reconstruction-v1",
+          "fixed_accuracy_passed": true,
+          "max_factor_abs_error": 0.0,
+          "relative_infinity_residual": 0.0,
+          "residual_limit": 3e-05,
+          "L_diagonal": "implicit exact unit diagonal; not a stored device field"
+        },
+        {
+          "contract": "fixed-packed-LU-and-reconstruction-v1",
+          "fixed_accuracy_passed": true,
+          "max_factor_abs_error": 1.854915480103969e-07,
+          "relative_infinity_residual": 1.7552332455683084e-07,
+          "residual_limit": 3e-05,
+          "L_diagonal": "implicit exact unit diagonal; not a stored device field"
+        },
+        {
+          "contract": "fixed-packed-LU-and-reconstruction-v1",
+          "fixed_accuracy_passed": true,
+          "max_factor_abs_error": 5.779844336473161e-08,
+          "relative_infinity_residual": 2.7093020352450283e-08,
+          "residual_limit": 3e-05,
+          "L_diagonal": "implicit exact unit diagonal; not a stored device field"
+        }
+      ],
+      "level": "sdk_simulator"
+    }
+  ],
+  "oracle": {
+    "python": "3.13.11",
+    "numpy": "2.2.6",
+    "rtol": 3e-05,
+    "atol": 3e-06,
+    "input_seed_base": 911,
+    "additional_contract_by_fixture_prefix": {
+      "mesh_gemm:": "componentwise-f32-dot-v1; fixed accuracy reported separately"
+    },
+    "sources": {
+      "fixtures.py": "96b8f21961994641ad74cf686e936b79205ba7a86fa21b5841990791bfdebc30",
+      "toolchain/roundoff.py": "4bc4e693d456bdf39dee4ac6774a545f812c085aacc7ec4d2244e583fcb935b5",
+      "import_stencil.py": "9a4dfd60f39c9ee90f056f1f07391ba8e361030067c380a85b99241ae09e5bc3",
+      "catalog.json": "4c209036463f6cb0e177695e3c583d2cd33ad3beed930ecbfd1b4d61ac7cac4b",
+      "run_ports.py": "19fedb9db7d8eef862158fde64fdd32ec785b13c571eeff8996cd001b674af99"
+    }
+  },
+  "sdk_sha256": "fff17e81c61dcb6012bdee2941a6fdc570f5c8604967530e7b7108651258193d"
+}

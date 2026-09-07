@@ -1,0 +1,11 @@
+{
+  "project": "sdk_examples",
+  "kernel": "bicgstab",
+  "origins": [
+    "benchmarks/bicgstab/src/kernel_bicgstab.csl"
+  ],
+  "fixture": "bicgstab",
+  "contract": "BiCGStab with explicit breakdown checks, zero initial x and at most sixteen iterations. Nonsymmetric tridiagonal specialization; original distributed communication remains pending.",
+  "partitions": 1,
+  "status": "source_ready"
+}

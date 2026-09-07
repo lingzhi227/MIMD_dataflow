@@ -1,0 +1,350 @@
+diff --git a/QR_factorization/many_elements_per_pe/layout.csl b/QR_factorization/many_elements_per_pe/layout.csl
+index 3e97f44..6422b45 100644
+--- a/QR_factorization/many_elements_per_pe/layout.csl
++++ b/QR_factorization/many_elements_per_pe/layout.csl
+@@ -1,90 +1,49 @@
+-// total matrix dimensions
+ param M: u32;
+ param N: u32;
+ param grid_height: u16;
+ param grid_width: u16;
+-
+-// Colors
+-const A_color: color = @get_color(0);
+-const sin_cos_horizontal_color: color = @get_color(2);
+-const LAUNCH: color = @get_color(3); // Color used by memcpy for kernel launch
+-
+-// Task IDs
+-const send_control_task_id: data_task_id = @get_data_task_id(A_color);
+-
+-const memcpy = @import_module("<memcpy/get_params>", .{
+-  .width = grid_width,
+-  .height = grid_height,
+-  .LAUNCH = LAUNCH
+-});
++const up_colors = [2]color{@get_color(0), @get_color(3)};
++const down_colors = [2]color{@get_color(4), @get_color(5)};
++const sin_cos_horizontal_color = @get_color(2);
++const memcpy = @import_module("<memcpy/get_params>", .{.width = grid_width, .height = grid_height});
+ 
+ layout {
+-  // PE coordinates are (column, row)
+   @set_rectangle(grid_width, grid_height);
+-  const N_per_pe: u16 = @as(u16, N/@as(u32, grid_width));
+-  const M_per_pe: u16 = @as(u16, M/@as(u32, grid_height));
+-  // routes
+-  const RX_RNS_TX_R = .{ .rx = .{RAMP, NORTH, SOUTH}, .tx = .{RAMP}};
+-  const RX_R_TX_E = .{ .rx = .{RAMP}, .tx = .{EAST}};
+-  const RX_RW_TX_RE = .{ .rx = .{RAMP, WEST}, .tx = .{RAMP, EAST}};
+-  const RX_RW_TX_R = .{ .rx = .{RAMP, NORTH, WEST}, .tx = .{RAMP}};
+-  // switches
+-  const switch_TX_N = .{.pos1 = .{ .tx = NORTH}, .ring_mode = true, .current_switch_pos = 1};
+-  const switch_TX_S = .{.pos1 = .{ .tx = SOUTH}, .ring_mode = true, .current_switch_pos = 0};
+-  const switch_TX_SNR = .{
+-    .pos1 = .{ .tx = SOUTH},
+-    .pos2 = .{ .tx = NORTH},
+-    .pos3 = .{ .tx = RAMP},
+-    .ring_mode = true,
+-    .current_switch_pos = 0
+-  };
+-
+-  for (@range(u16, grid_width)) |pe_x| {
+-    for (@range(u16, grid_height)) |pe_y| {
+-      @set_tile_code(pe_x, pe_y, "pe_program.csl", .{
+-        .memcpy_params = memcpy.get_params(pe_x),
+-        .M_per_pe = M_per_pe,
+-        .N_per_pe = N_per_pe,
+-        .grid_width = grid_width,
+-        .grid_height = grid_height,
+-        .A_color = A_color,
++  const N_per_pe = @as(u16, N / @as(u32, grid_width));
++  const M_per_pe = @as(u16, M / @as(u32, grid_height));
++  for (@range(u16, grid_width)) |x| {
++    for (@range(u16, grid_height)) |y| {
++      @set_tile_code(x, y, "pe_program.csl", .{
++        .memcpy_params = memcpy.get_params(x),
++        .M_per_pe = M_per_pe, .N_per_pe = N_per_pe,
++        .grid_width = grid_width, .grid_height = grid_height,
++        .A_up_send_color = up_colors[y % 2],
++        .A_up_recv_color = up_colors[1 - y % 2],
++        .A_down_send_color = down_colors[y % 2],
++        .A_down_recv_color = down_colors[1 - y % 2],
+         .sin_cos_horizontal_color = sin_cos_horizontal_color,
+-        .send_control_task_id = send_control_task_id,
+       });
+-
+-      //config A_color
+-      if (pe_y == (grid_height - 1)) {
+-        @set_color_config(pe_x, pe_y, A_color, .{.routes = RX_RNS_TX_R, .switches = switch_TX_N});
+-      }
+-      else if (pe_y == 0) {
+-        @set_color_config(pe_x, pe_y, A_color, .{.routes = RX_RNS_TX_R, .switches = switch_TX_S});
+-      }
+-      else {
+-        if (pe_x == pe_y) {
+-          @set_color_config(pe_x, pe_y, A_color, .{.routes = RX_RNS_TX_R, .switches = switch_TX_SNR});
++      for (@range(u16, 2)) |parity| {
++        if (y % 2 == parity and y > 0) {
++          @set_color_config(x, y, up_colors[parity], .{.routes = .{.rx = .{RAMP}, .tx = .{NORTH}}});
++        } else if (y % 2 != parity and y < grid_height-1) {
++          @set_color_config(x, y, up_colors[parity], .{.routes = .{.rx = .{SOUTH}, .tx = .{RAMP}}});
+         }
+-        else {
+-          @set_color_config(pe_x, pe_y, A_color, .{.routes = RX_RNS_TX_R, .switches = switch_TX_SNR});
++        if (y % 2 == parity and y < grid_height-1) {
++          @set_color_config(x, y, down_colors[parity], .{.routes = .{.rx = .{RAMP}, .tx = .{SOUTH}}});
++        } else if (y % 2 != parity and y > 0) {
++          @set_color_config(x, y, down_colors[parity], .{.routes = .{.rx = .{NORTH}, .tx = .{RAMP}}});
+         }
+       }
+-
+-      //config sin_cos_horizontal_color
+-      if (pe_x == 0) {
+-        @set_color_config(pe_x, pe_y, sin_cos_horizontal_color, .{.routes = RX_R_TX_E});
+-      }
+-      else if (pe_x == grid_width-1) {
+-        @set_color_config(pe_x, pe_y, sin_cos_horizontal_color, .{.routes = RX_RW_TX_R});
+-      }
+-      else {
+-        @set_color_config(pe_x, pe_y, sin_cos_horizontal_color, .{
+-          .routes = RX_RW_TX_RE,
+-          .switches = .{.pos1 = .{ .tx = EAST}, .ring_mode = true, .current_switch_pos = 1}
+-        });
++      if (x == 0 and grid_width > 1) {
++        @set_color_config(x, y, sin_cos_horizontal_color, .{.routes = .{.rx = .{RAMP}, .tx = .{EAST}}});
++      } else if (x > 0 and x == grid_width-1) {
++        @set_color_config(x, y, sin_cos_horizontal_color, .{.routes = .{.rx = .{WEST}, .tx = .{RAMP}}});
++      } else if (x > 0) {
++        @set_color_config(x, y, sin_cos_horizontal_color, .{.routes = .{.rx = .{WEST}, .tx = .{RAMP, EAST}}});
+       }
+     }
+   }
+-
+-  // export symbol names
+   @export_name("A", [*]f32, true);
+   @export_name("start", fn()void);
+-}
+\ No newline at end of file
++}
+diff --git a/QR_factorization/many_elements_per_pe/pe_program.csl b/QR_factorization/many_elements_per_pe/pe_program.csl
+index 0b8a9d9..eb1953e 100644
+--- a/QR_factorization/many_elements_per_pe/pe_program.csl
++++ b/QR_factorization/many_elements_per_pe/pe_program.csl
+@@ -1,4 +1,4 @@
+-param memcpy_params: comptime_struct;
++param memcpy_params;
+ 
+ // Matrix dimensions
+ param M_per_pe: i16;
+@@ -7,15 +7,19 @@ param grid_height: u16;
+ param grid_width: u16;
+ 
+ // Colors
+-param A_color: color;
++param A_up_send_color: color;
++param A_up_recv_color: color;
++param A_down_send_color: color;
++param A_down_recv_color: color;
+ param sin_cos_horizontal_color: color;
+ 
+ // Tasks IDs
+-param send_control_task_id: data_task_id;
++
+ 
+ const sys_mod = @import_module("<memcpy/memcpy>", memcpy_params);
+ const layout_mod = @import_module("<layout>");
+ const math = @import_module("<math>");
++const tile_config = @import_module("<tile_config>");
+ 
+ var A: [M_per_pe*N_per_pe] f32;
+ var A_ptr: [*]f32 = &A;
+@@ -35,12 +39,6 @@ var updates_limit: i32;
+ var count: i16 = 0;
+ var new_length: u16;
+ 
+-const opcode_switch_advance = 1;
+-
+-fn ctrl(ce_filter: bool, opcode: i16, color_id: u16) u32 {
+-  return @as(u32, color_id) << 16 | @as(u32, opcode) << 22 | @as(u32, ce_filter) << 24;
+-}
+-
+ fn is_top_row() bool {
+   return(layout_mod.get_y_coord() == 0);
+ }
+@@ -64,33 +62,19 @@ fn is_diagonal_pe() bool {
+   return(layout_mod.get_x_coord() == layout_mod.get_y_coord());
+ }
+ 
+-var out_dsd_A = @get_dsd(fabout_dsd, .{
+-                          .fabric_color = A_color, .extent = N_per_pe,
+-                          .output_queue = @get_output_queue(0)
+-});
+-var in_dsd_A = @get_dsd(fabin_dsd, .{
+-                          .fabric_color = A_color, .extent = N_per_pe,
+-                          .input_queue = @get_input_queue(0)
+-});
+-const out_dsd_A_control = @get_dsd(fabout_dsd, .{
+-                          .fabric_color = A_color, .extent = 1,
+-                          .output_queue = @get_output_queue(0),
+-                          .control = true
+-});
+-
+-const out_dsd_sin_cos_horizontally = @get_dsd(fabout_dsd, .{
+-                          .fabric_color = sin_cos_horizontal_color, .extent = 1,
+-                          .output_queue = @get_output_queue(2)
+-});
+-const out_dsd_sin_cos_horizontally_control = @get_dsd(fabout_dsd, .{
+-                          .fabric_color = sin_cos_horizontal_color, .extent = 1,
+-                          .output_queue = @get_output_queue(2),
+-                          .control = true
+-});
+-const in_dsd_sin_cos_horizontally = @get_dsd(fabin_dsd, .{
+-                          .fabric_color = sin_cos_horizontal_color, .extent = 1,
+-                          .input_queue = @get_input_queue(2)
+-});
++var out_dsd_A_up = @get_dsd(fabout_dsd, .{.extent = N_per_pe, .output_queue = @get_output_queue(5)});
++var out_dsd_A_down = @get_dsd(fabout_dsd, .{.extent = N_per_pe, .output_queue = @get_output_queue(6)});
++var in_dsd_A_up = @get_dsd(fabin_dsd, .{.extent = N_per_pe, .input_queue = @get_input_queue(2)});
++var in_dsd_A_down = @get_dsd(fabin_dsd, .{.extent = N_per_pe, .input_queue = @get_input_queue(3)});
++const out_dsd_sin_cos_horizontally = @get_dsd(fabout_dsd, .{.extent = 1, .output_queue = @get_output_queue(7)});
++const in_dsd_sin_cos_horizontally = @get_dsd(fabin_dsd, .{.extent = 1, .input_queue = @get_input_queue(4)});
++
++fn set_fabric_length(length: u16) void {
++  out_dsd_A_up = @set_dsd_length(out_dsd_A_up, length);
++  out_dsd_A_down = @set_dsd_length(out_dsd_A_down, length);
++  in_dsd_A_up = @set_dsd_length(in_dsd_A_up, length);
++  in_dsd_A_down = @set_dsd_length(in_dsd_A_down, length);
++}
+ 
+ fn compute_sin_cos(a: f32, b:f32) void {
+   if (!was_sin_cos_recvd_from_west) {
+@@ -126,15 +110,13 @@ fn update_local_rows() void {
+ 
+ fn send_sin_cos_east() void {
+   if (!was_sin_cos_recvd_from_west and !is_right_col()) {
++    // All earlier west pivot blocks have been consumed before injection.
++    tile_config.color_config.reset_routes(sin_cos_horizontal_color, .{.rx = RAMP, .tx = EAST});
+     @fmovs(out_dsd_sin_cos_horizontally, sin);
+     @fmovs(out_dsd_sin_cos_horizontally, cos);
+   }
+ }
+ 
+-fn send_A() void {
+-  @fmovs(out_dsd_A, row_dsd);
+-  @mov32(out_dsd_A_control, comptime ctrl(true, opcode_switch_advance, @get_int(A_color)));
+-}
+ 
+ fn set_rows_dsd_length(length: u16) void {
+   row_dsd = @set_dsd_length(row_dsd, length);
+@@ -143,8 +125,8 @@ fn set_rows_dsd_length(length: u16) void {
+ }
+ 
+ fn recv_A_from_south_and_update(own_element_id: i16) void {
+-  @fmovs(aux_row_2_dsd, in_dsd_A);
+-  send_A();
++  @fmovs(aux_row_2_dsd, in_dsd_A_up);
++  @fmovs(out_dsd_A_down, row_dsd);
+   compute_sin_cos(A[own_element_id], aux_row_2[0]);
+   send_sin_cos_east();
+   @fmovs(aux_row_1_dsd, row_dsd);
+@@ -153,8 +135,8 @@ fn recv_A_from_south_and_update(own_element_id: i16) void {
+ }
+ 
+ fn send_A_to_north_and_update(own_element_id: i16) void {
+-  send_A();
+-  @fmovs(aux_row_1_dsd, in_dsd_A);
++  @fmovs(out_dsd_A_up, row_dsd);
++  @fmovs(aux_row_1_dsd, in_dsd_A_down);
+   compute_sin_cos(aux_row_1[0], A[own_element_id]);
+   send_sin_cos_east();
+   @fmovs(aux_row_2_dsd, row_dsd);
+@@ -167,17 +149,8 @@ fn recv_sin_cos() void {
+   @fmovs(comptime &cos, in_dsd_sin_cos_horizontally);
+ }
+ 
+-task send_control(zero: i16) void {
+-  @mov32(out_dsd_A_control, comptime ctrl(true, opcode_switch_advance, @get_int(A_color)));
+-  if (!is_top_row()) {
+-    @mov32(out_dsd_A_control, comptime ctrl(false, opcode_switch_advance, @get_int(A_color)));
+-  }
+-}
+ 
+ fn recv_sin_cos_and_update() void {
+-  if (layout_mod.get_x_coord() == @as(u16, count + 1)) {
+-    @mov32(out_dsd_sin_cos_horizontally_control, comptime ctrl(true, opcode_switch_advance, @get_int(sin_cos_horizontal_color)));
+-  }
+   was_sin_cos_recvd_from_west = true;
+   row_dsd = @increment_dsd_offset(row_dsd, N_per_pe*(M_per_pe-2), f32);
+   // The PE receive the sine and cosine computed in a PE at left to make their lower 0s
+@@ -195,13 +168,8 @@ fn recv_sin_cos_and_update() void {
+     for (@range(i16, N_per_pe)) |row| {
+       recv_sin_cos();
+       recv_A_from_south_and_update(0);
+-      if(!is_top_row()) {
+-        // the middle PEs need advance 2 position in the switch because in this case they are just communicating with the PE at south.
+-        @mov32(out_dsd_A_control, comptime ctrl(false, opcode_switch_advance, @get_int(A_color)));
+-      }
+       row_dsd = @increment_dsd_offset(row_dsd, N_per_pe, f32);
+     }
+-    @unblock(send_control_task_id);
+     sys_mod.unblock_cmd_stream();
+     return;
+   }
+@@ -224,7 +192,6 @@ fn recv_sin_cos_and_update() void {
+   }
+   count += 1;
+   if (@as(u16, count) == layout_mod.get_x_coord()) {
+-    @mov32(out_dsd_sin_cos_horizontally_control, comptime ctrl(true, opcode_switch_advance, @get_int(sin_cos_horizontal_color)));
+     was_sin_cos_recvd_from_west = false;
+     count = 0;
+     make_lower_zeros();
+@@ -239,13 +206,8 @@ fn diagonal_recv_update() void {
+     for(@range(i16, N_per_pe)) |row| {
+       new_length = @as(u16, N_per_pe - row);
+       set_rows_dsd_length(new_length);
+-      out_dsd_A = @set_dsd_length(out_dsd_A, new_length);
+-      in_dsd_A = @set_dsd_length(in_dsd_A, new_length);
++      set_fabric_length(new_length);
+       recv_A_from_south_and_update(row*N_per_pe + row);
+-      if(!is_top_row()) {
+-        // the middle PEs need advance 2 position in the switch because in this case they are just communicating with the PE at south.
+-        @mov32(out_dsd_A_control, comptime ctrl(false, opcode_switch_advance, @get_int(A_color)));
+-      }
+       row_dsd = @increment_dsd_offset(row_dsd, N_per_pe + 1, f32);
+     }
+   }
+@@ -268,8 +230,7 @@ fn make_upper_zeros() void {
+     }
+     new_length = @as(u16, N_per_pe - count);
+     set_rows_dsd_length(new_length);
+-    out_dsd_A = @set_dsd_length(out_dsd_A, new_length);
+-    in_dsd_A = @set_dsd_length(in_dsd_A, new_length);
++    set_fabric_length(new_length);
+     row_dsd = @increment_dsd_offset(row_dsd, -N_per_pe*(M_per_pe-count) - (N_per_pe - count - 1), f32);
+   }
+   else {
+@@ -313,7 +274,6 @@ task exit_task() void {
+ }
+ 
+ fn start() void {
+-  @block(send_control_task_id);
+   is_down_updated_row = is_bottom_row();
+   was_sin_cos_recvd_from_west = false;
+   
+@@ -326,8 +286,12 @@ fn start() void {
+ }
+ 
+ comptime {
+-  @bind_data_task(send_control, send_control_task_id);
++  @initialize_queue(@get_input_queue(2), .{.color = A_up_recv_color});
++  @initialize_queue(@get_input_queue(3), .{.color = A_down_recv_color});
++  @initialize_queue(@get_input_queue(4), .{.color = sin_cos_horizontal_color});
++  @initialize_queue(@get_output_queue(5), .{.color = A_up_send_color});
++  @initialize_queue(@get_output_queue(6), .{.color = A_down_send_color});
++  @initialize_queue(@get_output_queue(7), .{.color = sin_cos_horizontal_color});
+   @export_symbol(A_ptr, "A");
+   @export_symbol(start);
+-  @rpc(@get_data_task_id(sys_mod.LAUNCH));
+-}
+\ No newline at end of file
++}

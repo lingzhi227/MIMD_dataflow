@@ -1,0 +1,1365 @@
+{
+  "kind": "qualification_index_of_existing_sdk_runs",
+  "sdk": true,
+  "success": true,
+  "cases": [
+    {
+      "key": "waferllm/mesh_twohop_64_4x4_f16",
+      "artifact": "projects/waferllm/mesh_twohop_64_4x4_f16/run-20260906T172641742457Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_twohop.v1",
+        "epochs": 6,
+        "actors": 16,
+        "internal_half_observations": 99840,
+        "cases": [
+          {
+            "scheduled_fma_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.0672225117248567,
+              "max_abs_error": 0.004541423171758652,
+              "max_error_over_bound": 0.015708325511487792,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.0672225117248567,
+              "max_abs_error": 0.005974683513613854,
+              "max_error_over_bound": 0.02139918577916046,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": false,
+            "max_native_abs_difference": 0.005859375,
+            "compute_cycles_median": 2013.5,
+            "max_local_cycles": 10542,
+            "total_cycles_per_pe": [
+              [
+                10535,
+                10532,
+                10529,
+                10526
+              ],
+              [
+                10542,
+                10540,
+                10536,
+                10532
+              ],
+              [
+                10533,
+                10530,
+                10529,
+                10525
+              ],
+              [
+                10537,
+                10534,
+                10534,
+                10529
+              ]
+            ]
+          },
+          {
+            "scheduled_fma_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.0672225117248567,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.0672225117248567,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "compute_cycles_median": 2013.5,
+            "max_local_cycles": 10542,
+            "total_cycles_per_pe": [
+              [
+                10535,
+                10532,
+                10529,
+                10526
+              ],
+              [
+                10542,
+                10540,
+                10536,
+                10532
+              ],
+              [
+                10533,
+                10530,
+                10529,
+                10525
+              ],
+              [
+                10537,
+                10534,
+                10534,
+                10529
+              ]
+            ]
+          },
+          {
+            "scheduled_fma_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.0672225117248567,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.0672225117248567,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "compute_cycles_median": 2013.5,
+            "max_local_cycles": 10542,
+            "total_cycles_per_pe": [
+              [
+                10535,
+                10532,
+                10529,
+                10526
+              ],
+              [
+                10542,
+                10540,
+                10536,
+                10532
+              ],
+              [
+                10533,
+                10530,
+                10529,
+                10525
+              ],
+              [
+                10537,
+                10534,
+                10534,
+                10529
+              ]
+            ]
+          },
+          {
+            "scheduled_fma_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.0672225117248567,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.0672225117248567,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "compute_cycles_median": 2013.5,
+            "max_local_cycles": 10542,
+            "total_cycles_per_pe": [
+              [
+                10535,
+                10532,
+                10529,
+                10526
+              ],
+              [
+                10542,
+                10540,
+                10536,
+                10532
+              ],
+              [
+                10533,
+                10530,
+                10529,
+                10525
+              ],
+              [
+                10537,
+                10534,
+                10534,
+                10529
+              ]
+            ]
+          },
+          {
+            "scheduled_fma_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.0672225117248567,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.0672225117248567,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "compute_cycles_median": 2013.5,
+            "max_local_cycles": 10542,
+            "total_cycles_per_pe": [
+              [
+                10535,
+                10532,
+                10529,
+                10526
+              ],
+              [
+                10542,
+                10540,
+                10536,
+                10532
+              ],
+              [
+                10533,
+                10530,
+                10529,
+                10525
+              ],
+              [
+                10537,
+                10534,
+                10534,
+                10529
+              ]
+            ]
+          },
+          {
+            "scheduled_fma_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.0672225117248567,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.0672225117248567,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "compute_cycles_median": 2013.5,
+            "max_local_cycles": 10542,
+            "total_cycles_per_pe": [
+              [
+                10535,
+                10532,
+                10529,
+                10526
+              ],
+              [
+                10542,
+                10540,
+                10536,
+                10532
+              ],
+              [
+                10533,
+                10530,
+                10529,
+                10525
+              ],
+              [
+                10537,
+                10534,
+                10534,
+                10529
+              ]
+            ]
+          }
+        ],
+        "contract": "bit-exact scheduled binary16 FMA recurrence and exact block ownership; high-level/native relaxed block order may round differently; independent original-product forward bound"
+      },
+      "qualification_sha256": "2d05dc532dc68ccd7d34fca0cf9390a9f01f84e35636da1e4cf2e356e909976f",
+      "native_application_checks": [
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.0672225117248567,
+          "max_abs_error": 0.005974683513613854,
+          "max_error_over_bound": 0.02139918577916046,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": []
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.0672225117248567,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.0672225117248567,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_zero_reset"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.0672225117248567,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "fused_not_split_half_rounding"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.0672225117248567,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "minimum_half_subnormal_preserved"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.0672225117248567,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        }
+      ],
+      "device_application_checks": [
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.0672225117248567,
+          "max_abs_error": 0.004541423171758652,
+          "max_error_over_bound": 0.015708325511487792,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": []
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.0672225117248567,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.0672225117248567,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_zero_reset"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.0672225117248567,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "fused_not_split_half_rounding"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.0672225117248567,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "minimum_half_subnormal_preserved"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.0672225117248567,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        }
+      ],
+      "numerical_validation": {
+        "contract": "binary16-fma-relaxed-v1",
+        "native_forward_bound_passed": true,
+        "device_forward_bound_passed": true,
+        "device_scheduled_bits_passed": true,
+        "native_f32_accuracy_not_implied": true
+      }
+    },
+    {
+      "key": "waferllm/mesh_twohop_64_4x4_f16",
+      "artifact": "projects/waferllm/mesh_twohop_64_4x4_f16/run-20260906T174509420723Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_twohop.v1",
+        "instrumentation": "counters",
+        "prefix_observed": false,
+        "epochs": 6,
+        "actors": 16,
+        "internal_half_observations": 1536,
+        "cases": [
+          {
+            "scheduled_final_bits_exact": true,
+            "scheduled_prefix_bits_exact": null,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.0672225117248567,
+              "max_abs_error": 0.004541423171758652,
+              "max_error_over_bound": 0.015708325511487792,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.0672225117248567,
+              "max_abs_error": 0.005974683513613854,
+              "max_error_over_bound": 0.02139918577916046,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": false,
+            "max_native_abs_difference": 0.005859375,
+            "compute_cycles_median": 2013.5,
+            "max_local_cycles": 10342,
+            "total_cycles_per_pe": [
+              [
+                10335,
+                10332,
+                10329,
+                10326
+              ],
+              [
+                10342,
+                10340,
+                10336,
+                10332
+              ],
+              [
+                10333,
+                10330,
+                10329,
+                10325
+              ],
+              [
+                10337,
+                10334,
+                10334,
+                10329
+              ]
+            ]
+          },
+          {
+            "scheduled_final_bits_exact": true,
+            "scheduled_prefix_bits_exact": null,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.0672225117248567,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.0672225117248567,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "compute_cycles_median": 2013.5,
+            "max_local_cycles": 10342,
+            "total_cycles_per_pe": [
+              [
+                10335,
+                10332,
+                10329,
+                10326
+              ],
+              [
+                10342,
+                10340,
+                10336,
+                10332
+              ],
+              [
+                10333,
+                10330,
+                10329,
+                10325
+              ],
+              [
+                10337,
+                10334,
+                10334,
+                10329
+              ]
+            ]
+          },
+          {
+            "scheduled_final_bits_exact": true,
+            "scheduled_prefix_bits_exact": null,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.0672225117248567,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.0672225117248567,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "compute_cycles_median": 2013.5,
+            "max_local_cycles": 10342,
+            "total_cycles_per_pe": [
+              [
+                10335,
+                10332,
+                10329,
+                10326
+              ],
+              [
+                10342,
+                10340,
+                10336,
+                10332
+              ],
+              [
+                10333,
+                10330,
+                10329,
+                10325
+              ],
+              [
+                10337,
+                10334,
+                10334,
+                10329
+              ]
+            ]
+          },
+          {
+            "scheduled_final_bits_exact": true,
+            "scheduled_prefix_bits_exact": null,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.0672225117248567,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.0672225117248567,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "compute_cycles_median": 2013.5,
+            "max_local_cycles": 10342,
+            "total_cycles_per_pe": [
+              [
+                10335,
+                10332,
+                10329,
+                10326
+              ],
+              [
+                10342,
+                10340,
+                10336,
+                10332
+              ],
+              [
+                10333,
+                10330,
+                10329,
+                10325
+              ],
+              [
+                10337,
+                10334,
+                10334,
+                10329
+              ]
+            ]
+          },
+          {
+            "scheduled_final_bits_exact": true,
+            "scheduled_prefix_bits_exact": null,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.0672225117248567,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.0672225117248567,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "compute_cycles_median": 2013.5,
+            "max_local_cycles": 10342,
+            "total_cycles_per_pe": [
+              [
+                10335,
+                10332,
+                10329,
+                10326
+              ],
+              [
+                10342,
+                10340,
+                10336,
+                10332
+              ],
+              [
+                10333,
+                10330,
+                10329,
+                10325
+              ],
+              [
+                10337,
+                10334,
+                10334,
+                10329
+              ]
+            ]
+          },
+          {
+            "scheduled_final_bits_exact": true,
+            "scheduled_prefix_bits_exact": null,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.0672225117248567,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.0672225117248567,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "compute_cycles_median": 2013.5,
+            "max_local_cycles": 10342,
+            "total_cycles_per_pe": [
+              [
+                10335,
+                10332,
+                10329,
+                10326
+              ],
+              [
+                10342,
+                10340,
+                10336,
+                10332
+              ],
+              [
+                10333,
+                10330,
+                10329,
+                10325
+              ],
+              [
+                10337,
+                10334,
+                10334,
+                10329
+              ]
+            ]
+          }
+        ],
+        "contract": "bit-exact scheduled binary16 FMA recurrence and exact block ownership; high-level/native relaxed block order may round differently; independent original-product forward bound"
+      },
+      "qualification_sha256": "8689f34b9d45a0ea5734e68862f3eaddfc3a2a16658a4518de65a89dfc546c77",
+      "native_application_checks": [
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.0672225117248567,
+          "max_abs_error": 0.005974683513613854,
+          "max_error_over_bound": 0.02139918577916046,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": []
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.0672225117248567,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.0672225117248567,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_zero_reset"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.0672225117248567,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "fused_not_split_half_rounding"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.0672225117248567,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "minimum_half_subnormal_preserved"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.0672225117248567,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        }
+      ],
+      "device_application_checks": [
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.0672225117248567,
+          "max_abs_error": 0.004541423171758652,
+          "max_error_over_bound": 0.015708325511487792,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": []
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.0672225117248567,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.0672225117248567,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_zero_reset"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.0672225117248567,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "fused_not_split_half_rounding"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.0672225117248567,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "minimum_half_subnormal_preserved"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.0672225117248567,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        }
+      ],
+      "numerical_validation": {
+        "contract": "binary16-fma-relaxed-v1",
+        "native_forward_bound_passed": true,
+        "device_forward_bound_passed": true,
+        "device_scheduled_bits_passed": true,
+        "native_f32_accuracy_not_implied": true
+      }
+    },
+    {
+      "key": "waferllm/mesh_twohop_128_4x4_f16",
+      "artifact": "projects/waferllm/mesh_twohop_128_4x4_f16/run-20260906T173506392821Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_twohop.v1",
+        "epochs": 6,
+        "actors": 16,
+        "internal_half_observations": 394752,
+        "cases": [
+          {
+            "scheduled_fma_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.012807498045731336,
+              "max_error_over_bound": 0.010565005430116833,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0166840017773211,
+              "max_error_over_bound": 0.014355952829685124,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": false,
+            "max_native_abs_difference": 0.015625,
+            "compute_cycles_median": 10685.0,
+            "max_local_cycles": 49550,
+            "total_cycles_per_pe": [
+              [
+                49544,
+                49540,
+                49539,
+                49534
+              ],
+              [
+                49550,
+                49548,
+                49545,
+                49540
+              ],
+              [
+                49541,
+                49538,
+                49537,
+                49533
+              ],
+              [
+                49546,
+                49544,
+                49542,
+                49538
+              ]
+            ]
+          },
+          {
+            "scheduled_fma_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "compute_cycles_median": 10685.0,
+            "max_local_cycles": 49550,
+            "total_cycles_per_pe": [
+              [
+                49544,
+                49540,
+                49539,
+                49534
+              ],
+              [
+                49550,
+                49548,
+                49545,
+                49540
+              ],
+              [
+                49541,
+                49538,
+                49537,
+                49533
+              ],
+              [
+                49546,
+                49544,
+                49542,
+                49538
+              ]
+            ]
+          },
+          {
+            "scheduled_fma_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "compute_cycles_median": 10685.0,
+            "max_local_cycles": 49550,
+            "total_cycles_per_pe": [
+              [
+                49544,
+                49540,
+                49539,
+                49534
+              ],
+              [
+                49550,
+                49548,
+                49545,
+                49540
+              ],
+              [
+                49541,
+                49538,
+                49537,
+                49533
+              ],
+              [
+                49546,
+                49544,
+                49542,
+                49538
+              ]
+            ]
+          },
+          {
+            "scheduled_fma_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "compute_cycles_median": 10685.0,
+            "max_local_cycles": 49550,
+            "total_cycles_per_pe": [
+              [
+                49544,
+                49540,
+                49539,
+                49534
+              ],
+              [
+                49550,
+                49548,
+                49545,
+                49540
+              ],
+              [
+                49541,
+                49538,
+                49537,
+                49533
+              ],
+              [
+                49546,
+                49544,
+                49542,
+                49538
+              ]
+            ]
+          },
+          {
+            "scheduled_fma_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "compute_cycles_median": 10685.0,
+            "max_local_cycles": 49550,
+            "total_cycles_per_pe": [
+              [
+                49544,
+                49540,
+                49539,
+                49534
+              ],
+              [
+                49550,
+                49548,
+                49545,
+                49540
+              ],
+              [
+                49541,
+                49538,
+                49537,
+                49533
+              ],
+              [
+                49546,
+                49544,
+                49542,
+                49538
+              ]
+            ]
+          },
+          {
+            "scheduled_fma_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.14349525404801786,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "compute_cycles_median": 10685.0,
+            "max_local_cycles": 49550,
+            "total_cycles_per_pe": [
+              [
+                49544,
+                49540,
+                49539,
+                49534
+              ],
+              [
+                49550,
+                49548,
+                49545,
+                49540
+              ],
+              [
+                49541,
+                49538,
+                49537,
+                49533
+              ],
+              [
+                49546,
+                49544,
+                49542,
+                49538
+              ]
+            ]
+          }
+        ],
+        "contract": "bit-exact scheduled binary16 FMA recurrence and exact block ownership; high-level/native relaxed block order may round differently; independent original-product forward bound"
+      },
+      "qualification_sha256": "89eb1dd2a3f97f13d52872eb07e6c5ea5ccd3d871d3ca31f01ffae16d6cfe921",
+      "native_application_checks": [
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0166840017773211,
+          "max_error_over_bound": 0.014355952829685124,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": []
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_zero_reset"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "fused_not_split_half_rounding"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "minimum_half_subnormal_preserved"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        }
+      ],
+      "device_application_checks": [
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.012807498045731336,
+          "max_error_over_bound": 0.010565005430116833,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": []
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_zero_reset"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "fused_not_split_half_rounding"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "minimum_half_subnormal_preserved"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.14349525404801786,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        }
+      ],
+      "numerical_validation": {
+        "contract": "binary16-fma-relaxed-v1",
+        "native_forward_bound_passed": true,
+        "device_forward_bound_passed": true,
+        "device_scheduled_bits_passed": true,
+        "native_f32_accuracy_not_implied": true
+      }
+    }
+  ]
+}

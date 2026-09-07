@@ -1,0 +1,27 @@
+{
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "source_files": {
+    "projects/waferllm/upstream/Prefill/src/layout.csl": "b2ed06f427893ce95a1226b44f703193f2de2b94a8e046643683df0a5b73d710",
+    "projects/waferllm/upstream/Prefill/src/prefill.csl": "f3a94b728e45584a854ef6795fc4a04860ee2a1392f58d48f2d11862a2fa2794",
+    "projects/waferllm/upstream/Prefill/src/comm_lib/comm_layout.csl": "18752c755a4f29e3dfaa9afccd2f0094f79ab11edfdbe8581847a69c9ae0152a",
+    "projects/waferllm/upstream/Prefill/src/comm_lib/comm_pe.csl": "47396d629f6850be2933589950bf81765ff7895e3d3fe0a24386fe38aa3ef7b3"
+  },
+  "runtime_files": {
+    "toolchain/runtime/normalized_matmul_pe.csl": "9a651d61738e022251c01ea489f76d72402ec84774e082e3a5f2388ba7130db0",
+    "toolchain/runtime/normalized_matmul_layout.csl": "b5cf38b51952bf8d1c6d56b39d467eab0a0aa26454743181ba1af2dc19bce1b4",
+    "toolchain/runtime/inference_comm.csl": "47396d629f6850be2933589950bf81765ff7895e3d3fe0a24386fe38aa3ef7b3",
+    "toolchain/runtime/inference_routes.csl": "18752c755a4f29e3dfaa9afccd2f0094f79ab11edfdbe8581847a69c9ae0152a"
+  },
+  "derivation_script": "experiments/derive_normalized_matmul_runtime.py",
+  "adaptations": [
+    "Retain only RMSNorm and Q contraction from Prefill PE code; generic typed host names mapped separately.",
+    "Correct inverse scale to per-row vector; feature weights packed by PE column.",
+    "Explicit epsilon parameter and sampled observation mode.",
+    "Stable exports, new host entry/completion, phase/round counters, raw timestamps, queue witnesses, normalized tensor and contraction prefixes.",
+    "Original communication PE/layout modules copied without arithmetic or routing changes. Source comments describe provenance-specific UT choice; not a general rule for every SDK operation."
+  ],
+  "scope": "Bounded resident normalization-contraction implementation. Original source-only six-call probe passed; HLS SDK qualification ongoing.",
+  "source_repository": "https://github.com/MeshInfra/WaferLLM",
+  "license": "Apache-2.0",
+  "license_reference": "projects/waferllm/upstream/LICENSE"
+}

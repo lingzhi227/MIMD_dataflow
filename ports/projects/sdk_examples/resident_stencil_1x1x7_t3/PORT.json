@@ -1,0 +1,12 @@
+{
+  "project": "sdk_examples",
+  "kernel": "resident_stencil_1x1x7_t3",
+  "origins": [
+    "benchmarks/7pt-stencil-spmv/src/kernel.csl",
+    "benchmarks/benchmark-libs/stencil_3d_7pts/wse3/pe.csl"
+  ],
+  "fixture": "grid:1:1:7:3",
+  "contract": "SDK seven-point operator iterated on resident pencils; zero exterior; four-neighbor on-device exchange with asynchronous full-frame DSD sends. Optional checked DSD vector arithmetic preserves multiply/add ordering; original block-overlapped DSR/fmac implementation not yet performance-matched.",
+  "partitions": 1,
+  "status": "source_ready"
+}

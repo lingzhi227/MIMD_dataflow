@@ -1,0 +1,11 @@
+{
+  "project": "sdk_examples",
+  "kernel": "residual",
+  "origins": [
+    "benchmarks/residual/residual.csl"
+  ],
+  "fixture": "residual",
+  "contract": "b-Ax residual equation; dense four-row counterpart, not original structured operator storage.",
+  "partitions": 1,
+  "status": "source_ready"
+}

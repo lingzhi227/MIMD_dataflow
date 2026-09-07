@@ -1,0 +1,6 @@
+{
+  "supersedes_scope_only": "evidence/mlp128x128x512-blocked-counter-source-comparison.json",
+  "original_sha256": "3459e3e5dc77abeae2e93f68be8111e082ad6494599c7abd2a75729c69e95265",
+  "new_sdk_execution": false,
+  "correction": "Counter omits half intermediate-prefix snapshots but retains final f32 accumulator readout: 131072 values over eight calls. Arithmetic, timings, hashes and qualification are unchanged."
+}

@@ -1,0 +1,11 @@
+{
+  "project": "spada",
+  "kernel": "allreduce",
+  "origins": [
+    "samples/spatial/collectives/allreduce_1D.sptl"
+  ],
+  "fixture": "allreduce",
+  "contract": "Balanced reduction followed by graph broadcast, four participants.",
+  "partitions": 1,
+  "status": "source_ready"
+}

@@ -1,0 +1,54 @@
+{
+  "numerical_diagnostic_passed": true,
+  "qualified": false,
+  "reason": "SDK six calls completed; frozen artifact audit failed because attention runtime templates were not snapshotted. This independent output-only review does not repair or qualify the original bundle.",
+  "cases": [
+    {
+      "contract": "attention-half-normwise-v1",
+      "fixed_accuracy_passed": true,
+      "relative_l2": 0.001262183265491465,
+      "peak_scaled_error": 0.003201541105016432,
+      "per_component_accuracy_not_implied": true
+    },
+    {
+      "contract": "attention-half-normwise-v1",
+      "fixed_accuracy_passed": true,
+      "relative_l2": 0.0012407786270969797,
+      "peak_scaled_error": 0.0036850771238403613,
+      "per_component_accuracy_not_implied": true
+    },
+    {
+      "contract": "attention-half-normwise-v1",
+      "fixed_accuracy_passed": true,
+      "relative_l2": 0.001115802074485032,
+      "peak_scaled_error": 0.001331028845859958,
+      "per_component_accuracy_not_implied": true
+    },
+    {
+      "contract": "attention-half-normwise-v1",
+      "fixed_accuracy_passed": true,
+      "relative_l2": 0.001156271515062228,
+      "peak_scaled_error": 0.002284056790126999,
+      "per_component_accuracy_not_implied": true
+    },
+    {
+      "contract": "attention-half-normwise-v1",
+      "fixed_accuracy_passed": true,
+      "relative_l2": 0.0,
+      "peak_scaled_error": 0.0,
+      "per_component_accuracy_not_implied": true
+    },
+    {
+      "contract": "attention-half-normwise-v1",
+      "fixed_accuracy_passed": true,
+      "relative_l2": 0.001360304127632064,
+      "peak_scaled_error": 0.0034767204955838257,
+      "per_component_accuracy_not_implied": true
+    }
+  ],
+  "results_sha256": "64b0c84da3c0e6ce9ff2be6764cc527186dd0aa814c34671c6daa5b7ddb234fb",
+  "helpers": {
+    "toolchain/mesh_attention.py": "e2c73a115c9d96f724f35791ad5eade6c58450c19afefc508515313901ae7b47",
+    "attention_fixtures.py": "b23027c277bbcc8b145f25c10a22985758f6d3e1c5b90b9c070da960a7ffd288"
+  }
+}

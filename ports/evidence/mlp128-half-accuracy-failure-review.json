@@ -1,0 +1,116 @@
+{
+  "passed": false,
+  "new_sdk_execution": false,
+  "scope": "Completed SDK execution with target-half schedule agreement is not mathematical accuracy qualification. Existing .02L2/.03peak limits unchanged. First-pass stage diagnosis uses float64 matmul/exp and independently executable native stdout; worst-case exact uniform-input formula checked separately.",
+  "cases": [
+    {
+      "epoch": 0,
+      "target_bits_exact": true,
+      "device": {
+        "relative_l2": 0.004053001658173037,
+        "peak_scaled_error": 0.007228635912254989
+      },
+      "native": {
+        "relative_l2": 0.004031732106891909,
+        "peak_scaled_error": 0.007506654612703337
+      },
+      "first_values": {
+        "device": -0.0011205673217773438,
+        "native": -0.0011129379272460938,
+        "nominal": -0.0011150798164885753
+      }
+    },
+    {
+      "epoch": 1,
+      "target_bits_exact": true,
+      "device": {
+        "relative_l2": 0.004074575782164946,
+        "peak_scaled_error": 0.007790426713611133
+      },
+      "native": {
+        "relative_l2": 0.00405767958169604,
+        "peak_scaled_error": 0.008747269397091317
+      },
+      "first_values": {
+        "device": 0.00066375732421875,
+        "native": 0.0006651878356933594,
+        "nominal": 0.000672204326238837
+      }
+    },
+    {
+      "epoch": 2,
+      "target_bits_exact": true,
+      "device": {
+        "relative_l2": 0.0,
+        "peak_scaled_error": 0.0
+      },
+      "native": {
+        "relative_l2": 0.0,
+        "peak_scaled_error": 0.0
+      },
+      "first_values": {
+        "device": 0.0,
+        "native": 0.0,
+        "nominal": 0.0
+      }
+    },
+    {
+      "epoch": 3,
+      "target_bits_exact": true,
+      "device": {
+        "relative_l2": 0.0038470970434644706,
+        "peak_scaled_error": 0.006872683575946879
+      },
+      "native": {
+        "relative_l2": 0.004179121287637289,
+        "peak_scaled_error": 0.004731423816866012
+      },
+      "first_values": {
+        "device": -0.04742431640625,
+        "native": -0.0474853515625,
+        "nominal": -0.0474819870727917
+      }
+    },
+    {
+      "epoch": 4,
+      "target_bits_exact": true,
+      "device": {
+        "relative_l2": 0.0,
+        "peak_scaled_error": 0.0
+      },
+      "native": {
+        "relative_l2": 0.0,
+        "peak_scaled_error": 0.0
+      },
+      "first_values": {
+        "device": 0.0,
+        "native": 0.0,
+        "nominal": 0.0
+      }
+    },
+    {
+      "epoch": 5,
+      "target_bits_exact": true,
+      "device": {
+        "relative_l2": 0.054398295271497685,
+        "peak_scaled_error": 0.05439829527149771
+      },
+      "native": {
+        "relative_l2": 0.054952658202765556,
+        "peak_scaled_error": 0.054952658202765584
+      },
+      "first_values": {
+        "device": 237.75,
+        "native": 237.875,
+        "nominal": 225.48405196233895
+      }
+    }
+  ],
+  "hashes": {
+    "projects/waferllm/mlp_128x128x512_8x8/run-20260907T044448791119Z/manifest.json": "20d65df1819e449915381709dd98a1e46dc47dcf7a32386ebf1d6b12ebfb0acb",
+    "projects/waferllm/mlp_128x128x512_8x8/run-20260907T044448791119Z/results.json": "29ad9a303b22baf6cb9d3e192de01bd9f623ef589319b02723c3d6c30bdeb870",
+    "projects/waferllm/mlp_128x128x512_8x8/run-20260907T044448791119Z/qualification.json": "be07bc8e0edb05571a359aeb4e7f0679e0fc1e90d9fcf334bbacc988946024fa",
+    "projects/waferllm/mlp_128x128x512_8x8/run-20260907T044448791119Z/native-output.txt": "a76ac21a477acd8d0fe775236ef141b5a1d60217ec9a47f42c0851bd7fa295d1"
+  },
+  "uniform_case_formula": 225.48405196233787
+}

@@ -1,0 +1,44 @@
+{
+  "key": "waferllm/attention_64x128_8x8",
+  "contract": "Resident supplied-Q/K/V unmasked single-head attention 64x128 on 8x8 PEs. Typed transpose/matmul/softmax/matmul composition; no intermediate host transfer. Source-derived score root reduction, SDK map normalization, device V prealignment/strided DSD. Explicit descriptor reset and completed-storage reuse. Six SDK calls, immutable inputs, exact score/probability/value-prefix and live-owner witnesses in sampled mode; counter mode omits internal tensor observations, coherent mutation rejections, actual native/device independent original-input math. Matching adapted-source control; no full prefill/decode/model/hardware claim.",
+  "origins": [
+    "Prefill/src/prefill.csl score_matmul/matmul_T_compute"
+  ],
+  "source_sha256": "ca28ec37863a60b23391ada5e218f5e396a5d67c16a83fb6bf3edaae0d07cdfc",
+  "native_stdout_verification": {
+    "level": "native_cpu",
+    "artifact": "projects/waferllm/attention_64x128_8x8/run-20260907T073733216957Z",
+    "report": "evidence/run-20260907T073733216957Z.json",
+    "native_application_source": "native-output.txt: actual C++ executable stdout",
+    "current_toolchain": true,
+    "numerical_validation": {
+      "contract": "attention-half-normwise-v1",
+      "native_fixed_accuracy_passed": true,
+      "device_fixed_accuracy_passed": null,
+      "device_audit_passed": null,
+      "fixed_accuracy_passed": true,
+      "relative_l2_limit": 0.02,
+      "max_error_over_reference_peak_limit": 0.025,
+      "zero_reference_requires_exact_zero": true,
+      "per_component_accuracy_not_implied": true
+    }
+  },
+  "verification": {
+    "level": "sdk_simulator",
+    "artifact": "projects/waferllm/attention_64x128_8x8/run-20260907T032800549283Z",
+    "report": "evidence/qualification-20260907T035517597578Z.json",
+    "native_application_source": "native-output.txt: actual C++ stdout, independent original-input attention math.fsum/exp review",
+    "current_toolchain": false,
+    "numerical_validation": {
+      "contract": "attention-half-normwise-v1",
+      "native_fixed_accuracy_passed": true,
+      "device_fixed_accuracy_passed": true,
+      "device_audit_passed": true,
+      "fixed_accuracy_passed": true,
+      "relative_l2_limit": 0.02,
+      "max_error_over_reference_peak_limit": 0.025,
+      "zero_reference_requires_exact_zero": true,
+      "per_component_accuracy_not_implied": true
+    }
+  }
+}

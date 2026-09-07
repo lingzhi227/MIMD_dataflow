@@ -1,0 +1,22 @@
+param N: u16;
+param tensor_type: type;
+
+param src_dsr: dsr_src1;
+param dest_dsr: dsr_dest;
+
+const dsd_ops = @import_module("<dsd_ops>");
+
+fn reshape(baseA: *u16, baseB: *u16, subproblems: u16, stride: u16, src: [*]tensor_type, dest: [*]tensor_type) void {
+  var destinationDSD = @get_dsd(mem1d_dsd, .{ .base_address = &dest[baseA.*], .extent = subproblems });
+  var sourceDSD = @get_dsd(mem1d_dsd, .{ .base_address = &src[baseB.*], .extent = subproblems });
+
+  @load_to_dsr(dest_dsr, destinationDSD, .{ .save_address = true });
+  while ((baseB.*) < N) {
+    @load_to_dsr(src_dsr, sourceDSD);
+    dsd_ops.mov(tensor_type, dest_dsr, src_dsr, .{});
+
+    sourceDSD = @increment_dsd_offset(sourceDSD, @as(i16, stride), tensor_type);
+    (baseA.*) += subproblems;
+    (baseB.*) += stride;
+  }
+}

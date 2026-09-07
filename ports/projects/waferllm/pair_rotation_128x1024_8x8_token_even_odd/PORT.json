@@ -1,0 +1,12 @@
+{
+  "project": "waferllm",
+  "kernel": "pair_rotation_128x1024_8x8_token_even_odd",
+  "origins": [
+    "Prefill/src/prefill.csl xq_rope/xk_rope"
+  ],
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "status": "source_ready",
+  "partitions": 1,
+  "contract": "Adjacent pair rotation 128x1024 on 8x8 PEs; explicit even_odd order and per-token coefficients. Six SDK calls, exact four-product/final half bits, immutable inputs, phase/epoch checks and independent actual native/device standard composition. Finite magnitude<=8; cancellation-aware .0015*sum(abs(products))+2^-23 per output. Original-source control covers broadcast odd_even64x128, including nontrivial angles. No full model/hardware claim.",
+  "fixture": "pair_rotation:128:1024:0:even_odd"
+}

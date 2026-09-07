@@ -1,0 +1,2708 @@
+{
+  "kind": "qualification_index_of_existing_sdk_runs",
+  "sdk": true,
+  "success": true,
+  "new_sdk_execution": false,
+  "source_controls": [
+    {
+      "path": "evidence/normalized-fanout64x128-counter-source-comparison.json",
+      "sha256": "92980b204522daa53c2872b988de7582b0260182fb0d9db25a5981e847e70063"
+    }
+  ],
+  "cases": [
+    {
+      "key": "waferllm/normalized_fanout3_64x128_8x8",
+      "artifact": "projects/waferllm/normalized_fanout3_64x128_8x8/run-20260907T010004125142Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_normalized_fanout.v1",
+        "epochs": 6,
+        "actors": 64,
+        "projections": 3,
+        "instrumentation": "sampled",
+        "internal_half_observations": 1376256,
+        "cases": [
+          {
+            "branches": [
+              {
+                "index": 0,
+                "output": "projection0",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.00043548812718574164,
+                "standard_max_abs_error": 0.0016105651428113266
+              },
+              {
+                "index": 1,
+                "output": "projection1",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0004354881271857417,
+                "standard_max_abs_error": 0.0016105651428113266
+              },
+              {
+                "index": 2,
+                "output": "projection2",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.00043548812718574164,
+                "standard_max_abs_error": 0.0008052825714056633
+              }
+            ],
+            "max_local_cycles": 49101,
+            "cycles_per_pe": [
+              [
+                49096,
+                49098,
+                49088,
+                49082,
+                49081,
+                49079,
+                49087,
+                49080
+              ],
+              [
+                49100,
+                49101,
+                49093,
+                49087,
+                49085,
+                49085,
+                49088,
+                49085
+              ],
+              [
+                49096,
+                49101,
+                49086,
+                49080,
+                49079,
+                49075,
+                49089,
+                49078
+              ],
+              [
+                49099,
+                49099,
+                49095,
+                49089,
+                49089,
+                49089,
+                49084,
+                49081
+              ],
+              [
+                49092,
+                49098,
+                49081,
+                49081,
+                49072,
+                49071,
+                49086,
+                49072
+              ],
+              [
+                49097,
+                49096,
+                49095,
+                49090,
+                49091,
+                49084,
+                49083,
+                49081
+              ],
+              [
+                49083,
+                49091,
+                49078,
+                49074,
+                49071,
+                49070,
+                49081,
+                49070
+              ],
+              [
+                49089,
+                49091,
+                49087,
+                49085,
+                49080,
+                49081,
+                49077,
+                49074
+              ]
+            ]
+          },
+          {
+            "branches": [
+              {
+                "index": 0,
+                "output": "projection0",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0016214412348392064,
+                "standard_max_abs_error": 0.002075859030865934
+              },
+              {
+                "index": 1,
+                "output": "projection1",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0016682904419428408,
+                "standard_max_abs_error": 0.002070835843280716
+              },
+              {
+                "index": 2,
+                "output": "projection2",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0016214412484515065,
+                "standard_max_abs_error": 0.001037929515432967
+              }
+            ],
+            "max_local_cycles": 49107,
+            "cycles_per_pe": [
+              [
+                49100,
+                49103,
+                49095,
+                49088,
+                49087,
+                49086,
+                49093,
+                49086
+              ],
+              [
+                49105,
+                49106,
+                49098,
+                49092,
+                49091,
+                49091,
+                49094,
+                49090
+              ],
+              [
+                49101,
+                49107,
+                49091,
+                49087,
+                49086,
+                49082,
+                49095,
+                49083
+              ],
+              [
+                49104,
+                49104,
+                49100,
+                49094,
+                49095,
+                49094,
+                49089,
+                49086
+              ],
+              [
+                49096,
+                49104,
+                49086,
+                49085,
+                49078,
+                49077,
+                49092,
+                49077
+              ],
+              [
+                49099,
+                49101,
+                49097,
+                49095,
+                49094,
+                49089,
+                49091,
+                49085
+              ],
+              [
+                49092,
+                49099,
+                49084,
+                49082,
+                49077,
+                49073,
+                49087,
+                49073
+              ],
+              [
+                49096,
+                49098,
+                49094,
+                49091,
+                49083,
+                49086,
+                49087,
+                49080
+              ]
+            ]
+          },
+          {
+            "branches": [
+              {
+                "index": 0,
+                "output": "projection0",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0016896539984777297,
+                "standard_max_abs_error": 0.004567867773299317
+              },
+              {
+                "index": 1,
+                "output": "projection1",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.001683681351637301,
+                "standard_max_abs_error": 0.005130055717532889
+              },
+              {
+                "index": 2,
+                "output": "projection2",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0016896538364769651,
+                "standard_max_abs_error": 0.0022839338866496584
+              }
+            ],
+            "max_local_cycles": 49101,
+            "cycles_per_pe": [
+              [
+                49096,
+                49098,
+                49088,
+                49082,
+                49081,
+                49079,
+                49087,
+                49080
+              ],
+              [
+                49100,
+                49101,
+                49093,
+                49087,
+                49085,
+                49085,
+                49088,
+                49085
+              ],
+              [
+                49096,
+                49101,
+                49086,
+                49080,
+                49079,
+                49075,
+                49089,
+                49078
+              ],
+              [
+                49099,
+                49099,
+                49095,
+                49089,
+                49089,
+                49089,
+                49084,
+                49081
+              ],
+              [
+                49092,
+                49098,
+                49081,
+                49081,
+                49072,
+                49071,
+                49086,
+                49072
+              ],
+              [
+                49097,
+                49096,
+                49095,
+                49090,
+                49091,
+                49084,
+                49083,
+                49081
+              ],
+              [
+                49083,
+                49091,
+                49078,
+                49074,
+                49071,
+                49070,
+                49081,
+                49070
+              ],
+              [
+                49089,
+                49091,
+                49087,
+                49085,
+                49080,
+                49081,
+                49077,
+                49074
+              ]
+            ]
+          },
+          {
+            "branches": [
+              {
+                "index": 0,
+                "output": "projection0",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0,
+                "standard_max_abs_error": 0.0
+              },
+              {
+                "index": 1,
+                "output": "projection1",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0,
+                "standard_max_abs_error": 0.0
+              },
+              {
+                "index": 2,
+                "output": "projection2",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0,
+                "standard_max_abs_error": 0.0
+              }
+            ],
+            "max_local_cycles": 49101,
+            "cycles_per_pe": [
+              [
+                49096,
+                49097,
+                49089,
+                49084,
+                49081,
+                49079,
+                49087,
+                49080
+              ],
+              [
+                49100,
+                49101,
+                49093,
+                49087,
+                49085,
+                49085,
+                49088,
+                49085
+              ],
+              [
+                49095,
+                49101,
+                49086,
+                49082,
+                49080,
+                49077,
+                49090,
+                49078
+              ],
+              [
+                49099,
+                49099,
+                49096,
+                49089,
+                49090,
+                49088,
+                49084,
+                49081
+              ],
+              [
+                49091,
+                49098,
+                49080,
+                49076,
+                49073,
+                49072,
+                49087,
+                49074
+              ],
+              [
+                49094,
+                49096,
+                49093,
+                49095,
+                49089,
+                49087,
+                49086,
+                49080
+              ],
+              [
+                49087,
+                49093,
+                49079,
+                49076,
+                49074,
+                49072,
+                49079,
+                49066
+              ],
+              [
+                49093,
+                49091,
+                49088,
+                49086,
+                49085,
+                49081,
+                49081,
+                49076
+              ]
+            ]
+          },
+          {
+            "branches": [
+              {
+                "index": 0,
+                "output": "projection0",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.006116081533260906,
+                "standard_max_abs_error": 0.0014567984629690889
+              },
+              {
+                "index": 1,
+                "output": "projection1",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.006116081533260906,
+                "standard_max_abs_error": 0.0014567984629690889
+              },
+              {
+                "index": 2,
+                "output": "projection2",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.006116081533260906,
+                "standard_max_abs_error": 0.0007283992314845444
+              }
+            ],
+            "max_local_cycles": 49101,
+            "cycles_per_pe": [
+              [
+                49096,
+                49098,
+                49088,
+                49082,
+                49081,
+                49079,
+                49087,
+                49080
+              ],
+              [
+                49100,
+                49101,
+                49093,
+                49087,
+                49085,
+                49085,
+                49088,
+                49085
+              ],
+              [
+                49096,
+                49101,
+                49086,
+                49080,
+                49079,
+                49075,
+                49089,
+                49078
+              ],
+              [
+                49099,
+                49099,
+                49095,
+                49089,
+                49089,
+                49089,
+                49084,
+                49081
+              ],
+              [
+                49092,
+                49098,
+                49081,
+                49081,
+                49072,
+                49071,
+                49086,
+                49072
+              ],
+              [
+                49097,
+                49096,
+                49095,
+                49090,
+                49091,
+                49084,
+                49083,
+                49081
+              ],
+              [
+                49083,
+                49091,
+                49078,
+                49074,
+                49071,
+                49070,
+                49081,
+                49070
+              ],
+              [
+                49089,
+                49091,
+                49087,
+                49085,
+                49080,
+                49081,
+                49077,
+                49074
+              ]
+            ]
+          },
+          {
+            "branches": [
+              {
+                "index": 0,
+                "output": "projection0",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0017352723329217537,
+                "standard_max_abs_error": 0.002652022919588215
+              },
+              {
+                "index": 1,
+                "output": "projection1",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0017411114598631673,
+                "standard_max_abs_error": 0.0038356025121395465
+              },
+              {
+                "index": 2,
+                "output": "projection2",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0017466520052365063,
+                "standard_max_abs_error": 0.002685510529931323
+              }
+            ],
+            "max_local_cycles": 49101,
+            "cycles_per_pe": [
+              [
+                49096,
+                49097,
+                49089,
+                49084,
+                49081,
+                49079,
+                49087,
+                49080
+              ],
+              [
+                49100,
+                49101,
+                49093,
+                49087,
+                49085,
+                49085,
+                49088,
+                49085
+              ],
+              [
+                49095,
+                49101,
+                49086,
+                49082,
+                49080,
+                49077,
+                49090,
+                49078
+              ],
+              [
+                49099,
+                49099,
+                49096,
+                49089,
+                49090,
+                49088,
+                49084,
+                49081
+              ],
+              [
+                49091,
+                49098,
+                49080,
+                49076,
+                49073,
+                49072,
+                49087,
+                49074
+              ],
+              [
+                49094,
+                49096,
+                49093,
+                49095,
+                49089,
+                49087,
+                49086,
+                49080
+              ],
+              [
+                49087,
+                49093,
+                49079,
+                49076,
+                49074,
+                49072,
+                49079,
+                49066
+              ],
+              [
+                49093,
+                49091,
+                49088,
+                49086,
+                49085,
+                49081,
+                49081,
+                49076
+              ]
+            ]
+          }
+        ],
+        "performance_scope": "WSE3 simulator local interval, no full inference/hardware/global latency claim"
+      },
+      "native_application_checks": [
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.00021011561500364914,
+              "max_abs_error": 0.0004879201260514776,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.00021011561500364917,
+              "max_abs_error": 0.0004879201260514776,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.00021011561500756728,
+              "max_abs_error": 0.0002439600630257388,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0014639863528542317,
+              "max_abs_error": 0.001550498823925106,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.001804641642427581,
+              "max_abs_error": 0.002184537306674672,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.001463988199922274,
+              "max_abs_error": 0.000775249411962553,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0016778934019826353,
+              "max_abs_error": 0.005618931936878235,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0016297699882898487,
+              "max_abs_error": 0.0043574637081056355,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0016777338360222575,
+              "max_abs_error": 0.0028094659684391177,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0,
+              "max_abs_error": 0.0,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0,
+              "max_abs_error": 0.0,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0,
+              "max_abs_error": 0.0,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.00011956411661067512,
+              "max_abs_error": 4.074806279316667e-05,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.00011956411661067512,
+              "max_abs_error": 4.074806279316667e-05,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.00011956411661067512,
+              "max_abs_error": 2.0374031396583336e-05,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0016836553212588332,
+              "max_abs_error": 0.003391807537533875,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0016794958540940084,
+              "max_abs_error": 0.003407273603280414,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.001688274089495025,
+              "max_abs_error": 0.002760545198687403,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        }
+      ],
+      "device_application_checks": [
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.00043548812718574164,
+              "max_abs_error": 0.0016105651428113266,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0004354881271857417,
+              "max_abs_error": 0.0016105651428113266,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.00043548812718574164,
+              "max_abs_error": 0.0008052825714056633,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0016214412348392084,
+              "max_abs_error": 0.002075859030865934,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0016682904419428495,
+              "max_abs_error": 0.002070835843280383,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0016214412484515082,
+              "max_abs_error": 0.001037929515432967,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.00168965399847773,
+              "max_abs_error": 0.004567867773299206,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0016836813516372968,
+              "max_abs_error": 0.005130055717532667,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0016896538364769647,
+              "max_abs_error": 0.002283933886649603,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0,
+              "max_abs_error": 0.0,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0,
+              "max_abs_error": 0.0,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0,
+              "max_abs_error": 0.0,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.006116081533260906,
+              "max_abs_error": 0.0014567984629690889,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.006116081533260906,
+              "max_abs_error": 0.0014567984629690889,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.006116081533260906,
+              "max_abs_error": 0.0007283992314845444,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0017352723329217407,
+              "max_abs_error": 0.0026520229195883815,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.001741111459863174,
+              "max_abs_error": 0.003835602512139491,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0017466520052365003,
+              "max_abs_error": 0.0026855105299312676,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        }
+      ],
+      "native_application_source": "native-output.txt: actual C++ stdout, independent math.fsum RMS and dense branch review",
+      "qualification_sha256": "542311039c0507fbf0fef02a90c966359365bb947efc5271765b2a2a121088ee",
+      "results_sha256": "4eb0b2e85f85cc9ea0db5dc414555353c7ba7728c871c49d69d291cde381b0ad",
+      "numerical_validation": {
+        "contract": "normalized-fanout-half-normwise-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "relative_l2_limit": 0.015,
+        "max_error_over_reference_peak_limit": 0.02,
+        "zero_reference_requires_exact_zero": true,
+        "per_component_accuracy_not_implied": true
+      }
+    },
+    {
+      "key": "waferllm/normalized_fanout2_64x128_4x4",
+      "artifact": "projects/waferllm/normalized_fanout2_64x128_4x4/run-20260907T010130882107Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_normalized_fanout.v1",
+        "epochs": 6,
+        "actors": 16,
+        "projections": 2,
+        "instrumentation": "sampled",
+        "internal_half_observations": 540672,
+        "cases": [
+          {
+            "branches": [
+              {
+                "index": 0,
+                "output": "projection0",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0004467798681136903,
+                "standard_max_abs_error": 0.0015457983138036369
+              },
+              {
+                "index": 1,
+                "output": "projection1",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0004467798681136903,
+                "standard_max_abs_error": 0.0015457983138036369
+              }
+            ],
+            "max_local_cycles": 66497,
+            "cycles_per_pe": [
+              [
+                66357,
+                66364,
+                66349,
+                66345
+              ],
+              [
+                66475,
+                66477,
+                66473,
+                66470
+              ],
+              [
+                66488,
+                66489,
+                66487,
+                66482
+              ],
+              [
+                66495,
+                66497,
+                66495,
+                66489
+              ]
+            ]
+          },
+          {
+            "branches": [
+              {
+                "index": 0,
+                "output": "projection0",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0017004149935435386,
+                "standard_max_abs_error": 0.0025259254310643353
+              },
+              {
+                "index": 1,
+                "output": "projection1",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0016882806978758826,
+                "standard_max_abs_error": 0.0025640494151294435
+              }
+            ],
+            "max_local_cycles": 66506,
+            "cycles_per_pe": [
+              [
+                66362,
+                66369,
+                66359,
+                66349
+              ],
+              [
+                66484,
+                66486,
+                66482,
+                66479
+              ],
+              [
+                66497,
+                66498,
+                66496,
+                66491
+              ],
+              [
+                66504,
+                66506,
+                66504,
+                66498
+              ]
+            ]
+          },
+          {
+            "branches": [
+              {
+                "index": 0,
+                "output": "projection0",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0017428828065273955,
+                "standard_max_abs_error": 0.007061953507534469
+              },
+              {
+                "index": 1,
+                "output": "projection1",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0016852886559914563,
+                "standard_max_abs_error": 0.006502260605525834
+              }
+            ],
+            "max_local_cycles": 66497,
+            "cycles_per_pe": [
+              [
+                66357,
+                66364,
+                66349,
+                66345
+              ],
+              [
+                66475,
+                66477,
+                66473,
+                66470
+              ],
+              [
+                66488,
+                66489,
+                66487,
+                66482
+              ],
+              [
+                66495,
+                66497,
+                66495,
+                66489
+              ]
+            ]
+          },
+          {
+            "branches": [
+              {
+                "index": 0,
+                "output": "projection0",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0,
+                "standard_max_abs_error": 0.0
+              },
+              {
+                "index": 1,
+                "output": "projection1",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0,
+                "standard_max_abs_error": 0.0
+              }
+            ],
+            "max_local_cycles": 66497,
+            "cycles_per_pe": [
+              [
+                66353,
+                66360,
+                66350,
+                66340
+              ],
+              [
+                66475,
+                66477,
+                66473,
+                66470
+              ],
+              [
+                66488,
+                66489,
+                66487,
+                66482
+              ],
+              [
+                66495,
+                66497,
+                66495,
+                66489
+              ]
+            ]
+          },
+          {
+            "branches": [
+              {
+                "index": 0,
+                "output": "projection0",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.006116081533260906,
+                "standard_max_abs_error": 0.0014567984629690889
+              },
+              {
+                "index": 1,
+                "output": "projection1",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.006116081533260906,
+                "standard_max_abs_error": 0.0014567984629690889
+              }
+            ],
+            "max_local_cycles": 66497,
+            "cycles_per_pe": [
+              [
+                66357,
+                66364,
+                66349,
+                66345
+              ],
+              [
+                66475,
+                66477,
+                66473,
+                66470
+              ],
+              [
+                66488,
+                66489,
+                66487,
+                66482
+              ],
+              [
+                66495,
+                66497,
+                66495,
+                66489
+              ]
+            ]
+          },
+          {
+            "branches": [
+              {
+                "index": 0,
+                "output": "projection0",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0017235277878870777,
+                "standard_max_abs_error": 0.002981021963051278
+              },
+              {
+                "index": 1,
+                "output": "projection1",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0017543469180275704,
+                "standard_max_abs_error": 0.0031800017991713836
+              }
+            ],
+            "max_local_cycles": 66497,
+            "cycles_per_pe": [
+              [
+                66353,
+                66360,
+                66350,
+                66340
+              ],
+              [
+                66475,
+                66477,
+                66473,
+                66470
+              ],
+              [
+                66488,
+                66489,
+                66487,
+                66482
+              ],
+              [
+                66495,
+                66497,
+                66495,
+                66489
+              ]
+            ]
+          }
+        ],
+        "performance_scope": "WSE3 simulator local interval, no full inference/hardware/global latency claim"
+      },
+      "native_application_checks": [
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.00021011561500364914,
+              "max_abs_error": 0.0004879201260514776,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.00021011561500364917,
+              "max_abs_error": 0.0004879201260514776,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0014639863528542317,
+              "max_abs_error": 0.001550498823925106,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.001804641642427581,
+              "max_abs_error": 0.002184537306674672,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0016778934019826353,
+              "max_abs_error": 0.005618931936878235,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0016297699882898487,
+              "max_abs_error": 0.0043574637081056355,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0,
+              "max_abs_error": 0.0,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0,
+              "max_abs_error": 0.0,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.00011956411661067512,
+              "max_abs_error": 4.074806279316667e-05,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.00011956411661067512,
+              "max_abs_error": 4.074806279316667e-05,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0016836553212588332,
+              "max_abs_error": 0.003391807537533875,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0016794958540940084,
+              "max_abs_error": 0.003407273603280414,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        }
+      ],
+      "device_application_checks": [
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0004467798681136903,
+              "max_abs_error": 0.0015457983138036369,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0004467798681136903,
+              "max_abs_error": 0.0015457983138036369,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0017004149935435388,
+              "max_abs_error": 0.0025259254310645574,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0016882806978758757,
+              "max_abs_error": 0.0025640494151289994,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.001742882806527399,
+              "max_abs_error": 0.007061953507535357,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0016852886559914533,
+              "max_abs_error": 0.006502260605526056,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0,
+              "max_abs_error": 0.0,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0,
+              "max_abs_error": 0.0,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.006116081533260906,
+              "max_abs_error": 0.0014567984629690889,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.006116081533260906,
+              "max_abs_error": 0.0014567984629690889,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0017235277878870777,
+              "max_abs_error": 0.002981021963051278,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0017543469180275684,
+              "max_abs_error": 0.003180001799171328,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        }
+      ],
+      "native_application_source": "native-output.txt: actual C++ stdout, independent math.fsum RMS and dense branch review",
+      "qualification_sha256": "14ac2002af942768ebf6988a84e8ed22203a3820a0812d06fb5bc365e2d59625",
+      "results_sha256": "8c01e486cfbe5f32f14bbb578dd10fe58f4a6634820b1e5654a0370af9530785",
+      "numerical_validation": {
+        "contract": "normalized-fanout-half-normwise-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "relative_l2_limit": 0.015,
+        "max_error_over_reference_peak_limit": 0.02,
+        "zero_reference_requires_exact_zero": true,
+        "per_component_accuracy_not_implied": true
+      }
+    },
+    {
+      "key": "waferllm/normalized_fanout3_128x256_8x8",
+      "artifact": "projects/waferllm/normalized_fanout3_128x256_8x8/run-20260907T010132771617Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_normalized_fanout.v1",
+        "epochs": 6,
+        "actors": 64,
+        "projections": 3,
+        "instrumentation": "counters",
+        "internal_half_observations": 0,
+        "cases": [
+          {
+            "branches": [
+              {
+                "index": 0,
+                "output": "projection0",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0004412179111742916,
+                "standard_max_abs_error": 0.001734439861308834
+              },
+              {
+                "index": 1,
+                "output": "projection1",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.00044121791117429155,
+                "standard_max_abs_error": 0.001734439861308834
+              },
+              {
+                "index": 2,
+                "output": "projection2",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.000441217911172399,
+                "standard_max_abs_error": 0.000867219930654417
+              }
+            ],
+            "max_local_cycles": 189254,
+            "cycles_per_pe": [
+              [
+                189166,
+                189162,
+                189157,
+                189164,
+                189158,
+                189158,
+                189152,
+                189153
+              ],
+              [
+                188888,
+                188886,
+                188885,
+                188872,
+                188880,
+                188866,
+                188879,
+                188871
+              ],
+              [
+                189194,
+                189186,
+                189184,
+                189182,
+                189188,
+                189180,
+                189179,
+                189178
+              ],
+              [
+                189254,
+                189254,
+                189252,
+                189247,
+                189249,
+                189241,
+                189242,
+                189238
+              ],
+              [
+                189217,
+                189208,
+                189209,
+                189207,
+                189208,
+                189207,
+                189203,
+                189203
+              ],
+              [
+                189253,
+                189252,
+                189252,
+                189248,
+                189251,
+                189246,
+                189246,
+                189240
+              ],
+              [
+                189237,
+                189235,
+                189233,
+                189232,
+                189232,
+                189230,
+                189225,
+                189225
+              ],
+              [
+                189249,
+                189250,
+                189250,
+                189247,
+                189245,
+                189242,
+                189242,
+                189236
+              ]
+            ]
+          },
+          {
+            "branches": [
+              {
+                "index": 0,
+                "output": "projection0",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0024739423300850364,
+                "standard_max_abs_error": 0.006088071084830227
+              },
+              {
+                "index": 1,
+                "output": "projection1",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0025147564867938673,
+                "standard_max_abs_error": 0.007471136262582112
+              },
+              {
+                "index": 2,
+                "output": "projection2",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0024739390351811983,
+                "standard_max_abs_error": 0.0030440355424151133
+              }
+            ],
+            "max_local_cycles": 189263,
+            "cycles_per_pe": [
+              [
+                189171,
+                189174,
+                189165,
+                189162,
+                189167,
+                189162,
+                189164,
+                189155
+              ],
+              [
+                188908,
+                188905,
+                188908,
+                188894,
+                188900,
+                188886,
+                188892,
+                188886
+              ],
+              [
+                189202,
+                189191,
+                189193,
+                189190,
+                189197,
+                189192,
+                189189,
+                189182
+              ],
+              [
+                189263,
+                189263,
+                189261,
+                189256,
+                189258,
+                189250,
+                189251,
+                189247
+              ],
+              [
+                189227,
+                189221,
+                189217,
+                189217,
+                189217,
+                189218,
+                189212,
+                189212
+              ],
+              [
+                189262,
+                189261,
+                189261,
+                189257,
+                189260,
+                189255,
+                189255,
+                189249
+              ],
+              [
+                189247,
+                189242,
+                189243,
+                189241,
+                189241,
+                189239,
+                189236,
+                189234
+              ],
+              [
+                189258,
+                189257,
+                189259,
+                189256,
+                189254,
+                189250,
+                189251,
+                189246
+              ]
+            ]
+          },
+          {
+            "branches": [
+              {
+                "index": 0,
+                "output": "projection0",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0023962726782043673,
+                "standard_max_abs_error": 0.011502725828682836
+              },
+              {
+                "index": 1,
+                "output": "projection1",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0023864306669895046,
+                "standard_max_abs_error": 0.014634378500355982
+              },
+              {
+                "index": 2,
+                "output": "projection2",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0023962725367725653,
+                "standard_max_abs_error": 0.005751362914341418
+              }
+            ],
+            "max_local_cycles": 189254,
+            "cycles_per_pe": [
+              [
+                189166,
+                189163,
+                189157,
+                189164,
+                189164,
+                189154,
+                189154,
+                189150
+              ],
+              [
+                188867,
+                188862,
+                188871,
+                188848,
+                188872,
+                188844,
+                188860,
+                188849
+              ],
+              [
+                189195,
+                189192,
+                189185,
+                189187,
+                189188,
+                189179,
+                189180,
+                189174
+              ],
+              [
+                189254,
+                189254,
+                189252,
+                189247,
+                189249,
+                189241,
+                189242,
+                189238
+              ],
+              [
+                189219,
+                189209,
+                189212,
+                189210,
+                189208,
+                189203,
+                189203,
+                189202
+              ],
+              [
+                189253,
+                189252,
+                189252,
+                189248,
+                189251,
+                189246,
+                189246,
+                189240
+              ],
+              [
+                189237,
+                189236,
+                189233,
+                189232,
+                189232,
+                189230,
+                189227,
+                189224
+              ],
+              [
+                189249,
+                189250,
+                189250,
+                189247,
+                189245,
+                189242,
+                189241,
+                189236
+              ]
+            ]
+          },
+          {
+            "branches": [
+              {
+                "index": 0,
+                "output": "projection0",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0,
+                "standard_max_abs_error": 0.0
+              },
+              {
+                "index": 1,
+                "output": "projection1",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0,
+                "standard_max_abs_error": 0.0
+              },
+              {
+                "index": 2,
+                "output": "projection2",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0,
+                "standard_max_abs_error": 0.0
+              }
+            ],
+            "max_local_cycles": 189254,
+            "cycles_per_pe": [
+              [
+                189166,
+                189161,
+                189157,
+                189160,
+                189158,
+                189151,
+                189152,
+                189149
+              ],
+              [
+                188879,
+                188875,
+                188870,
+                188867,
+                188869,
+                188859,
+                188865,
+                188855
+              ],
+              [
+                189194,
+                189186,
+                189184,
+                189182,
+                189188,
+                189182,
+                189180,
+                189178
+              ],
+              [
+                189254,
+                189254,
+                189252,
+                189247,
+                189249,
+                189241,
+                189242,
+                189238
+              ],
+              [
+                189217,
+                189208,
+                189209,
+                189207,
+                189208,
+                189207,
+                189207,
+                189206
+              ],
+              [
+                189253,
+                189252,
+                189252,
+                189248,
+                189251,
+                189246,
+                189246,
+                189240
+              ],
+              [
+                189237,
+                189235,
+                189233,
+                189232,
+                189232,
+                189230,
+                189224,
+                189223
+              ],
+              [
+                189249,
+                189250,
+                189250,
+                189247,
+                189245,
+                189242,
+                189241,
+                189236
+              ]
+            ]
+          },
+          {
+            "branches": [
+              {
+                "index": 0,
+                "output": "projection0",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.006116353499052801,
+                "standard_max_abs_error": 0.0014567984629690889
+              },
+              {
+                "index": 1,
+                "output": "projection1",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0061163534990528,
+                "standard_max_abs_error": 0.0014567984629690889
+              },
+              {
+                "index": 2,
+                "output": "projection2",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.006116353499052801,
+                "standard_max_abs_error": 0.0007283992314845444
+              }
+            ],
+            "max_local_cycles": 189254,
+            "cycles_per_pe": [
+              [
+                189166,
+                189162,
+                189158,
+                189155,
+                189156,
+                189153,
+                189154,
+                189154
+              ],
+              [
+                188871,
+                188874,
+                188869,
+                188868,
+                188863,
+                188854,
+                188860,
+                188848
+              ],
+              [
+                189194,
+                189186,
+                189184,
+                189180,
+                189188,
+                189178,
+                189181,
+                189174
+              ],
+              [
+                189254,
+                189254,
+                189252,
+                189247,
+                189249,
+                189241,
+                189242,
+                189238
+              ],
+              [
+                189217,
+                189208,
+                189209,
+                189208,
+                189208,
+                189209,
+                189203,
+                189203
+              ],
+              [
+                189253,
+                189252,
+                189252,
+                189248,
+                189251,
+                189246,
+                189246,
+                189240
+              ],
+              [
+                189237,
+                189235,
+                189233,
+                189232,
+                189232,
+                189230,
+                189227,
+                189225
+              ],
+              [
+                189249,
+                189250,
+                189250,
+                189247,
+                189245,
+                189241,
+                189242,
+                189237
+              ]
+            ]
+          },
+          {
+            "branches": [
+              {
+                "index": 0,
+                "output": "projection0",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0024052475160740833,
+                "standard_max_abs_error": 0.006434658251922576
+              },
+              {
+                "index": 1,
+                "output": "projection1",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0023750498409212347,
+                "standard_max_abs_error": 0.006031928540644826
+              },
+              {
+                "index": 2,
+                "output": "projection2",
+                "target_bits_exact": true,
+                "standard_relative_l2": 0.0024147965610709274,
+                "standard_max_abs_error": 0.007163971854684537
+              }
+            ],
+            "max_local_cycles": 189254,
+            "cycles_per_pe": [
+              [
+                189164,
+                189160,
+                189158,
+                189153,
+                189158,
+                189154,
+                189154,
+                189155
+              ],
+              [
+                188890,
+                188884,
+                188885,
+                188866,
+                188877,
+                188849,
+                188861,
+                188851
+              ],
+              [
+                189195,
+                189184,
+                189185,
+                189181,
+                189188,
+                189179,
+                189180,
+                189174
+              ],
+              [
+                189254,
+                189254,
+                189252,
+                189247,
+                189249,
+                189241,
+                189242,
+                189238
+              ],
+              [
+                189217,
+                189206,
+                189208,
+                189208,
+                189208,
+                189209,
+                189203,
+                189203
+              ],
+              [
+                189253,
+                189252,
+                189252,
+                189248,
+                189251,
+                189246,
+                189246,
+                189240
+              ],
+              [
+                189237,
+                189235,
+                189234,
+                189232,
+                189232,
+                189230,
+                189227,
+                189225
+              ],
+              [
+                189252,
+                189252,
+                189250,
+                189247,
+                189245,
+                189241,
+                189242,
+                189237
+              ]
+            ]
+          }
+        ],
+        "performance_scope": "WSE3 simulator local interval, no full inference/hardware/global latency claim"
+      },
+      "native_application_checks": [
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.00020875535295381058,
+              "max_abs_error": 0.0004882334809876987,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.00020875535295381058,
+              "max_abs_error": 0.0004882334809876987,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0002087553529552985,
+              "max_abs_error": 0.00024411674049384935,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0022624291999575334,
+              "max_abs_error": 0.0034048863771433124,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0022811357238555784,
+              "max_abs_error": 0.0037512629964772115,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0022624287006322522,
+              "max_abs_error": 0.0017024431885716562,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.002359506342944919,
+              "max_abs_error": 0.010323643001089344,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.002378650857699457,
+              "max_abs_error": 0.01165211573864633,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0023595088684716173,
+              "max_abs_error": 0.0051618542255855715,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0,
+              "max_abs_error": 0.0,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0,
+              "max_abs_error": 0.0,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0,
+              "max_abs_error": 0.0,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.00011899385457920808,
+              "max_abs_error": 4.074806279316667e-05,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.00011899385457920808,
+              "max_abs_error": 4.074806279316667e-05,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.00011899385457920808,
+              "max_abs_error": 2.0374031396583336e-05,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0023703434832425753,
+              "max_abs_error": 0.005925514157477552,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.002381455594648372,
+              "max_abs_error": 0.006097179294016097,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.002340899362634132,
+              "max_abs_error": 0.007526801993776477,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        }
+      ],
+      "device_application_checks": [
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0004412179111742916,
+              "max_abs_error": 0.001734439861308834,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.00044121791117429155,
+              "max_abs_error": 0.001734439861308834,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.000441217911172399,
+              "max_abs_error": 0.000867219930654417,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0024739423300850377,
+              "max_abs_error": 0.006088071084830227,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0025147564867938612,
+              "max_abs_error": 0.007471136262582556,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0024739390351811983,
+              "max_abs_error": 0.0030440355424151133,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.00239627267820437,
+              "max_abs_error": 0.011502725828681948,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.00238643066698951,
+              "max_abs_error": 0.01463437850035576,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0023962725367725683,
+              "max_abs_error": 0.005751362914340974,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0,
+              "max_abs_error": 0.0,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0,
+              "max_abs_error": 0.0,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0,
+              "max_abs_error": 0.0,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.006116353499052801,
+              "max_abs_error": 0.0014567984629690889,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0061163534990528,
+              "max_abs_error": 0.0014567984629690889,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.006116353499052801,
+              "max_abs_error": 0.0007283992314845444,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0024052475160740894,
+              "max_abs_error": 0.006434658251923686,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0023750498409212425,
+              "max_abs_error": 0.0060319285406449374,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            },
+            {
+              "contract": "normalized-matmul-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2_error": 0.0024147965610709318,
+              "max_abs_error": 0.007163971854684537,
+              "reference": "independent math.fsum row RMS and dot products, standard math.sqrt, epsilon 1e-6",
+              "per_component_accuracy_not_implied": true
+            }
+          ],
+          "per_component_accuracy_not_implied": true
+        }
+      ],
+      "native_application_source": "native-output.txt: actual C++ stdout, independent math.fsum RMS and dense branch review",
+      "qualification_sha256": "23009307e23bafff22080a90fbfce731e7800a55f2828543d40a50b346e4a714",
+      "results_sha256": "67d2d5ecee1ed43884f05043223e433829776fcd8b6a3c7239f2106e900b4f64",
+      "numerical_validation": {
+        "contract": "normalized-fanout-half-normwise-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "relative_l2_limit": 0.015,
+        "max_error_over_reference_peak_limit": 0.02,
+        "zero_reference_requires_exact_zero": true,
+        "per_component_accuracy_not_implied": true
+      }
+    }
+  ]
+}

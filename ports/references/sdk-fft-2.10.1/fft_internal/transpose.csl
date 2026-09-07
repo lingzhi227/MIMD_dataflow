@@ -1,0 +1,627 @@
+const simprint_enabled = false;
+const print = @import_module("<simprint>", .{ .enable = simprint_enabled });
+
+param firstPE: bool;
+param secondPE: bool;
+param secondToLastPE: bool;
+param lastPE: bool;
+
+param v_firstPE: bool;
+param v_secondPE: bool;
+param v_secondToLastPE: bool;
+param v_lastPE: bool;
+
+
+param WIDTH: u16;
+const WIDTHm1: u16 = WIDTH-1;
+
+param tensor_type: type;
+
+// System resources
+param LR_color: color;
+param RL_color: color;
+
+param sync_id:        local_task_id = @get_local_task_id(11);
+param transposeLR_id: local_task_id = @get_local_task_id(12);
+param transposeRL_id: local_task_id = @get_local_task_id(13);
+
+param LR_recv_iq: input_queue  = @get_input_queue(2);
+param RL_recv_iq: input_queue  = @get_input_queue(4);
+param LR_send_oq: output_queue = @get_output_queue(3);
+param RL_send_oq: output_queue = @get_output_queue(5);
+
+param LR_ut_id: ut_id = @get_ut_id(2);
+param RL_ut_id: ut_id = @get_ut_id(3);
+
+param src0_dsr_0: dsr_src0;
+param src1_dsr_0: dsr_src1;
+param dest_dsr_0: dsr_dest;
+param src0_dsr_1: dsr_src0;
+param src1_dsr_1: dsr_src1;
+param dest_dsr_1: dsr_dest;
+
+const fabric = @import_module("<layout>");
+const tile_config = @import_module("<tile_config>");
+const switch_config = tile_config.switch_config;
+const teardown = tile_config.teardown;
+const color_config = tile_config.color_config;
+const ctrl = @import_module("<control>");
+
+param callback: fn()void;
+
+export var sync_cnt: i16 = 0;
+
+// NOP is for the local router, ADVANCE is for the neighbor
+// Sentinel data for a sequence of NOP_NOCE and ADVANCE_NOCE
+//NOP ADV
+const sentinel_data = @constants([1]u32, ctrl.encode_payload(2, [2]ctrl.opcode{ctrl.opcode.SWITCH_ADV, ctrl.opcode.SWITCH_ADV}, [2]bool{true, true}, true, {}));
+const teardown_data = @constants([1]u32, ctrl.encode_payload(1, [1]ctrl.opcode{ctrl.opcode.TEARDOWN}, [1]bool{true}, true, {}));
+
+
+const ELEM_SIZE: u16 = 2; // 2 for real and imaginary components
+
+param DEPTH: u16;
+param BRICK_ELEMS: u16;
+param WORDS_PER_ELEM: u16; // number of 16b words per elem. size of tensor_type
+param T: u16;
+
+// number of 32 bit wavelets per elem, CSL doesn't tick on half wavelets
+const BRICK_WAVELETS = BRICK_ELEMS*WORDS_PER_ELEM*ELEM_SIZE/2;
+const BRICK_LEN: i16 = @as(i16, BRICK_ELEMS*ELEM_SIZE);
+const ARRAY_LEN = DEPTH*@as(u16, BRICK_LEN);
+
+var X_transposed = @zeros([ARRAY_LEN]tensor_type);
+
+// Number of Wavelets sent: each PE sends one element to all the other PEs (total of DEPTH-1 elements),
+// so each PE receives DEPTH-1 elements from DEPTH-1 PEs, one from each.
+const TRANS_LEN = (DEPTH-1)*BRICK_WAVELETS; // in 32b wavelets
+
+// Send Data from the left to the right part of the row (transposing the right triangular submatrix).
+// All PEs send elements from 1 to N (since we have complex numbers, the second element is at i+BRICK_LEN).
+// Technically each element would only need to send from left to right, from its PE_ID index to N,
+// but then each PE would send one less element each time which would require runtime update of filters
+// in teardown mode. This is not supported yet in CSL, so we just send fixed N-1 elements although only
+// N-PE_ID elements are used. Fabric Filters do the job of removing the extra wavelets that are sent since
+// each PE catches one element in every N-1 elements.
+
+// Here we send elements from N-2 to 0. Once again, technically only elements from PE_ID-1 to 0 are necessary.
+// Therefore, each PE sends N-1 elements on each color.
+const sendLR_dsd = @get_dsd(fabout_dsd, if (@is_arch("wse3")) .{
+        .extent = TRANS_LEN, .output_queue = LR_send_oq
+      } else .{
+        .extent = TRANS_LEN, .fabric_color = LR_color,
+        .output_queue = LR_send_oq });
+const sendRL_dsd = @get_dsd(fabout_dsd, if (@is_arch("wse3")) .{
+        .extent = TRANS_LEN, .output_queue = RL_send_oq
+      } else .{
+        .extent = TRANS_LEN, .fabric_color = RL_color,
+        .output_queue = RL_send_oq });
+
+// Each PE receives as many bricks in each direction as PEs are in that direction
+const recvLR_dsd = @get_dsd(fabin_dsd, .{ .extent = 0,
+        .input_queue = LR_recv_iq });
+const recvRL_dsd = @get_dsd(fabin_dsd, .{ .extent = 0,
+        .input_queue = RL_recv_iq });
+
+// DSDs to send control wavelets to advance switches. We need to advance 2 positions, thus send 2 sentinels.
+const sentinelLR_dsd = @get_dsd(fabout_dsd, if (@is_arch("wse3")) .{
+        .extent = 0, .control = true, .output_queue = LR_send_oq
+      } else .{ .extent = 0, .fabric_color = LR_color, .control = true,
+        .output_queue = LR_send_oq });
+const sentinelRL_dsd = @get_dsd(fabout_dsd, if (@is_arch("wse3")) .{
+        .extent = 0, .control = true, .output_queue = RL_send_oq
+      } else .{ .extent = 0, .fabric_color = RL_color, .control = true,
+        .output_queue = RL_send_oq });
+
+// DSD describing the DSD that contains the payload of the control wavelets.
+const sentinelData_dsd = @get_dsd(mem1d_dsd, .{ .base_address = &sentinel_data, .extent = 1 });
+const teardownData_dsd = @get_dsd(mem1d_dsd, .{ .base_address = &teardown_data, .extent = 1 });
+
+inline fn set_new_filter(c: color, limit: u16, max_counter: u16, counter: u16) void {
+  const filter_id = @get_filter_id(c);
+  tile_config.filters.set_max_counter(filter_id, max_counter);
+  tile_config.filters.set_active_limit(filter_id, limit);
+  tile_config.filters.set_counter(filter_id, counter);
+}
+
+inline fn setup_LR_route(vertical: bool) void {
+  const PE_ID = if (vertical) fabric.get_y_coord() else fabric.get_x_coord();
+  const ES_DIR: direction = if (vertical) SOUTH else EAST;
+
+  switch_config.set_invalid_for_all_switch_positions(LR_color);
+  switch_config.set_current_switch_position(LR_color, 0);
+
+  var is_first = if (vertical) v_firstPE else firstPE;
+  var is_last = if (vertical) v_lastPE else lastPE;
+  var is_second = if (vertical) v_secondPE else secondPE;
+  if (is_first) {
+    const counter_LR = 0;
+    if (vertical) {
+      color_config.reset_routes(LR_color, .{ .rx = [1]direction{ RAMP }, .tx = [1]direction{ SOUTH }});
+    } else {
+      color_config.reset_routes(LR_color, .{ .rx = [1]direction{ RAMP }, .tx = [1]direction{ EAST }});
+    }
+    set_new_filter(LR_color, TRANS_LEN-1, BRICK_WAVELETS-1, counter_LR);
+    switch_config.set_pop_mode(LR_color, switch_config.pop_mode.POP_ON_ADVANCE);
+  } else if (is_last) { //LAST PE
+    const counter_LR = BRICK_WAVELETS;
+    if (vertical) {
+      color_config.reset_routes(LR_color, .{ .rx = [1]direction{ NORTH }, .tx = [1]direction{ RAMP }});
+    } else {
+      color_config.reset_routes(LR_color, .{ .rx = [1]direction{ WEST }, .tx = [1]direction{ RAMP }});
+    }
+    set_new_filter(LR_color, TRANS_LEN-1, BRICK_WAVELETS-1, counter_LR);
+    switch_config.set_pop_mode(LR_color, switch_config.pop_mode.ALWAYS_POP);
+  } else { // PEs in the MIDDLE
+    const counter_LR = if (!is_second) (DEPTH-PE_ID)*BRICK_WAVELETS else 0;
+    if (vertical) {
+      color_config.reset_routes(LR_color, .{ .rx = [1]direction{ NORTH }, .tx = [2]direction{ RAMP, SOUTH }});
+    } else {
+      color_config.reset_routes(LR_color, .{ .rx = [1]direction{ WEST }, .tx = [2]direction{ RAMP, EAST }});
+    }
+    set_new_filter(LR_color, TRANS_LEN-1, BRICK_WAVELETS-1, counter_LR);
+
+    print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+    print.print_string("LR RXTX SWITCH POS1\n");
+    if (vertical) {
+      switch_config.set_rxtx_switch_pos1(LR_color, RAMP, SOUTH);
+    } else {
+      switch_config.set_rxtx_switch_pos1(LR_color, RAMP, EAST);
+    }
+    switch_config.set_pop_mode(LR_color, switch_config.pop_mode.POP_ON_ADVANCE);
+  }
+
+  print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+  print.print_string("LR RINGMODE\n");
+  switch_config.set_ring_mode(LR_color, switch_config.ring_mode.RING_MODE);
+  tile_config.teardown.exit(LR_color);
+}
+
+fn setup_RL_route(vertical: bool) void {
+  const PE_ID = if (vertical) fabric.get_y_coord() else fabric.get_x_coord();
+  const WN_DIR: direction = if (vertical) NORTH else WEST;
+
+  switch_config.set_invalid_for_all_switch_positions(RL_color);
+  print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+  print.print_string("RL CUR_SWITCH_POS\n");
+  switch_config.set_current_switch_position(RL_color, 0);
+
+  var is_first = if (vertical) v_firstPE else firstPE;
+  var is_last = if (vertical) v_lastPE else lastPE;
+  var is_second = if (vertical) v_secondPE else secondPE;
+  if (is_first) {
+    const counter_RL = 0;
+    if (vertical) {
+      color_config.reset_routes(RL_color, .{ .rx = [1]direction{ SOUTH }, .tx = [1]direction{ RAMP }, });
+    } else {
+      color_config.reset_routes(RL_color, .{ .rx = [1]direction{ EAST }, .tx = [1]direction{ RAMP }, });
+    }
+    set_new_filter(RL_color, TRANS_LEN-1, BRICK_WAVELETS-1, counter_RL);
+    switch_config.set_pop_mode(RL_color, switch_config.pop_mode.ALWAYS_POP);
+  } else if (is_last) { //LAST PE
+    const counter_RL = 0;
+    if (vertical) {
+      color_config.reset_routes(RL_color, .{ .rx = [1]direction{ RAMP }, .tx = [1]direction{ NORTH }, });
+    } else {
+      color_config.reset_routes(RL_color, .{ .rx = [1]direction{ RAMP }, .tx = [1]direction{ WEST }, });
+    }
+    set_new_filter(RL_color, TRANS_LEN-1, BRICK_WAVELETS-1, counter_RL);
+    switch_config.set_pop_mode(RL_color, switch_config.pop_mode.POP_ON_ADVANCE);
+  } else { // PEs in the MIDDLE
+    const counter_RL = (DEPTH-(PE_ID+1))*BRICK_WAVELETS;
+    if (vertical) {
+      color_config.reset_routes(RL_color, .{ .rx = [1]direction{ SOUTH }, .tx = [2]direction{ RAMP, NORTH }, });
+    } else {
+      color_config.reset_routes(RL_color, .{ .rx = [1]direction{ EAST }, .tx = [2]direction{ RAMP, WEST }, });
+    }
+    set_new_filter(RL_color, TRANS_LEN-1, BRICK_WAVELETS-1, counter_RL);
+
+    print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+    print.print_string("RL RXTX SWITCH POS1\n");
+    if (vertical) {
+      switch_config.set_rxtx_switch_pos1(RL_color, RAMP, NORTH);
+    } else {
+      switch_config.set_rxtx_switch_pos1(RL_color, RAMP, WEST);
+    }
+
+    switch_config.set_pop_mode(RL_color, switch_config.pop_mode.POP_ON_ADVANCE);
+    print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+    print.print_string("RL SETTING POPMODE DONE\n");
+  }
+
+  print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+  print.print_string("RL RINGMODE\n");
+  switch_config.set_ring_mode(RL_color, switch_config.ring_mode.RING_MODE);
+  tile_config.teardown.exit(RL_color);
+}
+
+fn initialize_filters() void {
+  setup_LR_route(vertical_mode);
+  setup_RL_route(vertical_mode);
+  lib_initialized = true;
+}
+
+var ptr_X: [*]tensor_type;
+var lib_initialized: bool = false;
+var vertical_mode: bool = false;
+var next_vertical_mode: bool = false;
+
+const SEND_STATE = enum(u16) { RECV, SEND, SEND_SENTINEL };
+var send_RL_state: SEND_STATE = SEND_STATE.RECV;
+var send_LR_state: SEND_STATE = SEND_STATE.RECV;
+
+fn transpose_start(aPtr_X: [*]tensor_type, vertical: bool, next_vertical: bool) void {
+  vertical_mode = vertical;
+  next_vertical_mode = next_vertical;
+
+  // Initiate the Data Transpose
+  ptr_X = aPtr_X;
+
+  if (simprint_enabled) {
+    print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+    print.print_string("STARTING TRANSPOSE | ");
+    if (firstPE) { print.print_string("FIRST |");} else { print.print_string(" |"); }
+    if (secondPE) { print.print_string("SECOND |");} else { print.print_string(" |"); }
+    if (secondToLastPE) { print.print_string("SECOND_TO_LAST |");} else { print.print_string(" |"); }
+    if (lastPE) { print.print_string("LAST |");} else { print.print_string(" |"); }
+    if (v_firstPE) { print.print_string("V_FIRST |");} else { print.print_string(" |"); }
+    if (v_secondPE) { print.print_string("V_SECOND |");} else { print.print_string(" |"); }
+    if (v_secondToLastPE) { print.print_string("V_SECOND_TO_LAST |");} else { print.print_string(" |"); }
+    if (v_lastPE) { print.print_string("V_LAST |");} else { print.print_string(" |"); }
+    print.print_string("\n");
+
+    const PE_X_ID = fabric.get_x_coord();
+    const PE_Y_ID = fabric.get_y_coord();
+    @assert(PE_X_ID != 0 or firstPE);
+    @assert(PE_Y_ID != 0 or v_firstPE);
+    @assert(PE_X_ID != WIDTH-1 or lastPE);
+    @assert(PE_Y_ID != WIDTH-1 or v_lastPE);
+    @assert((WIDTH > 2 and PE_X_ID != WIDTH-2) or (WIDTH <=2 or secondToLastPE));
+    @assert((WIDTH > 2 and PE_Y_ID != WIDTH-2) or (WIDTH <=2 or v_secondToLastPE));
+    @assert((WIDTH > 2 and PE_X_ID != 1) or (WIDTH <=2 or secondPE));
+    @assert((WIDTH > 2 and PE_Y_ID != 1) or (WIDTH <=2 or v_secondPE));
+  }
+
+  var is_first = if (vertical_mode) v_firstPE else firstPE;
+  var is_last = if (vertical_mode) v_lastPE else lastPE;
+
+  LR_TD_received = false;
+  RL_TD_received = false;
+  LR_Sentinel_received = false;
+  RL_Sentinel_received = false;
+  sync_cnt = 0;
+  initialize_filters();
+
+  if (is_first) {
+    send_LR_state = SEND_STATE.SEND;
+    const sendLeftData_dsd = @get_dsd(mem1d_dsd, .{ .base_address = &ptr_X[BRICK_LEN], .extent = TRANS_LEN });
+    @load_to_dsr(dest_dsr_0, sendLR_dsd, .{ .async = true, .activate = transposeLR, .ut_id = LR_ut_id });
+    @load_to_dsr(src1_dsr_0, sendLeftData_dsd);
+    @fmovs(dest_dsr_0, src1_dsr_0);
+  } else {
+    send_LR_state = SEND_STATE.RECV;
+    const PE_ID = if (vertical_mode) fabric.get_y_coord() else fabric.get_x_coord();
+    const recvDataLeft_dsd = @get_dsd(mem1d_dsd, .{ .base_address = &X_transposed, .extent = PE_ID*BRICK_WAVELETS});
+    @load_to_dsr(dest_dsr_0, recvDataLeft_dsd);
+    @load_to_dsr(src1_dsr_0, recvLR_dsd, .{ .async = true, .activate = transposeLR, .ut_id = LR_ut_id });
+    @fmovs(dest_dsr_0, src1_dsr_0);
+  }
+
+  if (is_last) {
+    send_RL_state = SEND_STATE.SEND;
+    // Send Data from the right to the left part of the Row (transposing the left triangular submatrix).
+    const sendRightData_dsd = @get_dsd(mem1d_dsd, .{ .base_address = ptr_X, .extent = TRANS_LEN});
+    @load_to_dsr(dest_dsr_1, sendRL_dsd, .{ .async = true, .activate = transposeRL, .ut_id = RL_ut_id });
+    @load_to_dsr(src1_dsr_1, sendRightData_dsd);
+    @fmovs(dest_dsr_1, src1_dsr_1);
+
+  } else {
+    send_RL_state = SEND_STATE.RECV;
+    const PE_ID = if (vertical_mode) fabric.get_y_coord() else fabric.get_x_coord();
+    const REV_PE_ID = WIDTHm1 - PE_ID;
+    const recvDataRight_dsd = @get_dsd(mem1d_dsd,
+      .{ .base_address = &X_transposed[ARRAY_LEN - ELEM_SIZE],
+         .extent = REV_PE_ID*BRICK_WAVELETS, .stride = -1 });
+    @load_to_dsr(dest_dsr_1, recvDataRight_dsd);
+    @load_to_dsr(src1_dsr_1, recvRL_dsd, .{ .async = true, .activate = transposeRL, .ut_id = RL_ut_id });
+    @fmovs(dest_dsr_1, src1_dsr_1);
+  }
+}
+
+// Continue the Data Transpose. Receive as much data as the position of the PE.
+var LR_Sentinel_received: bool = false;
+task transposeLR() void {
+  send_LR_state = @as(SEND_STATE, @as(u16, send_LR_state) + 1);
+  var is_first = if (vertical_mode) v_firstPE else firstPE;
+  if (send_LR_state == SEND_STATE.SEND) {
+    print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+    print.print_string("LR RECEIVING DONE\n");
+    var is_last = if (vertical_mode) v_lastPE else lastPE;
+    if (!is_last) {
+      const PE_ID = if (vertical_mode) fabric.get_y_coord() else fabric.get_x_coord();
+      const sendLeftData_dsd = @get_dsd(mem1d_dsd,
+        .{ .base_address = &ptr_X[BRICK_LEN], .extent = TRANS_LEN});
+      @load_to_dsr(dest_dsr_0, sendLR_dsd, .{ .async = true, .activate = transposeLR, .ut_id = LR_ut_id });
+      @load_to_dsr(src1_dsr_0, sendLeftData_dsd);
+      @fmovs(dest_dsr_0, src1_dsr_0);
+    } else {
+      LR_Sentinel_received = true;
+    }
+  } else if (send_LR_state == SEND_STATE.SEND_SENTINEL) {
+    print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+    print.print_string("SENDING LR SENTINEL\n");
+
+    @load_to_dsr(dest_dsr_0, sentinelLR_dsd, .{ .async = true, .activate = transposeLR, .ut_id = LR_ut_id });
+    @load_to_dsr(src1_dsr_0, sentinelData_dsd);
+    @mov32(dest_dsr_0, src1_dsr_0);
+  } else {
+    LR_Sentinel_received = true;
+    if (is_first) {
+      print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+      print.print_string("SENDING LR TD\n");
+      @load_to_dsr(dest_dsr_0, sentinelLR_dsd, .{ .async = true, .ut_id = LR_ut_id });
+      @load_to_dsr(src1_dsr_0, teardownData_dsd);
+      @mov32(dest_dsr_0, src1_dsr_0);
+    } else if (LR_TD_received) {
+      print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+      print.print_string("LR SENTINEL AND TD RECEIVED, CALLING SYNC\n");
+      sync();
+    }
+  }
+}
+
+var RL_Sentinel_received: bool = false;
+task transposeRL() void {
+  send_RL_state = @as(SEND_STATE, @as(u16, send_RL_state) + 1);
+  var is_last = if (vertical_mode) v_lastPE else lastPE;
+
+  if (send_RL_state == SEND_STATE.SEND) {
+    print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+    print.print_string("RL RECEIVING DONE\n");
+    var is_first = if (vertical_mode) v_firstPE else firstPE;
+    if (!is_first) {
+      const PE_ID = if (vertical_mode) fabric.get_y_coord() else fabric.get_x_coord();
+      const REV_PE_ID = WIDTHm1 - PE_ID;
+      // Send Data from the right to the left part of the Row (transposing the left triangular submatrix).
+      const sendRightData_dsd = @get_dsd(mem1d_dsd, .{ .base_address = ptr_X, .extent = TRANS_LEN});
+      @load_to_dsr(dest_dsr_1, sendRL_dsd, .{ .async = true, .activate = transposeRL, .ut_id = RL_ut_id });
+      @load_to_dsr(src1_dsr_1, sendRightData_dsd);
+      @fmovs(dest_dsr_1, src1_dsr_1);
+    } else {
+      RL_Sentinel_received = true;
+    }
+  } else if (send_RL_state == SEND_STATE.SEND_SENTINEL) {
+    print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+    print.print_string("SENDING RL SENTINEL\n");
+    @load_to_dsr(dest_dsr_1, sentinelRL_dsd, .{ .async = true, .activate = transposeRL, .ut_id = RL_ut_id });
+    @load_to_dsr(src1_dsr_1, sentinelData_dsd);
+    @mov32(dest_dsr_1, src1_dsr_1);
+  } else {
+    RL_Sentinel_received = true;
+    if (is_last){
+      print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+      print.print_string("SENDING RL TD\n");
+      @load_to_dsr(dest_dsr_1, sentinelRL_dsd, .{ .async = true, .ut_id = RL_ut_id });
+      @load_to_dsr(src1_dsr_1, teardownData_dsd);
+      @mov32(dest_dsr_1, src1_dsr_1);
+    } else if (RL_TD_received) {
+      print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+      print.print_string("RL SENTINEL AND TD RECEIVED, CALLING SYNC\n");
+      sync();
+    }
+  }
+}
+
+fn sync() void {
+  const expected: i16 = 2;
+  sync_cnt += 1;
+
+  if (sync_cnt == 2) {
+    const PE_ID = if (vertical_mode) fabric.get_y_coord() else fabric.get_x_coord();
+    var is_first = if (vertical_mode) v_firstPE else firstPE;
+    var is_last = if (vertical_mode) v_lastPE else lastPE;
+
+    if (!is_first) {
+      // Upper triangular matrix of X_transposed.
+      var X_t_upper_tri_dsd = @get_dsd(mem1d_dsd,
+        .{ .base_address = &X_transposed, .extent = PE_ID*BRICK_WAVELETS });
+      var X_upper_tri_dsd = @get_dsd(mem1d_dsd,
+        .{ .base_address = ptr_X, .extent = PE_ID*BRICK_WAVELETS });
+      @load_to_dsr(src1_dsr_0, X_t_upper_tri_dsd);
+      @load_to_dsr(dest_dsr_0, X_upper_tri_dsd);
+      @fmovs(dest_dsr_0, src1_dsr_0);
+    }
+    if (!is_last) {
+      var REV_PE_ID = WIDTHm1 - PE_ID;
+      //Data was received in reverse order, we need to use a stride of 2 and revert inmaginary and real parts
+      if (tensor_type == f16) {
+        // Lower triangular matrix of X_transposed
+        var X_lower_tri_dsd = @get_dsd(mem1d_dsd,
+          .{ .base_address = &ptr_X[(PE_ID+1)*BRICK_WAVELETS*2],
+             .extent = BRICK_WAVELETS, .stride = 1 });
+        @load_to_dsr(dest_dsr_0, X_lower_tri_dsd, .{ .save_address = true });
+
+        var X_t_lower_tri_dsd = @get_dsd(mem1d_dsd,
+          .{ .base_address = &X_transposed[(PE_ID+2)*BRICK_WAVELETS*2-ELEM_SIZE],
+             .extent = BRICK_WAVELETS, .stride = -1 });
+
+        for (@range(u16, REV_PE_ID)) |i| {
+          @load_to_dsr(src1_dsr_0, X_t_lower_tri_dsd);
+          @fmovs(dest_dsr_0, src1_dsr_0);
+          X_t_lower_tri_dsd = @increment_dsd_offset(X_t_lower_tri_dsd, BRICK_WAVELETS*2, tensor_type);
+        }
+
+      } else {
+        // Lower triangular matrix of X_transposed
+        const X_lower_tri_dsd = @get_dsd(mem1d_dsd,
+          .{ .base_address = &ptr_X[(PE_ID+1)*BRICK_WAVELETS],
+             .extent = BRICK_WAVELETS, .stride = 1 });
+        @load_to_dsr(dest_dsr_0, X_lower_tri_dsd, .{ .save_address = true });
+
+        var X_t_lower_tri_dsd = @get_dsd(mem1d_dsd,
+          .{ .base_address = &X_transposed[(PE_ID+2)*BRICK_WAVELETS-ELEM_SIZE],
+             .extent = BRICK_WAVELETS, .stride = -1 });
+
+        for (@range(u16, REV_PE_ID)) |i| {
+          @load_to_dsr(src1_dsr_0, X_t_lower_tri_dsd);
+          @fmovs(dest_dsr_0, src1_dsr_0);
+          X_t_lower_tri_dsd = @increment_dsd_offset(X_t_lower_tri_dsd, BRICK_WAVELETS, tensor_type);
+        }
+      }
+    }
+
+    const T3s = @as(i16, T*T*T);
+    const T2s = @as(i16, T*T);
+    const Ts  = @as(i16, T);
+
+    // X array contains bricks of new elements owned by this PE received from neighbors
+    // The received bricks must have dimensions transposed.
+    // We use X_transposed array to write reshuffled bricks, and then write back to X array
+    // We go through X in order, and find its correct location to write to X_transposed
+
+    // Each brick is T x T x T elems ("BRICK_LEN"), with N / T bricks ("DEPTH")
+    // The mapping for vertical and horiziontal transposes are as follows:
+    // for j in range(DEPTH):
+    //     for i in range(BRICK_LEN):
+    //         x = i % T
+    //         y = (i % (T * T)) // T
+    //         z = i // (T * T)
+    //
+    //         # FOR X,Z TRANSPOSE
+    //         i_ph = x*T*T + y*T + z
+    //         X_transposed[j*BRICK_LEN + i_ph] = ptr_X[j * BRICK_LEN + i]
+    //
+    //         # FOR Y,Z TRANSPOSE ("vertical_mode")
+    //         i_pv = y*T*T + z*T + x
+    //         X_transposed[j*BRICK_LEN + i_pv] = ptr_X[j * BRICK_LEN + i]
+    //
+    // For T = 2, DEPTH = 2, BRICK_LEN = 2 * 2 * 2 = 8, this shuffling is shown below.
+    //
+    // FOR X,Z TRANSPOSE
+    // X:           [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15]
+    // X_transpose: [ 0  4  2  6  1  5  3  7  8 12 10 14  9 13 11 15]
+    //
+    // FOR Y,Z TRANSPOSE ("vertical_mode")
+    // X:           [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15]
+    // X_transpose: [ 0  1  4  5  2  3  6  7  8  9 12 13 10 11 14 15]
+
+    if (tensor_type == f16) {
+      // For v_stride, we transpose y and z dimensions
+      const v_stride = .{1, 1*(T2s - Ts + 1), 1*(-T3s + T2s + 1), 1};
+      // For h_stride, we transpose x and z dimensions
+      const h_stride = .{1*T2s, 1*(-T3s + T2s + Ts), 1*(-T3s + Ts + 1), 1};
+      // NOTE: The extents are flipped relative to the strides due to compiler bug
+      // The strides should be read left to right, the extents right to left
+      const X_t_4d_dsd = if (vertical_mode)
+                           @get_dsd(mem4d_dsd, .{ .base_address = &X_transposed[0],
+                             .extent = .{DEPTH, T, T, T}, .stride = v_stride})
+                         else
+                           @get_dsd(mem4d_dsd, .{ .base_address = &X_transposed[0],
+                             .extent = .{DEPTH, T, T, T}, .stride = h_stride});
+      const X_dsd = @get_dsd(mem1d_dsd, .{ .base_address = ptr_X,
+        .extent = ARRAY_LEN/2, .stride = 1 });
+      @load_to_dsr(src1_dsr_0, X_dsd);
+      @fmovs(X_t_4d_dsd, src1_dsr_0);
+    } else {
+      // Note extra factor of 2 vs f16 strides. For f16, we treat real,imag components
+      // as 1 32-bit element. For fp32, we have 2 32-bit values
+      // For v_stride, we transpose y and z dimensions
+      const v_stride = .{2, 2*(T2s - Ts + 1), 2*(-T3s + T2s + 1), 2};
+      // For h_stride, we transpose x and z dimensions
+      const h_stride = .{2*T2s, 2*(-T3s + T2s + Ts), 2*(-T3s + Ts + 1), 2};
+
+      //REAL
+      // NOTE: The extents are flipped relative to the strides due to compiler bug
+      // The strides should be read left to right, the extents right to left
+      const Xr_t_dsd = if (vertical_mode)
+                         @get_dsd(mem4d_dsd, .{ .base_address = &X_transposed[0],
+                           .extent = .{DEPTH, T, T, T}, .stride = v_stride})
+                       else
+                         @get_dsd(mem4d_dsd, .{ .base_address = &X_transposed[0],
+                           .extent = .{DEPTH, T, T, T}, .stride = h_stride});
+      const Xr_dsd = @get_dsd(mem1d_dsd, .{ .base_address = ptr_X,
+        .extent = ARRAY_LEN/2, .stride = 2 });
+      @load_to_dsr(src1_dsr_0, Xr_dsd);
+      @fmovs(Xr_t_dsd, src1_dsr_0);
+
+      //IMAG
+      const Xi_t_dsd = @increment_dsd_offset(Xr_t_dsd, 1, tensor_type);
+      const Xi_dsd = @increment_dsd_offset(Xr_dsd, 1, tensor_type);
+      @load_to_dsr(src1_dsr_0, Xi_dsd);
+      @fmovs(Xi_t_dsd, src1_dsr_0);
+    }
+
+    //PUT BACK IN X ARR
+    const X_dsd = @get_dsd(mem1d_dsd, .{ .base_address = ptr_X,
+      .extent = if (f16 == tensor_type) ARRAY_LEN/2 else ARRAY_LEN });
+    const X_t_dsd = @get_dsd(mem1d_dsd, .{ .base_address = &X_transposed,
+      .extent = if (f16 == tensor_type) ARRAY_LEN/2 else ARRAY_LEN });
+    @load_to_dsr(dest_dsr_0, X_dsd);
+    @load_to_dsr(src1_dsr_0, X_t_dsd);
+    @fmovs(dest_dsr_0, src1_dsr_0);
+  }
+
+  if (sync_cnt == expected) { // after two teardowns send and receive
+    callback();
+  }
+}
+
+var RL_TD_received: bool = false;
+fn RL_teardown_hdlr() void {
+  print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+  print.print_string("IN RL TD HANDLER\n");
+  RL_TD_received = true;
+  if (RL_Sentinel_received) {
+    print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+    print.print_string("RL SENTINEL AND TD RECEIVED, CALLING SYNC\n");
+    sync();
+  }
+}
+
+var LR_TD_received: bool = false;
+fn LR_teardown_hdlr() void {
+  print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+  print.print_string("IN LR TD HANDLER\n");
+  LR_TD_received = true;
+  if (LR_Sentinel_received) {
+    print.fmt_no_nl("PE({d},{d}): ", .{ fabric.get_x_coord(), fabric.get_y_coord() });
+    print.print_string("LR SENTINEL AND TD RECEIVED, CALLING SYNC\n");
+    sync();
+  }
+}
+
+comptime {
+  @bind_local_task(transposeLR, transposeLR_id);
+  @bind_local_task(transposeRL, transposeRL_id);
+
+  const ES_DIR: direction = EAST;
+  const WN_DIR: direction = WEST;
+  @set_local_color_config(LR_color, .{
+    .routes = .{ .rx = .{ WN_DIR }, .tx = .{ RAMP, ES_DIR }, },
+    .filter = .{
+      .kind = .{.counter = true}, .limit1 =TRANS_LEN-1, .max_counter =BRICK_WAVELETS-1,
+      .init_counter = 0, .count_data = true, .count_control = false, .fast_mode = true
+    },
+    .switches = .{ .ring_mode = true, .pop_mode = .{.pop_on_advance = true}},
+    .teardown = true,
+  });
+  @set_local_color_config(RL_color, .{
+    .routes = .{ .rx = .{ ES_DIR }, .tx = .{ RAMP, WN_DIR }, },
+    .filter = .{
+      .kind = .{.counter = true}, .limit1 =TRANS_LEN-1, .max_counter =BRICK_WAVELETS-1,
+      .init_counter = 0, .count_data = true, .count_control = false, .fast_mode = true
+    },
+    .switches = .{ .ring_mode = true, .pop_mode = .{.pop_on_advance = true}},
+    .teardown = true,
+  });
+
+  // On WSE-3, we must explicitly initialize input and output queues
+  @initialize_queue(LR_recv_iq, .{ .color = LR_color });
+  @unblock(LR_recv_iq);
+  @initialize_queue(LR_send_oq, .{ .color = LR_color });
+  @initialize_queue(RL_recv_iq, .{ .color = RL_color });
+  @initialize_queue(RL_send_oq, .{ .color = RL_color });
+
+  @set_teardown_handler(RL_teardown_hdlr, RL_color);
+  @set_teardown_handler(LR_teardown_hdlr, LR_color);
+}

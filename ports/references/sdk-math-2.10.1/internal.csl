@@ -1,0 +1,159 @@
+// Internal utils and constants for the math library
+
+// ----------------------------------------------------------------
+// generic floating point constants
+// ----------------------------------------------------------------
+
+const types = @import_module("<types>");
+
+fn exp_len(comptime T: type) comptime_int {
+  if (T == f16) {
+    return 5;
+  } else if (T == cb16) {
+    return 6;
+  } else if (T == bf16 or T == f32) {
+    return 8;
+  }
+  @comptime_assert(false);
+}
+
+fn mantissa_len(comptime T: type) comptime_int {
+  return types.bit_size_of(T) - 1 - exp_len(T);
+}
+
+fn mantissa_mask(comptime T: type) comptime_int {
+  return comptime (1 << mantissa_len(T)) - 1;
+}
+
+// This mask is for an exponent shifted to bit 0.
+fn exp_mask(comptime T: type) comptime_int {
+  return (1 << exp_len(T)) - 1;
+}
+
+fn default_bias(comptime T: type) comptime_int {
+  if (T == cb16) {
+    return 42; // cb16 bias is customized
+  }
+  return exp_mask(T) >> 1;
+}
+
+fn sign_bit(comptime T: type) comptime_int {
+  return comptime 1 << (types.bit_size_of(T) - 1);
+}
+
+fn POSITIVE_INF(comptime T: type) T {
+  return @bitcast(T, @as(types.bits_type_of(T), comptime exp_mask(T) << mantissa_len(T)));
+}
+
+fn NEGATIVE_INF(comptime T: type) T {
+  return @bitcast(T, @as(types.bits_type_of(T), comptime (exp_mask(T) << mantissa_len(T)) | sign_bit(T)));
+}
+
+// indicates signalling NaN
+fn HIGH_MANT_BIT(comptime T: type) comptime_int {
+  return comptime 1 << (mantissa_len(T)) - 1;
+}
+
+fn NaN(comptime T: type) T {
+  return @bitcast(T, @as(types.bits_type_of(T), comptime (exp_mask(T) << mantissa_len(T)) | HIGH_MANT_BIT(T)));
+}
+
+// ----------------------------------------------------------------
+// f16 constants
+// ----------------------------------------------------------------
+
+const mantissa_len_f16 = mantissa_len(@fp16());
+const mantissa_mask_f16 = mantissa_mask(@fp16());
+
+// This mask is for an exponent shifted to bit 0.
+const exp_mask_f16 = exp_mask(@fp16());
+
+const default_bias_f16 = default_bias(@fp16());
+
+const LOW_EXP_BIT_f16: u16 = 1 << mantissa_len_f16;
+
+// SW-175910: CSOS changed the fp16 case to 0x498b
+const max_ln_bits: u16 =
+    if (@fp16() == f16) 0x498c // exp=0b10010, man=0b0110001100
+    else if (@fp16() == cb16) 0x5ba3 // exp=0b101101, man=0b110100011
+    else if (@fp16() == bf16) 0x42b1 // exp=0b10000101, man=0b0110001
+    else @comptime_assert(false);
+
+const EXP_MAX_LN_f16 = @bitcast(@fp16(), max_ln_bits);
+
+const min_ln_bits: u16 =
+    if (@fp16() == f16) 0xcc55 // exp=0b10011, man=0b0001010101
+    else if (@fp16() == cb16) 0xde35 // exp=0b101111, man=0b000110101
+    else if (@fp16() == bf16) 0xc2b9 // exp=0b10000101, man=0b0111001
+    else @comptime_assert(false);
+
+const EXP_MIN_LN_f16 = @bitcast(@fp16(), min_ln_bits);
+
+// Magic number used to get a first guess of inverse square root
+// Details at : en.wikipedia.org/wiki/Fast_inverse_square_root
+const INV_SQRT_MAGIC: u16 = if (@fp16() == f16) 0x59BC
+                            else if (@fp16() == cb16) 0x7DDE
+                            else if (@fp16() == bf16) 0x5F38
+                            else @comptime_assert(false);
+
+// ----------------------------------------------------------------
+// f32 constants
+// ----------------------------------------------------------------
+
+const mantissa_len_f32 = mantissa_len(f32);
+
+const default_bias_f32 = default_bias(f32);
+
+const POSITIVE_INF_f32 = POSITIVE_INF(f32);
+
+// ----------------------------------------------------------------
+// cerebras specific functions (used only in this library)
+// ----------------------------------------------------------------
+
+const dsd_ops = @import_module("<dsd_ops>");
+
+fn fnorm(comptime T: type, f: T) T {
+  var res: T = 0.0;
+  dsd_ops.norm(T, &res, f, .{});
+  return res;
+}
+
+fn fmac(comptime T: type, x : T, y : T, z : T) T {
+  return x + y * z;
+}
+
+fn fs2xp16(x : f32) i16 {
+  var res : i16 = 0;
+  @fs2xp16(&res, x);
+  return res;
+}
+
+// Implements pow2i_f32(x) = powf(2,x)
+fn pow2i_f32(x: i16) f32 {
+  const default_bias = @as(i16,default_bias_f32);
+  const max_exp = default_bias;
+  const min_exp = -(default_bias - 1);
+  if (x < min_exp - mantissa_len_f32) {
+    return @bitcast(f32, @as(u32,0));
+  }
+  if (x < min_exp) {
+    return @bitcast(f32, @as(u32,1) << @as(u16, mantissa_len_f32 + x - min_exp));
+  }
+  if (x > max_exp) {
+    return POSITIVE_INF_f32;
+  }
+  return @bitcast(f32, @as(u32,x + default_bias) << mantissa_len_f32);
+}
+
+fn fdivs(comptime T: type, ptr: *T, numerator: T, denominator: T) bool {
+  const mnemonic = if (T == @fp16()) "fdivsh"
+                   else if (T == f32) "fdivss"
+                   else @comptime_assert(false, "expected @fp16() or f32");
+  var res: T;
+  var flag: u16;
+  asm (@strcat(mnemonic, " %[r_res] = %[r_num], %[r_den]")
+       : [r_res] "=r" (res), [r_flag] "={cflag}" (flag)
+       : [r_num] "==[r_res]" (numerator), [r_den] "r" (denominator));
+  ptr.* = res;
+  return flag != 0;
+}

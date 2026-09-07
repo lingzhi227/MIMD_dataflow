@@ -1,0 +1,75 @@
+{
+  "passed": true,
+  "new_sdk_execution": false,
+  "source_repair": "both",
+  "shared_local_rms_library": false,
+  "source_math_review": {
+    "observed_source_behavior_confirmed": true,
+    "mathematical_accuracy_passed": true,
+    "repair": "both",
+    "cases": [
+      {
+        "epoch": 0,
+        "source_behavior_bits_exact": true,
+        "original_input_relative_l2": 0.0006268351462149775,
+        "original_input_peak_scaled_error": 0.0013872820979310939,
+        "mathematical_accuracy_passed": true
+      },
+      {
+        "epoch": 1,
+        "source_behavior_bits_exact": true,
+        "original_input_relative_l2": 0.0006018912256456443,
+        "original_input_peak_scaled_error": 0.0012635542426834765,
+        "mathematical_accuracy_passed": true
+      },
+      {
+        "epoch": 2,
+        "source_behavior_bits_exact": true,
+        "original_input_relative_l2": 0.0,
+        "original_input_peak_scaled_error": 0.0,
+        "mathematical_accuracy_passed": true
+      }
+    ],
+    "new_sdk_execution": false,
+    "scope": "Source projection/residual/RMS with explicit valid zero stale-descriptor seed. Source behavior and original-input fsum projection/residual/RMS are checked separately. Not an unmodified full Prefill or HLS qualification.",
+    "hashes": {
+      "evidence/projection-residual-rms-source-20260907T061402754916Z/provenance.json": "6eb7b4501a374c89e54caea4d036d468a3396c00aa6b5025695811b89a2bdffe",
+      "evidence/projection-residual-rms-source-20260907T061402754916Z/results.json": "154598baacdecd73d37790c9681e36b53e93b81f3c4a99098e453b85f077229c",
+      "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/experiments/analyze_projection_residual_rms.py": "ffca5ac0783349766e8a490a772975fafa5503699e0accfb5b2f6202487c8f7a",
+      "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/experiments/analyze_mlp_source.py": "4b165c38cb1f9604b9b6e47ea179cbcb159f62d53f601527d777a0119cdc7acb",
+      "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/toolchain/mesh_rms.py": "2d6d5d82ae75809a94f3e642d5e8f8983c245684780e85baf25c423f19a47a83",
+      "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/toolchain/sdk_math_reference.py": "147102208ff4b9040fcf2ae141319e94d1eb195fe7f4ff15be200504141e30bc"
+    }
+  },
+  "cases": [
+    {
+      "output_and_inverse_half_bits_exact": true,
+      "sampled_final_projection_and_norm_stages_exact": true,
+      "hls_max_local_cycles": 8908,
+      "source_max_local_cycles": 8460,
+      "hls_to_source_ratio": 1.0529550827423169
+    },
+    {
+      "output_and_inverse_half_bits_exact": true,
+      "sampled_final_projection_and_norm_stages_exact": true,
+      "hls_max_local_cycles": 8910,
+      "source_max_local_cycles": 8460,
+      "hls_to_source_ratio": 1.053191489361702
+    },
+    {
+      "output_and_inverse_half_bits_exact": true,
+      "sampled_final_projection_and_norm_stages_exact": true,
+      "hls_max_local_cycles": 8902,
+      "source_max_local_cycles": 8460,
+      "hls_to_source_ratio": 1.0522458628841607
+    }
+  ],
+  "scope": "Supplied activation/weight/residual/gamma, same inputs, physical fabric and SDK options. Explicit source descriptor and row-inverse corrections. HLS preserves public inputs and reuses dead private buffers; source uses destructive inputs/separate arrays. Sampled HLS additionally records every projection prefix and initial operands. Both retain inverse observations; source local/reduced copies occur inside timed path. Unequal observation/copy costs remain in local WSE3 simulator interval ratios. No full Prefill or hardware throughput claim.",
+  "hashes": {
+    "projects/waferllm/projection_residual_rms_64x64_8x8/run-20260907T071024411920Z/manifest.json": "c1b2e26fb8b1ea08cd049d47dde1abf91a94dbfc83465cc2c451d41224602da1",
+    "projects/waferllm/projection_residual_rms_64x64_8x8/run-20260907T071024411920Z/results.json": "8e7086fabd8a7f343fa3388d8bd6668abfc565a8820691984d16326cce77c4d3",
+    "evidence/projection-residual-rms-source-20260907T061402754916Z/provenance.json": "6eb7b4501a374c89e54caea4d036d468a3396c00aa6b5025695811b89a2bdffe",
+    "evidence/projection-residual-rms-source-20260907T061402754916Z/results.json": "154598baacdecd73d37790c9681e36b53e93b81f3c4a99098e453b85f077229c",
+    "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/experiments/compare_projection_residual_rms.py": "99fe1ce55bddc5fc80133d0523136df5c8e64889e563b55f573bab179a2577bd"
+  }
+}

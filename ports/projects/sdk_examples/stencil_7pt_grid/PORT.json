@@ -1,0 +1,12 @@
+{
+  "project": "sdk_examples",
+  "kernel": "stencil_7pt_grid",
+  "origins": [
+    "benchmarks/7pt-stencil-spmv/src/kernel.csl",
+    "benchmarks/benchmark-libs/stencil_3d_7pts/wse3/pe.csl"
+  ],
+  "fixture": "stencil_grid",
+  "contract": "Source seven-point operator on a 2x2x4 grid, zero exterior values, four spatial compute actors. Device actors gather pencil neighborhoods; host supplies only the global field and coefficients. Generic graph fanout/gather replaces original streaming nearest-neighbor exchange; no temporal loop or performance equivalence claimed.",
+  "partitions": 1,
+  "status": "source_ready"
+}

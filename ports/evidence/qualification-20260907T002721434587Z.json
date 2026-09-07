@@ -1,0 +1,400 @@
+{
+  "kind": "qualification_index_of_existing_sdk_runs",
+  "sdk": true,
+  "success": true,
+  "new_sdk_execution": false,
+  "source_controls": [
+    {
+      "path": "evidence/swiglu64x256-sampled-source-comparison.json",
+      "sha256": "e57d909c48bcc387487dd9341b15fd3d120d259b39e0bdbd81f4b688f1d4a96e"
+    },
+    {
+      "path": "evidence/swiglu64x256-counter-source-comparison.json",
+      "sha256": "faef6d9d0ff73dd339b8ce11e003dae034522ae45fdca0d5ce9fe823df0db5a1"
+    }
+  ],
+  "cases": [
+    {
+      "key": "waferllm/swiglu_65x129_5x3",
+      "artifact": "projects/waferllm/swiglu_65x129_5x3/run-20260907T001907677327Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_swiglu.v1",
+        "epochs": 6,
+        "actors": 15,
+        "instrumentation": "sampled",
+        "internal_half_observations": 50310,
+        "cases": [
+          {
+            "target_bits_exact": true,
+            "numerical": {
+              "contract": "gated-activation-half-v1",
+              "fixed_accuracy_passed": true,
+              "max_abs_error": 0.011032687314340706,
+              "max_error_over_allowance": 0.326030486895096,
+              "componentwise_relative_term": 0.004,
+              "absolute_rounding_term": "2^-24*(1+abs(up))",
+              "standard_reference": "unrounded stable mathematical SiLU times up; allowance includes stored half activation and final half product"
+            },
+            "max_local_cycles": 61189,
+            "cycles_per_pe": [
+              [
+                61189,
+                61189,
+                61189
+              ],
+              [
+                61189,
+                61189,
+                61189
+              ],
+              [
+                61189,
+                61189,
+                61189
+              ],
+              [
+                61189,
+                61189,
+                61189
+              ],
+              [
+                61189,
+                61189,
+                61189
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "numerical": {
+              "contract": "gated-activation-half-v1",
+              "fixed_accuracy_passed": true,
+              "max_abs_error": 0.0053656020874619514,
+              "max_error_over_allowance": 0.33288949060007955,
+              "componentwise_relative_term": 0.004,
+              "absolute_rounding_term": "2^-24*(1+abs(up))",
+              "standard_reference": "unrounded stable mathematical SiLU times up; allowance includes stored half activation and final half product"
+            },
+            "max_local_cycles": 58424,
+            "cycles_per_pe": [
+              [
+                58389,
+                58389,
+                58389
+              ],
+              [
+                58389,
+                58389,
+                58424
+              ],
+              [
+                58389,
+                58389,
+                58389
+              ],
+              [
+                58389,
+                58424,
+                58389
+              ],
+              [
+                58389,
+                58389,
+                58389
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "numerical": {
+              "contract": "gated-activation-half-v1",
+              "fixed_accuracy_passed": true,
+              "max_abs_error": 0.0,
+              "max_error_over_allowance": 0.0,
+              "componentwise_relative_term": 0.004,
+              "absolute_rounding_term": "2^-24*(1+abs(up))",
+              "standard_reference": "unrounded stable mathematical SiLU times up; allowance includes stored half activation and final half product"
+            },
+            "max_local_cycles": 61189,
+            "cycles_per_pe": [
+              [
+                61189,
+                61189,
+                61189
+              ],
+              [
+                61189,
+                61189,
+                61189
+              ],
+              [
+                61189,
+                61189,
+                61189
+              ],
+              [
+                61189,
+                61189,
+                61189
+              ],
+              [
+                61189,
+                61189,
+                61189
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "numerical": {
+              "contract": "gated-activation-half-v1",
+              "fixed_accuracy_passed": true,
+              "max_abs_error": 0.021462408349847806,
+              "max_error_over_allowance": 0.4436557363573357,
+              "componentwise_relative_term": 0.004,
+              "absolute_rounding_term": "2^-24*(1+abs(up))",
+              "standard_reference": "unrounded stable mathematical SiLU times up; allowance includes stored half activation and final half product"
+            },
+            "max_local_cycles": 58424,
+            "cycles_per_pe": [
+              [
+                58389,
+                58389,
+                58389
+              ],
+              [
+                58389,
+                58389,
+                58424
+              ],
+              [
+                58389,
+                58389,
+                58389
+              ],
+              [
+                58389,
+                58424,
+                58389
+              ],
+              [
+                58389,
+                58389,
+                58389
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "numerical": {
+              "contract": "gated-activation-half-v1",
+              "fixed_accuracy_passed": true,
+              "max_abs_error": 2.384186430504087e-07,
+              "max_error_over_allowance": 0.4436557363573357,
+              "componentwise_relative_term": 0.004,
+              "absolute_rounding_term": "2^-24*(1+abs(up))",
+              "standard_reference": "unrounded stable mathematical SiLU times up; allowance includes stored half activation and final half product"
+            },
+            "max_local_cycles": 58424,
+            "cycles_per_pe": [
+              [
+                58389,
+                58389,
+                58389
+              ],
+              [
+                58389,
+                58389,
+                58424
+              ],
+              [
+                58389,
+                58389,
+                58389
+              ],
+              [
+                58389,
+                58424,
+                58389
+              ],
+              [
+                58389,
+                58389,
+                58389
+              ]
+            ]
+          },
+          {
+            "target_bits_exact": true,
+            "numerical": {
+              "contract": "gated-activation-half-v1",
+              "fixed_accuracy_passed": true,
+              "max_abs_error": 0.04480070381899992,
+              "max_error_over_allowance": 0.3572420777903265,
+              "componentwise_relative_term": 0.004,
+              "absolute_rounding_term": "2^-24*(1+abs(up))",
+              "standard_reference": "unrounded stable mathematical SiLU times up; allowance includes stored half activation and final half product"
+            },
+            "max_local_cycles": 61189,
+            "cycles_per_pe": [
+              [
+                61189,
+                61189,
+                61189
+              ],
+              [
+                61189,
+                61189,
+                61189
+              ],
+              [
+                61189,
+                61189,
+                61189
+              ],
+              [
+                61189,
+                61189,
+                61189
+              ],
+              [
+                61189,
+                61189,
+                61189
+              ]
+            ]
+          }
+        ],
+        "performance_scope": "WSE3 simulator local PE interval; no global latency or hardware throughput claim"
+      },
+      "native_application_checks": [
+        {
+          "contract": "gated-activation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0072352870284060344,
+          "max_error_over_allowance": 0.2102281360337847,
+          "componentwise_relative_term": 0.004,
+          "absolute_rounding_term": "2^-24*(1+abs(up))",
+          "reference": "independent stable math.exp SiLU times up; unrounded mathematical composition"
+        },
+        {
+          "contract": "gated-activation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0024468979125380486,
+          "max_error_over_allowance": 0.3328894707847407,
+          "componentwise_relative_term": 0.004,
+          "absolute_rounding_term": "2^-24*(1+abs(up))",
+          "reference": "independent stable math.exp SiLU times up; unrounded mathematical composition"
+        },
+        {
+          "contract": "gated-activation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0,
+          "max_error_over_allowance": 0.0,
+          "componentwise_relative_term": 0.004,
+          "absolute_rounding_term": "2^-24*(1+abs(up))",
+          "reference": "independent stable math.exp SiLU times up; unrounded mathematical composition"
+        },
+        {
+          "contract": "gated-activation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.009787591650152194,
+          "max_error_over_allowance": 0.44365570996032183,
+          "componentwise_relative_term": 0.004,
+          "absolute_rounding_term": "2^-24*(1+abs(up))",
+          "reference": "independent stable math.exp SiLU times up; unrounded mathematical composition"
+        },
+        {
+          "contract": "gated-activation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 2.3841857199613514e-07,
+          "max_error_over_allowance": 0.44365570996032183,
+          "componentwise_relative_term": 0.004,
+          "absolute_rounding_term": "2^-24*(1+abs(up))",
+          "reference": "independent stable math.exp SiLU times up; unrounded mathematical composition"
+        },
+        {
+          "contract": "gated-activation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.028529194431726523,
+          "max_error_over_allowance": 0.2162296733576231,
+          "componentwise_relative_term": 0.004,
+          "absolute_rounding_term": "2^-24*(1+abs(up))",
+          "reference": "independent stable math.exp SiLU times up; unrounded mathematical composition"
+        }
+      ],
+      "device_application_checks": [
+        {
+          "contract": "gated-activation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.011032687314340706,
+          "max_error_over_allowance": 0.326030486895096,
+          "componentwise_relative_term": 0.004,
+          "absolute_rounding_term": "2^-24*(1+abs(up))",
+          "reference": "independent stable math.exp SiLU times up; unrounded mathematical composition"
+        },
+        {
+          "contract": "gated-activation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0053656020874619514,
+          "max_error_over_allowance": 0.33288949060007955,
+          "componentwise_relative_term": 0.004,
+          "absolute_rounding_term": "2^-24*(1+abs(up))",
+          "reference": "independent stable math.exp SiLU times up; unrounded mathematical composition"
+        },
+        {
+          "contract": "gated-activation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0,
+          "max_error_over_allowance": 0.0,
+          "componentwise_relative_term": 0.004,
+          "absolute_rounding_term": "2^-24*(1+abs(up))",
+          "reference": "independent stable math.exp SiLU times up; unrounded mathematical composition"
+        },
+        {
+          "contract": "gated-activation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.021462408349847806,
+          "max_error_over_allowance": 0.4436557363573357,
+          "componentwise_relative_term": 0.004,
+          "absolute_rounding_term": "2^-24*(1+abs(up))",
+          "reference": "independent stable math.exp SiLU times up; unrounded mathematical composition"
+        },
+        {
+          "contract": "gated-activation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 2.384186430504087e-07,
+          "max_error_over_allowance": 0.4436557363573357,
+          "componentwise_relative_term": 0.004,
+          "absolute_rounding_term": "2^-24*(1+abs(up))",
+          "reference": "independent stable math.exp SiLU times up; unrounded mathematical composition"
+        },
+        {
+          "contract": "gated-activation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.04480070381899992,
+          "max_error_over_allowance": 0.3572420777903265,
+          "componentwise_relative_term": 0.004,
+          "absolute_rounding_term": "2^-24*(1+abs(up))",
+          "reference": "independent stable math.exp SiLU times up; unrounded mathematical composition"
+        }
+      ],
+      "native_application_source": "native-output.txt: actual C++ stdout, independent stable math.exp review",
+      "qualification_sha256": "62f5b1bc12caef81d4aefe00eaf405c2e4a81e296c5c9cbe2b2b4aaef9d8dd8c",
+      "results_sha256": "04ee0583bda8531842841054b9c96a1f88b19035edbc6d8486ddf7f78e2a3cc3",
+      "numerical_validation": {
+        "contract": "gated-activation-half-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "componentwise_relative_term": 0.004,
+        "absolute_rounding_term": "2^-24*(1+abs(up))",
+        "scope": "bounded half gating, including stored activation and final product rounding; no f32 tolerance claim"
+      }
+    }
+  ]
+}

@@ -1,0 +1,793 @@
+{
+  "kind": "qualification_index_of_existing_sdk_runs",
+  "sdk": true,
+  "success": true,
+  "cases": [
+    {
+      "key": "waferllm/mesh_twohop_256_8x8_f16",
+      "artifact": "projects/waferllm/mesh_twohop_256_8x8_f16/run-20260906T173947330774Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_twohop.v1",
+        "epochs": 6,
+        "actors": 64,
+        "internal_half_observations": 3158016,
+        "cases": [
+          {
+            "scheduled_fma_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.33420195439739414,
+              "max_abs_error": 0.024354632943868637,
+              "max_error_over_bound": 0.004386146248700044,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.33420195439739414,
+              "max_abs_error": 0.031855746172368526,
+              "max_error_over_bound": 0.005706324993021751,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": false,
+            "max_native_abs_difference": 0.03125,
+            "compute_cycles_median": 10689.0,
+            "max_local_cycles": 98937,
+            "total_cycles_per_pe": [
+              [
+                98918,
+                98912,
+                98907,
+                98903,
+                98898,
+                98900,
+                98891,
+                98890
+              ],
+              [
+                98937,
+                98930,
+                98925,
+                98920,
+                98920,
+                98917,
+                98912,
+                98905
+              ],
+              [
+                98891,
+                98888,
+                98883,
+                98878,
+                98875,
+                98872,
+                98866,
+                98864
+              ],
+              [
+                98935,
+                98929,
+                98928,
+                98921,
+                98922,
+                98918,
+                98915,
+                98909
+              ],
+              [
+                98853,
+                98852,
+                98850,
+                98849,
+                98847,
+                98844,
+                98844,
+                98840
+              ],
+              [
+                98879,
+                98878,
+                98877,
+                98871,
+                98875,
+                98867,
+                98869,
+                98863
+              ],
+              [
+                98859,
+                98859,
+                98859,
+                98855,
+                98855,
+                98851,
+                98851,
+                98847
+              ],
+              [
+                98869,
+                98866,
+                98866,
+                98863,
+                98864,
+                98859,
+                98860,
+                98856
+              ]
+            ]
+          },
+          {
+            "scheduled_fma_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.33420195439739414,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.33420195439739414,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "compute_cycles_median": 10689.0,
+            "max_local_cycles": 98937,
+            "total_cycles_per_pe": [
+              [
+                98918,
+                98912,
+                98907,
+                98903,
+                98898,
+                98900,
+                98891,
+                98890
+              ],
+              [
+                98937,
+                98930,
+                98925,
+                98920,
+                98920,
+                98917,
+                98912,
+                98905
+              ],
+              [
+                98891,
+                98888,
+                98883,
+                98878,
+                98875,
+                98872,
+                98866,
+                98864
+              ],
+              [
+                98935,
+                98929,
+                98928,
+                98921,
+                98922,
+                98918,
+                98915,
+                98909
+              ],
+              [
+                98853,
+                98852,
+                98850,
+                98849,
+                98847,
+                98844,
+                98844,
+                98840
+              ],
+              [
+                98879,
+                98878,
+                98877,
+                98871,
+                98875,
+                98867,
+                98869,
+                98863
+              ],
+              [
+                98859,
+                98859,
+                98859,
+                98855,
+                98855,
+                98851,
+                98851,
+                98847
+              ],
+              [
+                98869,
+                98866,
+                98866,
+                98863,
+                98864,
+                98859,
+                98860,
+                98856
+              ]
+            ]
+          },
+          {
+            "scheduled_fma_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.33420195439739414,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.33420195439739414,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "compute_cycles_median": 10689.0,
+            "max_local_cycles": 98937,
+            "total_cycles_per_pe": [
+              [
+                98918,
+                98912,
+                98907,
+                98903,
+                98898,
+                98900,
+                98891,
+                98890
+              ],
+              [
+                98937,
+                98930,
+                98925,
+                98920,
+                98920,
+                98917,
+                98912,
+                98905
+              ],
+              [
+                98891,
+                98888,
+                98883,
+                98878,
+                98875,
+                98872,
+                98866,
+                98864
+              ],
+              [
+                98935,
+                98929,
+                98928,
+                98921,
+                98922,
+                98918,
+                98915,
+                98909
+              ],
+              [
+                98853,
+                98852,
+                98850,
+                98849,
+                98847,
+                98844,
+                98844,
+                98840
+              ],
+              [
+                98879,
+                98878,
+                98877,
+                98871,
+                98875,
+                98867,
+                98869,
+                98863
+              ],
+              [
+                98859,
+                98859,
+                98859,
+                98855,
+                98855,
+                98851,
+                98851,
+                98847
+              ],
+              [
+                98869,
+                98866,
+                98866,
+                98863,
+                98864,
+                98859,
+                98860,
+                98856
+              ]
+            ]
+          },
+          {
+            "scheduled_fma_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.33420195439739414,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.33420195439739414,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "compute_cycles_median": 10689.0,
+            "max_local_cycles": 98937,
+            "total_cycles_per_pe": [
+              [
+                98918,
+                98912,
+                98907,
+                98903,
+                98898,
+                98900,
+                98891,
+                98890
+              ],
+              [
+                98937,
+                98930,
+                98925,
+                98920,
+                98920,
+                98917,
+                98912,
+                98905
+              ],
+              [
+                98891,
+                98888,
+                98883,
+                98878,
+                98875,
+                98872,
+                98866,
+                98864
+              ],
+              [
+                98935,
+                98929,
+                98928,
+                98921,
+                98922,
+                98918,
+                98915,
+                98909
+              ],
+              [
+                98853,
+                98852,
+                98850,
+                98849,
+                98847,
+                98844,
+                98844,
+                98840
+              ],
+              [
+                98879,
+                98878,
+                98877,
+                98871,
+                98875,
+                98867,
+                98869,
+                98863
+              ],
+              [
+                98859,
+                98859,
+                98859,
+                98855,
+                98855,
+                98851,
+                98851,
+                98847
+              ],
+              [
+                98869,
+                98866,
+                98866,
+                98863,
+                98864,
+                98859,
+                98860,
+                98856
+              ]
+            ]
+          },
+          {
+            "scheduled_fma_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.33420195439739414,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.33420195439739414,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "compute_cycles_median": 10689.0,
+            "max_local_cycles": 98937,
+            "total_cycles_per_pe": [
+              [
+                98918,
+                98912,
+                98907,
+                98903,
+                98898,
+                98900,
+                98891,
+                98890
+              ],
+              [
+                98937,
+                98930,
+                98925,
+                98920,
+                98920,
+                98917,
+                98912,
+                98905
+              ],
+              [
+                98891,
+                98888,
+                98883,
+                98878,
+                98875,
+                98872,
+                98866,
+                98864
+              ],
+              [
+                98935,
+                98929,
+                98928,
+                98921,
+                98922,
+                98918,
+                98915,
+                98909
+              ],
+              [
+                98853,
+                98852,
+                98850,
+                98849,
+                98847,
+                98844,
+                98844,
+                98840
+              ],
+              [
+                98879,
+                98878,
+                98877,
+                98871,
+                98875,
+                98867,
+                98869,
+                98863
+              ],
+              [
+                98859,
+                98859,
+                98859,
+                98855,
+                98855,
+                98851,
+                98851,
+                98847
+              ],
+              [
+                98869,
+                98866,
+                98866,
+                98863,
+                98864,
+                98859,
+                98860,
+                98856
+              ]
+            ]
+          },
+          {
+            "scheduled_fma_bits_exact": true,
+            "roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.33420195439739414,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_roundoff": {
+              "contract": "binary16-fma-relaxed-v1",
+              "forward_bound_passed": true,
+              "gamma": 0.33420195439739414,
+              "max_abs_error": 0.0,
+              "max_error_over_bound": 0.0,
+              "native_f32_accuracy_not_implied": true
+            },
+            "native_bits_equal": true,
+            "max_native_abs_difference": 0.0,
+            "compute_cycles_median": 10689.0,
+            "max_local_cycles": 98937,
+            "total_cycles_per_pe": [
+              [
+                98918,
+                98912,
+                98907,
+                98903,
+                98898,
+                98900,
+                98891,
+                98890
+              ],
+              [
+                98937,
+                98930,
+                98925,
+                98920,
+                98920,
+                98917,
+                98912,
+                98905
+              ],
+              [
+                98891,
+                98888,
+                98883,
+                98878,
+                98875,
+                98872,
+                98866,
+                98864
+              ],
+              [
+                98935,
+                98929,
+                98928,
+                98921,
+                98922,
+                98918,
+                98915,
+                98909
+              ],
+              [
+                98853,
+                98852,
+                98850,
+                98849,
+                98847,
+                98844,
+                98844,
+                98840
+              ],
+              [
+                98879,
+                98878,
+                98877,
+                98871,
+                98875,
+                98867,
+                98869,
+                98863
+              ],
+              [
+                98859,
+                98859,
+                98859,
+                98855,
+                98855,
+                98851,
+                98851,
+                98847
+              ],
+              [
+                98869,
+                98866,
+                98866,
+                98863,
+                98864,
+                98859,
+                98860,
+                98856
+              ]
+            ]
+          }
+        ],
+        "contract": "bit-exact scheduled binary16 FMA recurrence and exact block ownership; high-level/native relaxed block order may round differently; independent original-product forward bound"
+      },
+      "qualification_sha256": "e4a5b4a0dc1d402d4e40c536f7c2db84a6e41ff827f5c5626a48d4a3c44b0e36",
+      "native_application_checks": [
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.33420195439739414,
+          "max_abs_error": 0.031855746172368526,
+          "max_error_over_bound": 0.005706324993021751,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": []
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.33420195439739414,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.33420195439739414,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_zero_reset"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.33420195439739414,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "fused_not_split_half_rounding"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.33420195439739414,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "minimum_half_subnormal_preserved"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.33420195439739414,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        }
+      ],
+      "device_application_checks": [
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.33420195439739414,
+          "max_abs_error": 0.024354632943868637,
+          "max_error_over_bound": 0.004386146248700044,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": []
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.33420195439739414,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.33420195439739414,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_zero_reset"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.33420195439739414,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "fused_not_split_half_rounding"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.33420195439739414,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "minimum_half_subnormal_preserved"
+          ]
+        },
+        {
+          "contract": "binary16-fma-relaxed-v1",
+          "forward_bound_passed": true,
+          "gamma": 0.33420195439739414,
+          "max_abs_error": 0.0,
+          "max_error_over_bound": 0.0,
+          "native_f32_accuracy_not_implied": true,
+          "exact_witnesses": [
+            "exact_signed_row_selection"
+          ]
+        }
+      ],
+      "numerical_validation": {
+        "contract": "binary16-fma-relaxed-v1",
+        "native_forward_bound_passed": true,
+        "device_forward_bound_passed": true,
+        "device_scheduled_bits_passed": true,
+        "native_f32_accuracy_not_implied": true
+      }
+    }
+  ]
+}

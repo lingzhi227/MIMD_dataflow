@@ -1,0 +1,60 @@
+{
+  "upstream_commit": "4866cf330333446cb5e529e10f36be4600d1df29",
+  "sdk_sha256": "fff17e81c61dcb6012bdee2941a6fdc570f5c8604967530e7b7108651258193d",
+  "changes": [
+    "Flat CSL imports and explicit WSE3 queue initialization; RX_SOUTH moved off SDK-reserved input1.",
+    "Four fixed-color TX queues and explicit send microthreads; conservative ownership, not evidence that all earlier resource hypotheses caused failure.",
+    "Benchmark-only legacy clock allreduce is separated; production uses per-PE SDK timestamps with no global synchronization claim.",
+    "Reverse-column scan guards occupied extent before metadata indexing, including unsigned empty/exhausted sentinel.",
+    "Directional u32-aligned row staging preserves the logical u16 packet format and values; isolated SDK probes reproduced odd-offset body corruption before adaptation.",
+    "Two sampled local partial sums and post-completion counts; full output correctness is checked independently from original CSC entries."
+  ],
+  "files": {
+    "layout.csl": {
+      "original_path": "projects/sdk_examples/upstream/benchmarks/spmv-hypersparse/src/layout.csl",
+      "target_path": "toolchain/runtime/spmv_layout.csl",
+      "role": "production",
+      "original_sha256": "6f8fcb7368fe1e512c5bdf10a226db472e49ed3009811d4b54bac79d477530c9",
+      "target_sha256": "df780bf03256f11577f6a76a281a59d8a5ff38c3f3bfe4210e78a3cc6d67ec5c"
+    },
+    "kernel.csl": {
+      "original_path": "projects/sdk_examples/upstream/benchmarks/spmv-hypersparse/src/kernel.csl",
+      "target_path": "toolchain/runtime/spmv_kernel.csl",
+      "role": "production",
+      "original_sha256": "17edad4a7d58580969e3931db918e334fe60336704aa695d326667486a869503",
+      "target_sha256": "56c47f5bb4e66641817de0d8e536b0d57ecefbd76768f42658279f20c2d43049"
+    },
+    "hypersparse_spmv/pe.csl": {
+      "original_path": "projects/sdk_examples/upstream/benchmarks/spmv-hypersparse/src/hypersparse_spmv/pe.csl",
+      "target_path": "toolchain/runtime/spmv_pe.csl",
+      "role": "production",
+      "original_sha256": "f9a78343009e8056303fd05fde65002b7400b69408b17d1959c87fde0d9f7491",
+      "target_sha256": "72e11879f46dec361b2d3355ae7dcfe30589678fe3d247c1c2cd3b1aab14e96a"
+    },
+    "hypersparse_spmv/layout.csl": {
+      "original_path": "projects/sdk_examples/upstream/benchmarks/spmv-hypersparse/src/hypersparse_spmv/layout.csl",
+      "target_path": "toolchain/runtime/spmv_routes.csl",
+      "role": "production",
+      "original_sha256": "b3f53a98479e28ef8a256e9fc6e6b793b174aa7e3905501726ca5353a06599df",
+      "target_sha256": "b3f53a98479e28ef8a256e9fc6e6b793b174aa7e3905501726ca5353a06599df"
+    },
+    "allreduce2R1E/pe.csl": {
+      "original_path": "projects/sdk_examples/upstream/benchmarks/spmv-hypersparse/src/allreduce2R1E/pe.csl",
+      "target_path": "experiments/reference/sdk-spmv-sync-migration/spmv_reduce_pe.csl",
+      "role": "unfinished auxiliary clock experiment; not linked",
+      "original_sha256": "6c1f1b6b7480753824e3329ec04609677ae70b1c4b3338cd342bf68de30e3da2",
+      "target_sha256": "f852622c349e8ef33d3b075ae8667455142e8c7fe74978eafd8ca5debf9a0158"
+    },
+    "allreduce2R1E/layout.csl": {
+      "original_path": "projects/sdk_examples/upstream/benchmarks/spmv-hypersparse/src/allreduce2R1E/layout.csl",
+      "target_path": "experiments/reference/sdk-spmv-sync-migration/spmv_reduce_routes.csl",
+      "role": "unfinished auxiliary clock experiment; not linked",
+      "original_sha256": "8d358774422abb60d991e9e462035e757e3cf7c8fd5960a3b256c429e940a669",
+      "target_sha256": "8d358774422abb60d991e9e462035e757e3cf7c8fd5960a3b256c429e940a669"
+    }
+  },
+  "added_library": {
+    "path": "toolchain/runtime/u16_transport.csl",
+    "sha256": "4d265897bade61867d392872f7369bcab97f6e70cc2c79b325f8e92e14d03f54"
+  }
+}

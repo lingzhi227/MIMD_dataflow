@@ -1,0 +1,11 @@
+{
+  "project": "waferllm",
+  "kernel": "mlp_128x128x512_8x8",
+  "origins": [
+    "Prefill/src/prefill.csl z1_matmul/z2_matmul/z3_comp/h2_matmul"
+  ],
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "status": "development",
+  "partitions": 1,
+  "contract": "Resident rectangular supplied X/U/G/D gated MLP; no RMS/residual/full-model claim."
+}

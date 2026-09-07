@@ -1,0 +1,29 @@
+// One owned scalar buffer per PE. Completion permits reuse, not remote acknowledgement.
+var buffer = @zeros([1]u32);
+var busy: bool = false;
+const source = @get_dsd(mem1d_dsd, .{ .tensor_access = |i|{1} -> buffer[i] });
+
+fn send(value: u32, comptime queue: output_queue, comptime done: local_task_id) void {
+  @assert(!busy);
+  busy = true;
+  buffer[0] = value;
+  const target = @get_dsd(fabout_dsd, .{ .extent = 1, .output_queue = queue });
+  @mov32(target, source, .{ .async = true, .activate = done });
+}
+
+// A rejected attempt leaves the owned buffer and output queue untouched.
+fn try_send(value: u32, comptime queue: output_queue, comptime done: local_task_id) bool {
+  if (busy) { return false; }
+  send(value, queue, done);
+  return true;
+}
+
+// Call exactly once from the completion task, before a subsequent send.
+fn release() void {
+  @assert(busy);
+  busy = false;
+}
+
+fn assert_idle() void { @assert(!busy); }
+
+comptime { @comptime_assert(@is_arch("wse3")); }

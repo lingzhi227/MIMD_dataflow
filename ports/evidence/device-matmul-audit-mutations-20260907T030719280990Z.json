@@ -1,0 +1,83 @@
+{
+  "passed": true,
+  "new_sdk_execution": false,
+  "source_bundle": "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/projects/waferllm/device_matmul_64x128_8x8/run-20260907T025218970814Z",
+  "results_sha256": "31482df67fd5bba14c92801014e5ce493d0113392372635b65db5e88336ab298",
+  "mutations": [
+    {
+      "name": "coherent_output",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 8192 (0.0122%)\nMismatch at index:\n [0, 0]: 10338 (ACTUAL), 10339 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 9.67211529e-05\n ACTUAL: array([[10338,  9666, 12907, ..., 45567, 45224, 11397],\n       [10941, 11954, 44750, ..., 45746, 45704,  8972],\n       [45628, 12022, 13021, ..., 12200, 45323, 12681],...\n DESIRED: array([[10339,  9666, 12907, ..., 45567, 45224, 11397],\n       [10941, 11954, 44750, ..., 45746, 45704,  8972],\n       [45628, 12022, 13021, ..., 12200, 45323, 12681],..."
+    },
+    {
+      "name": "changed_dense_warm",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 8192 (0.0122%)\nMismatch at index:\n [0, 0]: 43762 (ACTUAL), 43763 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 2.2850353e-05\n ACTUAL: array([[43762, 43931, 44254, ..., 46047, 12397, 43644],\n       [44407, 12179, 44249, ..., 41854, 45223, 41803],\n       [39820,  9445, 12381, ..., 45232, 45341, 12609],...\n DESIRED: array([[43763, 43931, 44254, ..., 46047, 12397, 43644],\n       [44407, 12179, 44249, ..., 41854, 45223, 41803],\n       [39820,  9445, 12381, ..., 45232, 45341, 12609],..."
+    },
+    {
+      "name": "zero_warm",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 8192 (0.0122%)\nMismatch at index:\n [0, 0]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACTUAL: array([[1, 0, 0, ..., 0, 0, 0],\n       [0, 0, 0, ..., 0, 0, 0],\n       [0, 0, 0, ..., 0, 0, 0],...\n DESIRED: array([[0, 0, 0, ..., 0, 0, 0],\n       [0, 0, 0, ..., 0, 0, 0],\n       [0, 0, 0, ..., 0, 0, 0],..."
+    },
+    {
+      "name": "immutable_a",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 4096 (0.0244%)\nMismatch at index:\n [0, 0, 0]: 15361 (ACTUAL), 15360 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 6.51041667e-05\n ACTUAL: array([[[15361,     0,     0, ...,     0,     0, 15360],\n        [    0,     0,     0, ...,     0,     0,     0],\n        [    0,     0,     0, ...,     0,     0,     0],...\n DESIRED: array([[[15360,     0,     0, ...,     0,     0, 15360],\n        [    0,     0,     0, ...,     0,     0,     0],\n        [    0,     0,     0, ...,     0,     0,     0],..."
+    },
+    {
+      "name": "immutable_b",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 8192 (0.0122%)\nMismatch at index:\n [0, 0, 0]: 10338 (ACTUAL), 10339 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 9.67211529e-05\n ACTUAL: array([[[10338, 10941, 45628, ..., 11656, 45539, 11406],\n        [44763, 12663, 13254, ..., 46068,  9365, 46058],\n        [46031, 42537, 11400, ...,  8365, 45501, 45354],...\n DESIRED: array([[[10339, 10941, 45628, ..., 11656, 45539, 11406],\n        [44763, 12663, 13254, ..., 46068,  9365, 46058],\n        [46031, 42537, 11400, ...,  8365, 45501, 45354],..."
+    },
+    {
+      "name": "missing_rhs_alignment",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 256 (0.391%)\nMismatch at index:\n [0, 0, 0]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACTUAL: array([[[1, 0, 8, 1],\n        [1, 0, 8, 1],\n        [7, 0, 8, 1],...\n DESIRED: array([[[0, 0, 8, 1],\n        [1, 0, 8, 1],\n        [7, 0, 8, 1],..."
+    },
+    {
+      "name": "missing_lhs_alignment",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 256 (0.391%)\nMismatch at index:\n [0, 0, 1]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACTUAL: array([[[0, 1, 8, 1],\n        [1, 0, 8, 1],\n        [7, 0, 8, 1],...\n DESIRED: array([[[0, 0, 8, 1],\n        [1, 0, 8, 1],\n        [7, 0, 8, 1],..."
+    },
+    {
+      "name": "missing_round",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 256 (0.391%)\nMismatch at index:\n [0, 0, 2]: 9 (ACTUAL), 8 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.125\n ACTUAL: array([[[0, 0, 9, 1],\n        [1, 0, 8, 1],\n        [7, 0, 8, 1],...\n DESIRED: array([[[0, 0, 8, 1],\n        [1, 0, 8, 1],\n        [7, 0, 8, 1],..."
+    },
+    {
+      "name": "stale_epoch",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 256 (0.391%)\nMismatch at index:\n [0, 0, 3]: 3 (ACTUAL), 2 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 0.5\n ACTUAL: array([[[0, 0, 8, 3],\n        [1, 0, 8, 2],\n        [7, 0, 8, 2],...\n DESIRED: array([[[0, 0, 8, 2],\n        [1, 0, 8, 2],\n        [7, 0, 8, 2],..."
+    },
+    {
+      "name": "undrained_queue",
+      "rejected": true,
+      "error": "device matmul owned queues drained"
+    },
+    {
+      "name": "missing_call",
+      "rejected": true,
+      "error": "device matmul lifecycle"
+    },
+    {
+      "name": "bad_timestamp",
+      "rejected": true,
+      "error": "device matmul bounded timestamps"
+    },
+    {
+      "name": "unexpected_history",
+      "rejected": true,
+      "error": "device matmul inactive tensor observations"
+    },
+    {
+      "name": "unexpected_left_owners",
+      "rejected": true,
+      "error": "device matmul inactive tensor observations"
+    },
+    {
+      "name": "unexpected_right_owners",
+      "rejected": true,
+      "error": "device matmul inactive tensor observations"
+    }
+  ]
+}

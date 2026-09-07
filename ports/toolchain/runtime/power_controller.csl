@@ -1,0 +1,28 @@
+// Fixed-step power iteration; completion is not a convergence certificate.
+var power_attempts=[1]u16{0};
+var power_inverse=@zeros([cg_max_iterations]f32);
+fn solver_initialize() void {
+ power_attempts[0]=0;
+ for(@range(u16,cg_max_iterations)) |i| {power_inverse[i]=0.0;}
+}
+fn power_next() void {
+ if(@as(u32,cg_k)>=cg_limit[0]){cg_reason[0]=0;cg_finish();return;}
+ power_attempts[0]+=1;cg_apply(&cg_solution,42);
+}
+fn solver_start() void {power_next();}
+fn solver_begin() void {cg_resource_error();}
+fn solver_advance() void {
+ if(cg_state==42){cg_norm(&y_local_buf,43);}
+ else if(cg_state==43){
+  const value=cg_norm_value;cg_history[cg_k]=value;
+  if(!cg_finite(value)){cg_reason[0]=2;cg_finish();return;}
+  if(value==0.0){cg_reason[0]=1;cg_finish();return;}
+  const inverse=cg_math.inv(value);
+  if(!cg_finite(inverse)){cg_reason[0]=2;cg_finish();return;}
+  power_inverse[cg_k]=inverse;@fmuls(cg_xd,cg_yd,inverse);
+  cg_k+=1;power_next();
+ }
+}
+var power_attempts_ptr:[*]u16=&power_attempts;
+var power_inverse_ptr:[*]f32=&power_inverse;
+comptime {@export_symbol(power_attempts_ptr,"power_attempts");@export_symbol(power_inverse_ptr,"power_inverse");}

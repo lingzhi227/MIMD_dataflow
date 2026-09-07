@@ -1,0 +1,14 @@
+{
+  "project": "sdk_examples",
+  "kernel": "mesh_pcg_512_4x4",
+  "origins": [
+    "benchmarks/preconditioned-conjugate-gradient/src/kernel_pcg.csl",
+    "benchmarks/spmv-hypersparse/src/hypersparse_spmv/pe.csl"
+  ],
+  "status": "source_ready",
+  "contract": "Resident Jacobi-PCG512/4608 stored entries on4x4 PEs; canonical CSC positive diagonal>=2^-16; device inverse and DSD preconditioner, train SpMV, row/column reductions, unweighted true residual. General sparse recurrence, not original seven-point schedule parity.",
+  "fixture": "mesh_pcg:512",
+  "partitions": 1,
+  "validation": "Nine SDK2.10.1 warm calls pass full numerical/trajectory/protocol audit. Matched diagonal control: PCG1 vs CG12 device updates,4.1524x maximum-local interval ratio on that input only; native CG13 and fixed solution cross-screen differ but both original residuals satisfy strict threshold.",
+  "remaining": "Larger resident configurations, broader nonfinite breakdown domain, original SDK seven-point schedule and hardware/global timing parity; static linked memory is not stack high-water."
+}

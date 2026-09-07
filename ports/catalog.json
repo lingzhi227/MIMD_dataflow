@@ -1,0 +1,1491 @@
+[
+  {
+    "project": "sdk_examples",
+    "kernel": "cholesky",
+    "origins": [
+      "benchmarks/cholesky/pe.csl"
+    ],
+    "fixture": "cholesky",
+    "contract": "Right-looking lower Cholesky, 4x4 SPD; one local tile. Original multi-tile schedule not claimed.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "matrix_algorithms",
+    "kernel": "lu_no_pivot",
+    "origins": [
+      "lu_factorization/one_element_per_pe/pe_program.csl",
+      "lu_factorization/many_elements_per_pe/pe_program.csl"
+    ],
+    "fixture": "lu",
+    "contract": "No-pivot elimination with packed L/U; 4x4. Two original layouts share equation coverage, not route equivalence.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "matrix_algorithms",
+    "kernel": "qr_givens",
+    "origins": [
+      "QR_factorization/many_elements_per_pe/pe_program.csl",
+      "QR_factorization/one_element_per_pe/pe_program.csl"
+    ],
+    "fixture": "qr",
+    "contract": "Stable source Givens coefficient branches; return R and accumulated Q-transpose. Explicit pivot-row rotation order; original distributed ordering/layout not preserved.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "gemm",
+    "origins": [
+      "benchmarks/gemm-collectives_2d/pe.csl"
+    ],
+    "fixture": "gemm",
+    "contract": "Matrix product equation, f32 4x4. Split-K is our schedule; named upstream Cannon/MeshGEMM schedules remain unported.",
+    "partitions": 2,
+    "status": "source_ready"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "summa_equation",
+    "origins": [
+      "SUMMA/src/summa.csl"
+    ],
+    "fixture": "gemm",
+    "contract": "Matrix product equation, f32 4x4. Split-K is our schedule; named upstream Cannon/MeshGEMM schedules remain unported.",
+    "partitions": 2,
+    "status": "source_ready"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "meshgemm_equation",
+    "origins": [
+      "MeshGEMM/src/meshgemm.csl"
+    ],
+    "fixture": "gemm",
+    "contract": "Matrix product equation, f32 4x4. Split-K is our schedule; named upstream Cannon/MeshGEMM schedules remain unported.",
+    "partitions": 2,
+    "status": "source_ready"
+  },
+  {
+    "project": "matrix_algorithms",
+    "kernel": "cannon_equation",
+    "origins": [
+      "Cannons_algorithm/pe_program.csl"
+    ],
+    "fixture": "gemm",
+    "contract": "Matrix product equation, f32 4x4. Split-K is our schedule; named upstream Cannon/MeshGEMM schedules remain unported.",
+    "partitions": 2,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "gemv",
+    "origins": [
+      "benchmarks/gemv-collectives_2d/pe.csl",
+      "benchmarks/gemv-checkerboard-pattern/pe.csl",
+      "benchmarks/single-tile-matvec/src/pe_matvec.csl"
+    ],
+    "fixture": "gemv",
+    "contract": "Matrix-vector equation; f32 instead of WaferLLM original half profile where applicable.",
+    "partitions": 2,
+    "status": "source_ready"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "meshgemv_equation",
+    "origins": [
+      "MeshGEMV/src/meshgemv.csl"
+    ],
+    "fixture": "gemv",
+    "contract": "Matrix-vector equation; f32 instead of WaferLLM original half profile where applicable.",
+    "partitions": 2,
+    "status": "source_ready"
+  },
+  {
+    "project": "spada",
+    "kernel": "gemv",
+    "origins": [
+      "samples/spatial/blas/gemv.sptl",
+      "samples/spatial/blas/matvec.sptl"
+    ],
+    "fixture": "gemv",
+    "contract": "Matrix-vector equation; f32 instead of WaferLLM original half profile where applicable.",
+    "partitions": 2,
+    "status": "source_ready"
+  },
+  {
+    "project": "spada",
+    "kernel": "axpy",
+    "origins": [
+      "samples/spatial/blas/axpy.sptl"
+    ],
+    "fixture": "axpy",
+    "contract": "Alpha specialized to 2.5; four-element local vectors, graph map/add actors.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "residual",
+    "origins": [
+      "benchmarks/residual/residual.csl"
+    ],
+    "fixture": "residual",
+    "contract": "b-Ax residual equation; dense four-row counterpart, not original structured operator storage.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "spatial_collectives",
+    "kernel": "chain_reduce",
+    "origins": [
+      "modules/chain.csl"
+    ],
+    "fixture": "collective",
+    "contract": "Four-participant right-to-left ordered vector sum; intermediate actors separate transport from numerical stage.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "spatial_collectives",
+    "kernel": "tree_reduce",
+    "origins": [
+      "modules/tree_runtime.csl"
+    ],
+    "fixture": "collective",
+    "contract": "Four-participant balanced binary vector sum; no performance-equivalence claim.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "spada",
+    "kernel": "chain_reduce",
+    "origins": [
+      "samples/spatial/collectives/chain_reduce_1D.sptl"
+    ],
+    "fixture": "collective",
+    "contract": "Four-participant right-to-left ordered vector sum; intermediate actors separate transport from numerical stage.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "spada",
+    "kernel": "tree_reduce",
+    "origins": [
+      "samples/spatial/collectives/tree_reduce_1D.sptl"
+    ],
+    "fixture": "collective",
+    "contract": "Four-participant balanced binary vector sum; no performance-equivalence claim.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "spatial_collectives",
+    "kernel": "broadcast",
+    "origins": [
+      "modules/broadcast.csl"
+    ],
+    "fixture": "broadcast",
+    "contract": "Four receiver ports; compiler fanout tree and owned-transfer runtime. Multicast routing policy not identical to upstream.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "spada",
+    "kernel": "broadcast",
+    "origins": [
+      "samples/spatial/collectives/broadcast_1D.sptl"
+    ],
+    "fixture": "broadcast",
+    "contract": "Four receiver ports; compiler fanout tree and owned-transfer runtime. Multicast routing policy not identical to upstream.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "broadcast",
+    "origins": [
+      "benchmarks/row-col-broadcast/src/kernel.csl"
+    ],
+    "fixture": "broadcast",
+    "contract": "Four receiver ports; compiler fanout tree and owned-transfer runtime. Multicast routing policy not identical to upstream.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "spada",
+    "kernel": "allreduce",
+    "origins": [
+      "samples/spatial/collectives/allreduce_1D.sptl"
+    ],
+    "fixture": "allreduce",
+    "contract": "Balanced reduction followed by graph broadcast, four participants.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "rmsnorm",
+    "origins": [
+      "Prefill/src/prefill.csl",
+      "Decode/src/decode.csl"
+    ],
+    "fixture": "rmsnorm",
+    "contract": "Per-row RMS normalization with weight feature axis and epsilon 1e-6; f32 mathematical profile.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "softmax",
+    "origins": [
+      "Prefill/src/prefill.csl",
+      "Decode/src/decode.csl"
+    ],
+    "fixture": "softmax",
+    "contract": "Stable row softmax; no mask or model inferred; f32 math exp implementation.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "gated_silu",
+    "origins": [
+      "Prefill/src/prefill.csl",
+      "Decode/src/decode.csl"
+    ],
+    "fixture": "silu",
+    "contract": "Up times SiLU(gate), f32 stage profile; weights/projections supplied separately.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "rope",
+    "origins": [
+      "Prefill/src/prefill.csl",
+      "Decode/src/decode.csl"
+    ],
+    "fixture": "rope",
+    "contract": "Supplied rotary coefficients; intended even/odd mathematics, not erroneous original scratch/index behavior.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "wse_stencil",
+    "kernel": "25-point-stencil-small-apply0",
+    "origins": [
+      "25-point-stencil-small.mlir"
+    ],
+    "fixture": "mlir:25-point-stencil-small-apply0",
+    "contract": "Original stencil.apply scalar expression and offsets; constant integer powers folded. Surrounding distributed field and temporal loop remain unported.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "wse_stencil",
+    "kernel": "acoustic-small-apply0",
+    "origins": [
+      "acoustic-small.mlir"
+    ],
+    "fixture": "mlir:acoustic-small-apply0",
+    "contract": "Original stencil.apply scalar expression and offsets; constant integer powers folded. Surrounding distributed field and temporal loop remain unported.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "wse_stencil",
+    "kernel": "diffusion-small-apply0",
+    "origins": [
+      "diffusion-small.mlir"
+    ],
+    "fixture": "mlir:diffusion-small-apply0",
+    "contract": "Original stencil.apply scalar expression and offsets; constant integer powers folded. Surrounding distributed field and temporal loop remain unported.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "wse_stencil",
+    "kernel": "loop-kernel-small-apply0",
+    "origins": [
+      "loop-kernel-small.mlir"
+    ],
+    "fixture": "mlir:loop-kernel-small-apply0",
+    "contract": "Original stencil.apply scalar expression and offsets; constant integer powers folded. Surrounding distributed field and temporal loop remain unported.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "wse_stencil",
+    "kernel": "uvbke-small-apply0",
+    "origins": [
+      "uvbke-small.mlir"
+    ],
+    "fixture": "mlir:uvbke-small-apply0",
+    "contract": "Original stencil.apply scalar expression and offsets; constant integer powers folded. Surrounding distributed field and temporal loop remain unported.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "wse_stencil",
+    "kernel": "uvbke-small-apply1",
+    "origins": [
+      "uvbke-small.mlir"
+    ],
+    "fixture": "mlir:uvbke-small-apply1",
+    "contract": "Original stencil.apply scalar expression and offsets; constant integer powers folded. Surrounding distributed field and temporal loop remain unported.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "mc_transport",
+    "kernel": "linear_xs_lookup",
+    "origins": [
+      "csl/full_implementation/device_code.csl"
+    ],
+    "fixture": "mc_xs",
+    "contract": "calculate_xs deterministic scalar-interpolation branch, two nuclides/four gridpoints/five XS components. Search specialized to bounded scan; particle sorting, diffusion and stochastic interpolation remain pending.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "annealing",
+    "kernel": "flip_energy",
+    "origins": [
+      "src/pe_program.csl"
+    ],
+    "fixture": "flip",
+    "contract": "prepare_flip_energy plus sign correction; four independent candidate indices on unchanged binary state. Q uses source combined off-diagonal convention; packed-bit storage and RNG not ported.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "annealing",
+    "kernel": "acceptance",
+    "origins": [
+      "src/pe_program.csl"
+    ],
+    "fixture": "accept",
+    "contract": "prepare_do_flip conditional acceptance with explicit supplied uniform draws; not a replacement PRNG or full annealer.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "conjugate_gradient",
+    "origins": [
+      "benchmarks/conjugate-gradient/src/kernel_cg.csl"
+    ],
+    "fixture": "cg",
+    "contract": "CG recurrence on dense representation of a small SPD operator, maximum eight iterations, squared residual threshold 1e-12, zero initial guess. Original distributed 7-point storage and global-reduction schedule remain pending.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "fft_1d",
+    "origins": [
+      "benchmarks/fft-1d-2d/fft.csl"
+    ],
+    "fixture": "fft:1",
+    "contract": "Length four per axis, radix-2 local pencils and explicit axis traversal; unnormalized forward transform with supplied twiddles. Multi-PE transpose/routing and larger sizes remain pending.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "fft_2d",
+    "origins": [
+      "benchmarks/fft-1d-2d/fft.csl"
+    ],
+    "fixture": "fft:2",
+    "contract": "Length four per axis, radix-2 local pencils and explicit axis traversal; unnormalized forward transform with supplied twiddles. Multi-PE transpose/routing and larger sizes remain pending.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "fft_3d",
+    "origins": [
+      "benchmarks/fft-1d-2d/fft.csl",
+      "benchmarks/fft-3d/layout.csl"
+    ],
+    "fixture": "fft:3",
+    "contract": "Length four per axis, radix-2 local pencils and explicit axis traversal; unnormalized forward transform with supplied twiddles. Multi-PE transpose/routing and larger sizes remain pending.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "pcg_jacobi",
+    "origins": [
+      "benchmarks/preconditioned-conjugate-gradient/src/kernel_pcg.csl"
+    ],
+    "fixture": "cg",
+    "contract": "Source Jacobi-PCG recurrence, zero initial x, at most eight iterations, small tridiagonal specialization of structured operator. Distributed SpMV/reduction scheduling pending.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "power_method",
+    "origins": [
+      "benchmarks/power-method/src/kernel_power.csl"
+    ],
+    "fixture": "power",
+    "contract": "Eight original SpMV/norm/scale iterations, supplied initial vector; tridiagonal operator. No converged-eigenvector claim.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "bicgstab",
+    "origins": [
+      "benchmarks/bicgstab/src/kernel_bicgstab.csl"
+    ],
+    "fixture": "bicgstab",
+    "contract": "BiCGStab with explicit breakdown checks, zero initial x and at most sixteen iterations. Nonsymmetric tridiagonal specialization; original distributed communication remains pending.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "stencil_7pt_grid",
+    "origins": [
+      "benchmarks/7pt-stencil-spmv/src/kernel.csl",
+      "benchmarks/benchmark-libs/stencil_3d_7pts/wse3/pe.csl"
+    ],
+    "fixture": "stencil_grid",
+    "contract": "Source seven-point operator on a 2x2x4 grid, zero exterior values, four spatial compute actors. Device actors gather pencil neighborhoods; host supplies only the global field and coefficients. Generic graph fanout/gather replaces original streaming nearest-neighbor exchange; no temporal loop or performance equivalence claimed.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "resident_stencil_1x1x7_t3",
+    "origins": [
+      "benchmarks/7pt-stencil-spmv/src/kernel.csl",
+      "benchmarks/benchmark-libs/stencil_3d_7pts/wse3/pe.csl"
+    ],
+    "fixture": "grid:1:1:7:3",
+    "contract": "SDK seven-point operator iterated on resident pencils; zero exterior; four-neighbor on-device exchange with asynchronous full-frame DSD sends. Optional checked DSD vector arithmetic preserves multiply/add ordering; original block-overlapped DSR/fmac implementation not yet performance-matched.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "resident_stencil_2x2x32_t4",
+    "origins": [
+      "benchmarks/7pt-stencil-spmv/src/kernel.csl",
+      "benchmarks/benchmark-libs/stencil_3d_7pts/wse3/pe.csl"
+    ],
+    "fixture": "grid:2:2:32:4",
+    "contract": "SDK seven-point operator iterated on resident pencils; zero exterior; four-neighbor on-device exchange with asynchronous full-frame DSD sends. Optional checked DSD vector arithmetic preserves multiply/add ordering; original block-overlapped DSR/fmac implementation not yet performance-matched.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "resident_stencil_4x4x128_t16",
+    "origins": [
+      "benchmarks/7pt-stencil-spmv/src/kernel.csl",
+      "benchmarks/benchmark-libs/stencil_3d_7pts/wse3/pe.csl"
+    ],
+    "fixture": "grid:4:4:128:16",
+    "contract": "SDK seven-point operator iterated on resident pencils; zero exterior; four-neighbor on-device exchange with asynchronous full-frame DSD sends. Optional checked DSD vector arithmetic preserves multiply/add ordering; original block-overlapped DSR/fmac implementation not yet performance-matched.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "resident_stencil_8x8x128_t16",
+    "origins": [
+      "benchmarks/7pt-stencil-spmv/src/kernel.csl",
+      "benchmarks/benchmark-libs/stencil_3d_7pts/wse3/pe.csl"
+    ],
+    "fixture": "grid:8:8:128:16",
+    "contract": "SDK seven-point operator iterated on resident pencils; zero exterior; four-neighbor on-device exchange with asynchronous full-frame DSD sends. Optional checked DSD vector arithmetic preserves multiply/add ordering; original block-overlapped DSR/fmac implementation not yet performance-matched.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "resident_stencil_2x2x32_t4_scalar",
+    "origins": [
+      "benchmarks/7pt-stencil-spmv/src/kernel.csl",
+      "benchmarks/benchmark-libs/stencil_3d_7pts/wse3/pe.csl"
+    ],
+    "fixture": "grid:2:2:32:4",
+    "contract": "SDK seven-point operator iterated on resident pencils; zero exterior; four-neighbor on-device exchange with asynchronous full-frame DSD sends. Optional checked DSD vector arithmetic preserves multiply/add ordering; original block-overlapped DSR/fmac implementation not yet performance-matched. Scalar compute control for same-scale simulator cycle comparison; communication is identical DSD transport.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "mesh_gemv_64x64_4x4_vector",
+    "origins": [
+      "benchmarks/gemv-collectives_2d/pe.csl",
+      "benchmarks/gemv-collectives_2d/layout.csl"
+    ],
+    "fixture": "mesh_gemv:64:64",
+    "contract": "Distributed f32 GEMV: 2D blocks, top-row scatter, column broadcast, local DSD/FMA or scalar control, row reduction, right-column gather. Explicit relaxed FP; repeated calls reset accumulation. SDK collectives_2d; no bias term.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "mesh_gemv_64x64_4x4_scalar",
+    "origins": [
+      "benchmarks/gemv-collectives_2d/pe.csl",
+      "benchmarks/gemv-collectives_2d/layout.csl"
+    ],
+    "fixture": "mesh_gemv:64:64",
+    "contract": "Distributed f32 GEMV: 2D blocks, top-row scatter, column broadcast, local DSD/FMA or scalar control, row reduction, right-column gather. Explicit relaxed FP; repeated calls reset accumulation. SDK collectives_2d; no bias term.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "mesh_gemv_256x256_8x8_vector",
+    "origins": [
+      "benchmarks/gemv-collectives_2d/pe.csl",
+      "benchmarks/gemv-collectives_2d/layout.csl"
+    ],
+    "fixture": "mesh_gemv:256:256",
+    "contract": "Distributed f32 GEMV: 2D blocks, top-row scatter, column broadcast, local DSD/FMA or scalar control, row reduction, right-column gather. Explicit relaxed FP; repeated calls reset accumulation. SDK collectives_2d; no bias term.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "mesh_gemm_64x64x64_4x4_vector",
+    "origins": [
+      "benchmarks/gemm-collectives_2d/pe.csl",
+      "benchmarks/gemm-collectives_2d/layout.csl"
+    ],
+    "fixture": "mesh_gemm:64:64:64",
+    "contract": "Distributed f32 SUMMA: square PE mesh, paired orthogonal broadcasts, increasing-K resident C accumulation; repeated external epochs reset state. HLS explicit relaxed floating policy, per-round audit. No alpha/beta, transpose or uneven tail support.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "mesh_gemm_64x64x64_4x4_scalar",
+    "origins": [
+      "benchmarks/gemm-collectives_2d/pe.csl",
+      "benchmarks/gemm-collectives_2d/layout.csl"
+    ],
+    "fixture": "mesh_gemm:64:64:64",
+    "contract": "Distributed f32 SUMMA: square PE mesh, paired orthogonal broadcasts, increasing-K resident C accumulation; repeated external epochs reset state. HLS explicit relaxed floating policy, per-round audit. No alpha/beta, transpose or uneven tail support.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "mesh_gemm_128x256x128_8x8_vector",
+    "origins": [
+      "benchmarks/gemm-collectives_2d/pe.csl",
+      "benchmarks/gemm-collectives_2d/layout.csl"
+    ],
+    "fixture": "mesh_gemm:128:256:128",
+    "contract": "Distributed f32 SUMMA: square PE mesh, paired orthogonal broadcasts, increasing-K resident C accumulation; repeated external epochs reset state. HLS explicit relaxed floating policy, per-round audit. No alpha/beta, transpose or uneven tail support.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "mesh_cholesky_32x32_4x4",
+    "origins": [
+      "benchmarks/cholesky/pe.csl",
+      "benchmarks/cholesky/layout.csl",
+      "benchmarks/cholesky/launch.csl"
+    ],
+    "fixture": "mesh_cholesky:32",
+    "contract": "Lower SPD right-looking distributed Cholesky; native SDK DSD rank-1 updates, row switches and column multicast. Same runtime prepare barrier resets switches and DSDs. Fixed factor and LLT residual checks. No pivoting or ill-conditioned accuracy guarantee.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "mesh_cholesky_128x128_8x8",
+    "origins": [
+      "benchmarks/cholesky/pe.csl",
+      "benchmarks/cholesky/layout.csl",
+      "benchmarks/cholesky/launch.csl"
+    ],
+    "fixture": "mesh_cholesky:128",
+    "contract": "Lower SPD right-looking distributed Cholesky; native SDK DSD rank-1 updates, row switches and column multicast. Same runtime prepare barrier resets switches and DSDs. Fixed factor and LLT residual checks. No pivoting or ill-conditioned accuracy guarantee.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "matrix_algorithms",
+    "kernel": "mesh_lu_32x32_4x4",
+    "origins": [
+      "lu_factorization/many_elements_per_pe/pe_program.csl",
+      "lu_factorization/many_elements_per_pe/layout.csl"
+    ],
+    "fixture": "mesh_lu:32",
+    "contract": "Blocked distributed no-pivot LU with packed multipliers/U; requires strictly row diagonally dominant finite input. Original prefix elimination, division/signal data tasks, SDK2.10.1 single-RX route migration and explicit warm reset. No hidden diagonal adjustment.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "matrix_algorithms",
+    "kernel": "mesh_lu_128x128_8x8",
+    "origins": [
+      "lu_factorization/many_elements_per_pe/pe_program.csl",
+      "lu_factorization/many_elements_per_pe/layout.csl"
+    ],
+    "fixture": "mesh_lu:128",
+    "contract": "Blocked distributed no-pivot LU with packed multipliers/U; requires strictly row diagonally dominant finite input. Original prefix elimination, division/signal data tasks, SDK2.10.1 single-RX route migration and explicit warm reset. No hidden diagonal adjustment.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "matrix_algorithms",
+    "kernel": "mesh_qr_32x32_4x4",
+    "origins": [
+      "QR_factorization/many_elements_per_pe/pe_program.csl",
+      "QR_factorization/many_elements_per_pe/layout.csl"
+    ],
+    "fixture": "mesh_qr:32:32",
+    "contract": "Blocked neighboring-row Givens QR with east coefficient broadcast; R-only upper trapezoid with unspecified row signs. Full column rank, cond2<=10000 and native pivot margin required before SDK. Original directed SDK2.10.1 migration plus warm reset and sampled rotation witnesses. Q is not a device output.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "matrix_algorithms",
+    "kernel": "mesh_qr_128x64_8x4",
+    "origins": [
+      "QR_factorization/many_elements_per_pe/pe_program.csl",
+      "QR_factorization/many_elements_per_pe/layout.csl"
+    ],
+    "fixture": "mesh_qr:128:64",
+    "contract": "Blocked neighboring-row Givens QR with east coefficient broadcast; R-only upper trapezoid with unspecified row signs. Full column rank, cond2<=10000 and native pivot margin required before SDK. Original directed SDK2.10.1 migration plus warm reset and sampled rotation witnesses. Q is not a device output.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "matrix_algorithms",
+    "kernel": "mesh_qr_128x128_8x8",
+    "origins": [
+      "QR_factorization/many_elements_per_pe/pe_program.csl",
+      "QR_factorization/many_elements_per_pe/layout.csl"
+    ],
+    "fixture": "mesh_qr:128:128",
+    "contract": "Blocked neighboring-row Givens QR with east coefficient broadcast; R-only upper trapezoid with unspecified row signs. Full column rank, cond2<=10000 and native pivot margin required before SDK. Original directed SDK2.10.1 migration plus warm reset and sampled rotation witnesses. Q is not a device output.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "mesh_spmv_512x512_4x4",
+    "origins": [
+      "benchmarks/spmv-hypersparse/src/layout.csl",
+      "benchmarks/spmv-hypersparse/src/kernel.csl",
+      "benchmarks/spmv-hypersparse/src/hypersparse_spmv/pe.csl",
+      "benchmarks/spmv-hypersparse/src/hypersparse_spmv/layout.csl",
+      "benchmarks/spmv-hypersparse/src/allreduce2R1E/pe.csl",
+      "benchmarks/spmv-hypersparse/src/allreduce2R1E/layout.csl"
+    ],
+    "fixture": "mesh_spmv:512:512:4096",
+    "contract": "Canonical CSC f32 SpMV; typed u32 host indices checked to u16 local storage. SDK north/south vector trains and east/west sparse reduction. Warm changing structure/values, empty partitions, explicit zeros, original-entry fsum and bounded pre-reduction witnesses.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "mesh_spmv_4096x4096_8x8",
+    "origins": [
+      "benchmarks/spmv-hypersparse/src/layout.csl",
+      "benchmarks/spmv-hypersparse/src/kernel.csl",
+      "benchmarks/spmv-hypersparse/src/hypersparse_spmv/pe.csl",
+      "benchmarks/spmv-hypersparse/src/hypersparse_spmv/layout.csl",
+      "benchmarks/spmv-hypersparse/src/allreduce2R1E/pe.csl",
+      "benchmarks/spmv-hypersparse/src/allreduce2R1E/layout.csl"
+    ],
+    "fixture": "mesh_spmv:4096:4096:32768",
+    "contract": "Canonical CSC f32 SpMV; typed u32 host indices checked to u16 local storage. SDK north/south vector trains and east/west sparse reduction. Warm changing structure/values, empty partitions, explicit zeros, original-entry fsum and bounded pre-reduction witnesses.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "mesh_dot_8191_4x4",
+    "origins": [
+      "benchmarks/conjugate-gradient/src/blas.csl",
+      "benchmarks/conjugate-gradient/src/kernel_cg.csl"
+    ],
+    "fixture": "mesh_reduction:dot:8191",
+    "contract": "dot over 8191 original f32 elements with contiguous 4x4 distribution, zero tail padding, SDK map local arithmetic and replicated SDK row/column scalar collective; standalone reduction, not full CG.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "mesh_dot_131071_8x8",
+    "origins": [
+      "benchmarks/conjugate-gradient/src/blas.csl",
+      "benchmarks/conjugate-gradient/src/kernel_cg.csl"
+    ],
+    "fixture": "mesh_reduction:dot:131071",
+    "contract": "dot over 131071 original f32 elements with contiguous 8x8 distribution, zero tail padding, SDK map local arithmetic and replicated SDK row/column scalar collective; standalone reduction, not full CG.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "mesh_nrm2_8191_4x4",
+    "origins": [
+      "benchmarks/conjugate-gradient/src/blas.csl",
+      "benchmarks/conjugate-gradient/src/kernel_cg.csl"
+    ],
+    "fixture": "mesh_reduction:nrm2:8191",
+    "contract": "nrm2 over 8191 original f32 elements with contiguous 4x4 distribution, zero tail padding, SDK map local arithmetic and replicated SDK row/column scalar collective; standalone reduction, not full CG.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "mesh_nrm2_131071_8x8",
+    "origins": [
+      "benchmarks/conjugate-gradient/src/blas.csl",
+      "benchmarks/conjugate-gradient/src/kernel_cg.csl"
+    ],
+    "fixture": "mesh_reduction:nrm2:131071",
+    "contract": "nrm2 over 131071 original f32 elements with contiguous 8x8 distribution, zero tail padding, SDK map local arithmetic and replicated SDK row/column scalar collective; standalone reduction, not full CG.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "mesh_nrm2_17_8x8",
+    "origins": [
+      "benchmarks/conjugate-gradient/src/blas.csl",
+      "benchmarks/conjugate-gradient/src/kernel_cg.csl"
+    ],
+    "fixture": "mesh_reduction:nrm2:17",
+    "contract": "nrm2 over 17 original f32 elements with contiguous 8x8 distribution, zero tail padding, SDK map local arithmetic and replicated SDK row/column scalar collective; standalone reduction, not full CG.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "mesh_cg_512_4x4",
+    "origins": [
+      "benchmarks/conjugate-gradient/src/kernel_cg.csl",
+      "benchmarks/conjugate-gradient/src/blas.csl",
+      "benchmarks/spmv-hypersparse/src/hypersparse_spmv/pe.csl"
+    ],
+    "contract": "Resident f32 CG over canonical CSC512/4608entries on4x4 PEs; SDK train SpMV, SDK row/column collectives, PE transpose, DSD/FMA recurrence, supplied initial guess, u32 iteration budget, stable true residual, explicit termination reasons. General sparse operator; not original SDK seven-point schedule parity.",
+    "status": "source_ready",
+    "remaining": "Larger resource-feasible shapes, broad nonfinite failure trajectories and original seven-point solver schedule/performance parity. Static footprint is not runtime stack evidence.",
+    "fixture": "mesh_cg:512",
+    "partitions": 1,
+    "validation": "Eight SDK2.10.1 warm calls and independent supplemental corrected audit; original audit underflow-oracle failure retained. All reason0 cases meet strict requested residual threshold. Two-case diagnostic-store control ~0.83\u20130.97% max-local overhead; no hardware/global latency or original full CG performance parity claim."
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "mesh_pcg_512_4x4",
+    "origins": [
+      "benchmarks/preconditioned-conjugate-gradient/src/kernel_pcg.csl",
+      "benchmarks/spmv-hypersparse/src/hypersparse_spmv/pe.csl"
+    ],
+    "status": "source_ready",
+    "contract": "Resident Jacobi-PCG512/4608 stored entries on4x4 PEs; canonical CSC positive diagonal>=2^-16; device inverse and DSD preconditioner, train SpMV, row/column reductions, unweighted true residual. General sparse recurrence, not original seven-point schedule parity.",
+    "fixture": "mesh_pcg:512",
+    "partitions": 1,
+    "validation": "Nine SDK2.10.1 warm calls pass full numerical/trajectory/protocol audit. Matched diagonal control: PCG1 vs CG12 device updates,4.1524x maximum-local interval ratio on that input only; native CG13 and fixed solution cross-screen differ but both original residuals satisfy strict threshold.",
+    "remaining": "Larger resident configurations, broader nonfinite breakdown domain, original SDK seven-point schedule and hardware/global timing parity; static linked memory is not stack high-water."
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "mesh_bicgstab_512_4x4",
+    "origins": [
+      "benchmarks/bicgstab/src/kernel_bicgstab.csl",
+      "benchmarks/spmv-hypersparse/src/hypersparse_spmv/pe.csl"
+    ],
+    "status": "source_ready",
+    "contract": "Resident real unpreconditioned BiCGStab512/4608stored CSC entries,4x4 PEs,32maximum updates. SDK train SpMV, row/column scalar reductions, transpose and DSD/FMA; early-s completion, zero-operator/zero-omega guards preserve last completed solution. General sparse operator, not original seven-point schedule.",
+    "fixture": "mesh_bicgstab:512",
+    "partitions": 1,
+    "validation": "Ten SDK2.10.1 warm calls pass original-system residual, exported trajectory, branch-specific counts and resource audit; all reason0 strict residual checks pass. Two full selected-store controls show0.48\u20130.58% maximum-local overhead for the removed stores only.",
+    "remaining": "Larger shapes, broader numerical breakdown cases, paired reductions and native-seven-point/hardware/global performance parity.47584static SRAM bytes are not stack high-water."
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "mesh_power_512_4x4",
+    "origins": [
+      "benchmarks/power-method/src/kernel_power.csl",
+      "benchmarks/spmv-hypersparse/src/hypersparse_spmv/pe.csl"
+    ],
+    "status": "source_ready",
+    "contract": "SDK-style fixed-step normalized power iteration on general CSC512/4608stored entries/4x4 PEs,32step capacity. Resident train SpMV, transpose, stable global norm and DSD scaling. Zero steps preserves initial vector; zero norm preserves last completed iterate. Completion is not eigenpair convergence.",
+    "fixture": "mesh_power:512",
+    "partitions": 1,
+    "validation": "Eight native/SDK2.10.1 warm calls pass original-CSC step replay, stable normalization and protocol audit.14 coherent mutations rejected. Same-schedule scalar normalization control ratios1.00916 and1.00908, maximum-local simulator intervals only.",
+    "remaining": "Original seven-point schedule, larger extents, overflow trajectories, hardware/global performance.43632static bytes is not stack high-water."
+  },
+  {
+    "project": "matrix_algorithms",
+    "kernel": "mesh_cannon_64_4x4_vector",
+    "origins": [
+      "Cannons_algorithm/layout.csl",
+      "Cannons_algorithm/pe_program.csl"
+    ],
+    "fixture": "mesh_gemm:64:64:64",
+    "partitions": 1,
+    "status": "source_ready",
+    "contract": "Source-distinct Cannon: host skew, cyclic six-color parity exchange, rotating temporary tile, stable host input handles, resident local contraction with explicit relaxed f32 policy.",
+    "validation": "Four SDK2.10.1 warm calls pass full cyclic-prefix, exact block-witness, original-product and protocol audits. Same-schedule vector/scalar control and original-CSL migration baselines retained.",
+    "remaining": "Odd or incomplete meshes, rectangular products, asynchronous overlap, lean instrumentation and real-hardware/global performance. Static SRAM is not stack high-water."
+  },
+  {
+    "project": "matrix_algorithms",
+    "kernel": "mesh_cannon_64_4x4_scalar",
+    "origins": [
+      "Cannons_algorithm/layout.csl",
+      "Cannons_algorithm/pe_program.csl"
+    ],
+    "fixture": "mesh_gemm:64:64:64",
+    "partitions": 1,
+    "status": "source_ready",
+    "contract": "Source-distinct Cannon: host skew, cyclic six-color parity exchange, rotating temporary tile, stable host input handles, resident local contraction with explicit relaxed f32 policy.",
+    "validation": "Four SDK2.10.1 warm calls pass full cyclic-prefix, exact block-witness, original-product and protocol audits. Same-schedule vector/scalar control and original-CSL migration baselines retained.",
+    "remaining": "Odd or incomplete meshes, rectangular products, asynchronous overlap, lean instrumentation and real-hardware/global performance. Static SRAM is not stack high-water."
+  },
+  {
+    "project": "matrix_algorithms",
+    "kernel": "mesh_cannon_128_8x8_vector",
+    "origins": [
+      "Cannons_algorithm/layout.csl",
+      "Cannons_algorithm/pe_program.csl"
+    ],
+    "fixture": "mesh_gemm:128:128:128",
+    "partitions": 1,
+    "status": "source_ready",
+    "contract": "Source-distinct Cannon: host skew, cyclic six-color parity exchange, rotating temporary tile, stable host input handles, resident local contraction with explicit relaxed f32 policy.",
+    "validation": "Four SDK2.10.1 warm calls pass full cyclic-prefix, exact block-witness, original-product and protocol audits. Same-schedule vector/scalar control and original-CSL migration baselines retained.",
+    "remaining": "Odd or incomplete meshes, rectangular products, asynchronous overlap, lean instrumentation and real-hardware/global performance. Static SRAM is not stack high-water."
+  },
+  {
+    "project": "waferllm",
+    "kernel": "mesh_twohop_64_4x4_f16",
+    "origins": [
+      "MeshGEMM/src/meshgemm.csl",
+      "MeshGEMM/src/comm_lib/comm_pe.csl",
+      "MeshGEMM/src/layout.csl"
+    ],
+    "fixture": "half_gemm:64:64:64",
+    "status": "source_ready",
+    "partitions": 1,
+    "contract": "64x64 binary16 fused matrix contraction on 4x4 PEs; source two-hop cycle, bidirectional device alignment, double-buffer DSR overlap. Six changed warm SDK calls; exact scheduled prefix/final bits and protocol witnesses; relaxed native K order may round differently. Simulator source comparison, not hardware or full LLM inference."
+  },
+  {
+    "project": "waferllm",
+    "kernel": "mesh_twohop_128_4x4_f16",
+    "origins": [
+      "MeshGEMM/src/meshgemm.csl",
+      "MeshGEMM/src/comm_lib/comm_pe.csl",
+      "MeshGEMM/src/layout.csl"
+    ],
+    "fixture": "half_gemm:128:128:128",
+    "status": "source_ready",
+    "partitions": 1,
+    "contract": "128x128 binary16 fused matrix contraction on 4x4 PEs; source two-hop cycle, bidirectional device alignment, double-buffer DSR overlap. Six changed warm SDK calls; exact scheduled prefix/final bits and protocol witnesses; relaxed native K order may round differently. Simulator source comparison, not hardware or full LLM inference."
+  },
+  {
+    "project": "waferllm",
+    "kernel": "mesh_twohop_256_8x8_f16",
+    "origins": [
+      "MeshGEMM/src/meshgemm.csl",
+      "MeshGEMM/src/comm_lib/comm_pe.csl",
+      "MeshGEMM/src/layout.csl"
+    ],
+    "fixture": "half_gemm:256:256:256",
+    "status": "source_ready",
+    "partitions": 1,
+    "contract": "256x256 binary16 fused contraction on8x8 PEs; original two-hop double-buffer/DSR schedule. Six SDK warm calls and3158016 internal half observations pass exact scheduled-bit/ownership/protocol audit; two source-native controls are bit-identical with ~3.25% sampled max-local simulator overhead. Relaxed native K order; not full LLM inference or hardware performance."
+  },
+  {
+    "project": "waferllm",
+    "kernel": "mesh_grouped_gemv_128_4x4_g2_f16",
+    "origins": [
+      "MeshGEMV/src/meshgemv.csl",
+      "MeshGEMV/src/comm_lib/comm_pe.csl",
+      "MeshGEMV/src/layout.csl"
+    ],
+    "fixture": "grouped_half:128:128:4:2",
+    "partitions": 1,
+    "status": "source_ready",
+    "contract": "128x128 half row-vector contraction on4x4 PEs with2groups; original local DSR FMA, two-phase half reduction and all-row replicas. Eight SDK calls in sampled/counter modes, exact active phases/finals, mutations and source-native control. Max-local overhead16.0% sampled /1.76% counters; relaxed half arithmetic, not f32 accuracy or hardware."
+  },
+  {
+    "project": "waferllm",
+    "kernel": "mesh_grouped_gemv_512_8x8_g2_f16",
+    "origins": [
+      "MeshGEMV/src/meshgemv.csl",
+      "MeshGEMV/src/comm_lib/comm_pe.csl",
+      "MeshGEMV/src/layout.csl"
+    ],
+    "fixture": "grouped_half:512:512:8:2",
+    "partitions": 1,
+    "status": "source_ready",
+    "contract": "512x512 half row-vector contraction on8x8 PEs with2groups; source DSR FMA/two-phase reduction/all-row replication. Eight SDK calls, exact active local/root/final bits and independent source-order review; two native controls bit-identical, ~6.79% sampled max-local simulator overhead. Relaxed half arithmetic; not hardware or full inference."
+  },
+  {
+    "project": "waferllm",
+    "kernel": "mesh_grouped_gemv_512_8x8_g4_f16",
+    "origins": [
+      "MeshGEMV/src/meshgemv.csl",
+      "MeshGEMV/src/comm_lib/comm_pe.csl",
+      "MeshGEMV/src/layout.csl"
+    ],
+    "fixture": "grouped_half:512:512:8:4",
+    "partitions": 1,
+    "status": "source_ready",
+    "contract": "512x512 half row-vector contraction on8x8 PEs with4groups; source DSR FMA/two-phase reduction/all-row replication. Eight SDK calls, exact active local/root/final bits and independent source-order review; two native controls bit-identical, ~6.76% sampled max-local simulator overhead. Relaxed half arithmetic; not hardware or full inference."
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "fft3d_16_4x4_forward",
+    "origins": [
+      "benchmarks/fft-3d/layout.csl"
+    ],
+    "fixture": "distributed_fft:16:forward:backward",
+    "contract": "SDK-native C2C 16\u00b3 forward/backward on4x4PEs; 6warm SDK calls, input_layout ownership, 7stages. Native stdout/directDFT and full device normwise/peak-scaled checks; per-component accuracy not implied. Source controls cover forward/backward-norm at16/32/64; other modes have measured local intervals, not individual source-overhead controls. Not full wsFFT/SlideFFT reproduction or hardware performance.",
+    "partitions": 1,
+    "status": "source_ready"
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "fft3d_16_4x4_inverse_backward",
+    "origins": [
+      "benchmarks/fft-3d/layout.csl"
+    ],
+    "fixture": "distributed_fft:16:inverse:backward",
+    "partitions": 1,
+    "status": "source_ready",
+    "contract": "SDK-native C2C 16\u00b3 inverse/backward on4x4PEs; 6warm SDK calls, input_layout ownership, 7stages. Native stdout/directDFT and full device normwise/peak-scaled checks; per-component accuracy not implied. Source controls cover forward/backward-norm at16/32/64; other modes have measured local intervals, not individual source-overhead controls. Not full wsFFT/SlideFFT reproduction or hardware performance."
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "fft3d_16_4x4_forward_ortho",
+    "origins": [
+      "benchmarks/fft-3d/layout.csl"
+    ],
+    "fixture": "distributed_fft:16:forward:ortho",
+    "partitions": 1,
+    "status": "source_ready",
+    "contract": "SDK-native C2C 16\u00b3 forward/ortho on4x4PEs; 6warm SDK calls, input_layout ownership, 7stages. Native stdout/directDFT and full device normwise/peak-scaled checks; per-component accuracy not implied. Source controls cover forward/backward-norm at16/32/64; other modes have measured local intervals, not individual source-overhead controls. Not full wsFFT/SlideFFT reproduction or hardware performance."
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "fft3d_16_4x4_inverse_ortho",
+    "origins": [
+      "benchmarks/fft-3d/layout.csl"
+    ],
+    "fixture": "distributed_fft:16:inverse:ortho",
+    "partitions": 1,
+    "status": "source_ready",
+    "contract": "SDK-native C2C 16\u00b3 inverse/ortho on4x4PEs; 6warm SDK calls, input_layout ownership, 7stages. Native stdout/directDFT and full device normwise/peak-scaled checks; per-component accuracy not implied. Source controls cover forward/backward-norm at16/32/64; other modes have measured local intervals, not individual source-overhead controls. Not full wsFFT/SlideFFT reproduction or hardware performance."
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "fft3d_16_4x4_forward_forward",
+    "origins": [
+      "benchmarks/fft-3d/layout.csl"
+    ],
+    "fixture": "distributed_fft:16:forward:forward",
+    "partitions": 1,
+    "status": "source_ready",
+    "contract": "SDK-native C2C 16\u00b3 forward/forward on4x4PEs; 6warm SDK calls, input_layout ownership, 7stages. Native stdout/directDFT and full device normwise/peak-scaled checks; per-component accuracy not implied. Source controls cover forward/backward-norm at16/32/64; other modes have measured local intervals, not individual source-overhead controls. Not full wsFFT/SlideFFT reproduction or hardware performance."
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "fft3d_16_4x4_inverse_forward",
+    "origins": [
+      "benchmarks/fft-3d/layout.csl"
+    ],
+    "fixture": "distributed_fft:16:inverse:forward",
+    "partitions": 1,
+    "status": "source_ready",
+    "contract": "SDK-native C2C 16\u00b3 inverse/forward on4x4PEs; 6warm SDK calls, input_layout ownership, 7stages. Native stdout/directDFT and full device normwise/peak-scaled checks; per-component accuracy not implied. Source controls cover forward/backward-norm at16/32/64; other modes have measured local intervals, not individual source-overhead controls. Not full wsFFT/SlideFFT reproduction or hardware performance."
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "fft3d_32_8x8_forward_backward",
+    "origins": [
+      "benchmarks/fft-3d/layout.csl"
+    ],
+    "fixture": "distributed_fft:32:forward:backward",
+    "partitions": 1,
+    "status": "source_ready",
+    "contract": "SDK-native C2C 32\u00b3 forward/backward on8x8PEs; 6warm SDK calls, input_layout ownership, 7stages. Native stdout/directDFT and full device normwise/peak-scaled checks; per-component accuracy not implied. Source controls cover forward/backward-norm at16/32/64; other modes have measured local intervals, not individual source-overhead controls. Not full wsFFT/SlideFFT reproduction or hardware performance."
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "fft3d_32_8x8_forward_backward_transposed",
+    "origins": [
+      "benchmarks/fft-3d/layout.csl"
+    ],
+    "fixture": "distributed_fft:32:forward:backward",
+    "partitions": 1,
+    "status": "source_ready",
+    "contract": "SDK-native C2C 32\u00b3 forward/backward on8x8PEs; 6warm SDK calls, transposed_pencils ownership, 5stages. Native stdout/directDFT and full device normwise/peak-scaled checks; per-component accuracy not implied. Source controls cover forward/backward-norm at16/32/64; other modes have measured local intervals, not individual source-overhead controls. Not full wsFFT/SlideFFT reproduction or hardware performance."
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "fft3d_32_8x8_inverse_backward",
+    "origins": [
+      "benchmarks/fft-3d/layout.csl"
+    ],
+    "fixture": "distributed_fft:32:inverse:backward",
+    "partitions": 1,
+    "status": "source_ready",
+    "contract": "SDK-native C2C 32\u00b3 inverse/backward on8x8PEs; 6warm SDK calls, input_layout ownership, 7stages. Native stdout/directDFT and full device normwise/peak-scaled checks; per-component accuracy not implied. Source controls cover forward/backward-norm at16/32/64; other modes have measured local intervals, not individual source-overhead controls. Not full wsFFT/SlideFFT reproduction or hardware performance."
+  },
+  {
+    "project": "sdk_examples",
+    "kernel": "fft3d_64_16x16_forward_backward",
+    "origins": [
+      "benchmarks/fft-3d/layout.csl"
+    ],
+    "fixture": "distributed_fft:64:forward:backward",
+    "partitions": 1,
+    "status": "source_ready",
+    "contract": "SDK-native C2C 64\u00b3 forward/backward on16x16PEs; 4warm SDK calls, input_layout ownership, 7stages. Native stdout/directDFT and full device normwise/peak-scaled checks; per-component accuracy not implied. Source controls cover forward/backward-norm at16/32/64; other modes have measured local intervals, not individual source-overhead controls. Not full wsFFT/SlideFFT reproduction or hardware performance."
+  },
+  {
+    "project": "waferllm",
+    "kernel": "rmsnorm_64x128_8x8",
+    "origins": [
+      "Prefill/src/prefill.csl rmsnorm_x",
+      "Prefill/src/comm_lib/comm_pe.csl mv_allreduce_add_x"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "contract": "Standard row RMSNorm 64x128 on8x8PEs, six warm SDK calls. Source-inspired bidirectional chain, explicit half accumulation and SDK math. Original feature-indexed scale and weight ownership corrected. Native stdout and device standard normwise checks, exact target half stages/results. Source-overhead control only64x128; larger shapes measured local intervals, no hardware/full-inference claim.",
+    "status": "source_ready",
+    "partitions": 1,
+    "fixture": "distributed_rms:64:128"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "rmsnorm_128x1024_8x8",
+    "origins": [
+      "Prefill/src/prefill.csl rmsnorm_x",
+      "Prefill/src/comm_lib/comm_pe.csl mv_allreduce_add_x"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "contract": "Standard row RMSNorm 128x1024 on8x8PEs, six warm SDK calls. Source-inspired bidirectional chain, explicit half accumulation and SDK math. Original feature-indexed scale and weight ownership corrected. Native stdout and device standard normwise checks, exact target half stages/results. Source-overhead control only64x128; larger shapes measured local intervals, no hardware/full-inference claim.",
+    "status": "source_ready",
+    "partitions": 1,
+    "fixture": "distributed_rms:128:1024"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "rmsnorm_128x2048_8x16",
+    "origins": [
+      "Prefill/src/prefill.csl rmsnorm_x",
+      "Prefill/src/comm_lib/comm_pe.csl mv_allreduce_add_x"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "contract": "Standard row RMSNorm 128x2048 on8x16PEs, six warm SDK calls. Source-inspired bidirectional chain, explicit half accumulation and SDK math. Original feature-indexed scale and weight ownership corrected. Native stdout and device standard normwise checks, exact target half stages/results. Source-overhead control only64x128; larger shapes measured local intervals, no hardware/full-inference claim.",
+    "status": "source_ready",
+    "partitions": 1,
+    "fixture": "distributed_rms:128:2048"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "softmax_64x128_8x8",
+    "origins": [
+      "Prefill/src/prefill.csl softmax_score",
+      "Prefill/src/comm_lib/comm_pe.csl"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "contract": "Stable scaled row softmax 64x128 on 8x8 PEs, six warm SDK calls. Source-inspired max/sum chains with finite negative maximum initialization, explicit half accumulation, SDK exp, and scalar elementwise lowering. Native stdout and device independent standard-math checks; exact target half stages/results. Matched scalar/map simulator interval controls; original-source overhead control only 64x64. No hardware or full-inference claim.",
+    "status": "source_ready",
+    "partitions": 1,
+    "fixture": "distributed_softmax:64:128"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "softmax_64x128_8x8_map",
+    "origins": [
+      "Prefill/src/prefill.csl softmax_score",
+      "Prefill/src/comm_lib/comm_pe.csl"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "contract": "Stable scaled row softmax 64x128 on 8x8 PEs, six warm SDK calls. Source-inspired max/sum chains with finite negative maximum initialization, explicit half accumulation, SDK exp, and map elementwise lowering. Native stdout and device independent standard-math checks; exact target half stages/results. Matched scalar/map simulator interval controls; original-source overhead control only 64x64. No hardware or full-inference claim.",
+    "status": "source_ready",
+    "partitions": 1,
+    "fixture": "distributed_softmax:64:128"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "softmax_128x1024_8x8",
+    "origins": [
+      "Prefill/src/prefill.csl softmax_score",
+      "Prefill/src/comm_lib/comm_pe.csl"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "contract": "Stable scaled row softmax 128x1024 on 8x8 PEs, six warm SDK calls. Source-inspired max/sum chains with finite negative maximum initialization, explicit half accumulation, SDK exp, and scalar elementwise lowering. Native stdout and device independent standard-math checks; exact target half stages/results. Matched scalar/map simulator interval controls; original-source overhead control only 64x64. No hardware or full-inference claim.",
+    "status": "source_ready",
+    "partitions": 1,
+    "fixture": "distributed_softmax:128:1024"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "softmax_128x1024_8x8_map",
+    "origins": [
+      "Prefill/src/prefill.csl softmax_score",
+      "Prefill/src/comm_lib/comm_pe.csl"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "contract": "Stable scaled row softmax 128x1024 on 8x8 PEs, six warm SDK calls. Source-inspired max/sum chains with finite negative maximum initialization, explicit half accumulation, SDK exp, and map elementwise lowering. Native stdout and device independent standard-math checks; exact target half stages/results. Matched scalar/map simulator interval controls; original-source overhead control only 64x64. No hardware or full-inference claim.",
+    "status": "source_ready",
+    "partitions": 1,
+    "fixture": "distributed_softmax:128:1024"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "normalized_matmul_64x128_8x8",
+    "origins": [
+      "Prefill/src/prefill.csl rmsnorm_x/xq_matmul/matmul_compute",
+      "Prefill/src/comm_lib/comm_pe.csl"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "contract": "Resident row RMSNorm -> projection 64x128 on 8x8 PEs; explicit half accumulation, SDK sqrt, forward two-hop communication and local DSR FMA. Six warm SDK calls, exact normalized tensor/contraction prefixes/results, actual C++ stdout and independent standard mathematical composition checks. Source-compatible shared resources and destructive private alignment, no intermediate host transfer. Matched original-source comparison; counter overhead measured separately at64x128/8x8. Bounded two-operation subgraph, not full QKV/inference or hardware performance.",
+    "status": "source_ready",
+    "partitions": 1,
+    "fixture": "normalized_matmul:64:128"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "normalized_matmul_128x256_8x8",
+    "origins": [
+      "Prefill/src/prefill.csl rmsnorm_x/xq_matmul/matmul_compute",
+      "Prefill/src/comm_lib/comm_pe.csl"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "contract": "Resident row RMSNorm -> projection 128x256 on 8x8 PEs; explicit half accumulation, SDK sqrt, forward two-hop communication and local DSR FMA. Six warm SDK calls, exact normalized tensor/contraction prefixes/results, actual C++ stdout and independent standard mathematical composition checks. Source-compatible shared resources and destructive private alignment, no intermediate host transfer. Matched original-source comparison; counter overhead measured separately at64x128/8x8. Bounded two-operation subgraph, not full QKV/inference or hardware performance.",
+    "status": "source_ready",
+    "partitions": 1,
+    "fixture": "normalized_matmul:128:256"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "normalized_matmul_64x128_4x4",
+    "origins": [
+      "Prefill/src/prefill.csl rmsnorm_x/xq_matmul/matmul_compute",
+      "Prefill/src/comm_lib/comm_pe.csl"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "contract": "Resident row RMSNorm -> projection 64x128 on 4x4 PEs; explicit half accumulation, SDK sqrt, forward two-hop communication and local DSR FMA. Six warm SDK calls, exact normalized tensor/contraction prefixes/results, actual C++ stdout and independent standard mathematical composition checks. Source-compatible shared resources and destructive private alignment, no intermediate host transfer. Matched original-source comparison; counter overhead measured separately at64x128/8x8. Bounded two-operation subgraph, not full QKV/inference or hardware performance.",
+    "status": "source_ready",
+    "partitions": 1,
+    "fixture": "normalized_matmul:64:128"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "normalized_matmul_128x512_8x8",
+    "origins": [
+      "Prefill/src/prefill.csl rmsnorm_x/xq_matmul/matmul_compute",
+      "Prefill/src/comm_lib/comm_pe.csl"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "contract": "Resident RMSNorm -> projection 128x512 on 8x8 PEs, six warm SDK calls in counters mode. Exact final target-half bits and completion checks plus actual native stdout/independent standard composition. No internal tensor/prefix observation at this larger size. Matched counter source control removes unrelated exports to allow compiler dead-storage elimination, preserving active numerical/communication code and the explicit RMS scale repair. Input magnitude <=1; no intermediate host transfer, no full inference/hardware claim.",
+    "status": "source_ready",
+    "partitions": 1,
+    "instrumentation": "counters",
+    "fixture": "normalized_matmul:128:512"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "swiglu_64x256_8x8",
+    "origins": [
+      "Prefill/src/prefill.csl silu_kernel/z3_comp"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "contract": "Gated SiLU 64x256 on 8x8 PEs; six SDK calls, exact activation/product half bits, immutable inputs, phase/epoch audit and independent actual native/device standard composition. Finite magnitude <=8; component error <=.004*abs(reference)+2^-24*(1+abs(up)), not uniform relative/f32 accuracy. Isolated original source control at64x256; no full MLP/inference or hardware claim.",
+    "status": "source_ready",
+    "partitions": 1,
+    "fixture": "gated_silu:64:256"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "swiglu_65x129_5x3",
+    "origins": [
+      "Prefill/src/prefill.csl silu_kernel/z3_comp"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "contract": "Gated SiLU 65x129 on 5x3 PEs; six SDK calls, exact activation/product half bits, immutable inputs, phase/epoch audit and independent actual native/device standard composition. Finite magnitude <=8; component error <=.004*abs(reference)+2^-24*(1+abs(up)), not uniform relative/f32 accuracy. Isolated original source control at64x256; no full MLP/inference or hardware claim.",
+    "status": "source_ready",
+    "partitions": 1,
+    "fixture": "gated_silu:65:129"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "pair_rotation_64x128_8x8_token_even_odd",
+    "origins": [
+      "Prefill/src/prefill.csl xq_rope/xk_rope"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "status": "source_ready",
+    "partitions": 1,
+    "contract": "Adjacent pair rotation 64x128 on 8x8 PEs; explicit even_odd order and per-token coefficients. Six SDK calls, exact four-product/final half bits, immutable inputs, phase/epoch checks and independent actual native/device standard composition. Finite magnitude<=8; cancellation-aware .0015*sum(abs(products))+2^-23 per output. Original-source control covers broadcast odd_even64x128, including nontrivial angles. No full model/hardware claim.",
+    "fixture": "pair_rotation:64:128:0:even_odd"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "pair_rotation_64x128_8x8_broadcast_odd_even",
+    "origins": [
+      "Prefill/src/prefill.csl xq_rope/xk_rope"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "status": "source_ready",
+    "partitions": 1,
+    "contract": "Adjacent pair rotation 64x128 on 8x8 PEs; explicit odd_even order and broadcast coefficients. Six SDK calls, exact four-product/final half bits, immutable inputs, phase/epoch checks and independent actual native/device standard composition. Finite magnitude<=8; cancellation-aware .0015*sum(abs(products))+2^-23 per output. Original-source control covers broadcast odd_even64x128, including nontrivial angles. No full model/hardware claim.",
+    "fixture": "pair_rotation:64:128:1:odd_even"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "swiglu_128x1024_8x8",
+    "origins": [
+      "Prefill/src/prefill.csl silu_kernel/z3_comp"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "contract": "Gated SiLU 128x1024 on 8x8 PEs; six SDK calls, exact activation/product half bits, immutable inputs, phase/epoch audit and independent actual native/device standard composition. Finite magnitude <=8; component error <=.004*abs(reference)+2^-24*(1+abs(up)), not uniform relative/f32 accuracy. Isolated original source control at64x256; no full MLP/inference or hardware claim.",
+    "status": "source_ready",
+    "partitions": 1,
+    "fixture": "gated_silu:128:1024"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "pair_rotation_128x1024_8x8_token_even_odd",
+    "origins": [
+      "Prefill/src/prefill.csl xq_rope/xk_rope"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "status": "source_ready",
+    "partitions": 1,
+    "contract": "Adjacent pair rotation 128x1024 on 8x8 PEs; explicit even_odd order and per-token coefficients. Six SDK calls, exact four-product/final half bits, immutable inputs, phase/epoch checks and independent actual native/device standard composition. Finite magnitude<=8; cancellation-aware .0015*sum(abs(products))+2^-23 per output. Original-source control covers broadcast odd_even64x128, including nontrivial angles. No full model/hardware claim.",
+    "fixture": "pair_rotation:128:1024:0:even_odd"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "normalized_fanout3_64x128_8x8",
+    "origins": [
+      "Prefill/src/prefill.csl rmsnorm_x/xq_matmul/xk_matmul/xv_matmul"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "status": "source_ready",
+    "partitions": 1,
+    "contract": "Resident RMSNorm plus 3 independent square projections 64x128 on 8x8 PEs. Shared normalization/alignment and live buffer ownership, sequential branches with overlapped per-branch two-hop communication and local DSR math. Six SDK calls including independent changed branch weights, exact final half bits, sampled prefixes/live ownership where enabled, immutable inputs, epochs/queues and actual native/device independent math.fsum review. Half normwise .015 L2/.02 peak; inputs<=1. Counter source comparison is scoped to three projections64x128/8x8 with explicit source repairs; no performance extrapolation to other geometries, full inference or hardware.",
+    "fixture": "normalized_fanout:64:128:3",
+    "instrumentation": "sampled"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "normalized_fanout2_64x128_4x4",
+    "origins": [
+      "Prefill/src/prefill.csl rmsnorm_x/xq_matmul/xk_matmul/xv_matmul"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "status": "source_ready",
+    "partitions": 1,
+    "contract": "Resident RMSNorm plus 2 independent square projections 64x128 on 4x4 PEs. Shared normalization/alignment and live buffer ownership, sequential branches with overlapped per-branch two-hop communication and local DSR math. Six SDK calls including independent changed branch weights, exact final half bits, sampled prefixes/live ownership where enabled, immutable inputs, epochs/queues and actual native/device independent math.fsum review. Half normwise .015 L2/.02 peak; inputs<=1. Counter source comparison is scoped to three projections64x128/8x8 with explicit source repairs; no performance extrapolation to other geometries, full inference or hardware.",
+    "fixture": "normalized_fanout:64:128:2",
+    "instrumentation": "sampled"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "normalized_fanout3_128x256_8x8",
+    "origins": [
+      "Prefill/src/prefill.csl rmsnorm_x/xq_matmul/xk_matmul/xv_matmul"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "status": "source_ready",
+    "partitions": 1,
+    "contract": "Resident RMSNorm plus 3 independent square projections 128x256 on 8x8 PEs. Shared normalization/alignment and live buffer ownership, sequential branches with overlapped per-branch two-hop communication and local DSR math. Six SDK calls including independent changed branch weights, exact final half bits, sampled prefixes/live ownership where enabled, immutable inputs, epochs/queues and actual native/device independent math.fsum review. Half normwise .015 L2/.02 peak; inputs<=1. Counter source comparison is scoped to three projections64x128/8x8 with explicit source repairs; no performance extrapolation to other geometries, full inference or hardware.",
+    "fixture": "normalized_fanout:128:256:3",
+    "instrumentation": "counters"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "score_64x128_8x8",
+    "origins": [
+      "Prefill/src/prefill.csl score_matmul/matmul_T_compute"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "status": "source_ready",
+    "partitions": 1,
+    "contract": "QK-transpose 64x128 on 8x8 PEs, typed transpose view and original vertical K exchange/horizontal EAST-first rotating-root reduction. Six SDK calls with changed dense Q/K, immutable inputs, exact target half outputs and sampled per-round partial/live K ownership, root/epoch/queue audits. Actual native/device independent math.fsum checks under .015L2/.02peak normwise policy, input<=1. Small counter control measures local simulator overhead separately from tensor observations; larger sampled comparison includes unequal live-owner observer costs. Not full attention or hardware performance.",
+    "fixture": "score:64:128",
+    "instrumentation": "sampled"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "score_128x256_8x8",
+    "origins": [
+      "Prefill/src/prefill.csl score_matmul/matmul_T_compute"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "status": "source_ready",
+    "partitions": 1,
+    "contract": "QK-transpose 128x256 on 8x8 PEs, typed transpose view and original vertical K exchange/horizontal EAST-first rotating-root reduction. Six SDK calls with changed dense Q/K, immutable inputs, exact target half outputs and sampled per-round partial/live K ownership, root/epoch/queue audits. Actual native/device independent math.fsum checks under .015L2/.02peak normwise policy, input<=1. Small counter control measures local simulator overhead separately from tensor observations; larger sampled comparison includes unequal live-owner observer costs. Not full attention or hardware performance.",
+    "fixture": "score:128:256",
+    "instrumentation": "sampled"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "score_softmax_64x128_8x8",
+    "origins": [
+      "Prefill/src/prefill.csl score_matmul/matmul_T_compute"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "status": "source_ready",
+    "partitions": 1,
+    "contract": "Resident QK-transpose then stable softmax 64x128 on 8x8 PEs, scale=0.08838834764831845. Typed view/graph composition, vertical K/root reduction followed by row max/sum, shared CSL queues/DSRs/UTs and completed-partial storage reused for exponents. SDK map exp local library; six warm calls, final target half bits and sampled partial/live-owner/logit/exp/statistic audits, immutable inputs and protocol mutations. Actual native/device math.fsum/exp checks under .015L2/.02peak/.01row-mass. Source comparison scoped to matched local simulator interval; no complete attention/hardware claim.",
+    "fixture": "score_softmax:64:128:0.08838834764831845",
+    "instrumentation": "sampled"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "device_matmul_64x128_8x8",
+    "origins": [
+      "Prefill/src/prefill.csl output_matmul with device alignment/strided layout"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "status": "source_ready",
+    "partitions": 1,
+    "contract": "Device-aligned half matmul 64x64 times 64x128 on 8x8 PEs; logical column-major inputs, vertical RHS then horizontal LHS alignment, strided RHS access without local transpose allocation. Source-derived overlapped both-axis contraction. Six SDK calls, immutable A/B, exact sampled prefixes and both live operands, alignment/epoch/queue audits and coherent mutations. Actual native/device original-input math.fsum normwise .015L2/.02peak checks. Matching adapted-source control; no full attention/hardware or unmodified-source claim.",
+    "fixture": "device_matmul:64:128",
+    "instrumentation": "sampled"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "score_softmax_128x256_8x8",
+    "origins": [
+      "Prefill/src/prefill.csl score_matmul/matmul_T_compute"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "status": "source_ready",
+    "partitions": 1,
+    "contract": "Resident QK-transpose then stable softmax 128x256 on 8x8 PEs, scale=0.0625. Typed view/graph composition, vertical K/root reduction followed by row max/sum, shared CSL queues/DSRs/UTs and completed-partial storage reused for exponents. SDK map exp local library; six warm calls, final target half bits and sampled partial/live-owner/logit/exp/statistic audits, immutable inputs and protocol mutations. Actual native/device math.fsum/exp checks under .015L2/.02peak/.01row-mass. Source comparison scoped to matched local simulator interval; no complete attention/hardware claim.",
+    "fixture": "score_softmax:128:256:0.0625",
+    "instrumentation": "sampled"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "attention_128x256_8x8",
+    "origins": [
+      "Prefill/src/prefill.csl score_matmul/matmul_T_compute"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "status": "source_ready",
+    "partitions": 1,
+    "contract": "Resident supplied-Q/K/V unmasked single-head attention 128x256 on 8x8 PEs. Typed transpose/matmul/softmax/matmul composition; no intermediate host transfer. Source-derived score root reduction, SDK map normalization, device V prealignment/strided DSD. Explicit descriptor reset and completed-storage reuse. Six SDK calls, immutable inputs, exact score/probability/value-prefix and live-owner witnesses in sampled mode; counter mode omits internal tensor observations, coherent mutation rejections, actual native/device independent original-input math. Matching adapted-source control; no full prefill/decode/model/hardware claim.",
+    "fixture": "attention:128:256:0.0625",
+    "instrumentation": "counters"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "device_matmul_128x256_8x8",
+    "origins": [
+      "Prefill/src/prefill.csl output_matmul with device alignment/strided layout"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "status": "source_ready",
+    "partitions": 1,
+    "contract": "Device-aligned half matmul 128x128 times 128x256 on 8x8 PEs; logical column-major inputs, vertical RHS then horizontal LHS alignment, strided RHS access without local transpose allocation. Source-derived overlapped both-axis contraction. Six SDK calls, immutable A/B, exact sampled prefixes and both live operands, alignment/epoch/queue audits and coherent mutations. Actual native/device original-input math.fsum normwise .015L2/.02peak checks. Matching adapted-source control; no full attention/hardware or unmodified-source claim.",
+    "fixture": "device_matmul:128:256",
+    "instrumentation": "sampled"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "attention_64x128_8x8",
+    "origins": [
+      "Prefill/src/prefill.csl score_matmul/matmul_T_compute"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "status": "source_ready",
+    "partitions": 1,
+    "contract": "Resident supplied-Q/K/V unmasked single-head attention 64x128 on 8x8 PEs. Typed transpose/matmul/softmax/matmul composition; no intermediate host transfer. Source-derived score root reduction, SDK map normalization, device V prealignment/strided DSD. Explicit descriptor reset and completed-storage reuse. Six SDK calls, immutable inputs, exact score/probability/value-prefix and live-owner witnesses in sampled mode; counter mode omits internal tensor observations, coherent mutation rejections, actual native/device independent original-input math. Matching adapted-source control; no full prefill/decode/model/hardware claim.",
+    "fixture": "attention:64:128:0.08838834764831845",
+    "instrumentation": "sampled"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "mlp_64x64x256_8x8",
+    "origins": [
+      "Prefill/src/prefill.csl z1_matmul/z2_matmul/z3_comp/h2_matmul"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "status": "source_ready",
+    "partitions": 1,
+    "contract": "Resident supplied bounded X/U/G/D rectangular gated MLP 64x64\u2192256\u219264 on 8x8 PEs. Typed three-matmul/SiLU/multiply graph; forward aligned two-hop projections, explicit gate-left carry, joined task resources, SDK map/DSR gating, immutable inputs and last-use buffer reuse. No intermediate host transfer. Six SDK calls, exact target outputs; sampled mode additionally observes projection prefixes/gate/hidden/first operands, counter mode omits internal tensor observations. Corruption rejection, actual C++/device independent fsum/exp checks, matched adapted-source control and static ELF memory. No RMS/residual/full-model or hardware claim.",
+    "fixture": "mlp:64:64:256",
+    "instrumentation": "sampled"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "mlp_64x64x128_4x4",
+    "origins": [
+      "Prefill/src/prefill.csl z1_matmul/z2_matmul/z3_comp/h2_matmul"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "status": "source_ready",
+    "partitions": 1,
+    "contract": "Resident supplied bounded X/U/G/D rectangular gated MLP 64x64\u2192128\u219264 on 4x4 PEs. Typed three-matmul/SiLU/multiply graph; forward aligned two-hop projections, explicit gate-left carry, joined task resources, SDK map/DSR gating, immutable inputs and last-use buffer reuse. No intermediate host transfer. Six SDK calls, exact target outputs; sampled mode additionally observes projection prefixes/gate/hidden/first operands, counter mode omits internal tensor observations. Corruption rejection, actual C++/device independent fsum/exp checks, matched adapted-source control and static ELF memory. No RMS/residual/full-model or hardware claim.",
+    "fixture": "mlp:64:64:128",
+    "instrumentation": "sampled",
+    "source_control_correction": {
+      "path": "evidence/mlp-p4-fabric-correction.json",
+      "sha256": "7d8608f658306bc92b4aa6fbc74463bdb6f87c0f06f3c7cbb774bc41b89d898f"
+    }
+  },
+  {
+    "project": "waferllm",
+    "kernel": "mlp_128x128x512_8x8_blocked",
+    "origins": [
+      "Prefill/src/prefill.csl z1_matmul/z2_matmul/z3_comp/h2_matmul"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "status": "source_ready",
+    "partitions": 1,
+    "contract": "Resident supplied bounded X/U/G/D rectangular gated MLP 128x128\u2192512\u2192128 on 8x8 PEs. Typed three-matmul/SiLU/multiply graph; forward aligned two-hop projections, explicit gate-left carry, joined task resources, SDK map/DSR gating, immutable inputs and last-use buffer reuse. No intermediate host transfer. 8 SDK calls, exact target outputs; sampled mode additionally observes projection prefixes/gate/hidden/first operands, counter mode omits half intermediate-prefix observations; final f32 accumulator readout is retained. Corruption rejection, actual C++/device independent fsum/exp checks, matched adapted-source control and static ELF memory. No RMS/residual/full-model or hardware claim. Explicit half partials per physical K block, float32 merge and final half rounding; exact f32 accumulator snapshots, cross-block cancellation and subsequent warm-zero reset. Source control shares the precision library; independent original-input math remains separate.",
+    "fixture": "mlp_blocked:128:128:512:8",
+    "instrumentation": "counters",
+    "observation_scope_correction": "evidence/mlp128-blocked-counter-observation-scope-correction.json"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "mlp_64x64x256_8x8_blocked",
+    "origins": [
+      "Prefill/src/prefill.csl z1_matmul/z2_matmul/z3_comp/h2_matmul"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "status": "source_ready",
+    "partitions": 1,
+    "contract": "Resident supplied bounded X/U/G/D rectangular gated MLP 64x64\u2192256\u219264 on 8x8 PEs. Typed three-matmul/SiLU/multiply graph; forward aligned two-hop projections, explicit gate-left carry, joined task resources, SDK map/DSR gating, immutable inputs and last-use buffer reuse. No intermediate host transfer. 8 SDK calls, exact target outputs; sampled mode additionally observes projection prefixes/gate/hidden/first operands, counter mode omits half intermediate-prefix observations (blocked mode retains final f32 accumulator readout). Corruption rejection, actual C++/device independent fsum/exp checks, matched adapted-source control and static ELF memory. No RMS/residual/full-model or hardware claim. Explicit half partials per physical K block, float32 merge and final half rounding; exact f32 accumulator snapshots, cross-block cancellation and subsequent warm-zero reset. Source control shares the precision library; independent original-input math remains separate.",
+    "fixture": "mlp_blocked:64:64:256:8",
+    "instrumentation": "sampled"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "projection_residual_rms_64x64_8x8",
+    "status": "source_ready",
+    "partitions": 1,
+    "origins": [
+      "Prefill/src/prefill.csl h1_matmul/z_add/rmsnorm_z"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "contract": "Resident supplied activation/weight/residual/gamma: 64x64 projection, residual add and row RMSNorm on 8x8 PEs. Ordinary typed matmul/add/rmsnorm graph, source forward two-hop DSR engine, joined resources, original CSL row collective and reusable local RMS library. Immutable inputs and last-use private buffer reuse; no intermediate host transfer. Eight SDK calls, exact output/inverse bits, fixed original-input native/device accuracy, mutation rejection and static ELF memory. Sampled mode additionally validates every projection prefix and normalization stages. Matched repaired-source comparison covers first three calls with observation/copy differences stated. No full Prefill or hardware performance claim.",
+    "fixture": "projection_residual_rms:64:64",
+    "instrumentation": "sampled",
+    "source_comparison": "evidence/projection-residual-rms64-sampled-source-comparison.json"
+  }
+]

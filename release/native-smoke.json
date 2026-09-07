@@ -1,0 +1,85 @@
+{
+  "run": "run-20260907T080144718784Z",
+  "sdk": false,
+  "instrumentation": null,
+  "selection": {
+    "substring": null,
+    "exact": "sdk_examples/gemm"
+  },
+  "sdk_runtime_options": null,
+  "sdk_timeout_seconds": 240,
+  "success": true,
+  "cases": [
+    {
+      "key": "sdk_examples/gemm",
+      "passed": true,
+      "artifact": "projects/sdk_examples/gemm/run-20260907T080144718784Z",
+      "ir_application_checks": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "native_application_checks": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "native_application_source": "native-output.txt: actual C++ executable stdout",
+      "numerical_validation": null,
+      "level": "native_cpu"
+    }
+  ],
+  "oracle": {
+    "python": "3.14.3",
+    "numpy": "2.4.1",
+    "rtol": 3e-05,
+    "atol": 3e-06,
+    "input_seed_base": 911,
+    "additional_contract_by_fixture_prefix": {
+      "mesh_gemm:": "componentwise-f32-dot-v1; fixed accuracy reported separately",
+      "distributed_fft:": "fft-f32-normwise-v1; not per-component accuracy",
+      "pair_rotation:": "pair-rotation-half-v1; cancellation-aware product-magnitude criterion",
+      "gated_silu:": "gated-activation-half-v1; componentwise relative plus input-dependent subnormal allowance",
+      "normalized_fanout:": "normalized-fanout-half-normwise-v1; every projection independently checked",
+      "score:": "score-half-normwise-v1; original-input math.fsum QK transpose",
+      "projection_residual_rms:": "projection-residual-rms-half-normwise-v1; original-input fsum projection/add/RMS",
+      "mlp_blocked:": "rectangular-mlp-half-normwise-v1; explicit half block/f32 merge; original-input fsum/exp",
+      "mlp:": "rectangular-mlp-half-normwise-v1; original-input fsum/exp three-projection gated path",
+      "attention:": "attention-half-normwise-v1; original-input fsum/exp/fsum full supplied-QKV path",
+      "score_softmax:": "score-softmax-half-normwise-v1; original-input dots and normalization, row mass and nonnegativity",
+      "device_matmul:": "device-matmul-half-normwise-v1; original-input math.fsum contraction",
+      "normalized_matmul:": "normalized-matmul-half-normwise-v1; standard composite numerical accuracy",
+      "distributed_softmax:": "softmax-half-normwise-v1; row mass and nonnegativity, not per-component accuracy",
+      "distributed_rms:": "rms-half-normwise-v1; not f32 or per-component accuracy"
+    },
+    "sources": {
+      "fixtures.py": "066b9e55a456685cafbe32edcf8984798a9d2eb3eb28d3664e285ad2221b2550",
+      "solver_fixtures.py": "dcb8eb701ae4ab720c8855ac92a78eac8c72a09e4c0171faa9d4a1a4b78b7868",
+      "pcg_fixtures.py": "df97606a178a1116f356da4fb622160c089c8e4bebf76e5c2ff249e47e80b14a",
+      "bicgstab_fixtures.py": "68aae0d8b3e93e546e1ff4ad942d9c393c99a3226cf75afca3bd8aef869d2b22",
+      "power_fixtures.py": "9163864f03872048d1f36b126a2e62bc5dd92a56163ce7868fd2650942bc0982",
+      "half_fixtures.py": "2c1849aeffa606ec664bb4a68315cace66e888962112fdb893a8d66f9d51ed29",
+      "grouped_half_fixtures.py": "da4a0821c1262b712d6015db7048574b19d1035ac7e1f2d9a0c5b608d49ec9c9",
+      "fft_fixtures.py": "f12c5a3ce2dc8f41864946b2ae1fc723010e7fbb2c1f13df2e5591f746d8ca37",
+      "rms_fixtures.py": "d7e44a6c2de86c44133c53e7e4775c403127deb4bae9455af54924b4505f6bef",
+      "softmax_fixtures.py": "faceaf718a86d2b4ba85df59fed12a2ab7c37cb7a04280c42abfce2f3c59e6be",
+      "normalized_matmul_fixtures.py": "13dd604065345b710f1d4a00c1b85c828971933ee69cfd2434a497a38ace0177",
+      "normalized_fanout_fixtures.py": "ecef4d89c02f8b21da1160482834c1a92ae4d42b126eca04cc9a6d7e81243338",
+      "score_fixtures.py": "7e0eb6f625cfb0e356d8a94ea133e6b0a901c581373b0788fefdbd461c8226e0",
+      "device_matmul_fixtures.py": "3fb2adff3f38f33aefc9f15faa686745c7f1ac8736b845e27e267d254ecaa1c3",
+      "score_softmax_fixtures.py": "081f32db4923ba71801ad365117d3a4168f51b6f4923269cef228b85daad7651",
+      "attention_fixtures.py": "b23027c277bbcc8b145f25c10a22985758f6d3e1c5b90b9c070da960a7ffd288",
+      "mlp_fixtures.py": "051c6cb12c728cb801e6c11feb0713bc2a6b5071738ffefdffa1d64a2f58dd71",
+      "projection_residual_rms_fixtures.py": "6c347bc8f5481cbfdcf7e2f447d4583a777fb7ebb71e5c129a20e6e983819831",
+      "swiglu_fixtures.py": "0e98b8c67e82ec0a16d46d7eb7417da3f376e3b1c1190be9970f927cbadaf358",
+      "pair_rotation_fixtures.py": "cc4b46297346e949d6143418a01b1abd988f0644edae0548025386b28810af17",
+      "toolchain/binary16.py": "a5de435c8609116a494bf13a387d5d598f239eb250a2504e5c949b4ee15ee431",
+      "toolchain/roundoff.py": "4bc4e693d456bdf39dee4ac6774a545f812c085aacc7ec4d2244e583fcb935b5",
+      "import_stencil.py": "9a4dfd60f39c9ee90f056f1f07391ba8e361030067c380a85b99241ae09e5bc3",
+      "catalog.json": "93391c76ec9ebffcea0aeaf7b589b2a3845bcef4bf7d876c9ab620bd0bcf2b5c",
+      "run_ports.py": "778dd3854c0ddb1604986c9b8f8e158a8c8ca2bcb657cb50935a51c9d66a0cd1"
+    }
+  }
+}

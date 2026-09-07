@@ -1,0 +1,97 @@
+{
+  "run": "run-20260906T081445392252Z",
+  "sdk": true,
+  "sdk_timeout_seconds": 600,
+  "success": true,
+  "cases": [
+    {
+      "key": "sdk_examples/resident_stencil_1x1x7_t3",
+      "passed": true,
+      "artifact": "projects/sdk_examples/resident_stencil_1x1x7_t3/run-20260906T081445392252Z",
+      "audit": {
+        "passed": true,
+        "output_values": 14,
+        "internal_observations": 50,
+        "epochs": 2,
+        "actors": 1,
+        "steps": 3,
+        "source_sha256": "55e4e7d01c3412ff6f04f59168fd639f0521f1eaf6282b8047f4b277cdddca17"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "sdk_examples/resident_stencil_2x2x32_t4",
+      "passed": true,
+      "artifact": "projects/sdk_examples/resident_stencil_2x2x32_t4/run-20260906T081445392252Z",
+      "audit": {
+        "passed": true,
+        "output_values": 256,
+        "internal_observations": 1056,
+        "epochs": 2,
+        "actors": 4,
+        "steps": 4,
+        "source_sha256": "7010ac4d817b88842d2539b2a1146ea41dcacabcb366fb1045458669dfee82a6"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "sdk_examples/resident_stencil_4x4x128_t16",
+      "passed": true,
+      "artifact": "projects/sdk_examples/resident_stencil_4x4x128_t16/run-20260906T081445392252Z",
+      "audit": {
+        "passed": true,
+        "output_values": 4096,
+        "internal_observations": 65664,
+        "epochs": 2,
+        "actors": 16,
+        "steps": 16,
+        "source_sha256": "f88a545bd791b92d8c5062d8f21f907c549d942125e421553a05c3d50ac84e1d"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "sdk_examples/resident_stencil_8x8x128_t16",
+      "passed": true,
+      "artifact": "projects/sdk_examples/resident_stencil_8x8x128_t16/run-20260906T081445392252Z",
+      "audit": {
+        "passed": true,
+        "output_values": 16384,
+        "internal_observations": 262656,
+        "epochs": 2,
+        "actors": 64,
+        "steps": 16,
+        "source_sha256": "e2ca279ca9788dffef1c31cb9a5eb977c6934e48d7cd2775a2b48db392dbf044"
+      },
+      "level": "sdk_simulator"
+    },
+    {
+      "key": "sdk_examples/resident_stencil_2x2x32_t4_scalar",
+      "passed": true,
+      "artifact": "projects/sdk_examples/resident_stencil_2x2x32_t4_scalar/run-20260906T081445392252Z",
+      "audit": {
+        "passed": true,
+        "output_values": 256,
+        "internal_observations": 1056,
+        "epochs": 2,
+        "actors": 4,
+        "steps": 4,
+        "source_sha256": "240d923367ab8437d127c4cc90d22b458e34d5326ab2201421b27d38176b2f1f"
+      },
+      "level": "sdk_simulator"
+    }
+  ],
+  "oracle": {
+    "python": "3.13.11",
+    "numpy": "2.2.6",
+    "rtol": 3e-05,
+    "atol": 3e-06,
+    "input_seed_base": 911,
+    "sources": {
+      "fixtures.py": "9381f19711b75668d2605877b6704ba4a4f861f914213c3cea55cc35664527eb",
+      "import_stencil.py": "9a4dfd60f39c9ee90f056f1f07391ba8e361030067c380a85b99241ae09e5bc3",
+      "catalog.json": "b713e3ae56ef2a9a129a327a963b877c5ced15d933989f81d1ab1b2866d74422",
+      "run_ports.py": "3d15ee3305ba4504007406ddb83c07e1f4241ae77725450e476f6c35a1a262c1"
+    }
+  },
+  "sdk_sha256": "fff17e81c61dcb6012bdee2941a6fdc570f5c8604967530e7b7108651258193d"
+}

@@ -1,0 +1,11 @@
+{
+  "project": "spada",
+  "kernel": "axpy",
+  "origins": [
+    "samples/spatial/blas/axpy.sptl"
+  ],
+  "fixture": "axpy",
+  "contract": "Alpha specialized to 2.5; four-element local vectors, graph map/add actors.",
+  "partitions": 1,
+  "status": "source_ready"
+}

@@ -1,0 +1,11 @@
+{
+  "project": "sdk_examples",
+  "kernel": "cholesky",
+  "origins": [
+    "benchmarks/cholesky/pe.csl"
+  ],
+  "fixture": "cholesky",
+  "contract": "Right-looking lower Cholesky, 4x4 SPD; one local tile. Original multi-tile schedule not claimed.",
+  "partitions": 1,
+  "status": "source_ready"
+}

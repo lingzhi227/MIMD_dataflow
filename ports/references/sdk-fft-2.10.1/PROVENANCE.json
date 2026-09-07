@@ -1,0 +1,16 @@
+{
+  "sdk_sif_sha256": "fff17e81c61dcb6012bdee2941a6fdc570f5c8604967530e7b7108651258193d",
+  "sdk_source": "/cb/toolchains/cslang/rel-sdk-2.10.0/202604012315-1813-1394a6ea/csl-libs/kernels/fft",
+  "host_source_commit": "4866cf330333446cb5e529e10f36be4600d1df29",
+  "host_source": "benchmarks/fft-3d/run.py",
+  "files": {
+    "benchmark_host.py": "902370437029e84dfa7921c2d5e6a3ce941c94634e1cd28efd283ab5664c1881",
+    "fft3d.csl": "7e6315d1b0c184cc19599a7aec0e20a852e82698fc33da36d3bf77e20a67db34",
+    "fft3d_layout.csl": "b6f8df1a3d92c9c7d9c5fb8817ed1802e0757d2a25c4153271558ea20ece31fd",
+    "fft3d_rpc.csl": "6208fe515f84828fbca7bb0c19a4426a4c50e37682ebe4c5dc4a455dd8e7e66f",
+    "fft_internal/fft.csl": "1803e0fe2e603d0478f53d37ade4dc1c6a99bb9e7f5003db12feae127e8a9ea4",
+    "fft_internal/reshape.csl": "c98bd7e1c5cc0c7b78618df7dbb3e2c6dd8a08ae33e0a1843b3e327099aefc0f",
+    "fft_internal/transpose.csl": "1eb8f31a18a85b17b95d2ef71169dfd72a59cfd7fd8ef1efbb7f8c7c87e08f86",
+    "get_params.csl": "48e86731973b519c8a7c5404cd1912bf5efc355e5a4023d50f18144f872c716f"
+  }
+}

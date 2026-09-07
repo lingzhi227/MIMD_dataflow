@@ -1,0 +1,44 @@
+{
+  "key": "waferllm/mlp_128x128x512_8x8_blocked",
+  "contract": "Resident supplied bounded X/U/G/D rectangular gated MLP 128x128\u2192512\u2192128 on 8x8 PEs. Typed three-matmul/SiLU/multiply graph; forward aligned two-hop projections, explicit gate-left carry, joined task resources, SDK map/DSR gating, immutable inputs and last-use buffer reuse. No intermediate host transfer. 8 SDK calls, exact target outputs; sampled mode additionally observes projection prefixes/gate/hidden/first operands, counter mode omits half intermediate-prefix observations; final f32 accumulator readout is retained. Corruption rejection, actual C++/device independent fsum/exp checks, matched adapted-source control and static ELF memory. No RMS/residual/full-model or hardware claim. Explicit half partials per physical K block, float32 merge and final half rounding; exact f32 accumulator snapshots, cross-block cancellation and subsequent warm-zero reset. Source control shares the precision library; independent original-input math remains separate.",
+  "origins": [
+    "Prefill/src/prefill.csl z1_matmul/z2_matmul/z3_comp/h2_matmul"
+  ],
+  "source_sha256": "03572d1afd35af8ae6546a2670416066265ad130765f26b481562b63ad7f499a",
+  "native_stdout_verification": {
+    "level": "native_cpu",
+    "artifact": "projects/waferllm/mlp_128x128x512_8x8_blocked/run-20260907T073733216957Z",
+    "report": "evidence/run-20260907T073733216957Z.json",
+    "native_application_source": "native-output.txt: actual C++ executable stdout",
+    "current_toolchain": true,
+    "numerical_validation": {
+      "contract": "rectangular-mlp-half-normwise-v1",
+      "native_fixed_accuracy_passed": true,
+      "device_fixed_accuracy_passed": null,
+      "device_audit_passed": null,
+      "fixed_accuracy_passed": true,
+      "relative_l2_limit": 0.02,
+      "max_error_over_reference_peak_limit": 0.03,
+      "zero_reference_requires_exact_zero": true,
+      "per_component_accuracy_not_implied": true
+    }
+  },
+  "verification": {
+    "level": "sdk_simulator",
+    "artifact": "projects/waferllm/mlp_128x128x512_8x8_blocked/run-20260907T064549573557Z",
+    "report": "evidence/qualification-20260907T072500004338Z.json",
+    "native_application_source": "native-output.txt: actual C++ stdout, independent original-input rectangular MLP math.fsum/exp review",
+    "current_toolchain": false,
+    "numerical_validation": {
+      "contract": "rectangular-mlp-half-normwise-v1",
+      "native_fixed_accuracy_passed": true,
+      "device_fixed_accuracy_passed": true,
+      "device_audit_passed": true,
+      "fixed_accuracy_passed": true,
+      "relative_l2_limit": 0.02,
+      "max_error_over_reference_peak_limit": 0.03,
+      "zero_reference_requires_exact_zero": true,
+      "per_component_accuracy_not_implied": true
+    }
+  }
+}

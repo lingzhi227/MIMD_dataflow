@@ -1,0 +1,11 @@
+{
+  "project": "annealing",
+  "kernel": "flip_energy",
+  "origins": [
+    "src/pe_program.csl"
+  ],
+  "fixture": "flip",
+  "contract": "prepare_flip_energy plus sign correction; four independent candidate indices on unchanged binary state. Q uses source combined off-diagonal convention; packed-bit storage and RNG not ported.",
+  "partitions": 1,
+  "status": "source_ready"
+}
