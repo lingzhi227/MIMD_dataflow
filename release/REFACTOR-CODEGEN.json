@@ -1,0 +1,34 @@
+[
+  {
+    "profile": "waferllm/mlp_128x128x512_8x8_blocked",
+    "files": 6,
+    "identical": true,
+    "differences": [],
+    "original_bundle": "csl-hls/ports/projects/waferllm/mlp_128x128x512_8x8_blocked/run-20260907T064549573557Z",
+    "refactored_bundle": "pragma-github-release/build/runs/waferllm/mlp_128x128x512_8x8_blocked/run-20260908T045353154959Z"
+  },
+  {
+    "profile": "waferllm/projected_cache_attention_3x256x512_8x8",
+    "files": 9,
+    "identical": false,
+    "differences": [
+      "batched_rms_local.csl"
+    ],
+    "original_bundle": "csl-hls/ports/projects/waferllm/projected_cache_attention_3x256x512_8x8/run-20260907T235739454777Z",
+    "refactored_bundle": "pragma-github-release/build/runs/waferllm/projected_cache_attention_3x256x512_8x8/run-20260908T045831207016Z"
+  },
+  {
+    "profile": "35-node candidate",
+    "files": 12,
+    "identical": true,
+    "differences": [],
+    "qualification": "still pending; this is native/codegen verification"
+  },
+  {
+    "profile": "projected cache against pre-refactor GitHub commit",
+    "files": 9,
+    "identical": true,
+    "differences": [],
+    "scope": "Matched current baseline includes the pre-existing optional RMS mean mode; historical SDK mismatch above is preserved separately."
+  }
+]

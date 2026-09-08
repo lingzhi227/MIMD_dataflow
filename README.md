@@ -1,72 +1,74 @@
-# Pragma: spatial HLS for Cerebras CSL
+# Pragma HLS
 
-Pragma is an experimental C++-to-CSL toolchain for explicit numerical dataflow on Cerebras wafer-scale processors. It combines typed tensor operations and spatial pragmas with reusable CSL compute and communication libraries. The official Cerebras compiler and SDK compile and execute the generated programs.
+A research C++-to-CSL compiler for explicit numerical dataflow on Cerebras wafer-scale processors. Write typed tensor operations and spatial policies in C++; Pragma checks and lowers supported graphs into CSL, which the official Cerebras compiler and SDK execute.
 
-**This repository contains a curated research implementation, not a production LLM runtime or a replacement for the Cerebras SDK.** The release snapshot includes **141 bounded profiles with recorded SDK simulator validation**. A profile specifies dimensions, precision, input domain, placement and observation mode; several profiles may implement variants of the same algorithm. Simulator evidence does not establish hardware throughput.
+**141 bounded profiles have recorded SDK simulator qualifications.** The current 35-node attention-plus-FFN composition is still a development candidate in this snapshot. This is not a production LLM runtime or a replacement for CSL. [Read the exact status](docs/STATUS.md).
 
-## Start here
+## Find what you need
 
-- [What works and what remains](docs/STATUS.md)
-- [Architecture and source map](docs/ARCHITECTURE.md)
-- [Install, run and reproduce](docs/REPRODUCING.md)
-- [Annotated example tour](examples/README.md)
-- [Per-profile validation index](ports/STATUS.md)
-- [Evidence policy and release checks](docs/VALIDATION.md)
-- [Source attribution and licensing boundaries](THIRD_PARTY_NOTICES.md)
+| I want to… | Start here |
+| --- | --- |
+| Understand the project | [Architecture](docs/ARCHITECTURE.md) and [repository layout](docs/REPOSITORY-LAYOUT.md) |
+| Learn the HLS interface | [Tutorials](examples/tutorials/README.md) and [public C++ headers](include/pragma/README.md) |
+| Run an algorithm | [Benchmark families](benchmarks/README.md) |
+| Work on the compiler | [Compiler source map](lib/README.md) |
+| Inspect reusable CSL | [CSL runtime library](runtime/README.md) |
+| Reproduce validation | [Reproduction guide](docs/REPRODUCING.md) and [qualification index](validation/STATUS.md) |
+| Review scope and provenance | [Evidence policy](docs/VALIDATION.md) and [third-party notices](THIRD_PARTY_NOTICES.md) |
 
-## What is implemented
-
-| Area | Implemented and evaluated capabilities | Important boundary |
-| --- | --- | --- |
-| Dense linear algebra | Distributed GEMV, SUMMA, Cannon, Cholesky, no-pivot LU, QR; half two-hop GEMM and grouped GEMV | Algorithm domains and supported mesh/shape configurations are explicit |
-| Sparse and iterative methods | Hypersparse SpMV, collective dot/norm, resident CG, Jacobi-PCG, BiCGStab and fixed-step power iteration | Bounded matrices, storage contracts and termination policies |
-| Transforms and grids | Distributed SDK-backed FFT; resident stencil iterations | Supported layouts/boundaries only; no general physical simulator |
-| Inference building blocks | RMSNorm, stable softmax, SiLU/gating, pair rotation, normalized projections, supplied-Q/K/V attention, resident MLP, projection/residual/RMS composition | No complete prefill/decode model pipeline; current pair rotation is not automatically Qwen RoPE |
-| Tooling | Typed frontend, numerical/resource checks, CSL generation, SDK transport, frozen builds, state inspection and independent numerical checks | Explicit supported lowerings, not unrestricted graph compilation |
-
-## Repository layout
+## Layout
 
 ```text
-.
-├── docs/                       # English overview, status, reproduction and evidence policy
-├── examples/                   # Reading guide and selected actual generated CSL
-├── ports/
-│   ├── toolchain/              # Frontend, IR, resource planning, code generation and SDK bindings
-│   │   ├── include/            # C++ tensor/operator interfaces
-│   │   └── runtime/            # Reusable CSL math, routes and communication implementations
-│   ├── projects/               # hls.cpp + PORT.json profiles, grouped by upstream provenance
-│   ├── tests/                  # Semantic, numerical, resource and regression tests
-│   ├── experiments/            # Source controls, compiler probes and comparison tools
-│   ├── docs/                   # Detailed English algorithm and resource contracts
-│   ├── evidence/               # Selected recorded qualification/failure reports
-│   ├── references/             # Small pinned reference extracts and provenance
-│   ├── catalog.json            # Profile definitions
-│   └── run_ports.py            # Fresh native/SDK build and validation entry point
-├── release/                    # File hashes, packaging checks and selection policy
-└── archive/                    # Original mixed-language development log, for historical context
+include/pragma/          Public C++ HLS interfaces
+lib/                    Compiler implementation, separated by responsibility
+  Frontend/             Clang parsing and pragma syntax
+  IR/                   Typed graph structure and semantic checks
+  Analysis/             Numerical ranges, resources and lifetimes
+  Transforms/           Scheduling and explicit transformations
+  Conversion/           Supported graph lowering and CSL emission
+  Runtime/              Python SDK bindings and transport
+  Numerics/             Precision semantics and numerical references
+  Driver/               Build orchestration, integrity and validation
+  Debug/                Execution-state inspection
+  Support/              Source-layout and frozen-bundle resolution
+runtime/                CSL kernels/communication and native C++ support
+  csl/
+  native/
+tools/                  Compile, run-profile and inspect entry points
+examples/               Tutorials and selected generated CSL for reading
+benchmarks/             HLS applications grouped by algorithm domain
+  linear_algebra/
+  inference/
+  transforms/
+  stencil/
+  applications/
+tests/                  Unit tests, numerical fixtures and SDK probes
+third_party/            Preserved upstream sources and reference extracts
+docs/                   Guides, architecture and detailed contracts
+validation/             Captured qualification index and historical reports
+experiments/            Source comparisons and research probes
+scripts/authoring/      Profile authoring utilities
+archive/                Original development chronology
+release/                Release selection, migration map and validation records
+build/                  Fresh generated runs and reports (ignored by Git)
 ```
 
-The `ports/` layout is retained deliberately: compiler snapshots, test fixtures and profile tooling use these relative paths. Earlier prototype compilers, SDK images, credentials, duplicate run snapshots and bulk device traces are not part of this source release.
+## Run from the repository root
 
-## Quick start: CPU validation
-
-Use Python 3.10+ and Clang with C++17 and `_Float16` support. SDK execution additionally needs the separately installed, pinned SDK 2.10.1 environment.
+A pinned dependency setup uses Python 3.10–3.13 and NumPy 2.2.6. Clang must support C++17 and `_Float16`. Set `HLS_CLANGXX` when the default compiler is unsuitable.
 
 ```sh
 python3 -m venv .venv
 . .venv/bin/activate
-python -m pip install -r ports/requirements.txt
-python -m unittest discover -s ports/tests -v
-cd ports
-python run_ports.py --select-exact sdk_examples/gemm
+python -m pip install -r requirements.txt
+python -m unittest discover -s tests/unit -v
+python tools/run_profiles.py --select-exact waferllm/mlp_128x128x512_8x8_blocked
 ```
 
-This command compiles and executes native C++, generates CSL, and checks the numerical reference. It **does not execute CSL in the simulator** unless `--sdk` is supplied in the configured SDK environment. See [reproduction](docs/REPRODUCING.md) for that distinction and setup.
+This executes native checks and generates a frozen CSL bundle. SDK execution is a separate step requiring your configured SDK 2.10.1 installation and `--sdk`; see [reproduction](docs/REPRODUCING.md). A recorded historical SDK pass does not mean every example was rerun with this reorganized checkout.
 
-## Current direction and stopping condition
+## Current development boundary
 
-The current authorized focus is category 8: WaferLLM numerical stages and source-backed prefill/decode composition. After completing and auditing that accepted scope, development must stop and report evidence and unsupported features. Categories 9–12 and other applications await further user instruction. Qwen implementation is not part of the authorized development scope.
+Finish and audit category 8—WaferLLM numerical stages and accepted prefill/decode composition—then stop and report results and unsupported scope. Categories 9–12, unrelated applications and Qwen development require new user instructions. A single passing graph does not close category 8.
 
-The latest qualified boundary is a 25-node normalized-QKV → pair transform → supplied-cache attention/output/residual graph. A 35-node attention-plus-FFN graph is implemented and undergoing full SDK validation; it is not counted as a qualified profile. Read the status page for exact limits, including read-only cache and missing full-model semantics.
-
-This repository retains previous revisions in Git history. No Cerebras or upstream-project endorsement is claimed.
+The original development workspace and active SDK runs are separate from this refactored publication checkout. Their immutable evidence has not been rewritten. No upstream endorsement is claimed.

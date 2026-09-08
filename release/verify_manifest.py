@@ -1,4 +1,5 @@
 """Verify the curated release payload, without modifying files."""
+
 import hashlib, json
 from pathlib import Path
 root = Path(__file__).resolve().parents[1]

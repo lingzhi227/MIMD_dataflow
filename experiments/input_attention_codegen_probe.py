@@ -1,0 +1,308 @@
+"""Development HLS lowering probe; native math gates precede real SDK execution.
+
+Uses shared frontend, typed verifier, resource planner and codegen directly while
+unified runtime dispatch is under development. Not a catalog qualification.
+"""
+
+from pathlib import Path as _BootstrapPath
+import sys as _bootstrap_sys
+_bootstrap_root = next(p for p in _BootstrapPath(__file__).resolve().parents if (p / "hls-layout.json").is_file())
+_bootstrap_sys.path.insert(0, str(_bootstrap_root / "tools"))
+from bootstrap import configure, repository_root
+configure(_bootstrap_root)
+
+
+import argparse, datetime, hashlib, json, shutil, subprocess, sys
+from pathlib import Path
+
+ROOT = repository_root(__file__)
+sys.path[:0] = [str(ROOT), str(ROOT / "lib")]
+
+
+def prepare(
+    diagnose_numerical_failure=False,
+    diagnostic_case=None,
+    csl_adapter=None,
+    *,
+    typed_mixed=False
+):
+    import numpy as np
+    from input_attention_source import source
+    from input_attention_fixtures import batches, check as math_check
+    from frontend import parse
+    from mesh_input_attention import verify, plan, generate, inputs
+    from mesh_mlp_sdk import parameters, WIDE_PORTS
+    from mesh_input_attention_sdk import extents, packed
+    from native_transport import parse_outputs
+    from host_compiler import executable
+
+    if typed_mixed:
+        assert (
+            csl_adapter is None and not diagnose_numerical_failure
+        ), "typed mixed build requires native gates and shared codegen"
+        from input_attention_mixed_source import source
+        from mesh_input_attention_mixed import verify, plan, generate, evaluate
+        from mesh_input_attention_mixed_sdk import extents, packed, WIDE_PORTS
+
+    root = (
+        ROOT
+        / "validation/evidence"
+        / (
+            "input-attention-codegen-"
+            + datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
+        )
+    )
+    root.mkdir()
+    print(root.relative_to(ROOT), flush=True)
+    (root / "source.cpp").write_text(source())
+    raw = parse(root / "source.cpp", root)
+    raw["instrumentation"] = "counters"
+    m = verify(raw, 8, 2)
+    s = plan(m)
+    for name, value in (
+        ("frontend.json", raw),
+        ("semantic.json", m),
+        ("schedule.json", s),
+    ):
+        (root / name).write_text(json.dumps(value, indent=2) + "\n")
+    generate(s, root)
+    bs = batches(64, 64, 256, 8)
+    for b in bs:
+        inputs(m, b)
+    (root / "logical-inputs.json").write_text(json.dumps(bs) + "\n")
+    data = str(len(bs)) + "\n"
+    for b in bs:
+        data += str(len(b)) + "\n"
+        for name, values in b.items():
+            data += (
+                name + " " + str(len(values)) + " " + " ".join(map(str, values)) + "\n"
+            )
+    (root / "native-input.txt").write_text(data)
+    shutil.copytree(ROOT / "include/pragma", root / "include")
+    shutil.copyfile(ROOT / "runtime/native/native.cpp", root / "native.cpp")
+    cmd = [
+        executable(),
+        "-std=c++17",
+        "-ffp-contract=off",
+        "-DMW_BOUND=2",
+        "-DMW_EPOCHS=8",
+        "-DMW_MAX_INPUT=16384",
+        "-Werror",
+        "-Wno-unknown-pragmas",
+        "-fsanitize=undefined",
+        "-fno-sanitize-recover=all",
+        "-I",
+        str(root / "include"),
+        str(root / "source.cpp"),
+        str(root / "native.cpp"),
+        "-o",
+        str(root / "native"),
+    ]
+
+    def native(command, stem):
+        (root / (stem + "-command.json")).write_text(json.dumps(command) + "\n")
+        r = subprocess.run(command, capture_output=True, text=True)
+        (root / (stem + "-compile.log")).write_text(r.stdout + r.stderr)
+        assert r.returncode == 0, stem
+        r = subprocess.run([command[-1]], input=data, capture_output=True, text=True)
+        (root / (stem + "-output.txt")).write_text(r.stdout)
+        (root / (stem + "-stderr.txt")).write_text(r.stderr)
+        assert r.returncode == 0, stem
+        return parse_outputs(r.stdout)
+
+    original = native(cmd, "native")
+    ast = json.loads((root / "00_clang_ast.json").read_text())
+    body = next(v for v in ast["inner"] if v["kind"] == "CompoundStmt")
+    indices = dict(
+        input_normalized=11,
+        q_raw=12,
+        k_raw=13,
+        v_raw=14,
+        q=15,
+        k=16,
+        score=18,
+        probability=19,
+        attention=20,
+        projection=21,
+        delta=28,
+    )
+    edits = []
+    for name, index in indices.items():
+        node = m["nodes"][index]
+        decl = next(
+            v
+            for v in body["inner"]
+            if v["kind"] == "DeclStmt"
+            and len(v["inner"]) == 1
+            and v["inner"][0].get("name") == node["id"]
+        )
+        end = decl["range"]["end"]
+        offset = end["offset"] + end["tokLen"]
+        edits.append(
+            (
+                offset,
+                (
+                    '\n spatial::output("__observe_' + name + '",' + node["id"] + ");\n"
+                ).encode(),
+            )
+        )
+    text = (root / "source.cpp").read_bytes()
+    for offset, insertion in sorted(edits, reverse=True):
+        assert text[offset - 1 : offset] == b";"
+        text = text[:offset] + insertion + text[offset:]
+    (root / "observed.cpp").write_bytes(text)
+    observed_cmd = cmd[:]
+    observed_cmd[observed_cmd.index(str(root / "source.cpp"))] = str(
+        root / "observed.cpp"
+    )
+    observed_cmd[-1] = str(root / "observed")
+    observed = native(observed_cmd, "observed")
+    if typed_mixed:
+        interpreted, _ = evaluate(m, bs)
+        assert (
+            interpreted == original
+        ), "typed native arithmetic differs from actual C++"
+        (root / "native-interpreter.json").write_text(
+            json.dumps(dict(passed=True, epochs=8, exact_outputs=True)) + "\n"
+        )
+    checks = []
+    for b, old, row in zip(bs, original, observed):
+        assert {k: v for k, v in row.items() if not k.startswith("__observe_")} == old
+        obs = {name: row["__observe_" + name] for name in indices}
+        obs["v"] = obs["v_raw"]
+        try:
+            result = math_check(64, 64, 256, s["epsilon"], s["scale"], b, old, obs)
+            checks.append(dict(passed=True, numerical=result))
+        except AssertionError as error:
+            checks.append(dict(passed=False, error=repr(error)))
+    (root / "native-gate.json").write_text(
+        json.dumps(
+            dict(
+                passed=all(c["passed"] for c in checks),
+                checks=checks,
+                scope="Actual unchanged C++ final outputs plus eleven actual native branch observations; original-eleven-input mathematical oracle.",
+            ),
+            indent=2,
+        )
+        + "\n"
+    )
+    if not all(c["passed"] for c in checks):
+        assert (
+            diagnose_numerical_failure
+        ), "Native numerical gate failed; preserve evidence. Only explicit diagnostic SDK execution may follow, never qualification."
+    source_control = ROOT / "validation/evidence/input-attention-source-20260907T122338297913Z"
+    source_physical = json.loads((source_control / "inputs.json").read_text())
+    assert bs[:3] == json.loads((source_control / "logical-inputs.json").read_text())
+    for row in source_physical:
+        row["residual"] = row.pop("input_x")
+    all_physical = [{k: v.tolist() for k, v in packed(s, m, b).items()} for b in bs]
+    assert (
+        all_physical[:3] == source_physical
+    ), "shared typed packing differs from executed source control"
+    selected = (
+        list(range(len(bs)))
+        if diagnostic_case == "all"
+        else [diagnostic_case] if diagnostic_case is not None else [0, 1, 2]
+    )
+    assert all(0 <= i < len(bs) for i in selected)
+    physical = [all_physical[i] for i in selected]
+    (root / "selected-cases.json").write_text(json.dumps(selected) + "\n")
+    (root / "inputs.json").write_text(json.dumps(physical) + "\n")
+    ext = extents(s)
+    lengths = {k: np.asarray(v).shape[-1] for k, v in physical[0].items()}
+    schema = dict(
+        rows=8,
+        cols=8,
+        inputs=lengths,
+        outputs=ext,
+        immutable=list(lengths),
+        launch="hls_main",
+        initialize="init_task",
+        output_word_bits={k: 32 for k in ext if k in WIDE_PORTS},
+    )
+    (root / "schema.json").write_text(json.dumps(schema) + "\n")
+    (root / "sdk-command.json").write_text(
+        json.dumps(
+            [
+                "cslc",
+                "layout.csl",
+                "--arch=wse3",
+                "--fabric-dims=15,10",
+                "--fabric-offsets=4,1",
+                parameters(s),
+                "-o=out",
+                "--memcpy",
+                "--channels=1",
+            ]
+        )
+        + "\n"
+    )
+    (root / "runtime-options.json").write_text(
+        json.dumps(dict(suppress_trace=True, num_threads=8, dump_core=True)) + "\n"
+    )
+    for name in ("probe_runtime.py",):
+        shutil.copyfile(ROOT / "experiments" / name, root / name)
+    shutil.copyfile(ROOT / "lib/Runtime/sdk_process.py", root / "sdk_process.py")
+    (root / "driver.py").write_text(
+        'import sys\nfrom pathlib import Path\nfrom probe_runtime import execute,mesh_half_worker\nr=Path(sys.argv[2]).resolve()\nif sys.argv[1]=="--worker":mesh_half_worker(r)\nelse:execute(r,2400)\n'
+    )
+    shutil.copyfile(__file__, root / "prepare.py")
+    for name in (
+        "tests/support/input_attention_fixtures.py",
+        "tests/support/attention_tail_fixtures.py",
+        "tests/support/prefill_tail_fixtures.py",
+        "tests/support/feed_forward_fixtures.py",
+    ):
+        shutil.copyfile(ROOT / name, root / name)
+    shutil.copytree(
+        ROOT / "lib",
+        root / "implementation",
+        ignore=shutil.ignore_patterns("__pycache__"),
+    )
+    if csl_adapter is not None:
+        csl_adapter(root, s)
+    if typed_mixed:
+        (root / "primitive-scope.json").write_text(
+            json.dumps(
+                dict(
+                    scope="Actual explicit-precision HLS C++ -> Clang AST -> development typed IR -> resource/width plan -> shared CSL generation. Public admission and qualification remain pending.",
+                    mixed_csl_adapter=False,
+                    native_gate_required=True,
+                )
+            )
+            + "\n"
+        )
+    files = {
+        str(p.relative_to(root)): hashlib.sha256(p.read_bytes()).hexdigest()
+        for p in root.rglob("*")
+        if p.is_file()
+    }
+    (root / "provenance.json").write_text(
+        json.dumps(
+            dict(
+                scope=(
+                    "Development explicit-precision HLS shared typed lowering, no CSL adapter; actual eight-case native and independent gates required. Conditional range obligations remain, so not public compiler admission or catalog qualification."
+                    if typed_mixed
+                    else "Development 31-node HLS shared codegen; not registered/qualified. Selected SDK diagnostic calls (selected-cases.json); first three inputs cross-checked against the executed source control. Eight actual native checks include a preserved cancellation failure; this probe cannot qualify the numerical contract."
+                ),
+                files=files,
+            ),
+            indent=2,
+        )
+        + "\n"
+    )
+    return root
+
+
+if __name__ == "__main__":
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--diagnose-numerical-failure", action="store_true")
+    ap.add_argument("--diagnostic-case", type=int, choices=range(8))
+    ap.add_argument("--typed-mixed", action="store_true")
+    ap.add_argument("--all", action="store_true")
+    args = ap.parse_args()
+    prepare(
+        args.diagnose_numerical_failure,
+        "all" if args.all else args.diagnostic_case,
+        typed_mixed=args.typed_mixed,
+    )

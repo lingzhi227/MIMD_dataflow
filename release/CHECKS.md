@@ -1,20 +1,18 @@
-# Release validation — 2026-09-08
+# Directory refactor validation — 2026-09-08
 
-The update was prepared and checked in the isolated publication checkout, without changing active SDK runs or the developer's canonical toolchain.
+The refactor was prepared in the isolated publication checkout. Active development trees and SDK experiments were not moved or modified.
 
-- Captured profile consistency: all **141** HLS source hashes match the captured status; each corresponding SDK report case records a pass.
-- First complete regression after fixture repairs: **332 tests passed** in 85.746 seconds. Final post-selection regression: **332 tests passed** in 85.725 seconds.
-- Native `sdk_examples/gemm` smoke passed; see `native-smoke-20260908.json`.
-- Root README, principal English guides, example tour and profile-index local links resolve.
-- No credential-pattern matches were found for GitHub tokens, AWS access keys or private-key headers in the selected payload.
-- No selected file exceeds 45 MiB. Roughly 331.5 MiB of unused historical data was removed after tracing fixture reads. Necessary regression witnesses remain separately identified under `tests/fixtures/history/`.
+- Full regression: **338 tests passed** in 99.798 seconds, including six repository-layout tests. After the final candidate relocation into the inference domain, **15 relevant tests passed** in 7.191 seconds.
+- Migration audit: **4,168 moved files have identical Git blob hashes** against the pre-refactor commit. This covers existing public headers, CSL/native runtime, profile sources/contracts, upstream reference files, raw reports and historical fixtures. See [MIGRATION-CHECKS.json](MIGRATION-CHECKS.json).
+- Blocked MLP native execution and profile checks passed. Its six generated CSL files match the selected qualified historical bundle.
+- The 25-node projected-cache composition passed native execution and profile checks. All nine generated CSL files match a fresh run of the **same pre-refactor GitHub revision**, establishing that the directory move did not change generated CSL.
+- The 35-node projected-cache + FFN candidate passed native compilation, frozen code-generation checks and the native/target preparation gates. All twelve generated CSL files match its selected frozen candidate. Target preparation is not SDK simulator execution.
+- Public commands work outside the repository working directory; frozen resolvers stay isolated from live compiler files; standalone numerical reference modules remain independently importable.
 
-Two initial packaging failures were missing historical fixture dependencies, not numerical failures. The missing source-generation witness and complete manifest-bound frozen-auditor witness were restored without relaxing assertions or modifying original evidence bytes.
+[REFACTOR-CODEGEN.json](REFACTOR-CODEGEN.json) also records a comparison against the older SDK-qualified projected-cache bundle. One RMS library file differs there due to an optional mean-mode feature that already existed before this refactor. That historical difference is retained rather than described as a byte-identical match. The matched-revision comparison above passes for every generated CSL file.
 
-Validation environment: Python 3.14.3, NumPy 2.4.1 and the local Clang installation. This is an additional host check, not a claim that the pinned NumPy 2.2.6 environment was rerun during packaging. The reproduction guide recommends Python 3.10–3.13 for that pinned dependency.
+No fresh SDK simulator or physical-wafer execution was performed for this refactor. The captured status remains **141 qualified bounded profiles**; the 35-node candidate remains pending SDK qualification. Neither full-catalog native reruns nor complete-model support is claimed.
 
-No fresh SDK simulator or physical-wafer execution was performed for this GitHub update. Historical reports refer to original frozen runs. The current 35-node parent remains unqualified at the captured checkpoint. Full-catalog native reruns are not claimed by the release smoke.
+Validation used Python 3.14.3, NumPy 2.4.1 and local Clang. The pinned SDK/reproduction environment is documented separately in [REPRODUCING.md](../docs/REPRODUCING.md). Fresh build outputs remain ignored under `build/`; the release manifest covers the published payload, not those local execution bundles.
 
-The human-readable status table separates recorded SDK success from captured toolchain-version matching. The status regeneration script now refuses to reconstruct history from this intentionally incomplete archive.
-
-Previous release checks are retained in `CHECKS-20260907.md`.
+The preceding source-update checks are preserved in [CHECKS-20260908-SNAPSHOT.md](CHECKS-20260908-SNAPSHOT.md). The organizational rationale and complete migration-map entry point are in [REPOSITORY-LAYOUT.md](../docs/REPOSITORY-LAYOUT.md).

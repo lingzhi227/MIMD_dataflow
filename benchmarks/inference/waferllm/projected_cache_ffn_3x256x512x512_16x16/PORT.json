@@ -1,0 +1,8 @@
+{
+  "profile": "waferllm/projected_cache_ffn_3x256x512x512_16x16",
+  "status": "development_candidate",
+  "sdk_qualified": false,
+  "scope": "Source candidate included for review, not an admitted catalog profile. Full composition SDK qualification is pending at this snapshot. Numerical policy and dimensions are explicit in hls.cpp; see docs/STATUS.md.",
+  "source": "hls.cpp",
+  "packaging_note": "Added during directory refactor to distinguish candidate source from qualified benchmarks."
+}

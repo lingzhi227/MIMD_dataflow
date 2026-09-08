@@ -17,7 +17,7 @@ The captured index contains **141 bounded SDK-qualified profiles**, up from 122 
 | Batch-major adjacent-pair transform | 1 | Six SDK/repaired-source calls; original odd-offset failure preserved |
 | Normalized QKV/pairs/cache-attention composition | 1 | 25-node graph; eight SDK/control calls, 11 numerical stages and 107 fault rejections |
 
-The 25-node graph is `projected_cache_attention_3x256x512_8x8`. Its newly computed K/V are outputs; it does not append them to the old cache. All entries and original report links are in [the profile index](../ports/STATUS.md).
+The 25-node graph is `projected_cache_attention_3x256x512_8x8`. Its newly computed K/V are outputs; it does not append them to the old cache. All entries and original report links are in [the profile index](../validation/STATUS.md).
 
 ## Current implementation, not yet qualified
 

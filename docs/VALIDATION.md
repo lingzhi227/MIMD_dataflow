@@ -15,7 +15,7 @@ The included profile index records historical level 4 evidence within each contr
 
 ## Evidence interpretation
 
-- Native C++ stdout, IR results, target arithmetic and independent mathematical references are separate evidence sources. Historical field naming is corrected in [NATIVE-EVIDENCE.md](../ports/docs/NATIVE-EVIDENCE.md).
+- Native C++ stdout, IR results, target arithmetic and independent mathematical references are separate evidence sources. Historical field naming is corrected in [NATIVE-EVIDENCE.md](contracts/NATIVE-EVIDENCE.md).
 - A source-control run is not automatically an HLS-generated run. Explicit source repairs and shared precision libraries are disclosed.
 - “Different snapshot” (`current_toolchain=false` in raw JSON) means the historical snapshot differs from the captured development toolchain, not that the historical test failed. Packaging changes mean even “Matching captured snapshot” must not be interpreted as a new release SDK run.
 - Maximum local PE cycles, global latency, host wall time and physical hardware throughput are different metrics.

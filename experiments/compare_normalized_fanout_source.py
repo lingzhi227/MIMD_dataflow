@@ -1,0 +1,111 @@
+"""Compare frozen resident fan-out to explicitly repaired pinned source control."""
+
+from pathlib import Path as _BootstrapPath
+import sys as _bootstrap_sys
+_bootstrap_root = next(p for p in _BootstrapPath(__file__).resolve().parents if (p / "hls-layout.json").is_file())
+_bootstrap_sys.path.insert(0, str(_bootstrap_root / "tools"))
+from bootstrap import configure, repository_root
+configure(_bootstrap_root)
+
+
+import argparse, json, subprocess, sys
+from pathlib import Path
+import numpy as np
+from probe_runtime import read, sha, verify
+
+p = argparse.ArgumentParser()
+p.add_argument("hls", type=Path)
+p.add_argument("source", type=Path)
+p.add_argument("output", type=Path)
+a = p.parse_args()
+assert not a.output.exists()
+code = 'import json,sys;from pathlib import Path;p=Path(sys.argv[1]);sys.path.insert(0,str(p/"implementation"));from validate import audit;print(json.dumps(audit(p)))'
+h = json.loads(
+    subprocess.check_output(
+        [sys.executable, "-c", code, str(a.hls.resolve())], text=True
+    )
+)
+assert h["passed"]
+verify(a.source)
+e = read(a.source / "execution.json")
+assert e["success"] and e["results_sha256"] == sha(a.source / "results.json")
+s = read(a.hls / "schedule.json")
+rs = read(a.source / "schedule.json")
+prov = read(a.source / "provenance.json")
+assert s["projections"] == 3 and s["instrumentation"] == "counters"
+assert (
+    prov["preserve_completed_left_ownership"]
+    and not prov["observe_completed_ownership"]
+)
+assert (s["M"], s["N"], s["P"], s["epsilon"]) == (
+    rs["M"],
+    rs["N"],
+    rs["cols"],
+    rs["epsilon"],
+) and rs["rows"] == rs["cols"]
+assert read(a.hls / "runtime-options.json") == read(a.source / "runtime-options.json")
+b = read(a.hls / "batches.json")
+sb = read(a.source / "inputs.json")
+r = read(a.hls / "results.json")
+c = read(a.source / "results.json")
+assert (
+    c["success"]
+    and c["runtime_instances"] == 1
+    and len(c["cases"]) == len(sb)
+    and len(sb) in (2, 6)
+    and len(r["cases"]) == 6
+)
+cases = []
+L = s["Mt"] * s["Nt"]
+for epoch, (source, d, inputs) in enumerate(zip(c["cases"], r["diagnostics"], sb)):
+    assert inputs == dict(
+        x=b[epoch]["x"],
+        w=b[epoch]["w"],
+        q=b[epoch]["weight0"],
+        k=b[epoch]["weight1"],
+        v=b[epoch]["weight2"],
+    )
+    for i, key in enumerate(["hls_result", "hls_k", "hls_v"]):
+        np.testing.assert_array_equal(
+            source[key], np.asarray(d["result"])[:, :, i * L : (i + 1) * L]
+        )
+    np.testing.assert_array_equal(source["hls_progress"], epoch + 1)
+    t = np.asarray(source["hls_time"], np.int64)
+    cycles = sum((t[:, :, j + 3] - t[:, :, j]) * (1 << (16 * j)) for j in range(3)) % (
+        1 << 48
+    )
+    assert np.all((cycles > 0) & (cycles < 2**32))
+    cc = int(cycles.max())
+    hc = h["cases"][epoch]["max_local_cycles"]
+    cases.append(
+        dict(
+            all_three_branch_half_bits_exact=True,
+            hls_max_local_cycles=hc,
+            source_max_local_cycles=cc,
+            hls_to_source_ratio=hc / cc,
+        )
+    )
+a.output.write_text(
+    json.dumps(
+        dict(
+            passed=True,
+            new_sdk_execution=False,
+            scope="RMSNorm plus three sequential projections; matching inputs, geometry and runtime options, no tensor observation copies. Source includes explicit row-normalization and live-buffer ownership repairs. Local WSE3 simulator intervals, not full inference or hardware performance.",
+            cases=cases,
+            hashes={
+                str(v): sha(v)
+                for v in [
+                    a.hls / "manifest.json",
+                    a.hls / "results.json",
+                    a.source / "provenance.json",
+                    a.source / "results.json",
+                    Path(__file__),
+                ]
+            },
+        ),
+        indent=2,
+    )
+    + "\n"
+)
+print(a.output)
+print(cases)

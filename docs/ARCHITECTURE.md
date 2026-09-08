@@ -18,15 +18,7 @@ flowchart TD
 
 ## Implementation map
 
-| Responsibility | Entry points under `ports/toolchain/` |
-| --- | --- |
-| Restricted C++ frontend and operator API | `frontend.py`, `include/` |
-| Numerical semantics | `ir.py`, `binary16.py`, algorithm-specific verifiers/evaluators |
-| Spatial mapping and supported composition | `planner.py`, `mesh_*.py`, resource and shape contracts |
-| CSL math and communication | `runtime/` |
-| Build snapshots and native execution | `compile.py`, `integrity.py` |
-| SDK transport and tensor packing | `sdk.py`, algorithm-specific SDK adapters |
-| Inspection and qualification | `validate.py`, `debug.py`, `ports/experiments/` |
+The implementation is now organized by responsibility under `lib/`. See [the compiler map](../lib/README.md) and [the complete directory guide](REPOSITORY-LAYOUT.md). Public headers live in `include/pragma/`, CSL libraries in `runtime/csl/`, and Python SDK bindings in `lib/Runtime/`.
 
 A logical matrix product may explicitly select SUMMA, Cannon, half two-hop or grouped reduction. This is a finite set of supported lowerings; arbitrary combinations, dynamic layouts and global resource allocation are not implemented. Unsupported combinations must fail rather than silently choose a different algorithm.
 
@@ -48,7 +40,7 @@ SDK half math can differ from rounding a host math function to half. The project
 
 Supported resident compositions include normalized projections, supplied-Q/K/V attention, gated MLP and a bounded projection/residual/RMS graph. Intermediate device tensors stay resident in those qualified graphs. These do not establish a complete transformer layer or model.
 
-See [pragma syntax](../ports/docs/PRAGMAS.md), [DSR leases](../ports/docs/INFERENCE-DSR-LEASES.md), [numerical policy](../ports/docs/NUMERICAL-POLICY.md) and [the validation policy](VALIDATION.md). Detailed algorithm documents preserve dated measurements; the release status defines the snapshot boundary.
+See [pragma syntax](contracts/PRAGMAS.md), [DSR leases](contracts/INFERENCE-DSR-LEASES.md), [numerical policy](contracts/NUMERICAL-POLICY.md) and [the validation policy](VALIDATION.md). Detailed algorithm documents preserve dated measurements; the release status defines the snapshot boundary.
 
 ## September 8 extension: explicit composition contracts
 
@@ -56,4 +48,4 @@ The frontend now expresses batch-major feature/sequence axes, local half versus 
 
 The latest parent borrows a caller-owned attention region and continues into mean-statistic normalization and FFN on shared SDK planes. Completion callbacks release specified local leases, not an assumed global barrier. The 35-node parent's full SDK qualification is still pending; primitive SDK evidence does not automatically qualify the composition.
 
-See [mean-statistic RMS](../ports/docs/MEAN-STATISTIC-RMS.md), the detailed contracts under `ports/docs/`, and [the candidate HLS source](../ports/projects/waferllm/projected_cache_ffn_3x256x512x512_16x16/hls.cpp).
+See [mean-statistic RMS](contracts/MEAN-STATISTIC-RMS.md), the detailed contracts under `ports/docs/`, and [the candidate HLS source](../benchmarks/inference/waferllm/projected_cache_ffn_3x256x512x512_16x16/hls.cpp).
