@@ -1,0 +1,131 @@
+// HLS resident supplied-cache attention. No intermediate host transfer.
+param memcpy_params;param c2d_params;
+param P:i16;param B:i16;param Nt:i16;param St:i16;param score_block:i16;param value_block:i16;param output_block:i16;param scale_bits:u16;param sampled:i16;
+const padded:i16=((B+1)/2)*2;
+const capacity:i16=if(B*St>B*Nt) (if(B*St>padded) B*St else padded) else (if(B*Nt>padded) B*Nt else padded);
+const sys=@import_module("<memcpy/memcpy>",memcpy_params);
+const time=@import_module("<time>");const config=@import_module("<tile_config>");const pos=@import_module("<layout>");
+const score_op=@import_module("batched_matmul_blocked.csl",.{.batches=B,.inner=Nt,.columns=St,.block_size=score_block});
+const value_op=@import_module("batched_matmul_blocked.csl",.{.batches=B,.inner=St,.columns=Nt,.block_size=value_block});
+const output_op=@import_module("batched_matmul_blocked.csl",.{.batches=B,.inner=Nt,.columns=Nt,.block_size=output_block});
+const softmax=@import_module("batched_softmax_local.csl",.{.batches=B,.features=St});
+const collective=@import_module("sdk_axis_reduce.csl",.{.c2d_params=c2d_params,.capacity=@as(u16,capacity),.f_callback=after_collective});
+const max_op=@import_module("sdk_axis_max.csl",.{.participants=@as(u16,P),.capacity=@as(u16,padded),.f_gather=gather,.f_broadcast=broadcast,.f_callback=after_collective});
+fn gather(axis:u16,input:[*]u32,output:[*]u32,count:u16,callback:local_task_id) void {
+ @assert(!collective.busy);
+ if(axis==0){collective.mx.gather(0,input,output,count,callback);}else{collective.my.gather(0,input,output,count,callback);}
+}
+fn broadcast(axis:u16,data:[*]u32,count:u16,callback:local_task_id) void {
+ if(axis==0){collective.mx.broadcast(0,data,count,callback);}else{collective.my.broadcast(0,data,count,callback);}
+}
+const len_X:i16=B*Nt;var X=@zeros([len_X]f16);
+const len_Q:i16=B*Nt;var Q=@zeros([len_Q]f16);
+const len_K:i16=Nt*St;var K=@zeros([len_K]f16);
+const len_V:i16=Nt*St;var V=@zeros([len_V]f16);
+const len_W:i16=Nt*Nt;var W=@zeros([len_W]f16);
+const len_score:i16=B*St;var score=@zeros([len_score]f16);
+const len_scaled:i16=B*St;var scaled=@zeros([len_scaled]f16);
+const len_exponents:i16=B*St;var exponents=@zeros([len_exponents]f16);
+const len_probability:i16=B*St;var probability=@zeros([len_probability]f16);
+const len_local_max:i16=padded;var local_max=@zeros([len_local_max]f16);
+const len_maximum:i16=padded;var maximum=@zeros([len_maximum]f16);
+const len_local_sum:i16=padded;var local_sum=@zeros([len_local_sum]f16);
+const len_sums:i16=padded;var sums=@zeros([len_sums]f16);
+const len_context:i16=B*Nt;var context=@zeros([len_context]f16);
+const len_delta:i16=B*Nt;var delta=@zeros([len_delta]f16);
+const len_result:i16=B*Nt;var result=@zeros([len_result]f16);
+const len_score_partial:i16=if(sampled!=0) B*St else 1;var score_partial=@zeros([len_score_partial]f16);
+const len_context_partial:i16=if(sampled!=0) B*Nt else 1;var context_partial=@zeros([len_context_partial]f16);
+const len_delta_partial:i16=if(sampled!=0) B*Nt else 1;var delta_partial=@zeros([len_delta_partial]f16);
+var progress=@zeros([8]u16);var timing=@zeros([6]u16);var queues=@zeros([2]u16);
+var start=@zeros([3]u16);var finish=@zeros([3]u16);
+var phase:u16=0;var ready:bool=false;var active:bool=false;
+fn copy(input:[*]f16,output:[*]f16,count:u16) void {
+ const a=@get_dsd(mem1d_dsd,.{.base_address=input,.extent=count});const b=@get_dsd(mem1d_dsd,.{.base_address=output,.extent=count});@mov16(b,a);
+}
+fn init_task() void {@assert(!active);collective.init();ready=true;progress[0]=1;sys.unblock_cmd_stream();}
+fn hls_main() void {
+ @assert(ready and !active and !max_op.busy and !collective.busy);active=true;phase=0;
+ time.enable_tsc();time.get_timestamp(&start);
+ for(@range(u16,6)) |i| {progress[i+1]=0;}
+ // MAX padding is the finite-domain identity, SUM padding is zero. Only B rows normalize.
+ for(@range(i16,padded)) |i| {local_max[i]=-65504.0;local_sum[i]=0.0;}
+ score_op.compute(&Q,&K,&score);
+ if(sampled!=0){copy(&score,&score_partial,@as(u16,B*St));}
+ collective.start(0,&score,&score,@as(u16,B*St));
+}
+fn after_collective() void {
+ @assert(active and !collective.busy and !max_op.busy);
+ if(phase==0){
+  progress[1]=1;softmax.scale_max(&score,&scaled,&local_max,@bitcast(f16,scale_bits));
+  phase=1;max_op.start(1,pos.get_y_coord(),&local_max,&maximum,@as(u16,padded));
+ } else if(phase==1){
+  progress[2]=1;softmax.exp_sum(&scaled,&maximum,&exponents,&local_sum);
+  phase=2;collective.start(1,&local_sum,&sums,@as(u16,padded));
+ } else if(phase==2){
+  progress[3]=1;softmax.normalize(&exponents,&sums,&probability);
+  value_op.compute(&probability,&V,&context);
+  if(sampled!=0){copy(&context,&context_partial,@as(u16,B*Nt));}
+  phase=3;collective.start(1,&context,&context,@as(u16,B*Nt));
+ } else if(phase==3){
+  progress[4]=1;output_op.compute(&context,&W,&delta);
+  if(sampled!=0){copy(&delta,&delta_partial,@as(u16,B*Nt));}
+  phase=4;collective.start(0,&delta,&delta,@as(u16,B*Nt));
+ } else {
+  @assert(phase==4);progress[5]=1;
+  const xd=@get_dsd(mem1d_dsd,.{.base_address=&X,.extent=@as(u16,B*Nt)});
+  const dd=@get_dsd(mem1d_dsd,.{.base_address=&delta,.extent=@as(u16,B*Nt)});
+  const rd=@get_dsd(mem1d_dsd,.{.base_address=&result,.extent=@as(u16,B*Nt)});
+  @faddh(rd,xd,dd);progress[6]=1;progress[7]+=1;
+  time.get_timestamp(&finish);time.disable_tsc();for(@range(u16,3)) |i| {timing[i]=start[i];timing[i+3]=finish[i];}
+  const qi=config.input_queue_status.get();const qo=config.output_queue_status.get();queues[0]=@as(u16,qi.empty);queues[1]=@as(u16,qo.empty);
+  active=false;sys.unblock_cmd_stream();
+ }
+}
+var export_X:[*]f16=&X;
+var export_Q:[*]f16=&Q;
+var export_K:[*]f16=&K;
+var export_V:[*]f16=&V;
+var export_W:[*]f16=&W;
+var export_score:[*]f16=&score;
+var export_scaled:[*]f16=&scaled;
+var export_exponents:[*]f16=&exponents;
+var export_probability:[*]f16=&probability;
+var export_local_max:[*]f16=&local_max;
+var export_maximum:[*]f16=&maximum;
+var export_local_sum:[*]f16=&local_sum;
+var export_sums:[*]f16=&sums;
+var export_context:[*]f16=&context;
+var export_delta:[*]f16=&delta;
+var export_result:[*]f16=&result;
+var export_score_partial:[*]f16=&score_partial;
+var export_context_partial:[*]f16=&context_partial;
+var export_delta_partial:[*]f16=&delta_partial;
+var export_progress:[*]u16=&progress;
+var export_timing:[*]u16=&timing;
+var export_queues:[*]u16=&queues;
+comptime {
+ @export_symbol(export_X,"X");
+ @export_symbol(export_Q,"Q");
+ @export_symbol(export_K,"K");
+ @export_symbol(export_V,"V");
+ @export_symbol(export_W,"W");
+ @export_symbol(export_score,"score");
+ @export_symbol(export_scaled,"scaled");
+ @export_symbol(export_exponents,"exponents");
+ @export_symbol(export_probability,"probability");
+ @export_symbol(export_local_max,"local_max");
+ @export_symbol(export_maximum,"maximum");
+ @export_symbol(export_local_sum,"local_sum");
+ @export_symbol(export_sums,"sums");
+ @export_symbol(export_context,"context");
+ @export_symbol(export_delta,"delta");
+ @export_symbol(export_result,"result");
+ @export_symbol(export_score_partial,"score_partial");
+ @export_symbol(export_context_partial,"context_partial");
+ @export_symbol(export_delta_partial,"delta_partial");
+ @export_symbol(export_progress,"progress");
+ @export_symbol(export_timing,"timing");
+ @export_symbol(export_queues,"queues");
+ @export_symbol(init_task);@export_symbol(hls_main);
+}

@@ -1,0 +1,60 @@
+{
+  "contract": {
+    "sdk_image_sha256": "fff17e81c61dcb6012bdee2941a6fdc570f5c8604967530e7b7108651258193d",
+    "source": "<memcpy/sys_params>",
+    "source_sha256": "e70159b986fd92a4f4a83a0a46abe209ce64ed45903ac8ccda9ca0c7a4ef47df",
+    "colors": [
+      20,
+      21,
+      22,
+      23
+    ],
+    "input_queues": [
+      0,
+      1
+    ],
+    "output_queues": [
+      0,
+      1
+    ],
+    "local_tasks": [
+      21,
+      24,
+      27,
+      28,
+      30
+    ],
+    "local_task_sources": {
+      "memcpy_data": {
+        "identifier": 21,
+        "source": "memcpy/wse3/memcpyd2h.csl",
+        "source_sha256": "352c56bbf4f3b5c0ea7a3851128270e9175dd1023d997cffaf9314a89f785b43",
+        "derivation": "LOCAL_MEMCPYD2H_DATA derives from default MEMCPYD2H_DATA=21 and binds f_send_data"
+      },
+      "persistent_context": {
+        "identifier": 24,
+        "conservative_reservation": true
+      }
+    },
+    "control_tasks": [
+      33,
+      34,
+      35,
+      36,
+      37,
+      40
+    ],
+    "scope": "WSE3 default core-rectangle memcpy implementation bindings plus context declarations; custom overrides require another contract. Hardware identifier ranges remain compiler-checked."
+  },
+  "inspection": "Installed SDK2.10.1 cs_python source inspection; no simulator or proprietary source redistribution.",
+  "derived_binding": {
+    "parameter_source": "memcpy/sys_params.csl:46",
+    "parameter": "MEMCPYD2H_DATA",
+    "default": 21,
+    "conversion": "memcpy/wse3/memcpyd2h.csl:161",
+    "binding": "memcpy/wse3/memcpyd2h.csl:545"
+  },
+  "prior_execution_evidence": "evidence/task-slots-20260906T132115614149Z",
+  "scope": "Conservative default WSE3 memcpy resource collision check; local24 also reserved for persistent context, not claimed unavailable in default-context probe.",
+  "implementation_sha256": "8c6379ac81cff946d46c8c77d834c061c8f83f063c457ade1d43ddae27f7e1d0"
+}

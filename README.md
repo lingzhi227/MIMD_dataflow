@@ -2,7 +2,7 @@
 
 Pragma is an experimental C++-to-CSL toolchain for explicit numerical dataflow on Cerebras wafer-scale processors. It combines typed tensor operations and spatial pragmas with reusable CSL compute and communication libraries. The official Cerebras compiler and SDK compile and execute the generated programs.
 
-**This repository contains a curated research implementation, not a production LLM runtime or a replacement for the Cerebras SDK.** The release snapshot includes **122 bounded profiles with recorded SDK simulator validation**. A profile specifies dimensions, precision, input domain, placement and observation mode; several profiles may implement variants of the same algorithm. Simulator evidence does not establish hardware throughput.
+**This repository contains a curated research implementation, not a production LLM runtime or a replacement for the Cerebras SDK.** The release snapshot includes **141 bounded profiles with recorded SDK simulator validation**. A profile specifies dimensions, precision, input domain, placement and observation mode; several profiles may implement variants of the same algorithm. Simulator evidence does not establish hardware throughput.
 
 ## Start here
 
@@ -63,8 +63,10 @@ python run_ports.py --select-exact sdk_examples/gemm
 
 This command compiles and executes native C++, generates CSL, and checks the numerical reference. It **does not execute CSL in the simulator** unless `--sdk` is supplied in the configured SDK environment. See [reproduction](docs/REPRODUCING.md) for that distinction and setup.
 
-## Direction
+## Current direction and stopping condition
 
-The next model-driven goal is a complete single-wafer Qwen2.5-0.5B-Instruct inference path: real weights, all 24 layers, full vocabulary, prefill and KV-cache decode. Missing capabilities include model-correct GQA/causal attention, persistent KV state, embedding, vocabulary-wide output selection and full-model placement. This is a roadmap, not a delivered model implementation.
+The current authorized focus is category 8: WaferLLM numerical stages and source-backed prefill/decode composition. After completing and auditing that accepted scope, development must stop and report evidence and unsupported features. Categories 9–12 and other applications await further user instruction. Qwen implementation is not part of the authorized development scope.
 
-This repository update replaces the previous working tree through a normal commit. Earlier contents remain available in Git history. No Cerebras or upstream-project endorsement is claimed.
+The latest qualified boundary is a 25-node normalized-QKV → pair transform → supplied-cache attention/output/residual graph. A 35-node attention-plus-FFN graph is implemented and undergoing full SDK validation; it is not counted as a qualified profile. Read the status page for exact limits, including read-only cache and missing full-model semantics.
+
+This repository retains previous revisions in Git history. No Cerebras or upstream-project endorsement is claimed.

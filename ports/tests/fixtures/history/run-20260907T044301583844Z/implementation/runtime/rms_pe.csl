@@ -1,0 +1,50 @@
+param memcpy_params;param x:i16;param cols:i16;param Mt:i16;param Nt:i16;
+param epsilon:f16;param sampled:i16;
+param rs:color;param rr:color;param ls:color;param lr:color;param bd:color;
+const sys=@import_module("<memcpy/memcpy>",memcpy_params);
+const math=@import_module("<math>");const time=@import_module("<time>");
+const config=@import_module("<tile_config>");
+const reduction=@import_module("row_reduce.csl",.{.x=x,.cols=cols,.extent=Mt,.rs=rs,.rr=rr,.ls=ls,.lr=lr,.bd=bd});
+var X=@zeros([Mt*Nt]f16);var W=@zeros([Nt]f16);var result=@zeros([Mt*Nt]f16);
+var squares=@zeros([Mt*Nt]f16);var sums=@zeros([Mt]f16);
+var history=@zeros([if(sampled!=0) 3*Mt else 1]f16);
+var progress=@zeros([5]u16);var timing=@zeros([6]u16);var queues=@zeros([2]u16);
+var start=@zeros([3]u16);var end=@zeros([3]u16);
+const xd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{Mt*Nt}->X[i]});
+const sd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{Mt*Nt}->squares[i]});
+const sumd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{Mt}->sums[i]});
+const cold=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{Mt}->X[i]});
+const outd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{Mt}->result[i]});
+const sqcold=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{Mt}->squares[i]});
+const histd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{Mt}->history[i]});
+const dest=@get_dsr(dsr_dest,1);const src0=@get_dsr(dsr_src0,1);const src1=@get_dsr(dsr_src1,1);
+fn observe(phase:i16) void {
+ if(sampled!=0){const d=@increment_dsd_offset(histd,phase*Mt,f16);@fmovh(d,sumd);}
+ progress[phase]+=1;
+}
+fn hls_main() void {
+ time.enable_tsc();time.get_timestamp(&start);
+ for(@range(i16,4)) |i| {progress[i]=0;}
+ @fmulh(sd,xd,xd);@fmovh(sumd,0.0);
+ @load_to_dsr(dest,sumd,.{.save_address=false});@load_to_dsr(src0,sumd,.{.save_address=false});
+ @load_to_dsr(src1,sqcold,.{.save_address=true});
+ for(@range(i16,Nt)) |j| {@faddh(dest,src0,src1);}
+ observe(0);reduction.allreduce_add(&sums);observe(1);
+ for(@range(i16,Mt)) |i| {const mean=sums[i]/@as(f16,cols*Nt);sums[i]=1.0/math.sqrt_f16(mean+epsilon);}
+ observe(2);
+ // Preserve original X and use the correct per-row inverse vector for each feature.
+ @load_to_dsr(dest,outd,.{.save_address=true});@load_to_dsr(src0,cold,.{.save_address=true});
+ for(@range(i16,Nt)) |j| {@fmulh(dest,src0,W[j]);}
+ @load_to_dsr(dest,outd,.{.save_address=true});@load_to_dsr(src0,outd,.{.save_address=true});
+ @load_to_dsr(src1,sumd,.{.save_address=false});
+ for(@range(i16,Nt)) |j| {@fmulh(dest,src0,src1);}
+ progress[3]=1;progress[4]+=1;
+ time.get_timestamp(&end);time.disable_tsc();
+ for(@range(i16,3)) |i| {timing[i]=start[i];timing[i+3]=end[i];}
+ const qi=config.input_queue_status.get();const qo=config.output_queue_status.get();
+ queues[0]=@as(u16,qi.empty);queues[1]=@as(u16,qo.empty);
+ sys.unblock_cmd_stream();
+}
+var xp:[*]f16=&X;var wp:[*]f16=&W;var yp:[*]f16=&result;var hp:[*]f16=&history;
+var pp:[*]u16=&progress;var tp:[*]u16=&timing;var qp:[*]u16=&queues;
+comptime {@export_symbol(xp,"X");@export_symbol(wp,"W");@export_symbol(yp,"result");@export_symbol(hp,"history");@export_symbol(pp,"progress");@export_symbol(tp,"timing");@export_symbol(qp,"queues");@export_symbol(hls_main);}

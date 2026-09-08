@@ -12,6 +12,38 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class ApplicationGate(unittest.TestCase):
+    def test_failed_stage_is_sealed_after_status_transition(self):
+        sys.path[:0] = [str(ROOT / "experiments"), str(ROOT / "toolchain")]
+        from application_gate import seal
+
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            (root / "batches.json").write_text('[{"x":[1]}]')
+            (root / "native-output.txt").write_text("epoch 0\nresult 1 2\n")
+            (root / "stage.json").write_text('{"stage":"native_passed"}')
+            digest = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+            (root / "manifest.json").write_text(
+                json.dumps({"files": {"stage.json": digest(root / "stage.json")}})
+            )
+            reference = root / "reference.py"
+            reference.write_text("# independent failing fixture\n")
+
+            def reject(batch, output):
+                raise AssertionError("independent math failed")
+
+            with self.assertRaises(AssertionError):
+                seal(root, reference, reject, {})
+            manifest = json.loads((root / "manifest.json").read_text())
+            self.assertEqual(
+                manifest["files"]["stage.json"], digest(root / "stage.json")
+            )
+            self.assertFalse(
+                json.loads((root / "application-gate.json").read_text())["passed"]
+            )
+            self.assertFalse(
+                json.loads((root / "stage.json").read_text())["sdk_started"]
+            )
+
     def test_failed_or_stale_math_gate_precedes_sdk(self):
         for passed, stale in [(False, False), (True, True)]:
             with self.subTest(

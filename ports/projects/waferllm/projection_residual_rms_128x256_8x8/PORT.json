@@ -1,11 +1,14 @@
 {
   "project": "waferllm",
   "kernel": "projection_residual_rms_128x256_8x8",
-  "status": "development",
+  "status": "source_ready",
   "partitions": 1,
   "origins": [
     "Prefill/src/prefill.csl h1_matmul/z_add/rmsnorm_z"
   ],
   "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
-  "contract": "Supplied activation, square projection weights, residual and feature gamma; resident projection/add/RMS composition under development. No full Prefill or hardware qualification."
+  "contract": "Resident supplied activation/weight/residual/gamma: 128x256 projection, residual add and row RMSNorm on 8x8 PEs. Ordinary typed matmul/add/rmsnorm graph, source forward two-hop DSR engine, joined resources, original CSL row collective and reusable local RMS library. Immutable inputs and last-use private buffer reuse; no intermediate host transfer. Eight SDK calls, exact output/inverse bits, fixed original-input native/device accuracy, mutation rejection and static ELF memory. Sampled mode additionally validates every projection prefix and normalization stages. Matched repaired-source comparison covers first three calls with observation/copy differences stated. No full Prefill or hardware performance claim.",
+  "fixture": "projection_residual_rms:128:256",
+  "instrumentation": "sampled",
+  "source_comparison": "evidence/projection-residual-rms128x256-sampled-source-comparison.json"
 }

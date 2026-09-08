@@ -15,3 +15,9 @@ Read a frontend source together with its `PORT.json` and contract. Profiles are 
 `generated/` includes actual emitted CSL from the three inference examples above. Each subdirectory contains `PROVENANCE.json` naming its qualified run. These are source-reading examples, not complete executable frozen bundles; use the runner to generate all metadata, bindings and dependencies for a fresh execution.
 
 The math/state witnesses used by tests are under `ports/tests/fixtures/`, with original-path hashes recorded separately. They are not invented expected outputs.
+
+## New source-reading entries
+
+- [Qualified 25-node QKV/pairs/cache-attention graph](../ports/projects/waferllm/projected_cache_attention_3x256x512_8x8/hls.cpp): read-only supplied old cache, separate new K/V outputs.
+- [35-node attention-plus-FFN candidate](../ports/projects/waferllm/projected_cache_ffn_3x256x512x512_16x16/hls.cpp): implemented and undergoing full SDK qualification; not an admitted profile.
+- [Mean-statistic RMS contract](../ports/docs/MEAN-STATISTIC-RMS.md): explicit overflow handling, range proof and actual primitive SDK experiments.

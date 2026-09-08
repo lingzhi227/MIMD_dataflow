@@ -7,6 +7,9 @@ ROOT = Path(__file__).resolve().parent
 
 
 def main():
+    # The curated checkout omits full historical execution bundles.
+    if (ROOT.parent / "release/UPDATE-SNAPSHOT.json").exists():
+        raise SystemExit("This curated release ships a captured status index. Regenerate status only in the full development workspace with original run bundles; see ../release/SELECTION.md.")
     catalog = json.loads((ROOT / "catalog.json").read_text())
     inventory = json.loads((ROOT / "evidence/source_inventory.json").read_text())
     reports = []

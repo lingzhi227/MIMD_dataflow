@@ -1,0 +1,112 @@
+{
+  "source_bundle": "projects/waferllm/feed_forward_64x64x256_8x8_counters/run-20260907T083556925411Z",
+  "new_sdk_execution": false,
+  "scope": "Target-model precision preflight; not SDK observations or actual native intermediate values.",
+  "cases": [
+    {
+      "epoch": 0,
+      "check": {
+        "relative_l2": 0.00018559785491196248,
+        "peak_scaled_error": 0.00029919286302230845,
+        "fixed_accuracy_passed": true,
+        "contract": "normalized-feed-forward-half-normwise-v1",
+        "mlp_delta": {
+          "relative_l2": 0.005682277351181153,
+          "peak_scaled_error": 0.006185478445505632,
+          "fixed_accuracy_passed": true
+        }
+      }
+    },
+    {
+      "epoch": 1,
+      "check": {
+        "relative_l2": 0.000182128981335924,
+        "peak_scaled_error": 0.0003661641287310893,
+        "fixed_accuracy_passed": true,
+        "contract": "normalized-feed-forward-half-normwise-v1",
+        "mlp_delta": {
+          "relative_l2": 0.005135397574032377,
+          "peak_scaled_error": 0.005432519725123603,
+          "fixed_accuracy_passed": true
+        }
+      }
+    },
+    {
+      "epoch": 2,
+      "check": {
+        "relative_l2": 0.0,
+        "peak_scaled_error": 0.0,
+        "fixed_accuracy_passed": true,
+        "contract": "normalized-feed-forward-half-normwise-v1",
+        "mlp_delta": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        }
+      }
+    },
+    {
+      "epoch": 3,
+      "check": {
+        "relative_l2": 0.00019635609291483353,
+        "peak_scaled_error": 0.0004447011141906398,
+        "fixed_accuracy_passed": true,
+        "contract": "normalized-feed-forward-half-normwise-v1",
+        "mlp_delta": {
+          "relative_l2": 0.0014708720810135308,
+          "peak_scaled_error": 0.0019702727134960447,
+          "fixed_accuracy_passed": true
+        }
+      }
+    },
+    {
+      "epoch": 4,
+      "check": {
+        "relative_l2": 0.0,
+        "peak_scaled_error": 0.0,
+        "fixed_accuracy_passed": true,
+        "contract": "normalized-feed-forward-half-normwise-v1",
+        "mlp_delta": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        }
+      }
+    },
+    {
+      "epoch": 5,
+      "check": {
+        "relative_l2": 0.0012547084087449426,
+        "peak_scaled_error": 0.0012547084087449398,
+        "fixed_accuracy_passed": true,
+        "contract": "normalized-feed-forward-half-normwise-v1",
+        "mlp_delta": {
+          "relative_l2": 0.0014599887589956642,
+          "peak_scaled_error": 0.0014599887589956649,
+          "fixed_accuracy_passed": true
+        }
+      }
+    },
+    {
+      "epoch": 6,
+      "check": {
+        "passed": false,
+        "error": "(0.5620308637348836, 0.973053906858879)"
+      }
+    },
+    {
+      "epoch": 7,
+      "check": {
+        "relative_l2": 0.0,
+        "peak_scaled_error": 0.0,
+        "fixed_accuracy_passed": true,
+        "contract": "normalized-feed-forward-half-normwise-v1",
+        "mlp_delta": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        }
+      }
+    }
+  ]
+}

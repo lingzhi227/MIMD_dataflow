@@ -1,0 +1,2257 @@
+{
+  "kind": "qualification_index_of_existing_sdk_runs",
+  "sdk": true,
+  "success": true,
+  "new_sdk_execution": false,
+  "cases": [
+    {
+      "key": "waferllm/projected_cache_attention_3x256x512_8x8",
+      "artifact": "projects/waferllm/projected_cache_attention_3x256x512_8x8/run-20260907T235739454777Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "epochs": 8,
+        "expected_epochs": 8,
+        "full_run_passed": true,
+        "cases": [
+          {
+            "epoch": 0,
+            "stages": {
+              "score": {
+                "relative_l2": 0.0,
+                "relative_peak": 0.0
+              },
+              "probability": {
+                "relative_l2": 0.0,
+                "relative_peak": 0.0
+              },
+              "context": {
+                "relative_l2": 0.0,
+                "relative_peak": 0.0
+              },
+              "delta": {
+                "relative_l2": 0.0003177790021757363,
+                "relative_peak": 0.00043203330584030476
+              },
+              "result": {
+                "relative_l2": 0.00016550263339392662,
+                "relative_peak": 0.0002398237816560875
+              },
+              "normalized": {
+                "relative_l2": 0.0,
+                "relative_peak": 0.0
+              },
+              "query": {
+                "relative_l2": 0.0,
+                "relative_peak": 0.0
+              },
+              "key_projection": {
+                "relative_l2": 0.0,
+                "relative_peak": 0.0
+              },
+              "value_projection": {
+                "relative_l2": 0.0,
+                "relative_peak": 0.0
+              },
+              "rotated_query": {
+                "relative_l2": 0.0,
+                "relative_peak": 0.0
+              },
+              "rotated_key": {
+                "relative_l2": 0.0,
+                "relative_peak": 0.0
+              }
+            },
+            "max_probability_mass_error": 0.0,
+            "max_pe_cycles": 65606
+          },
+          {
+            "epoch": 1,
+            "stages": {
+              "score": {
+                "relative_l2": 0.002815012444052136,
+                "relative_peak": 0.002384350085186069
+              },
+              "probability": {
+                "relative_l2": 0.0008478820585834022,
+                "relative_peak": 0.0015724443354519868
+              },
+              "context": {
+                "relative_l2": 0.007775524986873844,
+                "relative_peak": 0.009988329281433894
+              },
+              "delta": {
+                "relative_l2": 0.0041346225236213235,
+                "relative_peak": 0.005989587293613953
+              },
+              "result": {
+                "relative_l2": 0.00018236875342660835,
+                "relative_peak": 0.00034263923774366086
+              },
+              "normalized": {
+                "relative_l2": 0.0009506293172588309,
+                "relative_peak": 0.001102271094523814
+              },
+              "query": {
+                "relative_l2": 0.0011614870210772707,
+                "relative_peak": 0.0017793996236047103
+              },
+              "key_projection": {
+                "relative_l2": 0.001079580850235187,
+                "relative_peak": 0.001735439909549414
+              },
+              "value_projection": {
+                "relative_l2": 0.0010838169703746253,
+                "relative_peak": 0.001735439909549414
+              },
+              "rotated_query": {
+                "relative_l2": 0.0011804800491243576,
+                "relative_peak": 0.0014618340324541925
+              },
+              "rotated_key": {
+                "relative_l2": 0.0010732882127224294,
+                "relative_peak": 0.0014051366633812028
+              }
+            },
+            "max_probability_mass_error": 0.0009622573852539062,
+            "max_pe_cycles": 65606
+          },
+          {
+            "epoch": 2,
+            "stages": {
+              "score": {
+                "relative_l2": 0.0004258228547492128,
+                "relative_peak": 0.0004285808497792263
+              },
+              "probability": {
+                "relative_l2": 0.0,
+                "relative_peak": 0.0
+              },
+              "context": {
+                "relative_l2": 0.0,
+                "relative_peak": 0.0
+              },
+              "delta": {
+                "relative_l2": 0.0,
+                "relative_peak": 0.0
+              },
+              "result": {
+                "relative_l2": 0.0002533914329941329,
+                "relative_peak": 0.0004032258064516129
+              },
+              "normalized": {
+                "relative_l2": 0.0002921586035156709,
+                "relative_peak": 0.0005304161436044007
+              },
+              "query": {
+                "relative_l2": 0.00031724339181751944,
+                "relative_peak": 0.000383078895037694
+              },
+              "key_projection": {
+                "relative_l2": 0.0004577908545586403,
+                "relative_peak": 0.0008711246249044186
+              },
+              "value_projection": {
+                "relative_l2": 0.0004577908545586403,
+                "relative_peak": 0.0008711246249044186
+              },
+              "rotated_query": {
+                "relative_l2": 0.000324145889871824,
+                "relative_peak": 0.00028237598493936793
+              },
+              "rotated_key": {
+                "relative_l2": 0.000684717837512078,
+                "relative_peak": 0.00116149949987106
+              }
+            },
+            "max_probability_mass_error": 0.0,
+            "max_pe_cycles": 65606
+          },
+          {
+            "epoch": 3,
+            "stages": {
+              "score": {
+                "relative_l2": 7.999968000154201e-06,
+                "relative_peak": 7.999968000337074e-06
+              },
+              "probability": {
+                "relative_l2": 3.1401849173675503e-16,
+                "relative_peak": 6.661338147750938e-16
+              },
+              "context": {
+                "relative_l2": 1.8628474286722145e-15,
+                "relative_peak": 1.7308092281335773e-15
+              },
+              "delta": {
+                "relative_l2": 0.00028082893991164824,
+                "relative_peak": 0.0004755934108685277
+              },
+              "result": {
+                "relative_l2": 0.00017400477417840924,
+                "relative_peak": 0.00032212711428343695
+              },
+              "normalized": {
+                "relative_l2": 7.999968000219521e-06,
+                "relative_peak": 7.999968000219523e-06
+              },
+              "query": {
+                "relative_l2": 7.999967998776207e-06,
+                "relative_peak": 7.999967998776209e-06
+              },
+              "key_projection": {
+                "relative_l2": 7.999967998776207e-06,
+                "relative_peak": 7.999967998776209e-06
+              },
+              "value_projection": {
+                "relative_l2": 7.99996799881321e-06,
+                "relative_peak": 7.999967998813218e-06
+              },
+              "rotated_query": {
+                "relative_l2": 7.999967998776207e-06,
+                "relative_peak": 7.999967998776209e-06
+              },
+              "rotated_key": {
+                "relative_l2": 7.999967998776207e-06,
+                "relative_peak": 7.999967998776209e-06
+              }
+            },
+            "max_probability_mass_error": 0.0,
+            "max_pe_cycles": 65606
+          },
+          {
+            "epoch": 4,
+            "stages": {
+              "score": {
+                "relative_l2": 0.00012799180904841178,
+                "relative_peak": 0.0001279918090483655
+              },
+              "probability": {
+                "relative_l2": 0.0002386738947841481,
+                "relative_peak": 0.0005329962277383232
+              },
+              "context": {
+                "relative_l2": 0.001212306477593906,
+                "relative_peak": 0.0016456692711439304
+              },
+              "delta": {
+                "relative_l2": 0.002067970344075249,
+                "relative_peak": 0.0028818093652449002
+              },
+              "result": {
+                "relative_l2": 0.00022958371695122766,
+                "relative_peak": 0.00019750419358520113
+              },
+              "normalized": {
+                "relative_l2": 0.0001279918090484025,
+                "relative_peak": 0.00012799180904840253
+              },
+              "query": {
+                "relative_l2": 0.0001279918090484025,
+                "relative_peak": 0.00012799180904840253
+              },
+              "key_projection": {
+                "relative_l2": 0.0001279918090484025,
+                "relative_peak": 0.00012799180904840253
+              },
+              "value_projection": {
+                "relative_l2": 0.0001279918090484025,
+                "relative_peak": 0.00012799180904840253
+              },
+              "rotated_query": {
+                "relative_l2": 0.0001279918090484025,
+                "relative_peak": 0.00012799180904840253
+              },
+              "rotated_key": {
+                "relative_l2": 0.0001279918090484025,
+                "relative_peak": 0.00012799180904840253
+              }
+            },
+            "max_probability_mass_error": 9.059906005859375e-05,
+            "max_pe_cycles": 65606
+          },
+          {
+            "epoch": 5,
+            "stages": {
+              "score": {
+                "relative_l2": 0.001680340546101902,
+                "relative_peak": 0.0015357625026365931
+              },
+              "probability": {
+                "relative_l2": 0.003685552134199651,
+                "relative_peak": 0.006538537910431381
+              },
+              "context": {
+                "relative_l2": 0.009427661524770252,
+                "relative_peak": 0.013238626565855768
+              },
+              "delta": {
+                "relative_l2": 0.0036706245533717234,
+                "relative_peak": 0.006338677127059089
+              },
+              "result": {
+                "relative_l2": 0.000222221842401448,
+                "relative_peak": 0.0003661984048462072
+              },
+              "normalized": {
+                "relative_l2": 0.00022627126490799547,
+                "relative_peak": 0.0003291357013134045
+              },
+              "query": {
+                "relative_l2": 0.0008520753610130078,
+                "relative_peak": 0.0012967767143308936
+              },
+              "key_projection": {
+                "relative_l2": 0.0007697237422605568,
+                "relative_peak": 0.0010574056840440206
+              },
+              "value_projection": {
+                "relative_l2": 0.0007674944956723894,
+                "relative_peak": 0.0010574056840440206
+              },
+              "rotated_query": {
+                "relative_l2": 0.0008571594396054476,
+                "relative_peak": 0.0009409202943120845
+              },
+              "rotated_key": {
+                "relative_l2": 0.0008121820216649395,
+                "relative_peak": 0.0011381234564142282
+              }
+            },
+            "max_probability_mass_error": 0.0062255859375,
+            "max_pe_cycles": 65606
+          },
+          {
+            "epoch": 6,
+            "stages": {
+              "score": {
+                "relative_l2": 0.0031213708060345083,
+                "relative_peak": 0.0060177679663419486
+              },
+              "probability": {
+                "relative_l2": 0.0012061040860932755,
+                "relative_peak": 0.0016247161362893652
+              },
+              "context": {
+                "relative_l2": 0.0053004450657292215,
+                "relative_peak": 0.005884031850811099
+              },
+              "delta": {
+                "relative_l2": 0.0015064646849575452,
+                "relative_peak": 0.0021496409185648197
+              },
+              "result": {
+                "relative_l2": 0.0002132298060024762,
+                "relative_peak": 0.00046661652573945164
+              },
+              "normalized": {
+                "relative_l2": 0.0011668653529068817,
+                "relative_peak": 0.001959205756401948
+              },
+              "query": {
+                "relative_l2": 0.0016631363969029647,
+                "relative_peak": 0.0019592057564042815
+              },
+              "key_projection": {
+                "relative_l2": 0.0016615998264599599,
+                "relative_peak": 0.0019592057564042815
+              },
+              "value_projection": {
+                "relative_l2": 0.0016627770388894072,
+                "relative_peak": 0.0019592057564042815
+              },
+              "rotated_query": {
+                "relative_l2": 0.0016651986138538192,
+                "relative_peak": 0.0019592057564031557
+              },
+              "rotated_key": {
+                "relative_l2": 0.0016631605351071768,
+                "relative_peak": 0.0019592057564031557
+              }
+            },
+            "max_probability_mass_error": 0.00140380859375,
+            "max_pe_cycles": 65606
+          },
+          {
+            "epoch": 7,
+            "stages": {
+              "score": {
+                "relative_l2": 0.0021949932590893625,
+                "relative_peak": 0.002095912899956294
+              },
+              "probability": {
+                "relative_l2": 0.0006695352362364579,
+                "relative_peak": 0.0014302299520400998
+              },
+              "context": {
+                "relative_l2": 0.008461398133313744,
+                "relative_peak": 0.01304990002500343
+              },
+              "delta": {
+                "relative_l2": 0.0033769929883739904,
+                "relative_peak": 0.005373720731613944
+              },
+              "result": {
+                "relative_l2": 0.0002236013074393451,
+                "relative_peak": 0.0004978537793586173
+              },
+              "normalized": {
+                "relative_l2": 0.000959139321931296,
+                "relative_peak": 0.001232207401384493
+              },
+              "query": {
+                "relative_l2": 0.0010569684449587117,
+                "relative_peak": 0.0016311192065433995
+              },
+              "key_projection": {
+                "relative_l2": 0.0011080392129575083,
+                "relative_peak": 0.0016941919633131873
+              },
+              "value_projection": {
+                "relative_l2": 0.0011024343839685581,
+                "relative_peak": 0.0016941919633131873
+              },
+              "rotated_query": {
+                "relative_l2": 0.0011027347950108562,
+                "relative_peak": 0.001361690403314102
+              },
+              "rotated_key": {
+                "relative_l2": 0.0011540842632269564,
+                "relative_peak": 0.0015332864557024452
+              }
+            },
+            "max_probability_mass_error": 0.000896453857421875,
+            "max_pe_cycles": 65606
+          }
+        ],
+        "scope": "All-PE whole-graph raw trajectory and eleven original-input mathematical stages; separate source comparison and linked memory required"
+      },
+      "native_application_source": "native-output.txt: actual C++ stdout plus eight frozen intermediate observers",
+      "native_application_checks": [
+        {
+          "contract": "projected-cache-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "all_stage_gates": true,
+          "metrics": {
+            "normalized": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "query": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "key_projection": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "value_projection": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "rotated_query": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "rotated_key": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "score": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "probability": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "context": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "delta": {
+              "relative_l2": 0.0003177790021757363,
+              "relative_peak": 0.00043203330584030476
+            },
+            "result": {
+              "relative_l2": 0.00016550263339392662,
+              "relative_peak": 0.0002398237816560875
+            }
+          },
+          "max_probability_mass_error": 0.0,
+          "limits": {
+            "relative_l2": 0.02,
+            "relative_peak": 0.03,
+            "row_mass": 0.01
+          }
+        },
+        {
+          "contract": "projected-cache-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "all_stage_gates": true,
+          "metrics": {
+            "normalized": {
+              "relative_l2": 0.00019849224543488523,
+              "relative_peak": 0.0002824606454357394
+            },
+            "query": {
+              "relative_l2": 0.0005633583715545823,
+              "relative_peak": 0.001373143563631144
+            },
+            "key_projection": {
+              "relative_l2": 0.0007814476707110105,
+              "relative_peak": 0.0014719249138344585
+            },
+            "value_projection": {
+              "relative_l2": 0.0007825198204183448,
+              "relative_peak": 0.0014719249138344585
+            },
+            "rotated_query": {
+              "relative_l2": 0.0005907915721295593,
+              "relative_peak": 0.0007760688319643954
+            },
+            "rotated_key": {
+              "relative_l2": 0.000828165265297287,
+              "relative_peak": 0.0009839631234858355
+            },
+            "score": {
+              "relative_l2": 0.0024095452507292715,
+              "relative_peak": 0.0023530787135835965
+            },
+            "probability": {
+              "relative_l2": 0.00022593572629342105,
+              "relative_peak": 0.0004964337206278937
+            },
+            "context": {
+              "relative_l2": 0.008066243352017936,
+              "relative_peak": 0.009992327720954755
+            },
+            "delta": {
+              "relative_l2": 0.002936112256440809,
+              "relative_peak": 0.004508959984578614
+            },
+            "result": {
+              "relative_l2": 0.00018276056794609618,
+              "relative_peak": 0.00034263923774366086
+            }
+          },
+          "max_probability_mass_error": 4.482269287109375e-05,
+          "limits": {
+            "relative_l2": 0.02,
+            "relative_peak": 0.03,
+            "row_mass": 0.01
+          }
+        },
+        {
+          "contract": "projected-cache-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "all_stage_gates": true,
+          "metrics": {
+            "normalized": {
+              "relative_l2": 0.0001501811497010711,
+              "relative_peak": 0.00025052974666587815
+            },
+            "query": {
+              "relative_l2": 0.00017154167097293532,
+              "relative_peak": 0.00018487494722843053
+            },
+            "key_projection": {
+              "relative_l2": 0.00045779085455821474,
+              "relative_peak": 0.0008711246249034197
+            },
+            "value_projection": {
+              "relative_l2": 0.00045779085455821474,
+              "relative_peak": 0.0008711246249034197
+            },
+            "rotated_query": {
+              "relative_l2": 0.00026070058411225964,
+              "relative_peak": 0.00024238616713796892
+            },
+            "rotated_key": {
+              "relative_l2": 0.0006194158104926039,
+              "relative_peak": 0.00116149949987127
+            },
+            "score": {
+              "relative_l2": 0.00042582285475020184,
+              "relative_peak": 0.00042858084977789255
+            },
+            "probability": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "context": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "delta": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "result": {
+              "relative_l2": 0.0002533914329941329,
+              "relative_peak": 0.0004032258064516129
+            }
+          },
+          "max_probability_mass_error": 0.0,
+          "limits": {
+            "relative_l2": 0.02,
+            "relative_peak": 0.03,
+            "row_mass": 0.01
+          }
+        },
+        {
+          "contract": "projected-cache-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "all_stage_gates": true,
+          "metrics": {
+            "normalized": {
+              "relative_l2": 7.999968000219523e-06,
+              "relative_peak": 7.999968000219523e-06
+            },
+            "query": {
+              "relative_l2": 7.999968000219523e-06,
+              "relative_peak": 7.999968000219523e-06
+            },
+            "key_projection": {
+              "relative_l2": 7.999968000219523e-06,
+              "relative_peak": 7.999968000219523e-06
+            },
+            "value_projection": {
+              "relative_l2": 7.999968000145507e-06,
+              "relative_peak": 7.999968000145505e-06
+            },
+            "rotated_query": {
+              "relative_l2": 7.999968000219523e-06,
+              "relative_peak": 7.999968000219523e-06
+            },
+            "rotated_key": {
+              "relative_l2": 7.999968000219523e-06,
+              "relative_peak": 7.999968000219523e-06
+            },
+            "score": {
+              "relative_l2": 7.999968000128092e-06,
+              "relative_peak": 7.99996800012809e-06
+            },
+            "probability": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "context": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "delta": {
+              "relative_l2": 0.00028082893991178,
+              "relative_peak": 0.0004755934108694712
+            },
+            "result": {
+              "relative_l2": 0.00017400477417840924,
+              "relative_peak": 0.00032212711428343695
+            }
+          },
+          "max_probability_mass_error": 0.0,
+          "limits": {
+            "relative_l2": 0.02,
+            "relative_peak": 0.03,
+            "row_mass": 0.01
+          }
+        },
+        {
+          "contract": "projected-cache-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "all_stage_gates": true,
+          "metrics": {
+            "normalized": {
+              "relative_l2": 0.0001279918090484025,
+              "relative_peak": 0.00012799180904840253
+            },
+            "query": {
+              "relative_l2": 0.0001279918090484025,
+              "relative_peak": 0.00012799180904840253
+            },
+            "key_projection": {
+              "relative_l2": 0.0001279918090484025,
+              "relative_peak": 0.00012799180904840253
+            },
+            "value_projection": {
+              "relative_l2": 0.0001279918090484025,
+              "relative_peak": 0.00012799180904840253
+            },
+            "rotated_query": {
+              "relative_l2": 0.0001279918090484025,
+              "relative_peak": 0.00012799180904840253
+            },
+            "rotated_key": {
+              "relative_l2": 0.0001279918090484025,
+              "relative_peak": 0.00012799180904840253
+            },
+            "score": {
+              "relative_l2": 0.00012799180904841175,
+              "relative_peak": 0.0001279918090483655
+            },
+            "probability": {
+              "relative_l2": 0.000225248718553689,
+              "relative_peak": 0.00047870340088821913
+            },
+            "context": {
+              "relative_l2": 0.001006511318140429,
+              "relative_peak": 0.0014220464975551838
+            },
+            "delta": {
+              "relative_l2": 0.001909882963727698,
+              "relative_peak": 0.0023327084466930694
+            },
+            "result": {
+              "relative_l2": 0.00021916961710537132,
+              "relative_peak": 0.00019750419358520113
+            }
+          },
+          "max_probability_mass_error": 7.2479248046875e-05,
+          "limits": {
+            "relative_l2": 0.02,
+            "relative_peak": 0.03,
+            "row_mass": 0.01
+          }
+        },
+        {
+          "contract": "projected-cache-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "all_stage_gates": true,
+          "metrics": {
+            "normalized": {
+              "relative_l2": 0.0002129773401786717,
+              "relative_peak": 0.00031328690835532463
+            },
+            "query": {
+              "relative_l2": 0.0007339376999819801,
+              "relative_peak": 0.0012967767143307275
+            },
+            "key_projection": {
+              "relative_l2": 0.0006913772029615234,
+              "relative_peak": 0.001057405684043979
+            },
+            "value_projection": {
+              "relative_l2": 0.0006901124698512348,
+              "relative_peak": 0.001057405684043979
+            },
+            "rotated_query": {
+              "relative_l2": 0.0007482951403577986,
+              "relative_peak": 0.0009987613590967414
+            },
+            "rotated_key": {
+              "relative_l2": 0.0007158499632491373,
+              "relative_peak": 0.0008070495318337387
+            },
+            "score": {
+              "relative_l2": 0.002069754759141178,
+              "relative_peak": 0.0019234444350419188
+            },
+            "probability": {
+              "relative_l2": 0.0002814430426064056,
+              "relative_peak": 0.0004460865569929378
+            },
+            "context": {
+              "relative_l2": 0.00561335575432374,
+              "relative_peak": 0.008496176355760013
+            },
+            "delta": {
+              "relative_l2": 0.0008907763276155162,
+              "relative_peak": 0.002806698075152847
+            },
+            "result": {
+              "relative_l2": 0.00019883370527051117,
+              "relative_peak": 0.0003661984048462072
+            }
+          },
+          "max_probability_mass_error": 0.00032806396484375,
+          "limits": {
+            "relative_l2": 0.02,
+            "relative_peak": 0.03,
+            "row_mass": 0.01
+          }
+        },
+        {
+          "contract": "projected-cache-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "all_stage_gates": true,
+          "metrics": {
+            "normalized": {
+              "relative_l2": 0.00020266655459374254,
+              "relative_peak": 0.0004386489077463186
+            },
+            "query": {
+              "relative_l2": 0.004950892838498558,
+              "relative_peak": 0.006006255127914546
+            },
+            "key_projection": {
+              "relative_l2": 0.003280137611997088,
+              "relative_peak": 0.005417905623653594
+            },
+            "value_projection": {
+              "relative_l2": 0.00330752588329918,
+              "relative_peak": 0.005417905623653594
+            },
+            "rotated_query": {
+              "relative_l2": 0.00499594269141117,
+              "relative_peak": 0.0073893432569033645
+            },
+            "rotated_key": {
+              "relative_l2": 0.0033022030277192753,
+              "relative_peak": 0.0052975703847605625
+            },
+            "score": {
+              "relative_l2": 0.018475538396845684,
+              "relative_peak": 0.028683493224600058
+            },
+            "probability": {
+              "relative_l2": 0.0002750281488094509,
+              "relative_peak": 0.0004684459539025749
+            },
+            "context": {
+              "relative_l2": 0.007735588785063235,
+              "relative_peak": 0.008471261102244231
+            },
+            "delta": {
+              "relative_l2": 0.000617074300708037,
+              "relative_peak": 0.0011032615494271458
+            },
+            "result": {
+              "relative_l2": 0.00021260068162623795,
+              "relative_peak": 0.00044209899332088045
+            }
+          },
+          "max_probability_mass_error": 0.000244140625,
+          "limits": {
+            "relative_l2": 0.02,
+            "relative_peak": 0.03,
+            "row_mass": 0.01
+          }
+        },
+        {
+          "contract": "projected-cache-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "all_stage_gates": true,
+          "metrics": {
+            "normalized": {
+              "relative_l2": 0.0001996124805742643,
+              "relative_peak": 0.00028240569440685337
+            },
+            "query": {
+              "relative_l2": 0.0004973319734851184,
+              "relative_peak": 0.0006890954110879812
+            },
+            "key_projection": {
+              "relative_l2": 0.000768727651340616,
+              "relative_peak": 0.0011458011892612648
+            },
+            "value_projection": {
+              "relative_l2": 0.0007705886087971538,
+              "relative_peak": 0.0011458011892612648
+            },
+            "rotated_query": {
+              "relative_l2": 0.000544910541469635,
+              "relative_peak": 0.0007478923061320824
+            },
+            "rotated_key": {
+              "relative_l2": 0.0008044886237262763,
+              "relative_peak": 0.0009242333850835668
+            },
+            "score": {
+              "relative_l2": 0.0019325978989455283,
+              "relative_peak": 0.002246724772651008
+            },
+            "probability": {
+              "relative_l2": 0.0002213414803713897,
+              "relative_peak": 0.00048423578116746466
+            },
+            "context": {
+              "relative_l2": 0.007317727901234679,
+              "relative_peak": 0.008540927386164259
+            },
+            "delta": {
+              "relative_l2": 0.0029961140883557106,
+              "relative_peak": 0.004208760390871923
+            },
+            "result": {
+              "relative_l2": 0.00022185461219921331,
+              "relative_peak": 0.00047436945211382173
+            }
+          },
+          "max_probability_mass_error": 1.621246337890625e-05,
+          "limits": {
+            "relative_l2": 0.02,
+            "relative_peak": 0.03,
+            "row_mass": 0.01
+          }
+        }
+      ],
+      "sdk_host_native_application_checks": [
+        {
+          "contract": "projected-cache-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "all_stage_gates": true,
+          "metrics": {
+            "normalized": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "query": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "key_projection": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "value_projection": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "rotated_query": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "rotated_key": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "score": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "probability": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "context": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "delta": {
+              "relative_l2": 0.0003177790021757363,
+              "relative_peak": 0.00043203330584030476
+            },
+            "result": {
+              "relative_l2": 0.00016550263339392662,
+              "relative_peak": 0.0002398237816560875
+            }
+          },
+          "max_probability_mass_error": 0.0,
+          "limits": {
+            "relative_l2": 0.02,
+            "relative_peak": 0.03,
+            "row_mass": 0.01
+          }
+        },
+        {
+          "contract": "projected-cache-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "all_stage_gates": true,
+          "metrics": {
+            "normalized": {
+              "relative_l2": 0.00019849224543488523,
+              "relative_peak": 0.0002824606454357394
+            },
+            "query": {
+              "relative_l2": 0.0005633583715545823,
+              "relative_peak": 0.001373143563631144
+            },
+            "key_projection": {
+              "relative_l2": 0.0007814476707110105,
+              "relative_peak": 0.0014719249138344585
+            },
+            "value_projection": {
+              "relative_l2": 0.0007825198204183448,
+              "relative_peak": 0.0014719249138344585
+            },
+            "rotated_query": {
+              "relative_l2": 0.0005907915721295593,
+              "relative_peak": 0.0007760688319643954
+            },
+            "rotated_key": {
+              "relative_l2": 0.000828165265297287,
+              "relative_peak": 0.0009839631234858355
+            },
+            "score": {
+              "relative_l2": 0.0024095452507292715,
+              "relative_peak": 0.0023530787135835965
+            },
+            "probability": {
+              "relative_l2": 0.00022593572629342105,
+              "relative_peak": 0.0004964337206278937
+            },
+            "context": {
+              "relative_l2": 0.008066243352017936,
+              "relative_peak": 0.009992327720954755
+            },
+            "delta": {
+              "relative_l2": 0.002936112256440809,
+              "relative_peak": 0.004508959984578614
+            },
+            "result": {
+              "relative_l2": 0.00018276056794609618,
+              "relative_peak": 0.00034263923774366086
+            }
+          },
+          "max_probability_mass_error": 4.482269287109375e-05,
+          "limits": {
+            "relative_l2": 0.02,
+            "relative_peak": 0.03,
+            "row_mass": 0.01
+          }
+        },
+        {
+          "contract": "projected-cache-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "all_stage_gates": true,
+          "metrics": {
+            "normalized": {
+              "relative_l2": 0.0001501811497010711,
+              "relative_peak": 0.00025052974666587815
+            },
+            "query": {
+              "relative_l2": 0.00017154167097293532,
+              "relative_peak": 0.00018487494722843053
+            },
+            "key_projection": {
+              "relative_l2": 0.00045779085455821474,
+              "relative_peak": 0.0008711246249034197
+            },
+            "value_projection": {
+              "relative_l2": 0.00045779085455821474,
+              "relative_peak": 0.0008711246249034197
+            },
+            "rotated_query": {
+              "relative_l2": 0.00026070058411225964,
+              "relative_peak": 0.00024238616713796892
+            },
+            "rotated_key": {
+              "relative_l2": 0.0006194158104926039,
+              "relative_peak": 0.00116149949987127
+            },
+            "score": {
+              "relative_l2": 0.00042582285475020184,
+              "relative_peak": 0.00042858084977789255
+            },
+            "probability": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "context": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "delta": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "result": {
+              "relative_l2": 0.0002533914329941329,
+              "relative_peak": 0.0004032258064516129
+            }
+          },
+          "max_probability_mass_error": 0.0,
+          "limits": {
+            "relative_l2": 0.02,
+            "relative_peak": 0.03,
+            "row_mass": 0.01
+          }
+        },
+        {
+          "contract": "projected-cache-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "all_stage_gates": true,
+          "metrics": {
+            "normalized": {
+              "relative_l2": 7.999968000219523e-06,
+              "relative_peak": 7.999968000219523e-06
+            },
+            "query": {
+              "relative_l2": 7.999968000219523e-06,
+              "relative_peak": 7.999968000219523e-06
+            },
+            "key_projection": {
+              "relative_l2": 7.999968000219523e-06,
+              "relative_peak": 7.999968000219523e-06
+            },
+            "value_projection": {
+              "relative_l2": 7.999968000145507e-06,
+              "relative_peak": 7.999968000145505e-06
+            },
+            "rotated_query": {
+              "relative_l2": 7.999968000219523e-06,
+              "relative_peak": 7.999968000219523e-06
+            },
+            "rotated_key": {
+              "relative_l2": 7.999968000219523e-06,
+              "relative_peak": 7.999968000219523e-06
+            },
+            "score": {
+              "relative_l2": 7.999968000128092e-06,
+              "relative_peak": 7.99996800012809e-06
+            },
+            "probability": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "context": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "delta": {
+              "relative_l2": 0.00028082893991178,
+              "relative_peak": 0.0004755934108694712
+            },
+            "result": {
+              "relative_l2": 0.00017400477417840924,
+              "relative_peak": 0.00032212711428343695
+            }
+          },
+          "max_probability_mass_error": 0.0,
+          "limits": {
+            "relative_l2": 0.02,
+            "relative_peak": 0.03,
+            "row_mass": 0.01
+          }
+        },
+        {
+          "contract": "projected-cache-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "all_stage_gates": true,
+          "metrics": {
+            "normalized": {
+              "relative_l2": 0.0001279918090484025,
+              "relative_peak": 0.00012799180904840253
+            },
+            "query": {
+              "relative_l2": 0.0001279918090484025,
+              "relative_peak": 0.00012799180904840253
+            },
+            "key_projection": {
+              "relative_l2": 0.0001279918090484025,
+              "relative_peak": 0.00012799180904840253
+            },
+            "value_projection": {
+              "relative_l2": 0.0001279918090484025,
+              "relative_peak": 0.00012799180904840253
+            },
+            "rotated_query": {
+              "relative_l2": 0.0001279918090484025,
+              "relative_peak": 0.00012799180904840253
+            },
+            "rotated_key": {
+              "relative_l2": 0.0001279918090484025,
+              "relative_peak": 0.00012799180904840253
+            },
+            "score": {
+              "relative_l2": 0.00012799180904841175,
+              "relative_peak": 0.0001279918090483655
+            },
+            "probability": {
+              "relative_l2": 0.000225248718553689,
+              "relative_peak": 0.00047870340088821913
+            },
+            "context": {
+              "relative_l2": 0.001006511318140429,
+              "relative_peak": 0.0014220464975551838
+            },
+            "delta": {
+              "relative_l2": 0.001909882963727698,
+              "relative_peak": 0.0023327084466930694
+            },
+            "result": {
+              "relative_l2": 0.00021916961710537132,
+              "relative_peak": 0.00019750419358520113
+            }
+          },
+          "max_probability_mass_error": 7.2479248046875e-05,
+          "limits": {
+            "relative_l2": 0.02,
+            "relative_peak": 0.03,
+            "row_mass": 0.01
+          }
+        },
+        {
+          "contract": "projected-cache-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "all_stage_gates": true,
+          "metrics": {
+            "normalized": {
+              "relative_l2": 0.0002129773401786717,
+              "relative_peak": 0.00031328690835532463
+            },
+            "query": {
+              "relative_l2": 0.0007339376999819801,
+              "relative_peak": 0.0012967767143307275
+            },
+            "key_projection": {
+              "relative_l2": 0.0006913772029615234,
+              "relative_peak": 0.001057405684043979
+            },
+            "value_projection": {
+              "relative_l2": 0.0006901124698512348,
+              "relative_peak": 0.001057405684043979
+            },
+            "rotated_query": {
+              "relative_l2": 0.0007482951403577986,
+              "relative_peak": 0.0009987613590967414
+            },
+            "rotated_key": {
+              "relative_l2": 0.0007158499632491373,
+              "relative_peak": 0.0008070495318337387
+            },
+            "score": {
+              "relative_l2": 0.002069754759141178,
+              "relative_peak": 0.0019234444350419188
+            },
+            "probability": {
+              "relative_l2": 0.0002814430426064056,
+              "relative_peak": 0.0004460865569929378
+            },
+            "context": {
+              "relative_l2": 0.00561335575432374,
+              "relative_peak": 0.008496176355760013
+            },
+            "delta": {
+              "relative_l2": 0.0008907763276155162,
+              "relative_peak": 0.002806698075152847
+            },
+            "result": {
+              "relative_l2": 0.00019883370527051117,
+              "relative_peak": 0.0003661984048462072
+            }
+          },
+          "max_probability_mass_error": 0.00032806396484375,
+          "limits": {
+            "relative_l2": 0.02,
+            "relative_peak": 0.03,
+            "row_mass": 0.01
+          }
+        },
+        {
+          "contract": "projected-cache-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "all_stage_gates": true,
+          "metrics": {
+            "normalized": {
+              "relative_l2": 0.00020266655459374254,
+              "relative_peak": 0.0004386489077463186
+            },
+            "query": {
+              "relative_l2": 0.004950892838498558,
+              "relative_peak": 0.006006255127914546
+            },
+            "key_projection": {
+              "relative_l2": 0.003280137611997088,
+              "relative_peak": 0.005417905623653594
+            },
+            "value_projection": {
+              "relative_l2": 0.00330752588329918,
+              "relative_peak": 0.005417905623653594
+            },
+            "rotated_query": {
+              "relative_l2": 0.00499594269141117,
+              "relative_peak": 0.0073893432569033645
+            },
+            "rotated_key": {
+              "relative_l2": 0.0033022030277192753,
+              "relative_peak": 0.0052975703847605625
+            },
+            "score": {
+              "relative_l2": 0.018475538396845684,
+              "relative_peak": 0.028683493224600058
+            },
+            "probability": {
+              "relative_l2": 0.0002750281488094509,
+              "relative_peak": 0.0004684459539025749
+            },
+            "context": {
+              "relative_l2": 0.007735588785063235,
+              "relative_peak": 0.008471261102244231
+            },
+            "delta": {
+              "relative_l2": 0.000617074300708037,
+              "relative_peak": 0.0011032615494271458
+            },
+            "result": {
+              "relative_l2": 0.00021260068162623795,
+              "relative_peak": 0.00044209899332088045
+            }
+          },
+          "max_probability_mass_error": 0.000244140625,
+          "limits": {
+            "relative_l2": 0.02,
+            "relative_peak": 0.03,
+            "row_mass": 0.01
+          }
+        },
+        {
+          "contract": "projected-cache-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "all_stage_gates": true,
+          "metrics": {
+            "normalized": {
+              "relative_l2": 0.0001996124805742643,
+              "relative_peak": 0.00028240569440685337
+            },
+            "query": {
+              "relative_l2": 0.0004973319734851184,
+              "relative_peak": 0.0006890954110879812
+            },
+            "key_projection": {
+              "relative_l2": 0.000768727651340616,
+              "relative_peak": 0.0011458011892612648
+            },
+            "value_projection": {
+              "relative_l2": 0.0007705886087971538,
+              "relative_peak": 0.0011458011892612648
+            },
+            "rotated_query": {
+              "relative_l2": 0.000544910541469635,
+              "relative_peak": 0.0007478923061320824
+            },
+            "rotated_key": {
+              "relative_l2": 0.0008044886237262763,
+              "relative_peak": 0.0009242333850835668
+            },
+            "score": {
+              "relative_l2": 0.0019325978989455283,
+              "relative_peak": 0.002246724772651008
+            },
+            "probability": {
+              "relative_l2": 0.0002213414803713897,
+              "relative_peak": 0.00048423578116746466
+            },
+            "context": {
+              "relative_l2": 0.007317727901234679,
+              "relative_peak": 0.008540927386164259
+            },
+            "delta": {
+              "relative_l2": 0.0029961140883557106,
+              "relative_peak": 0.004208760390871923
+            },
+            "result": {
+              "relative_l2": 0.00022185461219921331,
+              "relative_peak": 0.00047436945211382173
+            }
+          },
+          "max_probability_mass_error": 1.621246337890625e-05,
+          "limits": {
+            "relative_l2": 0.02,
+            "relative_peak": 0.03,
+            "row_mass": 0.01
+          }
+        }
+      ],
+      "device_application_checks": [
+        {
+          "contract": "projected-cache-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "all_stage_gates": true,
+          "metrics": {
+            "normalized": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "query": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "key_projection": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "value_projection": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "rotated_query": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "rotated_key": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "score": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "probability": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "context": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "delta": {
+              "relative_l2": 0.0003177790021757363,
+              "relative_peak": 0.00043203330584030476
+            },
+            "result": {
+              "relative_l2": 0.00016550263339392662,
+              "relative_peak": 0.0002398237816560875
+            }
+          },
+          "max_probability_mass_error": 0.0,
+          "limits": {
+            "relative_l2": 0.02,
+            "relative_peak": 0.03,
+            "row_mass": 0.01
+          }
+        },
+        {
+          "contract": "projected-cache-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "all_stage_gates": true,
+          "metrics": {
+            "normalized": {
+              "relative_l2": 0.000950629317258842,
+              "relative_peak": 0.001102271094523814
+            },
+            "query": {
+              "relative_l2": 0.001161487021077234,
+              "relative_peak": 0.001779399623604273
+            },
+            "key_projection": {
+              "relative_l2": 0.001079580850235169,
+              "relative_peak": 0.0017354399095491225
+            },
+            "value_projection": {
+              "relative_l2": 0.0010838169703746112,
+              "relative_peak": 0.0017354399095491225
+            },
+            "rotated_query": {
+              "relative_l2": 0.0011804800491243216,
+              "relative_peak": 0.0014618340324543482
+            },
+            "rotated_key": {
+              "relative_l2": 0.0010732882127224108,
+              "relative_peak": 0.0014051366633812028
+            },
+            "score": {
+              "relative_l2": 0.002815012444051919,
+              "relative_peak": 0.0023843500851859875
+            },
+            "probability": {
+              "relative_l2": 0.0008478820585833632,
+              "relative_peak": 0.0015724443354519868
+            },
+            "context": {
+              "relative_l2": 0.007775524986874191,
+              "relative_peak": 0.009988329281433029
+            },
+            "delta": {
+              "relative_l2": 0.004134622523621179,
+              "relative_peak": 0.005989587293614145
+            },
+            "result": {
+              "relative_l2": 0.00018236875342660718,
+              "relative_peak": 0.00034263923774366086
+            }
+          },
+          "max_probability_mass_error": 0.0009622573852539062,
+          "limits": {
+            "relative_l2": 0.02,
+            "relative_peak": 0.03,
+            "row_mass": 0.01
+          }
+        },
+        {
+          "contract": "projected-cache-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "all_stage_gates": true,
+          "metrics": {
+            "normalized": {
+              "relative_l2": 0.000292158603515671,
+              "relative_peak": 0.0005304161436044007
+            },
+            "query": {
+              "relative_l2": 0.0003172433918171797,
+              "relative_peak": 0.0003830788950370278
+            },
+            "key_projection": {
+              "relative_l2": 0.00045779085455821474,
+              "relative_peak": 0.0008711246249034197
+            },
+            "value_projection": {
+              "relative_l2": 0.00045779085455821474,
+              "relative_peak": 0.0008711246249034197
+            },
+            "rotated_query": {
+              "relative_l2": 0.00032414588987133896,
+              "relative_peak": 0.0002823759849380081
+            },
+            "rotated_key": {
+              "relative_l2": 0.0006847178375117659,
+              "relative_peak": 0.00116149949987127
+            },
+            "score": {
+              "relative_l2": 0.00042582285475020184,
+              "relative_peak": 0.00042858084977789255
+            },
+            "probability": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "context": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "delta": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "result": {
+              "relative_l2": 0.0002533914329941329,
+              "relative_peak": 0.0004032258064516129
+            }
+          },
+          "max_probability_mass_error": 0.0,
+          "limits": {
+            "relative_l2": 0.02,
+            "relative_peak": 0.03,
+            "row_mass": 0.01
+          }
+        },
+        {
+          "contract": "projected-cache-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "all_stage_gates": true,
+          "metrics": {
+            "normalized": {
+              "relative_l2": 7.999968000219523e-06,
+              "relative_peak": 7.999968000219523e-06
+            },
+            "query": {
+              "relative_l2": 7.999968000219523e-06,
+              "relative_peak": 7.999968000219523e-06
+            },
+            "key_projection": {
+              "relative_l2": 7.999968000219523e-06,
+              "relative_peak": 7.999968000219523e-06
+            },
+            "value_projection": {
+              "relative_l2": 7.999968000145507e-06,
+              "relative_peak": 7.999968000145505e-06
+            },
+            "rotated_query": {
+              "relative_l2": 7.999968000219523e-06,
+              "relative_peak": 7.999968000219523e-06
+            },
+            "rotated_key": {
+              "relative_l2": 7.999968000219523e-06,
+              "relative_peak": 7.999968000219523e-06
+            },
+            "score": {
+              "relative_l2": 7.999968000128092e-06,
+              "relative_peak": 7.99996800012809e-06
+            },
+            "probability": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "context": {
+              "relative_l2": 0.0,
+              "relative_peak": 0.0
+            },
+            "delta": {
+              "relative_l2": 0.00028082893991178,
+              "relative_peak": 0.0004755934108694712
+            },
+            "result": {
+              "relative_l2": 0.00017400477417840924,
+              "relative_peak": 0.00032212711428343695
+            }
+          },
+          "max_probability_mass_error": 0.0,
+          "limits": {
+            "relative_l2": 0.02,
+            "relative_peak": 0.03,
+            "row_mass": 0.01
+          }
+        },
+        {
+          "contract": "projected-cache-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "all_stage_gates": true,
+          "metrics": {
+            "normalized": {
+              "relative_l2": 0.0001279918090484025,
+              "relative_peak": 0.00012799180904840253
+            },
+            "query": {
+              "relative_l2": 0.0001279918090484025,
+              "relative_peak": 0.00012799180904840253
+            },
+            "key_projection": {
+              "relative_l2": 0.0001279918090484025,
+              "relative_peak": 0.00012799180904840253
+            },
+            "value_projection": {
+              "relative_l2": 0.0001279918090484025,
+              "relative_peak": 0.00012799180904840253
+            },
+            "rotated_query": {
+              "relative_l2": 0.0001279918090484025,
+              "relative_peak": 0.00012799180904840253
+            },
+            "rotated_key": {
+              "relative_l2": 0.0001279918090484025,
+              "relative_peak": 0.00012799180904840253
+            },
+            "score": {
+              "relative_l2": 0.00012799180904841175,
+              "relative_peak": 0.0001279918090483655
+            },
+            "probability": {
+              "relative_l2": 0.0002386738947841481,
+              "relative_peak": 0.0005329962277383232
+            },
+            "context": {
+              "relative_l2": 0.0012123064775934347,
+              "relative_peak": 0.0016456692711417982
+            },
+            "delta": {
+              "relative_l2": 0.002067970344074613,
+              "relative_peak": 0.0028818093652442397
+            },
+            "result": {
+              "relative_l2": 0.0002295837169511852,
+              "relative_peak": 0.00019750419358520113
+            }
+          },
+          "max_probability_mass_error": 9.059906005859375e-05,
+          "limits": {
+            "relative_l2": 0.02,
+            "relative_peak": 0.03,
+            "row_mass": 0.01
+          }
+        },
+        {
+          "contract": "projected-cache-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "all_stage_gates": true,
+          "metrics": {
+            "normalized": {
+              "relative_l2": 0.00022627126490796988,
+              "relative_peak": 0.0003291357013134045
+            },
+            "query": {
+              "relative_l2": 0.0008520753610129603,
+              "relative_peak": 0.0012967767143307275
+            },
+            "key_projection": {
+              "relative_l2": 0.0007697237422605239,
+              "relative_peak": 0.001057405684043979
+            },
+            "value_projection": {
+              "relative_l2": 0.0007674944956723572,
+              "relative_peak": 0.001057405684043979
+            },
+            "rotated_query": {
+              "relative_l2": 0.000857159439605415,
+              "relative_peak": 0.0009409202943120845
+            },
+            "rotated_key": {
+              "relative_l2": 0.0008121820216649146,
+              "relative_peak": 0.0011381234564142282
+            },
+            "score": {
+              "relative_l2": 0.0016803405461012816,
+              "relative_peak": 0.0015357625026355063
+            },
+            "probability": {
+              "relative_l2": 0.0036855521341997302,
+              "relative_peak": 0.0065385379104316
+            },
+            "context": {
+              "relative_l2": 0.00942766152477068,
+              "relative_peak": 0.01323862656585728
+            },
+            "delta": {
+              "relative_l2": 0.0036706245533715634,
+              "relative_peak": 0.006338677127059863
+            },
+            "result": {
+              "relative_l2": 0.00022222184240144476,
+              "relative_peak": 0.0003661984048462072
+            }
+          },
+          "max_probability_mass_error": 0.0062255859375,
+          "limits": {
+            "relative_l2": 0.02,
+            "relative_peak": 0.03,
+            "row_mass": 0.01
+          }
+        },
+        {
+          "contract": "projected-cache-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "all_stage_gates": true,
+          "metrics": {
+            "normalized": {
+              "relative_l2": 0.0011668653529068817,
+              "relative_peak": 0.001959205756401948
+            },
+            "query": {
+              "relative_l2": 0.0016631363969029343,
+              "relative_peak": 0.001959205756402137
+            },
+            "key_projection": {
+              "relative_l2": 0.0016615998264599627,
+              "relative_peak": 0.001959205756402137
+            },
+            "value_projection": {
+              "relative_l2": 0.0016627770388893638,
+              "relative_peak": 0.001959205756402137
+            },
+            "rotated_query": {
+              "relative_l2": 0.0016651986138537804,
+              "relative_peak": 0.0019592057564020837
+            },
+            "rotated_key": {
+              "relative_l2": 0.0016631605351071707,
+              "relative_peak": 0.0019592057564020837
+            },
+            "score": {
+              "relative_l2": 0.003121370806020765,
+              "relative_peak": 0.0060177679663012094
+            },
+            "probability": {
+              "relative_l2": 0.0012061040860932577,
+              "relative_peak": 0.0016247161362893657
+            },
+            "context": {
+              "relative_l2": 0.0053004450657294045,
+              "relative_peak": 0.005884031850810487
+            },
+            "delta": {
+              "relative_l2": 0.0015064646849572909,
+              "relative_peak": 0.0021496409185642533
+            },
+            "result": {
+              "relative_l2": 0.00021322980600247505,
+              "relative_peak": 0.00046661652573945164
+            }
+          },
+          "max_probability_mass_error": 0.00140380859375,
+          "limits": {
+            "relative_l2": 0.02,
+            "relative_peak": 0.03,
+            "row_mass": 0.01
+          }
+        },
+        {
+          "contract": "projected-cache-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "all_stage_gates": true,
+          "metrics": {
+            "normalized": {
+              "relative_l2": 0.0009591393219313091,
+              "relative_peak": 0.001232207401384493
+            },
+            "query": {
+              "relative_l2": 0.0010569684449586265,
+              "relative_peak": 0.0016311192065435155
+            },
+            "key_projection": {
+              "relative_l2": 0.0011080392129573919,
+              "relative_peak": 0.0016941919633131867
+            },
+            "value_projection": {
+              "relative_l2": 0.0011024343839684356,
+              "relative_peak": 0.0016941919633131867
+            },
+            "rotated_query": {
+              "relative_l2": 0.001102734795010764,
+              "relative_peak": 0.0013616904033139632
+            },
+            "rotated_key": {
+              "relative_l2": 0.001154084263226842,
+              "relative_peak": 0.001533286455702308
+            },
+            "score": {
+              "relative_l2": 0.002194993259088932,
+              "relative_peak": 0.0020959128999558175
+            },
+            "probability": {
+              "relative_l2": 0.0006695352362364158,
+              "relative_peak": 0.0014302299520398865
+            },
+            "context": {
+              "relative_l2": 0.008461398133313662,
+              "relative_peak": 0.01304990002500284
+            },
+            "delta": {
+              "relative_l2": 0.003376992988374006,
+              "relative_peak": 0.005373720731613562
+            },
+            "result": {
+              "relative_l2": 0.00022360130743934306,
+              "relative_peak": 0.0004978537793586173
+            }
+          },
+          "max_probability_mass_error": 0.000896453857421875,
+          "limits": {
+            "relative_l2": 0.02,
+            "relative_peak": 0.03,
+            "row_mass": 0.01
+          }
+        }
+      ],
+      "linked_static_memory": {
+        "scope": "linked static SRAM sections by ELF class; not runtime stack usage",
+        "elf_classes": 9,
+        "max_static_high_water_bytes": 46592,
+        "min_unallocated_static_bytes": 2560,
+        "classes": [
+          {
+            "elf": "out_0_0.elf",
+            "sha256": "a3594cfbac0fd175d718a325249d08fdcc2f59c6b1c7aded5ab5f224331ef4fb",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 112
+              },
+              {
+                "name": ".text",
+                "start": 112,
+                "size": 19404
+              },
+              {
+                "name": ".data",
+                "start": 19516,
+                "size": 228
+              },
+              {
+                "name": ".bss",
+                "start": 19744,
+                "size": 25814
+              },
+              {
+                "name": ".task_table",
+                "start": 45568,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 46592,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 46592,
+            "unallocated_static_bytes": 2560
+          },
+          {
+            "elf": "out_1_0.elf",
+            "sha256": "46778be82d4c15a78b365920c6eacc010f97b0112ff7c8a83f7d4235fd935f0b",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 112
+              },
+              {
+                "name": ".text",
+                "start": 112,
+                "size": 19404
+              },
+              {
+                "name": ".data",
+                "start": 19516,
+                "size": 228
+              },
+              {
+                "name": ".bss",
+                "start": 19744,
+                "size": 25814
+              },
+              {
+                "name": ".task_table",
+                "start": 45568,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 46592,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 46592,
+            "unallocated_static_bytes": 2560
+          },
+          {
+            "elf": "out_2_0.elf",
+            "sha256": "dfa2d7c49ec0f0399cc3b913b041f6d652bd7b9fbe9bbbf595fd07973a482423",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 112
+              },
+              {
+                "name": ".text",
+                "start": 112,
+                "size": 19404
+              },
+              {
+                "name": ".data",
+                "start": 19516,
+                "size": 228
+              },
+              {
+                "name": ".bss",
+                "start": 19744,
+                "size": 25814
+              },
+              {
+                "name": ".task_table",
+                "start": 45568,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 46592,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 46592,
+            "unallocated_static_bytes": 2560
+          },
+          {
+            "elf": "out_3_0.elf",
+            "sha256": "f242901c024d23b7be203478f6aa5b3a6c94b5f7dcbf5fe42548deee0c10b6a4",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 112
+              },
+              {
+                "name": ".text",
+                "start": 112,
+                "size": 19404
+              },
+              {
+                "name": ".data",
+                "start": 19516,
+                "size": 228
+              },
+              {
+                "name": ".bss",
+                "start": 19744,
+                "size": 25814
+              },
+              {
+                "name": ".task_table",
+                "start": 45568,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 46592,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 46592,
+            "unallocated_static_bytes": 2560
+          },
+          {
+            "elf": "out_4_0.elf",
+            "sha256": "58ccb93d48b015264278c7445dc77c9b5acc3076b923b9b772424749fb833f9b",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 112
+              },
+              {
+                "name": ".text",
+                "start": 112,
+                "size": 19404
+              },
+              {
+                "name": ".data",
+                "start": 19516,
+                "size": 228
+              },
+              {
+                "name": ".bss",
+                "start": 19744,
+                "size": 25814
+              },
+              {
+                "name": ".task_table",
+                "start": 45568,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 46592,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 46592,
+            "unallocated_static_bytes": 2560
+          },
+          {
+            "elf": "out_5_0.elf",
+            "sha256": "9a26ed223a5991c3a1c07667f9176c01258091bd7da70e16176a1ae6d509a8c5",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 112
+              },
+              {
+                "name": ".text",
+                "start": 112,
+                "size": 19404
+              },
+              {
+                "name": ".data",
+                "start": 19516,
+                "size": 228
+              },
+              {
+                "name": ".bss",
+                "start": 19744,
+                "size": 25814
+              },
+              {
+                "name": ".task_table",
+                "start": 45568,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 46592,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 46592,
+            "unallocated_static_bytes": 2560
+          },
+          {
+            "elf": "out_6_0.elf",
+            "sha256": "6df1cb7dff3db4c42921df4dafa8e2359126d56b951f3411fd7a8ded2629f6db",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 112
+              },
+              {
+                "name": ".text",
+                "start": 112,
+                "size": 19404
+              },
+              {
+                "name": ".data",
+                "start": 19516,
+                "size": 228
+              },
+              {
+                "name": ".bss",
+                "start": 19744,
+                "size": 25814
+              },
+              {
+                "name": ".task_table",
+                "start": 45568,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 46592,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 46592,
+            "unallocated_static_bytes": 2560
+          },
+          {
+            "elf": "out_7_0.elf",
+            "sha256": "92619fe17d98afdbd4f88957550125ea05fd323b463152b9ef7f53c849338a31",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 112
+              },
+              {
+                "name": ".text",
+                "start": 112,
+                "size": 19404
+              },
+              {
+                "name": ".data",
+                "start": 19516,
+                "size": 228
+              },
+              {
+                "name": ".bss",
+                "start": 19744,
+                "size": 25814
+              },
+              {
+                "name": ".task_table",
+                "start": 45568,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 46592,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 46592,
+            "unallocated_static_bytes": 2560
+          },
+          {
+            "elf": "out_8_0.elf",
+            "sha256": "8dc7de678851e13389f6d3095f5277d34f68e25302b75384d4839863b1eb1291",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 112
+              },
+              {
+                "name": ".text",
+                "start": 112,
+                "size": 19404
+              },
+              {
+                "name": ".data",
+                "start": 19516,
+                "size": 228
+              },
+              {
+                "name": ".bss",
+                "start": 19744,
+                "size": 25814
+              },
+              {
+                "name": ".task_table",
+                "start": 45568,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 46592,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 46592,
+            "unallocated_static_bytes": 2560
+          }
+        ]
+      },
+      "linked_static_memory_sha256": "afc9d62f1535d2365783d5628d9ca4578b5eb14e3de154e8db45ccc855f2526e",
+      "qualification_sha256": "77c63387613d57e71177af1133caf9b86a0164e54078940ebc0e5c63073bb997",
+      "results_sha256": "fd3e8eeaeca1d6cb056388fadcce734a5e74c208f46384b80534a275320680d0",
+      "source_comparison": "evidence/projected-cache-full8-source-compute-comparison.json",
+      "performance": {
+        "min_ratio": 0.9813324557992043,
+        "max_ratio": 0.9813324557992043,
+        "scope": "Original Decode gemv_static_step/vecmat_computation unchanged under same SDK X/Y f32 collective, shared repaired RMS/softmax/pairs, explicit local block merge and diagnostic schedule. Measures local projection lowering overhead only; not unmodified Decode performance or hardware throughput."
+      },
+      "numerical_validation": {
+        "contract": "projected-cache-half-normwise-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "relative_l2_limit": 0.02,
+        "max_error_over_reference_peak_limit": 0.03,
+        "zero_reference_requires_exact_zero": true,
+        "per_component_accuracy_not_implied": true
+      }
+    }
+  ],
+  "source_controls": [
+    {
+      "path": "evidence/qualification-controls-20260908T011119829595Z/projects/waferllm/projected_cache_attention_3x256x512_8x8/SOURCE-MAP.json",
+      "sha256": "f75016acc08396ae97f6648fe6c7699e44d36af78d3a7478030e0de590d7b66e",
+      "original_authoring_path": "projects/waferllm/projected_cache_attention_3x256x512_8x8/SOURCE-MAP.json"
+    },
+    {
+      "path": "evidence/qualification-controls-20260908T011119829595Z/evidence/projected-cache-full8-source-compute-comparison.json",
+      "sha256": "e63cdda06b4401f1d8d90baf74b2ce61efcf71b9fe1f7027d0fae741fb3d3b6f",
+      "original_authoring_path": "evidence/projected-cache-full8-source-compute-comparison.json"
+    },
+    {
+      "path": "evidence/qualification-controls-20260908T011119829595Z/evidence/projected-cache-static-memory-0009.json",
+      "sha256": "afc9d62f1535d2365783d5628d9ca4578b5eb14e3de154e8db45ccc855f2526e",
+      "original_authoring_path": "evidence/projected-cache-static-memory-0009.json"
+    },
+    {
+      "path": "evidence/qualification-controls-20260908T011119829595Z/evidence/projected-cache-full8-mutations.json",
+      "sha256": "ce8aec9a6c67cd993f61668d3c390688880e925fd947fdfe6eca16ca77845ba9",
+      "original_authoring_path": "evidence/projected-cache-full8-mutations.json"
+    },
+    {
+      "path": "evidence/qualification-controls-20260908T011119829595Z/evidence/projected-cache-native-host-0008/review.json",
+      "sha256": "ac876605f61cbdf9f48a816ff2fa8aaeef87acf541e9aa9cb376bedc566a682f",
+      "original_authoring_path": "evidence/projected-cache-native-host-0008/review.json"
+    },
+    {
+      "path": "evidence/qualification-controls-20260908T011119829595Z/evidence/projected-cache-native-host-0008/provenance.json",
+      "sha256": "7f033f45b6872a6c9be67f7c1602401c9cc7f5ce7b517e3995106912e6474dd4",
+      "original_authoring_path": "evidence/projected-cache-native-host-0008/provenance.json"
+    },
+    {
+      "path": "evidence/qualification-controls-20260908T011119829595Z/evidence/projected-cache-native-q4-iteration.json",
+      "sha256": "76d59f7a9ed7bb4d7733aeb46c460a3a2eaf23e8069f41842a801f8310a795f1",
+      "original_authoring_path": "evidence/projected-cache-native-q4-iteration.json"
+    },
+    {
+      "path": "evidence/qualification-controls-20260908T011119829595Z/evidence/projected-cache-final-guards-identity.json",
+      "sha256": "7287dc7007c4a99627c7d324376f4ee9aaf10ed2d227214f29b4c9868af17c7a",
+      "original_authoring_path": "evidence/projected-cache-final-guards-identity.json"
+    },
+    {
+      "path": "evidence/qualification-controls-20260908T011119829595Z/evidence/projected-cache-312-tests.log",
+      "sha256": "9cfb1c62da0d58a4b7548f5e7f14c47391414a3f71f96caa55b27d7fb6a7c6da",
+      "original_authoring_path": "evidence/projected-cache-312-tests.log"
+    },
+    {
+      "path": "evidence/qualification-controls-20260908T011119829595Z/projected_cache_fixtures.py",
+      "sha256": "792495fa8964170b21188716f90e3e68340956c1756da0512236b72261002497",
+      "original_authoring_path": "projected_cache_fixtures.py"
+    },
+    {
+      "path": "evidence/qualification-controls-20260908T011119829595Z/experiments/projected_cache_gate.py",
+      "sha256": "9494db690bdb2ba03f1b4aa13a7df7a86bb4b49af2348681ebfa6a68f9cd07df",
+      "original_authoring_path": "experiments/projected_cache_gate.py"
+    },
+    {
+      "path": "evidence/qualification-controls-20260908T011119829595Z/experiments/elf_memory.py",
+      "sha256": "2a6e0dcb1102dc76145b5d1836c622ec18e68690b5d754aadf66b2a08db33c0d",
+      "original_authoring_path": "experiments/elf_memory.py"
+    },
+    {
+      "path": "evidence/qualification-controls-20260908T011119829595Z/run_ports.py",
+      "sha256": "b723defd89cd2843ffe6329c707083a76d00f919de395741b7a62b127722c987",
+      "original_authoring_path": "run_ports.py"
+    },
+    {
+      "path": "evidence/qualification-controls-20260908T011119829595Z/experiments/register_projected_cache.py",
+      "sha256": "8c1e1adfc1a6f3a459c9e8ff607e57e74a6586101a8db1bc4a3779a0d100a623",
+      "original_authoring_path": "experiments/register_projected_cache.py"
+    },
+    {
+      "path": "evidence/qualification-controls-20260908T011119829595Z/archive-driver.py",
+      "sha256": "ac0aeccec0249aa10da748d161b35ea13b8793988f8a35d3fb8c5e4ac1881c97"
+    }
+  ],
+  "source_control_archive": {
+    "original_admission": "evidence/qualification-20260908T010554710275Z.json",
+    "original_admission_sha256": "43f207a6202d0246f2ed75bc0914a8087279db7aae290592fa177dc187e61b8b",
+    "scope": "Byte-identical source witnesses frozen for subsequent development; original report and SDK outputs are unchanged. This is an index amendment, not a new configuration or execution."
+  }
+}

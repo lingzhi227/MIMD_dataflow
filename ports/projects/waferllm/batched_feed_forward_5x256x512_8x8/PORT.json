@@ -1,0 +1,15 @@
+{
+  "project": "waferllm",
+  "kernel": "batched_feed_forward_5x256x512_8x8",
+  "status": "source_ready",
+  "partitions": 1,
+  "instrumentation": "sampled",
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "origins": [
+    "Decode/src/decode.csl RMS and UP/GATE, activation/product, DOWN and residual"
+  ],
+  "contract": "Resident full FFN with half local DSR arithmetic and explicit SDK f32 reduce/broadcast on independent X/Y planes. Stable SDK half SiLU repairs the source approximation. Eight-call SDK qualification; original vecmat compute-control comparison only, not full Decode/cache/hardware coverage.",
+  "fixture": "batched_ffn:5:256:512",
+  "source_comparison": "evidence/batched-ffn-full8-source-compute-comparison.json",
+  "qualification": "Eight actual SDK calls; all seven native/device original-input stage gates, six actual native observers on two hosts, all-PE raw witnesses, linked ELF, >=40 frozen mutation rejections; original vecmat compute-control performance scope only. No unmodified Decode or hardware throughput claim."
+}

@@ -117,6 +117,40 @@ comptime {{
 
 
 def generate(schedule, dest):
+    if schedule.get("profile") == "mesh_projected_cache_ffn.v1":
+        from mesh_projected_cache_ffn import generate as composed
+
+        return composed(schedule, dest)
+
+    if schedule.get("profile") == "mesh_projected_cache.v1":
+        from mesh_projected_cache import generate as projected
+
+        return projected(schedule, dest)
+    if schedule.get("profile") == "mesh_input_attention_mixed.v1":
+        from mesh_input_attention_mixed import generate as mixed_generate
+
+        return mixed_generate(schedule, dest)
+
+    if schedule.get("profile") == "mesh_attention_tail.v1":
+        from mesh_attention_tail import generate as attention_tail_generate
+
+        return attention_tail_generate(schedule, dest)
+    if schedule.get("profile") == "mesh_prefill_tail.v1":
+        from mesh_prefill_tail import generate as tail_generate
+
+        return tail_generate(schedule, dest)
+    if schedule.get("profile") == "mesh_cache_attention.v1":
+        from mesh_cache_attention import generate as cache_generate
+
+        return cache_generate(schedule, dest)
+    if schedule.get("profile") == "mesh_batched_feed_forward.v1":
+        from mesh_batched_feed_forward import generate as batch_ffn_generate
+
+        return batch_ffn_generate(schedule, dest)
+    if schedule.get("profile") == "mesh_feed_forward.v1":
+        from mesh_feed_forward import generate as feed_forward_generate
+
+        return feed_forward_generate(schedule, dest)
     if schedule.get("profile") == "mesh_projection_residual_rms.v1":
         from mesh_projection_residual_rms import generate as composition_generate
 
@@ -162,6 +196,14 @@ def generate(schedule, dest):
         from mesh_softmax import generate as softmax_generate
 
         return softmax_generate(schedule, dest)
+    if schedule.get("profile") == "mesh_batched_fanout.v1":
+        from mesh_batched_fanout import generate as batched_fanout
+
+        return batched_fanout(schedule, dest)
+    if schedule.get("profile") == "mesh_batched_rms.v1":
+        from mesh_batched_rms import generate as batched_generate
+
+        return batched_generate(schedule, dest)
     if schedule.get("profile") == "mesh_rms.v1":
         from mesh_rms import generate as rms_generate
 

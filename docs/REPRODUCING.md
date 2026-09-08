@@ -2,7 +2,9 @@
 
 ## CPU setup
 
-Requirements: Python 3.10+, NumPy 2.2.6, and `clang++` supporting C++17 and `_Float16`. The SDK environment is a separate dependency and is not bundled.
+Recommended reproducible dependency setup: Python 3.10–3.13, NumPy 2.2.6, and `clang++` supporting C++17 and `_Float16`. The SDK environment is a separate dependency and is not bundled.
+
+Set `HLS_CLANGXX` to select a compatible native/frontend compiler, for example `export HLS_CLANGXX=/usr/bin/clang++-17` on the SDK host. The default is `clang++`; the actual command and version are recorded. Default Clang 14 on the development SDK host rejected `_Float16`, while the explicit Clang 17 path passed.
 
 ```sh
 python3 -m venv .venv
@@ -51,3 +53,5 @@ Supported phase/step arguments depend on the profile. Inspect final outputs, tar
 Selected JSON reports and a few generated CSL outputs are included for review. Full frozen execution bundles, binaries, device dumps and bulk traces are excluded. Thus this checkout cannot re-audit every historical result offline. Generate a fresh run for execution reproduction; historical source bit-for-bit reproduction additionally requires the corresponding complete frozen bundle. See [the packaging policy](../release/SELECTION.md).
 
 The `experiments/` directory contains research source controls and comparisons. Some still refer to the original lab paths or omitted runs. They are not the portable getting-started interface; inspect their setup before invoking them.
+
+`status.py` requires complete historical run bundles and is disabled in this curated checkout to avoid replacing the captured index with incomplete results. Fresh run reports remain available in `ports/evidence/`.

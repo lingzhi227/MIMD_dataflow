@@ -1,0 +1,17 @@
+{
+  "project": "waferllm",
+  "kernel": "input_attention_mixed_64x64x256_8x8_counters",
+  "status": "source_ready",
+  "partitions": 1,
+  "instrumentation": "counters",
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "origins": [
+    "Prefill/src/prefill.csl RMS/QKV/odd_even pair/score/attention/output projection/residual/MLP chain"
+  ],
+  "contract": "Eleven original half inputs; explicit f32 V, probabilities, PV, O, Z and RMS arithmetic, narrowing to half before blocked MLP and at final output. Shared gamma, original X residual, 64x64 activations and 64x256/256x64 MLP on 8x8 mesh. Single-head unmasked; not full Prefill/Decode.",
+  "development_bundle": "evidence/input-attention-codegen-20260907T142401616614Z",
+  "qualification": "Eight standard-driver SDK calls; original-eleven-input branch and final accuracy, actual native observers on two hosts, exact matched-source data, frozen audit mutations, linked ELF memory and simulator cycle comparison. Scoped single-head unmasked chain, not full Prefill/Decode or hardware performance.",
+  "fixture": "input_attention_mixed:64:64:256:8",
+  "target_replay": "evidence/input-attention-codegen-20260907T142401616614Z",
+  "source_comparison": "evidence/input-attention-mixed-source-comparison-validated-execution.json"
+}

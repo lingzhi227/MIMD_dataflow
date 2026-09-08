@@ -1,0 +1,35 @@
+// Pairwise vector rotation; all descriptors in one operation have length Mt.
+param memcpy_params;param Mt:i16;param Nt:i16;param broadcast:i16;param swapped:i16;param sampled:i16;
+const sys=@import_module("<memcpy/memcpy>",memcpy_params);const time=@import_module("<time>");
+const L:i16=Mt*Nt;const C:i16=(if(broadcast!=0) 1 else Mt)*(Nt/2);
+var x=@zeros([L]f16);var cosine=@zeros([C]f16);var sine=@zeros([C]f16);var result=@zeros([L]f16);
+var history=@zeros([if(sampled!=0) 2*L else 1]f16);
+var t0=@zeros([Mt]f16);var t1=@zeros([Mt]f16);var t2=@zeros([Mt]f16);var t3=@zeros([Mt]f16);
+const d0=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{Mt}->t0[i]});const d1=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{Mt}->t1[i]});
+const d2=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{Mt}->t2[i]});const d3=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{Mt}->t3[i]});
+const xd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{Mt}->x[i]});const rd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{Mt}->result[i]});
+const cd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{Mt}->cosine[i]});const sd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{Mt}->sine[i]});
+const hd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{Mt}->history[i]});
+var progress=@zeros([3]u16);var timing=@zeros([6]u16);var start=@zeros([3]u16);var end=@zeros([3]u16);
+fn hls_main() void {
+ time.enable_tsc();time.get_timestamp(&start);progress[0]=0;progress[1]=0;
+ for(@range(i16,Nt/2)) |j| {
+  const a=@increment_dsd_offset(xd,(2*j+swapped)*Mt,f16);const b=@increment_dsd_offset(xd,(2*j+1-swapped)*Mt,f16);
+  if(broadcast!=0){
+   @fmulh(d0,a,cosine[j]);@fmulh(d1,b,sine[j]);@fmulh(d2,b,cosine[j]);@fmulh(d3,a,sine[j]);
+  }else{
+   const c=@increment_dsd_offset(cd,j*Mt,f16);const s=@increment_dsd_offset(sd,j*Mt,f16);
+   @fmulh(d0,a,c);@fmulh(d1,b,s);@fmulh(d2,b,c);@fmulh(d3,a,s);
+  }
+  if(sampled!=0){
+   @fmovh(@increment_dsd_offset(hd,(4*j)*Mt,f16),d0);@fmovh(@increment_dsd_offset(hd,(4*j+1)*Mt,f16),d1);
+   @fmovh(@increment_dsd_offset(hd,(4*j+2)*Mt,f16),d2);@fmovh(@increment_dsd_offset(hd,(4*j+3)*Mt,f16),d3);
+  }
+  @fsubh(@increment_dsd_offset(rd,2*j*Mt,f16),d0,d1);@faddh(@increment_dsd_offset(rd,(2*j+1)*Mt,f16),d2,d3);
+  progress[0]+=1;
+ }
+ progress[1]=1;progress[2]+=1;time.get_timestamp(&end);time.disable_tsc();
+ for(@range(i16,3)) |i| {timing[i]=start[i];timing[i+3]=end[i];}sys.unblock_cmd_stream();
+}
+var xp:[*]f16=&x;var cp:[*]f16=&cosine;var sp:[*]f16=&sine;var rp:[*]f16=&result;var hp:[*]f16=&history;var pp:[*]u16=&progress;var tp:[*]u16=&timing;
+comptime {@export_symbol(xp,"x");@export_symbol(cp,"cosine");@export_symbol(sp,"sine");@export_symbol(rp,"result");@export_symbol(hp,"history");@export_symbol(pp,"progress");@export_symbol(tp,"timing");@export_symbol(hls_main);}

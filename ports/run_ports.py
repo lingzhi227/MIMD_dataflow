@@ -1,6 +1,6 @@
 """Per-kernel fresh builds, staged artifacts and independent application checks."""
 
-import argparse, datetime, json, subprocess, sys, os, hashlib, platform
+import argparse, datetime, json, subprocess, sys, os, hashlib, platform, math
 import numpy as np
 from pathlib import Path
 
@@ -17,6 +17,8 @@ def numerical_summary(case):
     native = case.get("native_application_checks", [])
     device = case.get("device_application_checks", [])
     normwise_limits = {
+        "composed-attention-ffn-half-normwise-v1": (0.02, 0.03),
+        "shared-gamma-input-attention-tail-half-normwise-v1": (0.02, 0.03),
         "fft-f32-normwise-v1": (2e-5, 3e-5),
         "rms-half-normwise-v1": (0.01, 0.015),
         "softmax-half-normwise-v1": (0.01, 0.015),
@@ -28,6 +30,12 @@ def numerical_summary(case):
         "attention-half-normwise-v1": (0.02, 0.025),
         "rectangular-mlp-half-normwise-v1": (0.02, 0.03),
         "projection-residual-rms-half-normwise-v1": (0.02, 0.03),
+        "normalized-feed-forward-half-normwise-v1": (0.02, 0.03),
+        "batched-feed-forward-half-normwise-v1": (0.02, 0.03),
+        "supplied-cache-attention-half-normwise-v1": (0.02, 0.03),
+        "projected-cache-half-normwise-v1": (0.02, 0.03),
+        "supplied-attention-tail-half-normwise-v1": (0.02, 0.03),
+        "supplied-qkv-attention-tail-half-normwise-v1": (0.02, 0.03),
     }
     contract = (
         native[0].get("contract") if native and isinstance(native[0], dict) else None
@@ -79,6 +87,118 @@ def numerical_summary(case):
             not isinstance(v, dict) or v.get("contract") != contract for v in device
         ):
             raise ValueError("mixed normwise numerical contracts")
+        if contract == "shared-gamma-input-attention-tail-half-normwise-v1":
+            branches = (
+                "input_normalized",
+                "q_raw",
+                "k_raw",
+                "v_raw",
+                "q",
+                "k",
+                "v",
+                "score",
+                "probability",
+                "attention",
+                "projection",
+                "mlp_delta",
+            )
+            if any(
+                not v.get(k, {}).get("fixed_accuracy_passed")
+                for v in native + device
+                for k in branches
+            ):
+                raise ValueError(
+                    "Input attention requires all original-input branch gates"
+                )
+            if any(
+                not v[k].get("local_pair_rounding_passed")
+                for v in native + device
+                for k in ("q", "k")
+            ):
+                raise ValueError("Input attention requires local pair rounding checks")
+        if contract == "normalized-feed-forward-half-normwise-v1":
+            if any(
+                not isinstance(v.get("mlp_delta"), dict)
+                or not v["mlp_delta"].get("fixed_accuracy_passed")
+                for v in native + device
+            ):
+                raise ValueError("FFN requires a passing separately observed MLP delta")
+        if contract == "supplied-qkv-attention-tail-half-normwise-v1":
+            if any(
+                not v.get(k, {}).get("fixed_accuracy_passed")
+                for v in native + device
+                for k in (
+                    "score",
+                    "probability",
+                    "attention",
+                    "projection",
+                    "mlp_delta",
+                )
+            ):
+                raise ValueError(
+                    "Attention tail requires five separately observed passing branches"
+                )
+        if contract == "supplied-attention-tail-half-normwise-v1":
+            if any(
+                not v.get(k, {}).get("fixed_accuracy_passed")
+                for v in native + device
+                for k in ("projection", "mlp_delta")
+            ):
+                raise ValueError(
+                    "Tail requires separately observed passing projection and MLP delta"
+                )
+        if contract == "supplied-cache-attention-half-normwise-v1":
+            if any(
+                not v.get("all_stage_gates")
+                or set(v.get("stages", {}))
+                != {"score", "probability", "context", "delta", "result"}
+                or v.get("max_row_mass_error") is None
+                or v["max_row_mass_error"] > 0.01
+                for v in native + device
+            ):
+                raise ValueError(
+                    "Cache attention requires all original-input stages and probability mass"
+                )
+        if contract == "projected-cache-half-normwise-v1":
+            stages = {
+                "normalized",
+                "query",
+                "key_projection",
+                "value_projection",
+                "rotated_query",
+                "rotated_key",
+                "score",
+                "probability",
+                "context",
+                "delta",
+                "result",
+            }
+            for v in native + device:
+                if (
+                    v.get("all_stage_gates") is not True
+                    or set(v.get("metrics", {})) != stages
+                    or v.get("limits")
+                    != dict(relative_l2=0.02, relative_peak=0.03, row_mass=0.01)
+                ):
+                    raise ValueError(
+                        "Projected cache requires eleven observed stages and fixed limits"
+                    )
+                mass = v.get("max_probability_mass_error")
+                if (
+                    type(mass) not in (int, float)
+                    or not math.isfinite(mass)
+                    or not 0 <= mass <= 0.01
+                ):
+                    raise ValueError("Projected cache probability mass")
+                for metric in v["metrics"].values():
+                    for key, limit in (("relative_l2", 0.02), ("relative_peak", 0.03)):
+                        value = metric.get(key)
+                        if (
+                            type(value) not in (int, float)
+                            or not math.isfinite(value)
+                            or not 0 <= value <= limit
+                        ):
+                            raise ValueError("Projected cache stage numerical gate")
         native_fixed = all(v["fixed_accuracy_passed"] for v in native)
         device_fixed = (
             all(v["fixed_accuracy_passed"] for v in device) if device else None
@@ -139,6 +259,46 @@ def numerical_summary(case):
             for v in device
         ):
             raise ValueError("mixed numerical contracts")
+        if contract == "projected-cache-half-normwise-v1":
+            stages = {
+                "normalized",
+                "query",
+                "key_projection",
+                "value_projection",
+                "rotated_query",
+                "rotated_key",
+                "score",
+                "probability",
+                "context",
+                "delta",
+                "result",
+            }
+            for v in native + device:
+                if (
+                    v.get("all_stage_gates") is not True
+                    or set(v.get("metrics", {})) != stages
+                    or v.get("limits")
+                    != dict(relative_l2=0.02, relative_peak=0.03, row_mass=0.01)
+                ):
+                    raise ValueError(
+                        "Projected cache requires eleven observed stages and fixed limits"
+                    )
+                mass = v.get("max_probability_mass_error")
+                if (
+                    type(mass) not in (int, float)
+                    or not math.isfinite(mass)
+                    or not 0 <= mass <= 0.01
+                ):
+                    raise ValueError("Projected cache probability mass")
+                for metric in v["metrics"].values():
+                    for key, limit in (("relative_l2", 0.02), ("relative_peak", 0.03)):
+                        value = metric.get(key)
+                        if (
+                            type(value) not in (int, float)
+                            or not math.isfinite(value)
+                            or not 0 <= value <= limit
+                        ):
+                            raise ValueError("Projected cache stage numerical gate")
         native_fixed = all(v["fixed_accuracy_passed"] for v in native)
         device_fixed = (
             all(v["fixed_accuracy_passed"] for v in device) if device else None
@@ -243,12 +403,19 @@ def main():
         "atol": 3e-6,
         "input_seed_base": 911,
         "additional_contract_by_fixture_prefix": {
+            "composed_ffn:": "resident attention/FFN; eighteen original-input native/device stage gates, 2% L2 / 3% peak, probability mass 1%; source-local-compute performance scope",
             "mesh_gemm:": "componentwise-f32-dot-v1; fixed accuracy reported separately",
             "distributed_fft:": "fft-f32-normwise-v1; not per-component accuracy",
             "pair_rotation:": "pair-rotation-half-v1; cancellation-aware product-magnitude criterion",
             "gated_silu:": "gated-activation-half-v1; componentwise relative plus input-dependent subnormal allowance",
             "normalized_fanout:": "normalized-fanout-half-normwise-v1; every projection independently checked",
             "score:": "score-half-normwise-v1; original-input math.fsum QK transpose",
+            "batched_fanout:": "grouped normalized projection; all branches and original-input math",
+            "batched_rms:": "rms-half-normwise-v1; original-domain batched RMS and all device replicas",
+            "input_attention_mixed:": "shared-gamma-input-attention-tail-half-normwise-v1; thirteen actual native observers and actual device branch gates",
+            "attention_tail:": "supplied-qkv-attention-tail-half-normwise-v1; five actual observed branch gates",
+            "prefill_tail:": "supplied-attention-tail-half-normwise-v1; separate actual native/device projection and delta gates",
+            "feed_forward:": "normalized-feed-forward-half-normwise-v1; separate actual native/device delta gates plus original-input final math",
             "projection_residual_rms:": "projection-residual-rms-half-normwise-v1; original-input fsum projection/add/RMS",
             "mlp_blocked:": "rectangular-mlp-half-normwise-v1; explicit half block/f32 merge; original-input fsum/exp",
             "mlp:": "rectangular-mlp-half-normwise-v1; original-input fsum/exp three-projection gated path",
@@ -280,6 +447,22 @@ def main():
                 "attention_fixtures.py",
                 "mlp_fixtures.py",
                 "projection_residual_rms_fixtures.py",
+                "feed_forward_fixtures.py",
+                "batched_rms_fixtures.py",
+                "batched_fanout_fixtures.py",
+                "batched_ffn_fixtures.py",
+                "cache_attention_fixtures.py",
+                "projected_cache_fixtures.py",
+                "composed_ffn_fixtures.py",
+                "experiments/batched_ffn_gate.py",
+                "rms_fixtures.py",
+                "input_attention_fixtures.py",
+                "experiments/input_attention_mixed_gate.py",
+                "attention_tail_fixtures.py",
+                "experiments/attention_tail_gate.py",
+                "prefill_tail_fixtures.py",
+                "experiments/prefill_tail_gate.py",
+                "experiments/feed_forward_gate.py",
                 "swiglu_fixtures.py",
                 "pair_rotation_fixtures.py",
                 "toolchain/binary16.py",
@@ -345,6 +528,16 @@ def main():
                     "mlp": 6,
                     "mlp_blocked": 8,
                     "projection_residual_rms": 8,
+                    "feed_forward": 8,
+                    "batched_rms": 8,
+                    "batched_fanout": 8,
+                    "batched_ffn": 8,
+                    "cache_attention": 8,
+                    "projected_cache": 8,
+                    "composed_ffn": 8,
+                    "input_attention_mixed": 8,
+                    "attention_tail": 8,
+                    "prefill_tail": 8,
                     "gated_silu": 6,
                     "pair_rotation": 6,
                 }.get(item["fixture"].split(":")[0], 4),
@@ -365,6 +558,16 @@ def main():
                     "mlp": 1,
                     "mlp_blocked": 1,
                     "projection_residual_rms": 2,
+                    "feed_forward": 2,
+                    "batched_rms": 2,
+                    "batched_fanout": 2,
+                    "batched_ffn": 2,
+                    "cache_attention": 2,
+                    "projected_cache": 2,
+                    "composed_ffn": 2,
+                    "input_attention_mixed": 2,
+                    "attention_tail": 2,
+                    "prefill_tail": 2,
                     "gated_silu": 8,
                     "pair_rotation": 8,
                 }.get(item["fixture"].split(":")[0], 64),
@@ -384,6 +587,80 @@ def main():
             case["native_application_checks"] = [
                 check_application(item["fixture"], b, o) for b, o in zip(inputs, native)
             ]
+            if item["fixture"].startswith("composed_ffn:"):
+                sys.path.insert(0, str(ROOT / "experiments"))
+                from composed_ffn_gate import seal_native, seal_target
+
+                case["native_application_checks"] = seal_native(out)["checks"]
+                case["predicted_target_application_checks"] = seal_target(out)["checks"]
+            if item["fixture"].startswith("projected_cache:"):
+                sys.path.insert(0, str(ROOT / "experiments"))
+                from projected_cache_gate import seal_native, seal_target
+
+                case["native_application_checks"] = seal_native(out)["checks"]
+                case["predicted_target_application_checks"] = seal_target(out)["checks"]
+            if item["fixture"].startswith("cache_attention:"):
+                sys.path.insert(0, str(ROOT / "experiments"))
+                from cache_attention_gate import seal_native, seal_target
+
+                case["native_application_checks"] = seal_native(out)["checks"]
+                case["predicted_target_application_checks"] = seal_target(out)["checks"]
+            if item["fixture"].startswith("batched_ffn:"):
+                sys.path.insert(0, str(ROOT / "experiments"))
+                from batched_ffn_gate import seal_native, seal_target
+
+                case["native_application_checks"] = seal_native(out)["checks"]
+                case["predicted_target_application_checks"] = seal_target(out)["checks"]
+            if item["fixture"].startswith("batched_fanout:"):
+                sys.path.insert(0, str(ROOT / "experiments"))
+                from application_gate import seal
+
+                dims = list(map(int, item["fixture"].split(":")[1:]))
+                seal(
+                    out,
+                    ROOT / "batched_fanout_fixtures.py",
+                    lambda b, o: check_application(item["fixture"], b, o),
+                    dict(zip(("B", "N", "F", "C"), dims)),
+                )
+            if item["fixture"].startswith("batched_rms:"):
+                sys.path.insert(0, str(ROOT / "experiments"))
+                from application_gate import seal
+
+                dims = list(map(int, item["fixture"].split(":")[1:]))
+                seal(
+                    out,
+                    ROOT / "rms_fixtures.py",
+                    lambda b, o: check_application(item["fixture"], b, o),
+                    dict(B=dims[0], N=dims[1]),
+                )
+            if item["fixture"].startswith("input_attention_mixed:"):
+                sys.path.insert(0, str(ROOT / "experiments"))
+                from input_attention_mixed_gate import seal_native, seal_replay
+
+                case["native_application_checks"] = seal_native(out)["checks"]
+                case["target_replay_application_checks"] = seal_replay(
+                    out, ROOT / item["target_replay"]
+                )["checks"]
+            if item["fixture"].startswith("attention_tail:"):
+                sys.path.insert(0, str(ROOT / "experiments"))
+                from attention_tail_gate import seal_native, seal_target
+
+                case["native_application_checks"] = seal_native(out)["checks"]
+                case["predicted_target_application_checks"] = seal_target(out)["checks"]
+            if item["fixture"].startswith("prefill_tail:"):
+                sys.path.insert(0, str(ROOT / "experiments"))
+                from prefill_tail_gate import seal_native, seal_target
+
+                gate = seal_native(out)
+                case["native_application_checks"] = gate["checks"]
+                seal_target(out)
+            if item["fixture"].startswith("feed_forward:"):
+                sys.path.insert(0, str(ROOT / "experiments"))
+                from feed_forward_gate import seal_native, seal_target
+
+                gate = seal_native(out)
+                case["native_application_checks"] = gate["checks"]
+                case["predicted_target_application_checks"] = seal_target(out)["checks"]
             case["native_application_source"] = (
                 "native-output.txt: actual C++ executable stdout"
             )
@@ -413,6 +690,83 @@ def main():
                     check_application(item["fixture"], b, o)
                     for b, o in zip(inputs, actual)
                 ]
+                if item["fixture"].startswith("composed_ffn:"):
+                    from composed_ffn_gate import device_checks
+
+                    case["device_application_checks"] = device_checks(out)
+                if item["fixture"].startswith("projected_cache:"):
+                    from projected_cache_gate import device_checks
+
+                    case["device_application_checks"] = device_checks(out)
+                if item["fixture"].startswith("cache_attention:"):
+                    from cache_attention_gate import device_checks
+
+                    case["device_application_checks"] = device_checks(out)
+                if item["fixture"].startswith("feed_forward:"):
+                    from feed_forward_fixtures import check as ff_check
+                    from mesh_common import unpack_tiles
+
+                    sch = json.loads((out / "schedule.json").read_text())
+                    observed = json.loads((out / "results.json").read_text())[
+                        "diagnostics"
+                    ]
+                    case["device_application_checks"] = [
+                        ff_check(
+                            sch["M"],
+                            sch["N"],
+                            sch["F"],
+                            sch["epsilon"],
+                            b,
+                            o,
+                            unpack_tiles(
+                                np.asarray(v["down_snapshot"], np.uint16).view(
+                                    np.float16
+                                ),
+                                sch["Mt"],
+                                sch["Nt"],
+                                "F",
+                            ),
+                        )
+                        for b, o, v in zip(inputs, actual, observed)
+                    ]
+                if item["fixture"].startswith("input_attention_mixed:"):
+                    from input_attention_mixed_gate import device_checks
+
+                    case["device_application_checks"] = device_checks(out)
+                if item["fixture"].startswith("attention_tail:"):
+                    from attention_tail_gate import device_checks
+
+                    case["device_application_checks"] = device_checks(out)
+                if item["fixture"].startswith("prefill_tail:"):
+                    from prefill_tail_fixtures import check as tail_check
+                    from mesh_common import unpack_tiles
+
+                    sch = json.loads((out / "schedule.json").read_text())
+                    observed = json.loads((out / "results.json").read_text())[
+                        "diagnostics"
+                    ]
+
+                    def decode(v, key):
+                        return unpack_tiles(
+                            np.asarray(v[key], np.uint16).view(np.float16),
+                            sch["Mt"],
+                            sch["Nt"],
+                            "F",
+                        )
+
+                    case["device_application_checks"] = [
+                        tail_check(
+                            sch["M"],
+                            sch["N"],
+                            sch["F"],
+                            sch["epsilon"],
+                            b,
+                            o,
+                            decode(v, "projection_snapshot"),
+                            decode(v, "down_snapshot"),
+                        )
+                        for b, o, v in zip(inputs, actual, observed)
+                    ]
                 case["numerical_validation"] = numerical_summary(case)
             case["passed"] = True
             case["level"] = "sdk_simulator" if a.sdk else "native_cpu"

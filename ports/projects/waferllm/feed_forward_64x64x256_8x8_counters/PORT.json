@@ -1,0 +1,11 @@
+{
+  "project": "waferllm",
+  "kernel": "feed_forward_64x64x256_8x8_counters",
+  "status": "development",
+  "partitions": 1,
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "origins": [
+    "Prefill/src/prefill.csl rmsnorm_z/z1_matmul/z2_matmul/z3_comp/h2_matmul/add_result"
+  ],
+  "contract": "Supplied Z normalized feed-forward residual, explicit block-f32 down. Development; not full Prefill/Decode."
+}

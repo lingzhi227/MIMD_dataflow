@@ -1,0 +1,346 @@
+{
+  "passed": true,
+  "mutations": 67,
+  "cases": [
+    {
+      "name": "X-p0_0-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 X\nMismatched elements: 1 / 10240 (0.00977%)\nMismatch at index:\n [0, 0, 159]: 13569 (ACTUAL), 13568 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violatio"
+    },
+    {
+      "name": "X-p7_7-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 X\nMismatched elements: 1 / 10240 (0.00977%)\nMismatch at index:\n [7, 7, 159]: 45569 (ACTUAL), 45568 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violatio"
+    },
+    {
+      "name": "Q-p0_0-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 Q\nMismatched elements: 1 / 10240 (0.00977%)\nMismatch at index:\n [0, 0, 159]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n"
+    },
+    {
+      "name": "Q-p7_7-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 Q\nMismatched elements: 1 / 10240 (0.00977%)\nMismatch at index:\n [7, 7, 159]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n"
+    },
+    {
+      "name": "K-p0_0-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 K\nMismatched elements: 1 / 131072 (0.000763%)\nMismatch at index:\n [0, 0, 2047]: 13377 (ACTUAL), 13376 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among viola"
+    },
+    {
+      "name": "K-p7_7-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 K\nMismatched elements: 1 / 131072 (0.000763%)\nMismatch at index:\n [7, 7, 2047]: 13697 (ACTUAL), 13696 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among viola"
+    },
+    {
+      "name": "V-p0_0-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 V\nMismatched elements: 1 / 131072 (0.000763%)\nMismatch at index:\n [0, 0, 2047]: 12417 (ACTUAL), 12416 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among viola"
+    },
+    {
+      "name": "V-p7_7-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 V\nMismatched elements: 1 / 131072 (0.000763%)\nMismatch at index:\n [7, 7, 2047]: 13057 (ACTUAL), 13056 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among viola"
+    },
+    {
+      "name": "W-p0_0-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 W\nMismatched elements: 1 / 65536 (0.00153%)\nMismatch at index:\n [0, 0, 1023]: 39937 (ACTUAL), 39936 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violati"
+    },
+    {
+      "name": "W-p7_7-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 W\nMismatched elements: 1 / 65536 (0.00153%)\nMismatch at index:\n [7, 7, 1023]: 8193 (ACTUAL), 8192 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violation"
+    },
+    {
+      "name": "score-p0_0-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 score\nMismatched elements: 1 / 20480 (0.00488%)\nMismatch at index:\n [0, 0, 319]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: "
+    },
+    {
+      "name": "score-p7_7-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 score\nMismatched elements: 1 / 20480 (0.00488%)\nMismatch at index:\n [7, 7, 319]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: "
+    },
+    {
+      "name": "scaled-p0_0-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 scaled\nMismatched elements: 1 / 20480 (0.00488%)\nMismatch at index:\n [0, 0, 319]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations:"
+    },
+    {
+      "name": "scaled-p7_7-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 scaled\nMismatched elements: 1 / 20480 (0.00488%)\nMismatch at index:\n [7, 7, 319]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations:"
+    },
+    {
+      "name": "local_max-p0_0-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 local_max\nMismatched elements: 1 / 384 (0.26%)\nMismatch at index:\n [0, 0, 5]: 64510 (ACTUAL), 64511 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violati"
+    },
+    {
+      "name": "local_max-p7_7-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 local_max\nMismatched elements: 1 / 384 (0.26%)\nMismatch at index:\n [7, 7, 5]: 64510 (ACTUAL), 64511 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violati"
+    },
+    {
+      "name": "maximum-p0_0-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 maximum\nMismatched elements: 1 / 384 (0.26%)\nMismatch at index:\n [0, 0, 5]: 64510 (ACTUAL), 64511 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violation"
+    },
+    {
+      "name": "maximum-p7_7-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 maximum\nMismatched elements: 1 / 384 (0.26%)\nMismatch at index:\n [7, 7, 5]: 64510 (ACTUAL), 64511 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violation"
+    },
+    {
+      "name": "exponents-p0_0-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 exponents\nMismatched elements: 1 / 20480 (0.00488%)\nMismatch at index:\n [0, 0, 319]: 15361 (ACTUAL), 15360 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among "
+    },
+    {
+      "name": "exponents-p7_7-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 exponents\nMismatched elements: 1 / 20480 (0.00488%)\nMismatch at index:\n [7, 7, 319]: 15361 (ACTUAL), 15360 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among "
+    },
+    {
+      "name": "local_sum-p0_0-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 local_sum\nMismatched elements: 1 / 384 (0.26%)\nMismatch at index:\n [0, 0, 5]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf"
+    },
+    {
+      "name": "local_sum-p7_7-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 local_sum\nMismatched elements: 1 / 384 (0.26%)\nMismatch at index:\n [7, 7, 5]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf"
+    },
+    {
+      "name": "sums-p0_0-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 sums\nMismatched elements: 1 / 384 (0.26%)\nMismatch at index:\n [0, 0, 5]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACT"
+    },
+    {
+      "name": "sums-p7_7-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 sums\nMismatched elements: 1 / 384 (0.26%)\nMismatch at index:\n [7, 7, 5]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: inf\n ACT"
+    },
+    {
+      "name": "probability-p0_0-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 probability\nMismatched elements: 1 / 20480 (0.00488%)\nMismatch at index:\n [0, 0, 319]: 6145 (ACTUAL), 6144 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among "
+    },
+    {
+      "name": "probability-p7_7-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 probability\nMismatched elements: 1 / 20480 (0.00488%)\nMismatch at index:\n [7, 7, 319]: 6145 (ACTUAL), 6144 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among "
+    },
+    {
+      "name": "score_partial-p0_0-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 score_partial\nMismatched elements: 1 / 20480 (0.00488%)\nMismatch at index:\n [0, 0, 319]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among viol"
+    },
+    {
+      "name": "score_partial-p7_7-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 score_partial\nMismatched elements: 1 / 20480 (0.00488%)\nMismatch at index:\n [7, 7, 319]: 1 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among viol"
+    },
+    {
+      "name": "context_partial-p0_0-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 context_partial\nMismatched elements: 1 / 10240 (0.00977%)\nMismatch at index:\n [0, 0, 159]: 37121 (ACTUAL), 37120 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference "
+    },
+    {
+      "name": "context_partial-p7_7-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 context_partial\nMismatched elements: 1 / 10240 (0.00977%)\nMismatch at index:\n [7, 7, 159]: 37441 (ACTUAL), 37440 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference "
+    },
+    {
+      "name": "context-p0_0-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 context\nMismatched elements: 1 / 10240 (0.00977%)\nMismatch at index:\n [0, 0, 159]: 38369 (ACTUAL), 38368 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among vi"
+    },
+    {
+      "name": "context-p7_7-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 context\nMismatched elements: 1 / 10240 (0.00977%)\nMismatch at index:\n [7, 7, 159]: 3585 (ACTUAL), 3584 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among viol"
+    },
+    {
+      "name": "delta_partial-p0_0-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 delta_partial\nMismatched elements: 1 / 10240 (0.00977%)\nMismatch at index:\n [0, 0, 159]: 35557 (ACTUAL), 35556 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference am"
+    },
+    {
+      "name": "delta_partial-p7_7-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 delta_partial\nMismatched elements: 1 / 10240 (0.00977%)\nMismatch at index:\n [7, 7, 159]: 3552 (ACTUAL), 3553 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference amon"
+    },
+    {
+      "name": "delta-p0_0-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 delta\nMismatched elements: 1 / 10240 (0.00977%)\nMismatch at index:\n [0, 0, 159]: 39198 (ACTUAL), 39199 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among viol"
+    },
+    {
+      "name": "delta-p7_7-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 delta\nMismatched elements: 1 / 10240 (0.00977%)\nMismatch at index:\n [7, 7, 159]: 37987 (ACTUAL), 37986 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among viol"
+    },
+    {
+      "name": "result-p0_0-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 result\nMismatched elements: 1 / 10240 (0.00977%)\nMismatch at index:\n [0, 0, 159]: 13559 (ACTUAL), 13558 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among vio"
+    },
+    {
+      "name": "result-p7_7-last-word",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 result\nMismatched elements: 1 / 10240 (0.00977%)\nMismatch at index:\n [7, 7, 159]: 45576 (ACTUAL), 45577 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among vio"
+    },
+    {
+      "name": "X-truncated",
+      "rejected": true,
+      "error": "setting an array element with a sequence. The requested array has an inhomogeneous shape after 2 dimensions. The detected shape was (8, 8) + inhomogeneous part."
+    },
+    {
+      "name": "Q-truncated",
+      "rejected": true,
+      "error": "setting an array element with a sequence. The requested array has an inhomogeneous shape after 2 dimensions. The detected shape was (8, 8) + inhomogeneous part."
+    },
+    {
+      "name": "K-truncated",
+      "rejected": true,
+      "error": "setting an array element with a sequence. The requested array has an inhomogeneous shape after 2 dimensions. The detected shape was (8, 8) + inhomogeneous part."
+    },
+    {
+      "name": "V-truncated",
+      "rejected": true,
+      "error": "setting an array element with a sequence. The requested array has an inhomogeneous shape after 2 dimensions. The detected shape was (8, 8) + inhomogeneous part."
+    },
+    {
+      "name": "W-truncated",
+      "rejected": true,
+      "error": "setting an array element with a sequence. The requested array has an inhomogeneous shape after 2 dimensions. The detected shape was (8, 8) + inhomogeneous part."
+    },
+    {
+      "name": "probability-truncated",
+      "rejected": true,
+      "error": "setting an array element with a sequence. The requested array has an inhomogeneous shape after 2 dimensions. The detected shape was (8, 8) + inhomogeneous part."
+    },
+    {
+      "name": "context-truncated",
+      "rejected": true,
+      "error": "setting an array element with a sequence. The requested array has an inhomogeneous shape after 2 dimensions. The detected shape was (8, 8) + inhomogeneous part."
+    },
+    {
+      "name": "delta-truncated",
+      "rejected": true,
+      "error": "setting an array element with a sequence. The requested array has an inhomogeneous shape after 2 dimensions. The detected shape was (8, 8) + inhomogeneous part."
+    },
+    {
+      "name": "result-truncated",
+      "rejected": true,
+      "error": "setting an array element with a sequence. The requested array has an inhomogeneous shape after 2 dimensions. The detected shape was (8, 8) + inhomogeneous part."
+    },
+    {
+      "name": "missing-epoch",
+      "rejected": true,
+      "error": "cache attention lifecycle"
+    },
+    {
+      "name": "false-success",
+      "rejected": true,
+      "error": "cache attention lifecycle"
+    },
+    {
+      "name": "runtime-instances",
+      "rejected": true,
+      "error": "cache attention lifecycle"
+    },
+    {
+      "name": "launch-order",
+      "rejected": true,
+      "error": "cache attention lifecycle"
+    },
+    {
+      "name": "wrong-output",
+      "rejected": true,
+      "error": "cache attention decoded output"
+    },
+    {
+      "name": "missing-port",
+      "rejected": true,
+      "error": "cache attention diagnostic ports"
+    },
+    {
+      "name": "queue-not-empty",
+      "rejected": true,
+      "error": "cache attention SDK queues drained"
+    },
+    {
+      "name": "unfinished-phase",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 512 (0.195%)\nMismatch at index:\n [0, 0, 5]: 0 (ACTUAL), 1 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 1.\n ACTUAL: array("
+    },
+    {
+      "name": "epoch-regression",
+      "rejected": true,
+      "error": "\nArrays are not equal\n\nMismatched elements: 1 / 512 (0.195%)\nMismatch at index:\n [0, 0, 7]: 0 (ACTUAL), 1 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violations: 1.\n ACTUAL: array("
+    },
+    {
+      "name": "bad-timer-high-word",
+      "rejected": true,
+      "error": "cache attention positive timing"
+    },
+    {
+      "name": "zero-cycle",
+      "rejected": true,
+      "error": "cache attention positive timing"
+    },
+    {
+      "name": "word-overflow",
+      "rejected": true,
+      "error": "cache attention raw words delta"
+    },
+    {
+      "name": "last-call-delta-corruption",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch7 delta\nMismatched elements: 1 / 10240 (0.00977%)\nMismatch at index:\n [7, 7, 0]: 5551 (ACTUAL), 5550 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violatio"
+    },
+    {
+      "name": "last-call-immutable-cache",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch7 K\nMismatched elements: 1 / 131072 (0.000763%)\nMismatch at index:\n [7, 7, 0]: 11265 (ACTUAL), 11264 (DESIRED)\nMax absolute difference among violations: 1\nMax relative difference among violatio"
+    },
+    {
+      "name": "last-call-stale-observations",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch7 score_partial\nMismatched elements: 20480 / 20480 (100%)\nFirst 5 mismatches are at indices:\n [0, 0, 0]: 16384 (ACTUAL), 47282 (DESIRED)\n [0, 0, 1]: 49152 (ACTUAL), 13695 (DESIRED)\n [0, 0, 2]: "
+    },
+    {
+      "name": "nonzero-call-stale-output",
+      "rejected": true,
+      "error": "cache attention decoded output"
+    },
+    {
+      "name": "all-negative-global-max-zero",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch3 maximum\nMismatched elements: 1 / 384 (0.26%)\nMismatch at index:\n [7, 7, 0]: 0 (ACTUAL), 47168 (DESIRED)\nMax absolute difference among violations: 18368\nMax relative difference among violation"
+    },
+    {
+      "name": "nonzero-cache-transposed-local",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch4 K\nMismatched elements: 2030 / 131072 (1.55%)\nFirst 5 mismatches are at indices:\n [7, 3, 0]: 44544 (ACTUAL), 45760 (DESIRED)\n [7, 3, 1]: 45888 (ACTUAL), 44288 (DESIRED)\n [7, 3, 2]: 46528 (ACTU"
+    },
+    {
+      "name": "max-padding-zero",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 maximum\nMismatched elements: 1 / 384 (0.26%)\nMismatch at index:\n [7, 7, 5]: 0 (ACTUAL), 64511 (DESIRED)\nMax absolute difference among violations: 1025\nMax relative difference among violations"
+    },
+    {
+      "name": "sum-padding-nonzero",
+      "rejected": true,
+      "error": "\nArrays are not equal\nepoch0 sums\nMismatched elements: 1 / 384 (0.26%)\nMismatch at index:\n [7, 7, 5]: 15360 (ACTUAL), 0 (DESIRED)\nMax absolute difference among violations: 15360\nMax relative difference among violations: "
+    }
+  ],
+  "source_bundle": "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/projects/waferllm/cache_attention_5x256x512_8x8/run-20260907T220401939966Z",
+  "results_sha256": "8207c81eee500236bf0af54f68c988f4570a8cb055fcb0143800f64d6cf93f1a",
+  "manifest_sha256": "ea8eee6c7472a4a8f9de4eade1b48e22457cfba6e61a5fec08a609696ff2cad4",
+  "driver_sha256": "eeebb87eeb6c8ff05880f38b905a2663566b035b41c90828d943766992882f3b",
+  "scope": "Actual full SDK snapshot rejected after numeric, replica, ownership, lifecycle and timestamp corruption through its frozen auditor"
+}

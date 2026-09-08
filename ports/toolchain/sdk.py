@@ -34,6 +34,30 @@ def main():
     root = Path(args.directory).resolve()
     verify_bundle(root)
     s = json.loads((root / "schedule.json").read_text())
+    if s.get("profile") == "mesh_projected_cache_ffn.v1":
+        from mesh_projected_cache_ffn_sdk import run as composed
+
+        return composed(root)
+    if s.get("profile") == "mesh_projected_cache.v1":
+        from mesh_projected_cache_sdk import run as projected
+
+        return projected(root)
+    if s.get("profile") == "mesh_input_attention_mixed.v1":
+        from mesh_input_attention_mixed_sdk import run as mixed_run
+
+        return mixed_run(root)
+    if s.get("profile") == "mesh_attention_tail.v1":
+        from mesh_attention_tail_sdk import run as attention_tail_run
+
+        return attention_tail_run(root)
+    if s.get("profile") == "mesh_prefill_tail.v1":
+        from mesh_prefill_tail_sdk import run as tail_run
+
+        return tail_run(root)
+    if s.get("profile") == "mesh_feed_forward.v1":
+        from mesh_feed_forward_sdk import run as feed_forward_run
+
+        return feed_forward_run(root)
     if s.get("profile") == "mesh_projection_residual_rms.v1":
         from mesh_projection_residual_rms_sdk import run as composition_run
 
@@ -78,6 +102,22 @@ def main():
         from mesh_softmax_sdk import run as softmax_run
 
         return softmax_run(root)
+    if s.get("profile") == "mesh_cache_attention.v1":
+        from mesh_cache_attention_sdk import run as cache_run
+
+        return cache_run(root)
+    if s.get("profile") == "mesh_batched_feed_forward.v1":
+        from mesh_batched_feed_forward_sdk import run as batch_ffn
+
+        return batch_ffn(root)
+    if s.get("profile") == "mesh_batched_fanout.v1":
+        from mesh_batched_fanout_sdk import run as batched_fanout
+
+        return batched_fanout(root)
+    if s.get("profile") == "mesh_batched_rms.v1":
+        from mesh_batched_rms_sdk import run as batched_run
+
+        return batched_run(root)
     if s.get("profile") == "mesh_rms.v1":
         from mesh_rms_sdk import run as rms_run
 

@@ -1,0 +1,128 @@
+// Reusable attention region: synchronous local kernels and caller completion.
+// Derived from the qualified projected-cache PE; no host exports or command unblock.
+// Caller owns timestamps and final host completion. External SUM leases reuse SDK planes.
+param memcpy_params;param c2d_params;
+param capacity_override:i16;param f_complete:fn()void;param f_external_callback:fn()void;
+param P:i16;param B:i16;param Nt:i16;param St:i16;param score_block:i16;param value_block:i16;param output_block:i16;param scale_bits:u16;param sampled:i16;param epsilon_bits:u16;param q_block:i16;param k_block:i16;param v_block:i16;
+const padded:i16=((B+1)/2)*2;
+const capacity:i16=capacity_override;
+comptime {@comptime_assert(capacity>=3*B*Nt and capacity>=B*St and capacity>=padded);}
+
+const config=@import_module("<tile_config>");const pos=@import_module("<layout>");
+const rms=@import_module("batched_rms_local.csl",.{.batches=B,.features=Nt,.global_features=P*Nt,.epsilon=@bitcast(f16,epsilon_bits)});
+const project_q=@import_module("batched_matmul_blocked.csl",.{.batches=B,.inner=Nt,.columns=Nt,.block_size=q_block});
+const project_k=@import_module("batched_matmul_blocked.csl",.{.batches=B,.inner=Nt,.columns=Nt,.block_size=k_block});
+const project_v=@import_module("batched_matmul_blocked.csl",.{.batches=B,.inner=Nt,.columns=Nt,.block_size=v_block});
+const pair=@import_module("batched_pair_rotation_local.csl",.{.batches=B,.features=Nt,.sampled=sampled,.swapped=1});
+const score_op=@import_module("batched_matmul_blocked.csl",.{.batches=B,.inner=Nt,.columns=St,.block_size=score_block});
+const value_op=@import_module("batched_matmul_blocked.csl",.{.batches=B,.inner=St,.columns=Nt,.block_size=value_block});
+const output_op=@import_module("batched_matmul_blocked.csl",.{.batches=B,.inner=Nt,.columns=Nt,.block_size=output_block});
+const softmax=@import_module("batched_softmax_local.csl",.{.batches=B,.features=St});
+const collective=@import_module("sdk_axis_reduce.csl",.{.c2d_params=c2d_params,.capacity=@as(u16,capacity),.f_callback=after_collective});
+const max_op=@import_module("sdk_axis_max.csl",.{.participants=@as(u16,P),.capacity=@as(u16,padded),.f_gather=gather,.f_broadcast=broadcast,.f_callback=after_collective});
+fn gather(axis:u16,input:[*]u32,output:[*]u32,count:u16,callback:local_task_id) void {
+ @assert(!collective.busy);
+ if(axis==0){collective.mx.gather(0,input,output,count,callback);}else{collective.my.gather(0,input,output,count,callback);}
+}
+fn broadcast(axis:u16,data:[*]u32,count:u16,callback:local_task_id) void {
+ if(axis==0){collective.mx.broadcast(0,data,count,callback);}else{collective.my.broadcast(0,data,count,callback);}
+}
+const len_X:i16=B*Nt;var X=@zeros([len_X]f16);
+const len_Q:i16=B*Nt;var Q=@zeros([len_Q]f16);
+const len_K:i16=Nt*St;var K=@zeros([len_K]f16);
+const len_V:i16=Nt*St;var V=@zeros([len_V]f16);
+const len_W:i16=Nt*Nt;var W=@zeros([len_W]f16);
+const len_score:i16=B*St;var score=@zeros([len_score]f16);
+const len_scaled:i16=B*St;var scaled=@zeros([len_scaled]f16);
+const len_exponents:i16=B*St;var exponents=@zeros([len_exponents]f16);
+const len_probability:i16=B*St;var probability=@zeros([len_probability]f16);
+const len_local_max:i16=padded;var local_max=@zeros([len_local_max]f16);
+const len_maximum:i16=padded;var maximum=@zeros([len_maximum]f16);
+const len_local_sum:i16=padded;var local_sum=@zeros([len_local_sum]f16);
+const len_sums:i16=padded;var sums=@zeros([len_sums]f16);
+const len_context:i16=B*Nt;var context=@zeros([len_context]f16);
+const len_delta:i16=B*Nt;var delta=@zeros([len_delta]f16);
+const len_result:i16=B*Nt;var result=@zeros([len_result]f16);
+const len_score_partial:i16=if(sampled!=0) B*St else 1;var score_partial=@zeros([len_score_partial]f16);
+const len_context_partial:i16=if(sampled!=0) B*Nt else 1;var context_partial=@zeros([len_context_partial]f16);
+const len_delta_partial:i16=if(sampled!=0) B*Nt else 1;var delta_partial=@zeros([len_delta_partial]f16);
+var gamma=@zeros([Nt]f16);
+var qkv_weights=@zeros([3*Nt*Nt]f16);
+var cosine=@zeros([Nt/2]f16);
+var sine=@zeros([Nt/2]f16);
+var normalized=@zeros([B*Nt]f16);
+var rms_scratch=@zeros([B*Nt]f16);
+var rms_sums=@zeros([padded]f16);
+var rms_history=@zeros([if(sampled!=0) 2*padded else 1]f16);
+var projections=@zeros([3*B*Nt]f16);
+var projection_partial=@zeros([if(sampled!=0) 3*B*Nt else 1]f16);
+var rotated_key=@zeros([B*Nt]f16);
+var pair_scratch=@zeros([2*Nt]f16);
+var query_pair_history=@zeros([if(sampled!=0) 2*B*Nt else 1]f16);
+var key_pair_history=@zeros([if(sampled!=0) 2*B*Nt else 1]f16);
+var progress=@zeros([11]u16);var timing=@zeros([6]u16);var queues=@zeros([2]u16);
+var start=@zeros([3]u16);var finish=@zeros([3]u16);
+var delegated:bool=false;var phase:u16=0;var ready:bool=false;var active:bool=false;
+fn copy(input:[*]f16,output:[*]f16,count:u16) void {
+ const a=@get_dsd(mem1d_dsd,.{.base_address=input,.extent=count});const b=@get_dsd(mem1d_dsd,.{.base_address=output,.extent=count});@mov16(b,a);
+}
+fn init() void {@assert(!active and !delegated);collective.init();ready=true;progress[0]=1;}
+fn start_region() void {
+ @assert(ready and !active and !delegated and !max_op.busy and !collective.busy);active=true;phase=0;
+
+ for(@range(u16,9)) |i| {progress[i+1]=0;}
+ for(@range(i16,padded)) |i| {rms_sums[i]=0.0;local_max[i]=-65504.0;local_sum[i]=0.0;}
+ rms.square_sum(&X,&rms_scratch,&rms_sums);
+ if(sampled!=0){copy(&rms_sums,&rms_history,@as(u16,padded));}
+ collective.start(1,&rms_sums,&rms_sums,@as(u16,padded));
+}
+fn after_collective() void {
+ if(delegated){@assert(!active and !collective.busy and !max_op.busy);delegated=false;f_external_callback();return;}
+ @assert(active and !collective.busy and !max_op.busy);
+ if(phase==0){
+  if(sampled!=0){copy(&rms_sums,@ptrcast([*]f16,&rms_history[padded]),@as(u16,padded));}
+  rms.normalize(&X,&gamma,&normalized,&rms_sums);progress[1]=1;
+  project_q.compute(&normalized,@ptrcast([*]f16,&qkv_weights[0*Nt*Nt]),@ptrcast([*]f16,&projections[0*B*Nt]));
+  project_k.compute(&normalized,@ptrcast([*]f16,&qkv_weights[1*Nt*Nt]),@ptrcast([*]f16,&projections[1*B*Nt]));
+  project_v.compute(&normalized,@ptrcast([*]f16,&qkv_weights[2*Nt*Nt]),@ptrcast([*]f16,&projections[2*B*Nt]));
+  if(sampled!=0){copy(&projections,&projection_partial,@as(u16,3*B*Nt));}
+  phase=1;collective.start(1,&projections,&projections,@as(u16,3*B*Nt));
+ } else if(phase==1){
+  progress[2]=1;
+  pair.apply(&projections,&Q,&cosine,&sine,&pair_scratch,&query_pair_history);
+  pair.apply(@ptrcast([*]f16,&projections[B*Nt]),&rotated_key,&cosine,&sine,&pair_scratch,&key_pair_history);progress[3]=1;
+  score_op.compute(&Q,&K,&score);
+  if(sampled!=0){copy(&score,&score_partial,@as(u16,B*St));}
+  phase=2;collective.start(0,&score,&score,@as(u16,B*St));
+ } else if(phase==2){
+  progress[4]=1;softmax.scale_max(&score,&scaled,&local_max,@bitcast(f16,scale_bits));
+  phase=3;max_op.start(1,pos.get_y_coord(),&local_max,&maximum,@as(u16,padded));
+ } else if(phase==3){
+  progress[5]=1;softmax.exp_sum(&scaled,&maximum,&exponents,&local_sum);
+  phase=4;collective.start(1,&local_sum,&sums,@as(u16,padded));
+ } else if(phase==4){
+  progress[6]=1;softmax.normalize(&exponents,&sums,&probability);
+  value_op.compute(&probability,&V,&context);
+  if(sampled!=0){copy(&context,&context_partial,@as(u16,B*Nt));}
+  phase=5;collective.start(1,&context,&context,@as(u16,B*Nt));
+ } else if(phase==5){
+  progress[7]=1;output_op.compute(&context,&W,&delta);
+  if(sampled!=0){copy(&delta,&delta_partial,@as(u16,B*Nt));}
+  phase=6;collective.start(0,&delta,&delta,@as(u16,B*Nt));
+ } else {
+  @assert(phase==6);progress[8]=1;
+  const xd=@get_dsd(mem1d_dsd,.{.base_address=&X,.extent=@as(u16,B*Nt)});
+  const dd=@get_dsd(mem1d_dsd,.{.base_address=&delta,.extent=@as(u16,B*Nt)});
+  const rd=@get_dsd(mem1d_dsd,.{.base_address=&result,.extent=@as(u16,B*Nt)});
+  @faddh(rd,xd,dd);progress[9]=1;progress[10]+=1;
+
+
+  active=false;f_complete();
+ }
+}
+
+// Borrow the same SDK planes and widening buffers after prefix completion.
+fn external_sum(axis:u16,input:[*]f16,output:[*]f16,count:u16) void {
+ @assert(ready and !active and !delegated and !collective.busy and !max_op.busy);
+ delegated=true;collective.start(axis,input,output,count);
+}

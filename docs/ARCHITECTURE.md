@@ -49,3 +49,11 @@ SDK half math can differ from rounding a host math function to half. The project
 Supported resident compositions include normalized projections, supplied-Q/K/V attention, gated MLP and a bounded projection/residual/RMS graph. Intermediate device tensors stay resident in those qualified graphs. These do not establish a complete transformer layer or model.
 
 See [pragma syntax](../ports/docs/PRAGMAS.md), [DSR leases](../ports/docs/INFERENCE-DSR-LEASES.md), [numerical policy](../ports/docs/NUMERICAL-POLICY.md) and [the validation policy](VALIDATION.md). Detailed algorithm documents preserve dated measurements; the release status defines the snapshot boundary.
+
+## September 8 extension: explicit composition contracts
+
+The frontend now expresses batch-major feature/sequence axes, local half versus collective f32 precision, blocked contraction policies and explicit `statistic=mean`. Shared graph verifiers cover attention and FFN structures. Range propagation and allocation/DSR lifetime checks reject incompatible numerical or storage plans before SDK execution.
+
+The latest parent borrows a caller-owned attention region and continues into mean-statistic normalization and FFN on shared SDK planes. Completion callbacks release specified local leases, not an assumed global barrier. The 35-node parent's full SDK qualification is still pending; primitive SDK evidence does not automatically qualify the composition.
+
+See [mean-statistic RMS](../ports/docs/MEAN-STATISTIC-RMS.md), the detailed contracts under `ports/docs/`, and [the candidate HLS source](../ports/projects/waferllm/projected_cache_ffn_3x256x512x512_16x16/hls.cpp).

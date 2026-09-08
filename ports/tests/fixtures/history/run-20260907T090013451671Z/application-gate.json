@@ -1,0 +1,109 @@
+{
+  "passed": true,
+  "dimensions": {
+    "M": 64,
+    "N": 64,
+    "F": 256
+  },
+  "checks": [
+    {
+      "relative_l2": 0.00018557732274107622,
+      "peak_scaled_error": 0.00029919286302230845,
+      "fixed_accuracy_passed": true,
+      "contract": "normalized-feed-forward-half-normwise-v1",
+      "mlp_delta": {
+        "relative_l2": 0.005414179451264248,
+        "peak_scaled_error": 0.0063845386507104755,
+        "fixed_accuracy_passed": true
+      }
+    },
+    {
+      "relative_l2": 0.00018213368612161825,
+      "peak_scaled_error": 0.0003661641287310893,
+      "fixed_accuracy_passed": true,
+      "contract": "normalized-feed-forward-half-normwise-v1",
+      "mlp_delta": {
+        "relative_l2": 0.004790023246885981,
+        "peak_scaled_error": 0.004716229825317583,
+        "fixed_accuracy_passed": true
+      }
+    },
+    {
+      "relative_l2": 0.0,
+      "peak_scaled_error": 0.0,
+      "fixed_accuracy_passed": true,
+      "contract": "normalized-feed-forward-half-normwise-v1",
+      "mlp_delta": {
+        "relative_l2": 0.0,
+        "peak_scaled_error": 0.0,
+        "fixed_accuracy_passed": true
+      }
+    },
+    {
+      "relative_l2": 0.00019635578938289772,
+      "peak_scaled_error": 0.0004447011141906398,
+      "fixed_accuracy_passed": true,
+      "contract": "normalized-feed-forward-half-normwise-v1",
+      "mlp_delta": {
+        "relative_l2": 0.0009081690819975087,
+        "peak_scaled_error": 0.0010031443458030705,
+        "fixed_accuracy_passed": true
+      }
+    },
+    {
+      "relative_l2": 0.0,
+      "peak_scaled_error": 0.0,
+      "fixed_accuracy_passed": true,
+      "contract": "normalized-feed-forward-half-normwise-v1",
+      "mlp_delta": {
+        "relative_l2": 0.0,
+        "peak_scaled_error": 0.0,
+        "fixed_accuracy_passed": true
+      }
+    },
+    {
+      "relative_l2": 0.0012547084087449426,
+      "peak_scaled_error": 0.0012547084087449398,
+      "fixed_accuracy_passed": true,
+      "contract": "normalized-feed-forward-half-normwise-v1",
+      "mlp_delta": {
+        "relative_l2": 0.0014599887589956642,
+        "peak_scaled_error": 0.0014599887589956649,
+        "fixed_accuracy_passed": true
+      }
+    },
+    {
+      "relative_l2": 0.00031125368055384857,
+      "peak_scaled_error": 0.00031125368055384835,
+      "fixed_accuracy_passed": true,
+      "contract": "normalized-feed-forward-half-normwise-v1",
+      "mlp_delta": {
+        "relative_l2": 0.0029945537785244516,
+        "peak_scaled_error": 0.002994553778524466,
+        "fixed_accuracy_passed": true
+      }
+    },
+    {
+      "relative_l2": 0.0,
+      "peak_scaled_error": 0.0,
+      "fixed_accuracy_passed": true,
+      "contract": "normalized-feed-forward-half-normwise-v1",
+      "mlp_delta": {
+        "relative_l2": 0.0,
+        "peak_scaled_error": 0.0,
+        "fixed_accuracy_passed": true
+      }
+    }
+  ],
+  "failure": null,
+  "native_output_sha256": "1620b5deffa966fb27a057a6f953144bd2dd09030c3a13d2f7558604246cbd8b",
+  "reference_sha256": "b720df834d5cf8af59a0bda0ae527da355ccde01c1d6c19d0f86ba2bb904a57d",
+  "gate_driver_sha256": "2d808d6a2b99646dba5551927c6913b77e69b268309bb65f8ae0153914486b3a",
+  "scope": "Actual C++ stdout independently checked against original-input application mathematics before SDK",
+  "native_observation": {
+    "path": "native-observation",
+    "report_sha256": "b13141d3bd446b3f92ea56b56797a544dbbf6193e014d56c47b83d2ef6de244e",
+    "node": "delta",
+    "host": "__native_observed"
+  }
+}

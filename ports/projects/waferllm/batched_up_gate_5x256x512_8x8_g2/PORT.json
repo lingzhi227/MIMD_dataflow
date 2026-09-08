@@ -1,0 +1,16 @@
+{
+  "project": "waferllm",
+  "kernel": "batched_up_gate_5x256x512_8x8_g2",
+  "status": "source_ready",
+  "fixture": "batched_fanout:5:256:512:2",
+  "partitions": 1,
+  "instrumentation": "sampled",
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "origins": [
+    "Decode/src/decode.csl vecmat_computation",
+    "Decode/src/decode.csl UP/GATE ZZ fusion"
+  ],
+  "contract": "Normalized projection subgraph; resident batches, feature-Y shards, weights tiled Y/X, one packed grouped reduction for all branches using same five-color instance as RMS. No full Decode/cache/hardware claim. Eight-call SDK qualification completed; see the bound source comparison.",
+  "source_comparison": "evidence/batched-upgate-full8-source-comparison.json",
+  "qualification": "Eight standard SDK calls, same-host C++ on two hosts, independent per-branch original-input accuracy, exact source local/reduced/results and replicas, odd batch padding, at least40 mutation rejections, linked ELF and scoped simulator cycle comparison."
+}

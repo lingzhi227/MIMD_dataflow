@@ -1,0 +1,6 @@
+param rows:i16;param cols:i16;param Mt:i16;param Nt:i16;param broadcast:i16;param swapped:i16;param sampled:i16;
+const memcpy=@import_module("<memcpy/get_params>",.{.width=cols,.height=rows});
+layout {@set_rectangle(cols,rows);
+ for(@range(i16,rows)) |y| {for(@range(i16,cols)) |x| {@set_tile_code(x,y,"pe.csl",.{.memcpy_params=memcpy.get_params(x),.Mt=Mt,.Nt=Nt,.broadcast=broadcast,.swapped=swapped,.sampled=sampled});}}
+ @export_name("x",[*]f16,true);@export_name("cosine",[*]f16,true);@export_name("sine",[*]f16,true);@export_name("result",[*]f16,true);@export_name("history",[*]f16,true);@export_name("progress",[*]u16,true);@export_name("timing",[*]u16,true);@export_name("hls_main",fn()void);
+}

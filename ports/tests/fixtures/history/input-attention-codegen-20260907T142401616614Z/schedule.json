@@ -1,0 +1,3415 @@
+{
+  "profile": "mesh_input_attention_mixed.v1",
+  "M": 64,
+  "N": 64,
+  "F": 256,
+  "P": 8,
+  "rows": 8,
+  "cols": 8,
+  "Mt": 8,
+  "Nt": 8,
+  "Ft": 32,
+  "length": 64,
+  "hidden_length": 256,
+  "weight_length": 256,
+  "epochs": 8,
+  "instrumentation": "counters",
+  "projection_stages": [
+    {
+      "M": 64,
+      "K": 64,
+      "N": 256,
+      "P": 8,
+      "Mt": 8,
+      "Kt": 8,
+      "Nt": 32,
+      "left_length": 64,
+      "right_length": 256,
+      "output_length": 256,
+      "rounds": 8,
+      "weights": "static logical weights host-packed in row-major tiles with two-hop block-row alignment",
+      "activation": "logical column-major tiles aligned forward on device",
+      "result": "logical column-major tiles",
+      "right_descriptor": "contiguous feature vector; contraction increment Nt",
+      "k_block_rule": "cycle[(position(y)+position(x)-round)%P]",
+      "completion": "both-axis transfer and local DSR compute joined before buffer swap",
+      "accumulation": "block_f32",
+      "partial_type": "f16",
+      "merge_type": "f32",
+      "block_size": 8,
+      "output_rounding": "f16 after final f32 merge; optional rounded prefix observations"
+    },
+    {
+      "M": 64,
+      "K": 64,
+      "N": 256,
+      "P": 8,
+      "Mt": 8,
+      "Kt": 8,
+      "Nt": 32,
+      "left_length": 64,
+      "right_length": 256,
+      "output_length": 256,
+      "rounds": 8,
+      "weights": "static logical weights host-packed in row-major tiles with two-hop block-row alignment",
+      "activation": "logical column-major tiles aligned forward on device",
+      "result": "logical column-major tiles",
+      "right_descriptor": "contiguous feature vector; contraction increment Nt",
+      "k_block_rule": "cycle[(position(y)+position(x)-round)%P]",
+      "completion": "both-axis transfer and local DSR compute joined before buffer swap",
+      "accumulation": "block_f32",
+      "partial_type": "f16",
+      "merge_type": "f32",
+      "block_size": 8,
+      "output_rounding": "f16 after final f32 merge; optional rounded prefix observations"
+    },
+    {
+      "M": 64,
+      "K": 256,
+      "N": 64,
+      "P": 8,
+      "Mt": 8,
+      "Kt": 32,
+      "Nt": 8,
+      "left_length": 256,
+      "right_length": 256,
+      "output_length": 64,
+      "rounds": 8,
+      "weights": "static logical weights host-packed in row-major tiles with two-hop block-row alignment",
+      "activation": "logical column-major tiles aligned forward on device",
+      "result": "logical column-major tiles",
+      "right_descriptor": "contiguous feature vector; contraction increment Nt",
+      "k_block_rule": "cycle[(position(y)+position(x)-round)%P]",
+      "completion": "both-axis transfer and local DSR compute joined before buffer swap",
+      "accumulation": "block_f32",
+      "partial_type": "f16",
+      "merge_type": "f32",
+      "block_size": 32,
+      "output_rounding": "f16 after final f32 merge; optional rounded prefix observations"
+    }
+  ],
+  "memory_per_pe": {
+    "resident_arrays": 4480,
+    "observations": 16,
+    "descriptors_control_reserve": 2048,
+    "sdk_code_tasks_stack_reserve": 16384,
+    "shared_up_gate_block_accumulator_and_readouts": 5120,
+    "wide_accumulator_and_conversion_scratch": 768,
+    "normalization_and_delta_observers": 292,
+    "projection_prelude_inputs_live_Z_and_observers": 526,
+    "attention_public_KV_and_observers": 728,
+    "attention_code_descriptor_reserve": 2048,
+    "input_prefix_weights_coefficients_observers": 824,
+    "input_prefix_code_descriptor_reserve": 2048,
+    "mixed_f32_arrays": 2880,
+    "mixed_code_descriptor_reserve": 4096
+  },
+  "numerical_bounds": {
+    "inputs": [
+      12.0078125,
+      0.0078125,
+      0.0078125,
+      0.0078125
+    ],
+    "up": 6.00390625,
+    "gate": 6.00390625,
+    "hidden": 36.0625,
+    "output": 72.0625,
+    "reason": "monotone half-FMA bounds; validated SDK half SiLU magnitude <= gate magnitude"
+  },
+  "stages": [
+    "copy immutable X/U and forward-align X",
+    "up contraction with joined double buffers",
+    "copy G and carry completed left ownership",
+    "gate contraction with joined double buffers",
+    "resident SDK map SiLU and DSR in-place multiply",
+    "copy D and forward-align hidden",
+    "down contraction into dead X work storage",
+    "drain queues and return"
+  ],
+  "descriptor_entry_states": {
+    "right": "contiguous stride1 reset on every projection entry; increment Nt",
+    "compute": "DSR1 loaded for each contraction; gating only after both-axis join"
+  },
+  "ownership": {
+    "intermediate_host_transfer": false,
+    "inputs": "immutable X/U/G/D",
+    "up": "becomes hidden after last up read",
+    "x_work": "becomes output after gate completes",
+    "weights": "one private work/receive pair reused after each joined projection",
+    "gate": "becomes activated gate in place"
+  },
+  "resources": {
+    "colors": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "input_queues": [
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "output_queues": [
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "local_tasks": [
+      19,
+      20,
+      25,
+      26
+    ],
+    "microthreads": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "compute_dsr": 1,
+    "communication_dsrs": [
+      3,
+      4,
+      5,
+      6
+    ],
+    "explicit_dsr_lease": {
+      "compute": [
+        {
+          "bank": "dest",
+          "index": 1
+        },
+        {
+          "bank": "src0",
+          "index": 1
+        },
+        {
+          "bank": "src1",
+          "index": 1
+        }
+      ],
+      "communication": {
+        "left_memory": [
+          {
+            "bank": "src1",
+            "index": 3
+          },
+          {
+            "bank": "dest",
+            "index": 3
+          }
+        ],
+        "right_memory": [
+          {
+            "bank": "src1",
+            "index": 4
+          },
+          {
+            "bank": "dest",
+            "index": 4
+          }
+        ],
+        "left_fabric": [
+          {
+            "bank": "dest",
+            "index": 5
+          },
+          {
+            "bank": "src1",
+            "index": 5
+          }
+        ],
+        "right_fabric": [
+          {
+            "bank": "dest",
+            "index": 6
+          },
+          {
+            "bank": "src1",
+            "index": 6
+          }
+        ]
+      },
+      "completion": "all four explicit microthread operations join before lease reuse",
+      "scope": "explicit DSR reservations; compiler/SDK temporary allocation is not enumerated"
+    },
+    "completion": "two-axis completion joins before next step; phase-exclusive reuse",
+    "explicit_dsr_phases": {
+      "local_square_sum": [
+        {
+          "bank": "dest",
+          "index": 1
+        },
+        {
+          "bank": "src0",
+          "index": 1
+        },
+        {
+          "bank": "src1",
+          "index": 1
+        },
+        {
+          "bank": "dest",
+          "index": 2
+        },
+        {
+          "bank": "src0",
+          "index": 2
+        },
+        {
+          "bank": "src1",
+          "index": 2
+        }
+      ],
+      "row_collective": [
+        {
+          "bank": "src1",
+          "index": 2
+        }
+      ],
+      "inverse": "SDK-managed temporaries; no explicit user DSR lease",
+      "normalize": [
+        {
+          "bank": "dest",
+          "index": 1
+        },
+        {
+          "bank": "src0",
+          "index": 1
+        },
+        {
+          "bank": "src1",
+          "index": 1
+        }
+      ],
+      "projections": {
+        "compute": [
+          {
+            "bank": "dest",
+            "index": 1
+          },
+          {
+            "bank": "src0",
+            "index": 1
+          },
+          {
+            "bank": "src1",
+            "index": 1
+          }
+        ],
+        "communication": {
+          "left_memory": [
+            {
+              "bank": "src1",
+              "index": 3
+            },
+            {
+              "bank": "dest",
+              "index": 3
+            }
+          ],
+          "right_memory": [
+            {
+              "bank": "src1",
+              "index": 4
+            },
+            {
+              "bank": "dest",
+              "index": 4
+            }
+          ],
+          "left_fabric": [
+            {
+              "bank": "dest",
+              "index": 5
+            },
+            {
+              "bank": "src1",
+              "index": 5
+            }
+          ],
+          "right_fabric": [
+            {
+              "bank": "dest",
+              "index": 6
+            },
+            {
+              "bank": "src1",
+              "index": 6
+            }
+          ]
+        },
+        "completion": "all four explicit microthread operations join before lease reuse",
+        "scope": "explicit DSR reservations; compiler/SDK temporary allocation is not enumerated"
+      },
+      "gating": [
+        {
+          "bank": "dest",
+          "index": 1
+        },
+        {
+          "bank": "src0",
+          "index": 1
+        },
+        {
+          "bank": "src1",
+          "index": 1
+        }
+      ],
+      "final_residual": [
+        {
+          "bank": "dest",
+          "index": 1
+        },
+        {
+          "bank": "src0",
+          "index": 1
+        },
+        {
+          "bank": "src1",
+          "index": 1
+        }
+      ],
+      "projection_prelude": {
+        "compute": [
+          {
+            "bank": "dest",
+            "index": 1
+          },
+          {
+            "bank": "src0",
+            "index": 1
+          },
+          {
+            "bank": "src1",
+            "index": 1
+          }
+        ],
+        "communication": {
+          "left_memory": [
+            {
+              "bank": "src1",
+              "index": 3
+            },
+            {
+              "bank": "dest",
+              "index": 3
+            }
+          ],
+          "right_memory": [
+            {
+              "bank": "src1",
+              "index": 4
+            },
+            {
+              "bank": "dest",
+              "index": 4
+            }
+          ],
+          "left_fabric": [
+            {
+              "bank": "dest",
+              "index": 5
+            },
+            {
+              "bank": "src1",
+              "index": 5
+            }
+          ],
+          "right_fabric": [
+            {
+              "bank": "dest",
+              "index": 6
+            },
+            {
+              "bank": "src1",
+              "index": 6
+            }
+          ]
+        },
+        "completion": "all four explicit microthread operations join before lease reuse",
+        "scope": "explicit DSR reservations; compiler/SDK temporary allocation is not enumerated"
+      },
+      "attention": {
+        "colors": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "input_queues": [
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "output_queues": [
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "active_input_queues": [
+          5,
+          7
+        ],
+        "active_output_queues": [
+          5,
+          7
+        ],
+        "microthreads": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "local_tasks": [
+          19,
+          20,
+          25,
+          26
+        ],
+        "compute_dsrs": [
+          1
+        ],
+        "communication_dsrs": [
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "explicit_dsr_lease": {
+          "compute": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ],
+          "communication": {
+            "left_memory": [
+              {
+                "bank": "src1",
+                "index": 3
+              },
+              {
+                "bank": "dest",
+                "index": 3
+              }
+            ],
+            "right_memory": [
+              {
+                "bank": "src1",
+                "index": 4
+              },
+              {
+                "bank": "dest",
+                "index": 4
+              }
+            ],
+            "left_fabric": [
+              {
+                "bank": "dest",
+                "index": 5
+              },
+              {
+                "bank": "src1",
+                "index": 5
+              }
+            ],
+            "right_fabric": [
+              {
+                "bank": "dest",
+                "index": 6
+              },
+              {
+                "bank": "src1",
+                "index": 6
+              }
+            ]
+          },
+          "completion": "all four explicit microthread operations join before lease reuse",
+          "scope": "explicit DSR reservations; compiler/SDK temporary allocation is not enumerated"
+        },
+        "phase_resources": {
+          "normalization": {
+            "colors": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11
+            ],
+            "input_queues": [
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "output_queues": [
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "active_input_queues": [
+              3,
+              4,
+              5,
+              6
+            ],
+            "active_output_queues": [
+              3,
+              4,
+              5,
+              6
+            ],
+            "microthreads": [
+              2,
+              3
+            ],
+            "local_tasks": [
+              19,
+              20,
+              25,
+              26
+            ],
+            "compute_dsrs": [
+              1
+            ],
+            "reduction_dsrs": [
+              1,
+              2
+            ],
+            "async_communication_dsrs": [
+              4,
+              6
+            ],
+            "explicit_dsr_phases": {
+              "local_compute": [
+                {
+                  "bank": "dest",
+                  "index": 1
+                },
+                {
+                  "bank": "src0",
+                  "index": 1
+                },
+                {
+                  "bank": "src1",
+                  "index": 1
+                }
+              ],
+              "overlapped_exchange": {
+                "right_memory": [
+                  {
+                    "bank": "src1",
+                    "index": 4
+                  },
+                  {
+                    "bank": "dest",
+                    "index": 4
+                  }
+                ],
+                "right_fabric": [
+                  {
+                    "bank": "dest",
+                    "index": 6
+                  },
+                  {
+                    "bank": "src1",
+                    "index": 6
+                  }
+                ]
+              },
+              "joined_reduction": [
+                {
+                  "bank": "dest",
+                  "index": 1
+                },
+                {
+                  "bank": "src0",
+                  "index": 1
+                },
+                {
+                  "bank": "src1",
+                  "index": 1
+                },
+                {
+                  "bank": "dest",
+                  "index": 2
+                },
+                {
+                  "bank": "src0",
+                  "index": 2
+                }
+              ]
+            },
+            "reuse": "score joins all vertical traffic before softmax borrows DSR1/2 and row queues3/4/6; no new colors/tasks/UTs",
+            "softmax_explicit_dsr_phases": {
+              "local_math": [
+                {
+                  "bank": "dest",
+                  "index": 1
+                },
+                {
+                  "bank": "src0",
+                  "index": 1
+                },
+                {
+                  "bank": "src1",
+                  "index": 1
+                }
+              ],
+              "row_collective": [
+                {
+                  "bank": "src1",
+                  "index": 2
+                }
+              ]
+            }
+          },
+          "value": {
+            "colors": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11
+            ],
+            "input_queues": [
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "output_queues": [
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "active_input_queues": [
+              5,
+              7
+            ],
+            "active_output_queues": [
+              5,
+              7
+            ],
+            "microthreads": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "local_tasks": [
+              19,
+              20,
+              25,
+              26
+            ],
+            "compute_dsrs": [
+              1
+            ],
+            "communication_dsrs": [
+              3,
+              4,
+              5,
+              6
+            ],
+            "explicit_dsr_lease": {
+              "compute": [
+                {
+                  "bank": "dest",
+                  "index": 1
+                },
+                {
+                  "bank": "src0",
+                  "index": 1
+                },
+                {
+                  "bank": "src1",
+                  "index": 1
+                }
+              ],
+              "communication": {
+                "left_memory": [
+                  {
+                    "bank": "src1",
+                    "index": 3
+                  },
+                  {
+                    "bank": "dest",
+                    "index": 3
+                  }
+                ],
+                "right_memory": [
+                  {
+                    "bank": "src1",
+                    "index": 4
+                  },
+                  {
+                    "bank": "dest",
+                    "index": 4
+                  }
+                ],
+                "left_fabric": [
+                  {
+                    "bank": "dest",
+                    "index": 5
+                  },
+                  {
+                    "bank": "src1",
+                    "index": 5
+                  }
+                ],
+                "right_fabric": [
+                  {
+                    "bank": "dest",
+                    "index": 6
+                  },
+                  {
+                    "bank": "src1",
+                    "index": 6
+                  }
+                ]
+              },
+              "completion": "all four explicit microthread operations join before lease reuse",
+              "scope": "explicit DSR reservations; compiler/SDK temporary allocation is not enumerated"
+            }
+          }
+        },
+        "reuse": "score and softmax drain communication before value reuses queues3..7, tasks19/20/25/26, UT0..3 and DSR1/2/3/4/5/6; phase dispatch preserves joins"
+      }
+    }
+  },
+  "nodes": [
+    {
+      "id": "p0_0",
+      "tile": [
+        0,
+        0
+      ],
+      "place": [
+        4,
+        1
+      ]
+    },
+    {
+      "id": "p1_0",
+      "tile": [
+        1,
+        0
+      ],
+      "place": [
+        5,
+        1
+      ]
+    },
+    {
+      "id": "p2_0",
+      "tile": [
+        2,
+        0
+      ],
+      "place": [
+        6,
+        1
+      ]
+    },
+    {
+      "id": "p3_0",
+      "tile": [
+        3,
+        0
+      ],
+      "place": [
+        7,
+        1
+      ]
+    },
+    {
+      "id": "p4_0",
+      "tile": [
+        4,
+        0
+      ],
+      "place": [
+        8,
+        1
+      ]
+    },
+    {
+      "id": "p5_0",
+      "tile": [
+        5,
+        0
+      ],
+      "place": [
+        9,
+        1
+      ]
+    },
+    {
+      "id": "p6_0",
+      "tile": [
+        6,
+        0
+      ],
+      "place": [
+        10,
+        1
+      ]
+    },
+    {
+      "id": "p7_0",
+      "tile": [
+        7,
+        0
+      ],
+      "place": [
+        11,
+        1
+      ]
+    },
+    {
+      "id": "p0_1",
+      "tile": [
+        0,
+        1
+      ],
+      "place": [
+        4,
+        2
+      ]
+    },
+    {
+      "id": "p1_1",
+      "tile": [
+        1,
+        1
+      ],
+      "place": [
+        5,
+        2
+      ]
+    },
+    {
+      "id": "p2_1",
+      "tile": [
+        2,
+        1
+      ],
+      "place": [
+        6,
+        2
+      ]
+    },
+    {
+      "id": "p3_1",
+      "tile": [
+        3,
+        1
+      ],
+      "place": [
+        7,
+        2
+      ]
+    },
+    {
+      "id": "p4_1",
+      "tile": [
+        4,
+        1
+      ],
+      "place": [
+        8,
+        2
+      ]
+    },
+    {
+      "id": "p5_1",
+      "tile": [
+        5,
+        1
+      ],
+      "place": [
+        9,
+        2
+      ]
+    },
+    {
+      "id": "p6_1",
+      "tile": [
+        6,
+        1
+      ],
+      "place": [
+        10,
+        2
+      ]
+    },
+    {
+      "id": "p7_1",
+      "tile": [
+        7,
+        1
+      ],
+      "place": [
+        11,
+        2
+      ]
+    },
+    {
+      "id": "p0_2",
+      "tile": [
+        0,
+        2
+      ],
+      "place": [
+        4,
+        3
+      ]
+    },
+    {
+      "id": "p1_2",
+      "tile": [
+        1,
+        2
+      ],
+      "place": [
+        5,
+        3
+      ]
+    },
+    {
+      "id": "p2_2",
+      "tile": [
+        2,
+        2
+      ],
+      "place": [
+        6,
+        3
+      ]
+    },
+    {
+      "id": "p3_2",
+      "tile": [
+        3,
+        2
+      ],
+      "place": [
+        7,
+        3
+      ]
+    },
+    {
+      "id": "p4_2",
+      "tile": [
+        4,
+        2
+      ],
+      "place": [
+        8,
+        3
+      ]
+    },
+    {
+      "id": "p5_2",
+      "tile": [
+        5,
+        2
+      ],
+      "place": [
+        9,
+        3
+      ]
+    },
+    {
+      "id": "p6_2",
+      "tile": [
+        6,
+        2
+      ],
+      "place": [
+        10,
+        3
+      ]
+    },
+    {
+      "id": "p7_2",
+      "tile": [
+        7,
+        2
+      ],
+      "place": [
+        11,
+        3
+      ]
+    },
+    {
+      "id": "p0_3",
+      "tile": [
+        0,
+        3
+      ],
+      "place": [
+        4,
+        4
+      ]
+    },
+    {
+      "id": "p1_3",
+      "tile": [
+        1,
+        3
+      ],
+      "place": [
+        5,
+        4
+      ]
+    },
+    {
+      "id": "p2_3",
+      "tile": [
+        2,
+        3
+      ],
+      "place": [
+        6,
+        4
+      ]
+    },
+    {
+      "id": "p3_3",
+      "tile": [
+        3,
+        3
+      ],
+      "place": [
+        7,
+        4
+      ]
+    },
+    {
+      "id": "p4_3",
+      "tile": [
+        4,
+        3
+      ],
+      "place": [
+        8,
+        4
+      ]
+    },
+    {
+      "id": "p5_3",
+      "tile": [
+        5,
+        3
+      ],
+      "place": [
+        9,
+        4
+      ]
+    },
+    {
+      "id": "p6_3",
+      "tile": [
+        6,
+        3
+      ],
+      "place": [
+        10,
+        4
+      ]
+    },
+    {
+      "id": "p7_3",
+      "tile": [
+        7,
+        3
+      ],
+      "place": [
+        11,
+        4
+      ]
+    },
+    {
+      "id": "p0_4",
+      "tile": [
+        0,
+        4
+      ],
+      "place": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "p1_4",
+      "tile": [
+        1,
+        4
+      ],
+      "place": [
+        5,
+        5
+      ]
+    },
+    {
+      "id": "p2_4",
+      "tile": [
+        2,
+        4
+      ],
+      "place": [
+        6,
+        5
+      ]
+    },
+    {
+      "id": "p3_4",
+      "tile": [
+        3,
+        4
+      ],
+      "place": [
+        7,
+        5
+      ]
+    },
+    {
+      "id": "p4_4",
+      "tile": [
+        4,
+        4
+      ],
+      "place": [
+        8,
+        5
+      ]
+    },
+    {
+      "id": "p5_4",
+      "tile": [
+        5,
+        4
+      ],
+      "place": [
+        9,
+        5
+      ]
+    },
+    {
+      "id": "p6_4",
+      "tile": [
+        6,
+        4
+      ],
+      "place": [
+        10,
+        5
+      ]
+    },
+    {
+      "id": "p7_4",
+      "tile": [
+        7,
+        4
+      ],
+      "place": [
+        11,
+        5
+      ]
+    },
+    {
+      "id": "p0_5",
+      "tile": [
+        0,
+        5
+      ],
+      "place": [
+        4,
+        6
+      ]
+    },
+    {
+      "id": "p1_5",
+      "tile": [
+        1,
+        5
+      ],
+      "place": [
+        5,
+        6
+      ]
+    },
+    {
+      "id": "p2_5",
+      "tile": [
+        2,
+        5
+      ],
+      "place": [
+        6,
+        6
+      ]
+    },
+    {
+      "id": "p3_5",
+      "tile": [
+        3,
+        5
+      ],
+      "place": [
+        7,
+        6
+      ]
+    },
+    {
+      "id": "p4_5",
+      "tile": [
+        4,
+        5
+      ],
+      "place": [
+        8,
+        6
+      ]
+    },
+    {
+      "id": "p5_5",
+      "tile": [
+        5,
+        5
+      ],
+      "place": [
+        9,
+        6
+      ]
+    },
+    {
+      "id": "p6_5",
+      "tile": [
+        6,
+        5
+      ],
+      "place": [
+        10,
+        6
+      ]
+    },
+    {
+      "id": "p7_5",
+      "tile": [
+        7,
+        5
+      ],
+      "place": [
+        11,
+        6
+      ]
+    },
+    {
+      "id": "p0_6",
+      "tile": [
+        0,
+        6
+      ],
+      "place": [
+        4,
+        7
+      ]
+    },
+    {
+      "id": "p1_6",
+      "tile": [
+        1,
+        6
+      ],
+      "place": [
+        5,
+        7
+      ]
+    },
+    {
+      "id": "p2_6",
+      "tile": [
+        2,
+        6
+      ],
+      "place": [
+        6,
+        7
+      ]
+    },
+    {
+      "id": "p3_6",
+      "tile": [
+        3,
+        6
+      ],
+      "place": [
+        7,
+        7
+      ]
+    },
+    {
+      "id": "p4_6",
+      "tile": [
+        4,
+        6
+      ],
+      "place": [
+        8,
+        7
+      ]
+    },
+    {
+      "id": "p5_6",
+      "tile": [
+        5,
+        6
+      ],
+      "place": [
+        9,
+        7
+      ]
+    },
+    {
+      "id": "p6_6",
+      "tile": [
+        6,
+        6
+      ],
+      "place": [
+        10,
+        7
+      ]
+    },
+    {
+      "id": "p7_6",
+      "tile": [
+        7,
+        6
+      ],
+      "place": [
+        11,
+        7
+      ]
+    },
+    {
+      "id": "p0_7",
+      "tile": [
+        0,
+        7
+      ],
+      "place": [
+        4,
+        8
+      ]
+    },
+    {
+      "id": "p1_7",
+      "tile": [
+        1,
+        7
+      ],
+      "place": [
+        5,
+        8
+      ]
+    },
+    {
+      "id": "p2_7",
+      "tile": [
+        2,
+        7
+      ],
+      "place": [
+        6,
+        8
+      ]
+    },
+    {
+      "id": "p3_7",
+      "tile": [
+        3,
+        7
+      ],
+      "place": [
+        7,
+        8
+      ]
+    },
+    {
+      "id": "p4_7",
+      "tile": [
+        4,
+        7
+      ],
+      "place": [
+        8,
+        8
+      ]
+    },
+    {
+      "id": "p5_7",
+      "tile": [
+        5,
+        7
+      ],
+      "place": [
+        9,
+        8
+      ]
+    },
+    {
+      "id": "p6_7",
+      "tile": [
+        6,
+        7
+      ],
+      "place": [
+        10,
+        8
+      ]
+    },
+    {
+      "id": "p7_7",
+      "tile": [
+        7,
+        7
+      ],
+      "place": [
+        11,
+        8
+      ]
+    }
+  ],
+  "down_accumulation": "block_f32",
+  "down_block_size": 32,
+  "accumulator_observation": "final raw binary32 accumulator words; per-round half-rounded prefixes in sampled mode",
+  "epsilon": 1e-06,
+  "input_bindings": {
+    "input_x": "residual",
+    "gamma": "gamma",
+    "q_weight": "q_weight",
+    "k_weight": "k_weight",
+    "v_weight": "v_weight",
+    "cosine": "cosine",
+    "sine": "sine",
+    "output_weight": "output_weight",
+    "up_weight": "up_weight",
+    "gate_weight": "gate_weight",
+    "down_weight": "down_weight"
+  },
+  "composition": {
+    "expression": "A=softmax(scale*Q*K^T)*V; Z=A*O+R; Y=Z+MLP(RMSNorm(Z,gamma))",
+    "intermediate_host_transfer": false,
+    "phases": {
+      "score": 5,
+      "value": 4,
+      "output_projection": 3,
+      "up": 0,
+      "gate": 1,
+      "down": 2
+    },
+    "entry_reset": "contiguous score right DSD; value stride Mt then contiguous output projection",
+    "borrowed": "half score storage; separate f32 probability/V/A/Z buffers; half MLP begins after explicit RMS narrowing",
+    "completion": "single task binding; join each producer before reuse; only final Z residual unblocks host"
+  },
+  "storage_lifetimes": {
+    "storage": {
+      "x": 128,
+      "xwork": 128,
+      "xrecv": 128,
+      "u": 512,
+      "g": 512,
+      "d": 512,
+      "ww": 512,
+      "wr": 512,
+      "up": 512,
+      "gate": 512,
+      "hr": 512,
+      "gamma": 16,
+      "rms_rows": 16,
+      "hidden_accumulator": 1024,
+      "hidden_widened": 1024,
+      "down_accumulator": 256,
+      "down_widened": 256,
+      "output_weight": 128,
+      "residual": 128,
+      "post_projection_z": 128,
+      "attention_k": 128,
+      "attention_v": 128,
+      "attention_peaks": 16,
+      "attention_sums": 16,
+      "q_weight": 128,
+      "k_weight": 128,
+      "v_weight": 128,
+      "cosine": 8,
+      "sine": 8,
+      "wide_probability": 256,
+      "wide_exponents": 256,
+      "wide_peaks": 32,
+      "wide_sums": 32,
+      "wide_history": 160,
+      "mixed_v": 256,
+      "mixed_a": 256,
+      "mixed_z": 256,
+      "mixed_projection": 256,
+      "mixed_normalized": 256,
+      "mixed_probability_snapshot": 256,
+      "mixed_work0": 256,
+      "mixed_work1": 256,
+      "mixed_left_column": 32,
+      "mixed_rows": 32,
+      "mixed_gamma": 32
+    },
+    "values": [
+      {
+        "name": "computed_Q",
+        "storage": "x",
+        "bytes": 128,
+        "first": 4,
+        "last": 24,
+        "immutable": false,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "public_u",
+        "storage": "u",
+        "bytes": 512,
+        "first": 0,
+        "last": 24,
+        "immutable": true,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "public_g",
+        "storage": "g",
+        "bytes": 512,
+        "first": 0,
+        "last": 24,
+        "immutable": true,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "public_d",
+        "storage": "d",
+        "bytes": 512,
+        "first": 0,
+        "last": 24,
+        "immutable": true,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "public_gamma",
+        "storage": "gamma",
+        "bytes": 16,
+        "first": 0,
+        "last": 24,
+        "immutable": true,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "narrowed_normalized_then_rotating_X",
+        "storage": "xwork",
+        "bytes": 128,
+        "first": 19,
+        "last": 21,
+        "immutable": false,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "down_then_final_residual",
+        "storage": "xwork",
+        "bytes": 128,
+        "first": 23,
+        "last": 24,
+        "immutable": false,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "rotating_normalized_receive",
+        "storage": "xrecv",
+        "bytes": 128,
+        "first": 20,
+        "last": 21,
+        "immutable": false,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "up_to_hidden_then_rotating_send",
+        "storage": "up",
+        "bytes": 512,
+        "first": 20,
+        "last": 23,
+        "immutable": false,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "gate_to_silu",
+        "storage": "gate",
+        "bytes": 512,
+        "first": 21,
+        "last": 22,
+        "immutable": false,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "hidden_receive",
+        "storage": "hr",
+        "bytes": 512,
+        "first": 23,
+        "last": 23,
+        "immutable": false,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "projection_ww",
+        "storage": "ww",
+        "bytes": 512,
+        "first": 20,
+        "last": 23,
+        "immutable": false,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "projection_wr",
+        "storage": "wr",
+        "bytes": 512,
+        "first": 20,
+        "last": 23,
+        "immutable": false,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "up_f32_accumulator",
+        "storage": "hidden_accumulator",
+        "bytes": 1024,
+        "first": 20,
+        "last": 20,
+        "immutable": false,
+        "storage_dtype": "f32"
+      },
+      {
+        "name": "gate_f32_accumulator",
+        "storage": "hidden_accumulator",
+        "bytes": 1024,
+        "first": 21,
+        "last": 21,
+        "immutable": false,
+        "storage_dtype": "f32"
+      },
+      {
+        "name": "hidden_partial_conversion",
+        "storage": "hidden_widened",
+        "bytes": 1024,
+        "first": 20,
+        "last": 21,
+        "immutable": false,
+        "storage_dtype": "f32"
+      },
+      {
+        "name": "down_f32_accumulator",
+        "storage": "down_accumulator",
+        "bytes": 256,
+        "first": 23,
+        "last": 23,
+        "immutable": false,
+        "storage_dtype": "f32"
+      },
+      {
+        "name": "down_partial_conversion",
+        "storage": "down_widened",
+        "bytes": 256,
+        "first": 23,
+        "last": 23,
+        "immutable": false,
+        "storage_dtype": "f32"
+      },
+      {
+        "name": "public_output_weight",
+        "storage": "output_weight",
+        "bytes": 128,
+        "first": 0,
+        "last": 24,
+        "immutable": true,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "public_original_X",
+        "storage": "residual",
+        "bytes": 128,
+        "first": 0,
+        "last": 24,
+        "immutable": true,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "rounded_Z_observer",
+        "storage": "post_projection_z",
+        "bytes": 128,
+        "first": 15,
+        "last": 24,
+        "immutable": false,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "prelude_ww",
+        "storage": "ww",
+        "bytes": 512,
+        "first": 14,
+        "last": 14,
+        "immutable": false,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "prelude_wr",
+        "storage": "wr",
+        "bytes": 512,
+        "first": 14,
+        "last": 14,
+        "immutable": false,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "computed_attention_k",
+        "storage": "attention_k",
+        "bytes": 128,
+        "first": 5,
+        "last": 24,
+        "immutable": false,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "rounded_V_observer",
+        "storage": "attention_v",
+        "bytes": 128,
+        "first": 6,
+        "last": 24,
+        "immutable": false,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "K_rotating_xwork",
+        "storage": "xwork",
+        "bytes": 128,
+        "first": 9,
+        "last": 9,
+        "immutable": false,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "K_rotating_xrecv",
+        "storage": "xrecv",
+        "bytes": 128,
+        "first": 9,
+        "last": 9,
+        "immutable": false,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "half_score_then_probability_preview",
+        "storage": "up",
+        "bytes": 128,
+        "first": 9,
+        "last": 12,
+        "immutable": false,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "half_score_partial",
+        "storage": "gate",
+        "bytes": 128,
+        "first": 9,
+        "last": 9,
+        "immutable": false,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "public_q_weight",
+        "storage": "q_weight",
+        "bytes": 128,
+        "first": 0,
+        "last": 24,
+        "immutable": true,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "public_k_weight",
+        "storage": "k_weight",
+        "bytes": 128,
+        "first": 0,
+        "last": 24,
+        "immutable": true,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "public_v_weight",
+        "storage": "v_weight",
+        "bytes": 128,
+        "first": 0,
+        "last": 24,
+        "immutable": true,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "public_cosine",
+        "storage": "cosine",
+        "bytes": 8,
+        "first": 0,
+        "last": 24,
+        "immutable": true,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "public_sine",
+        "storage": "sine",
+        "bytes": 8,
+        "first": 0,
+        "last": 24,
+        "immutable": true,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "input_normalized_then_shared_rotating_owner",
+        "storage": "xwork",
+        "bytes": 128,
+        "first": 0,
+        "last": 6,
+        "immutable": false,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "input_square_scratch",
+        "storage": "xrecv",
+        "bytes": 128,
+        "first": 0,
+        "last": 0,
+        "immutable": false,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "input_normalized_receive",
+        "storage": "xrecv",
+        "bytes": 128,
+        "first": 4,
+        "last": 6,
+        "immutable": false,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "input_row_sum_to_inverse",
+        "storage": "rms_rows",
+        "bytes": 16,
+        "first": 0,
+        "last": 3,
+        "immutable": false,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "prefix_projection_ww",
+        "storage": "ww",
+        "bytes": 512,
+        "first": 4,
+        "last": 6,
+        "immutable": false,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "prefix_projection_wr",
+        "storage": "wr",
+        "bytes": 512,
+        "first": 4,
+        "last": 6,
+        "immutable": false,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "Q_then_K_pair_scratch",
+        "storage": "xwork",
+        "bytes": 64,
+        "first": 7,
+        "last": 8,
+        "immutable": false,
+        "storage_dtype": "f16"
+      },
+      {
+        "name": "wide_probability",
+        "storage": "wide_probability",
+        "bytes": 256,
+        "first": 10,
+        "last": 13,
+        "immutable": false,
+        "storage_dtype": "f32"
+      },
+      {
+        "name": "wide_exponents",
+        "storage": "wide_exponents",
+        "bytes": 256,
+        "first": 11,
+        "last": 13,
+        "immutable": false,
+        "storage_dtype": "f32"
+      },
+      {
+        "name": "wide_peaks",
+        "storage": "wide_peaks",
+        "bytes": 32,
+        "first": 10,
+        "last": 24,
+        "immutable": false,
+        "storage_dtype": "f32"
+      },
+      {
+        "name": "wide_sums",
+        "storage": "wide_sums",
+        "bytes": 32,
+        "first": 11,
+        "last": 24,
+        "immutable": false,
+        "storage_dtype": "f32"
+      },
+      {
+        "name": "wide_history",
+        "storage": "wide_history",
+        "bytes": 160,
+        "first": 10,
+        "last": 24,
+        "immutable": false,
+        "storage_dtype": "f32"
+      },
+      {
+        "name": "mixed_v",
+        "storage": "mixed_v",
+        "bytes": 256,
+        "first": 6,
+        "last": 24,
+        "immutable": false,
+        "storage_dtype": "f32"
+      },
+      {
+        "name": "mixed_a",
+        "storage": "mixed_a",
+        "bytes": 256,
+        "first": 13,
+        "last": 24,
+        "immutable": false,
+        "storage_dtype": "f32"
+      },
+      {
+        "name": "mixed_z",
+        "storage": "mixed_z",
+        "bytes": 256,
+        "first": 14,
+        "last": 24,
+        "immutable": false,
+        "storage_dtype": "f32"
+      },
+      {
+        "name": "mixed_projection",
+        "storage": "mixed_projection",
+        "bytes": 256,
+        "first": 14,
+        "last": 24,
+        "immutable": false,
+        "storage_dtype": "f32"
+      },
+      {
+        "name": "mixed_normalized",
+        "storage": "mixed_normalized",
+        "bytes": 256,
+        "first": 19,
+        "last": 24,
+        "immutable": false,
+        "storage_dtype": "f32"
+      },
+      {
+        "name": "mixed_probability_snapshot",
+        "storage": "mixed_probability_snapshot",
+        "bytes": 256,
+        "first": 12,
+        "last": 24,
+        "immutable": false,
+        "storage_dtype": "f32"
+      },
+      {
+        "name": "mixed_left_column",
+        "storage": "mixed_left_column",
+        "bytes": 32,
+        "first": 6,
+        "last": 6,
+        "immutable": false,
+        "storage_dtype": "f32"
+      },
+      {
+        "name": "mixed_rows",
+        "storage": "mixed_rows",
+        "bytes": 32,
+        "first": 16,
+        "last": 19,
+        "immutable": false,
+        "storage_dtype": "f32"
+      },
+      {
+        "name": "mixed_gamma",
+        "storage": "mixed_gamma",
+        "bytes": 32,
+        "first": 15,
+        "last": 19,
+        "immutable": false,
+        "storage_dtype": "f32"
+      },
+      {
+        "name": "V_send",
+        "storage": "mixed_work0",
+        "bytes": 256,
+        "first": 13,
+        "last": 13,
+        "immutable": false,
+        "storage_dtype": "f32"
+      },
+      {
+        "name": "A_send",
+        "storage": "mixed_work0",
+        "bytes": 256,
+        "first": 14,
+        "last": 14,
+        "immutable": false,
+        "storage_dtype": "f32"
+      },
+      {
+        "name": "residual_widen",
+        "storage": "mixed_work0",
+        "bytes": 256,
+        "first": 15,
+        "last": 15,
+        "immutable": false,
+        "storage_dtype": "f32"
+      },
+      {
+        "name": "delta_widen",
+        "storage": "mixed_work0",
+        "bytes": 256,
+        "first": 24,
+        "last": 24,
+        "immutable": false,
+        "storage_dtype": "f32"
+      },
+      {
+        "name": "V_receive",
+        "storage": "mixed_work1",
+        "bytes": 256,
+        "first": 13,
+        "last": 13,
+        "immutable": false,
+        "storage_dtype": "f32"
+      },
+      {
+        "name": "A_receive",
+        "storage": "mixed_work1",
+        "bytes": 256,
+        "first": 14,
+        "last": 14,
+        "immutable": false,
+        "storage_dtype": "f32"
+      },
+      {
+        "name": "RMS_square",
+        "storage": "mixed_work1",
+        "bytes": 256,
+        "first": 16,
+        "last": 16,
+        "immutable": false,
+        "storage_dtype": "f32"
+      }
+    ],
+    "phases": [
+      {
+        "name": "input_square_sum",
+        "acquire": {
+          "square": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            },
+            {
+              "bank": "dest",
+              "index": 2
+            },
+            {
+              "bank": "src0",
+              "index": 2
+            },
+            {
+              "bank": "src1",
+              "index": 2
+            }
+          ]
+        },
+        "release": [
+          "square"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "input_row_reduce",
+        "acquire": {
+          "row": [
+            {
+              "bank": "src1",
+              "index": 2
+            }
+          ]
+        },
+        "release": [
+          "row"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "input_inverse",
+        "acquire": {
+          "synchronous_sdk_math": []
+        },
+        "release": [
+          "synchronous_sdk_math"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "input_normalize",
+        "acquire": {
+          "scale": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ]
+        },
+        "release": [
+          "scale"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "Q_projection_complete",
+        "acquire": {
+          "local_compute": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ],
+          "left_memory": [
+            {
+              "bank": "src1",
+              "index": 3
+            },
+            {
+              "bank": "dest",
+              "index": 3
+            }
+          ],
+          "right_memory": [
+            {
+              "bank": "src1",
+              "index": 4
+            },
+            {
+              "bank": "dest",
+              "index": 4
+            }
+          ],
+          "left_fabric": [
+            {
+              "bank": "dest",
+              "index": 5
+            },
+            {
+              "bank": "src1",
+              "index": 5
+            }
+          ],
+          "right_fabric": [
+            {
+              "bank": "dest",
+              "index": 6
+            },
+            {
+              "bank": "src1",
+              "index": 6
+            }
+          ]
+        },
+        "release": [
+          "local_compute",
+          "left_memory",
+          "right_memory",
+          "left_fabric",
+          "right_fabric"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "K_projection_complete",
+        "acquire": {
+          "local_compute": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ],
+          "left_memory": [
+            {
+              "bank": "src1",
+              "index": 3
+            },
+            {
+              "bank": "dest",
+              "index": 3
+            }
+          ],
+          "right_memory": [
+            {
+              "bank": "src1",
+              "index": 4
+            },
+            {
+              "bank": "dest",
+              "index": 4
+            }
+          ],
+          "left_fabric": [
+            {
+              "bank": "dest",
+              "index": 5
+            },
+            {
+              "bank": "src1",
+              "index": 5
+            }
+          ],
+          "right_fabric": [
+            {
+              "bank": "dest",
+              "index": 6
+            },
+            {
+              "bank": "src1",
+              "index": 6
+            }
+          ]
+        },
+        "release": [
+          "local_compute",
+          "left_memory",
+          "right_memory",
+          "left_fabric",
+          "right_fabric"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "V_projection_complete",
+        "acquire": {
+          "local_compute": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ],
+          "left_memory": [
+            {
+              "bank": "src1",
+              "index": 3
+            },
+            {
+              "bank": "dest",
+              "index": 3
+            }
+          ],
+          "right_memory": [
+            {
+              "bank": "src1",
+              "index": 4
+            },
+            {
+              "bank": "dest",
+              "index": 4
+            }
+          ],
+          "left_fabric": [
+            {
+              "bank": "dest",
+              "index": 5
+            },
+            {
+              "bank": "src1",
+              "index": 5
+            }
+          ],
+          "right_fabric": [
+            {
+              "bank": "dest",
+              "index": 6
+            },
+            {
+              "bank": "src1",
+              "index": 6
+            }
+          ]
+        },
+        "release": [
+          "local_compute",
+          "left_memory",
+          "right_memory",
+          "left_fabric",
+          "right_fabric"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "Q_pair_transform_complete",
+        "acquire": {
+          "synchronous_memory_dsds": []
+        },
+        "release": [
+          "synchronous_memory_dsds"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "K_pair_transform_complete",
+        "acquire": {
+          "synchronous_memory_dsds": []
+        },
+        "release": [
+          "synchronous_memory_dsds"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "score_and_root_reductions_complete",
+        "acquire": {
+          "score_numeric": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            },
+            {
+              "bank": "dest",
+              "index": 2
+            },
+            {
+              "bank": "src0",
+              "index": 2
+            }
+          ],
+          "right_memory": [
+            {
+              "bank": "src1",
+              "index": 4
+            },
+            {
+              "bank": "dest",
+              "index": 4
+            }
+          ],
+          "right_fabric": [
+            {
+              "bank": "dest",
+              "index": 6
+            },
+            {
+              "bank": "src1",
+              "index": 6
+            }
+          ]
+        },
+        "release": [
+          "score_numeric",
+          "right_memory",
+          "right_fabric"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "softmax_maximum_complete",
+        "acquire": {
+          "local_max": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ],
+          "row_max": [
+            {
+              "bank": "src1",
+              "index": 2
+            }
+          ]
+        },
+        "release": [
+          "local_max",
+          "row_max"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "softmax_exponent_sum_complete",
+        "acquire": {
+          "local_exp_sum": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ],
+          "row_sum": [
+            {
+              "bank": "src1",
+              "index": 2
+            }
+          ]
+        },
+        "release": [
+          "local_exp_sum",
+          "row_sum"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "softmax_normalized",
+        "acquire": {
+          "normalize": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ]
+        },
+        "release": [
+          "normalize"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "value_alignment_and_contraction_complete",
+        "acquire": {
+          "local_compute": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ],
+          "left_memory": [
+            {
+              "bank": "src1",
+              "index": 3
+            },
+            {
+              "bank": "dest",
+              "index": 3
+            }
+          ],
+          "right_memory": [
+            {
+              "bank": "src1",
+              "index": 4
+            },
+            {
+              "bank": "dest",
+              "index": 4
+            }
+          ],
+          "left_fabric": [
+            {
+              "bank": "dest",
+              "index": 5
+            },
+            {
+              "bank": "src1",
+              "index": 5
+            }
+          ],
+          "right_fabric": [
+            {
+              "bank": "dest",
+              "index": 6
+            },
+            {
+              "bank": "src1",
+              "index": 6
+            }
+          ]
+        },
+        "release": [
+          "local_compute",
+          "left_memory",
+          "right_memory",
+          "left_fabric",
+          "right_fabric"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "output_projection_complete",
+        "acquire": {
+          "local_compute": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ],
+          "left_memory": [
+            {
+              "bank": "src1",
+              "index": 3
+            },
+            {
+              "bank": "dest",
+              "index": 3
+            }
+          ],
+          "right_memory": [
+            {
+              "bank": "src1",
+              "index": 4
+            },
+            {
+              "bank": "dest",
+              "index": 4
+            }
+          ],
+          "left_fabric": [
+            {
+              "bank": "dest",
+              "index": 5
+            },
+            {
+              "bank": "src1",
+              "index": 5
+            }
+          ],
+          "right_fabric": [
+            {
+              "bank": "dest",
+              "index": 6
+            },
+            {
+              "bank": "src1",
+              "index": 6
+            }
+          ]
+        },
+        "release": [
+          "local_compute",
+          "left_memory",
+          "right_memory",
+          "left_fabric",
+          "right_fabric"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "post_projection_residual",
+        "acquire": {
+          "add": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ]
+        },
+        "release": [
+          "add"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "local_square_sum",
+        "acquire": {
+          "square": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            },
+            {
+              "bank": "dest",
+              "index": 2
+            },
+            {
+              "bank": "src0",
+              "index": 2
+            },
+            {
+              "bank": "src1",
+              "index": 2
+            }
+          ]
+        },
+        "release": [
+          "square"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "row_collective",
+        "acquire": {
+          "row": [
+            {
+              "bank": "src1",
+              "index": 2
+            }
+          ]
+        },
+        "release": [
+          "row"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "inverse",
+        "acquire": {
+          "synchronous_sdk_math": []
+        },
+        "release": [
+          "synchronous_sdk_math"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "normalize",
+        "acquire": {
+          "scale": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ]
+        },
+        "release": [
+          "scale"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "up_projection_complete",
+        "acquire": {
+          "local_compute": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ],
+          "left_memory": [
+            {
+              "bank": "src1",
+              "index": 3
+            },
+            {
+              "bank": "dest",
+              "index": 3
+            }
+          ],
+          "right_memory": [
+            {
+              "bank": "src1",
+              "index": 4
+            },
+            {
+              "bank": "dest",
+              "index": 4
+            }
+          ],
+          "left_fabric": [
+            {
+              "bank": "dest",
+              "index": 5
+            },
+            {
+              "bank": "src1",
+              "index": 5
+            }
+          ],
+          "right_fabric": [
+            {
+              "bank": "dest",
+              "index": 6
+            },
+            {
+              "bank": "src1",
+              "index": 6
+            }
+          ]
+        },
+        "release": [
+          "local_compute",
+          "left_memory",
+          "right_memory",
+          "left_fabric",
+          "right_fabric"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "gate_projection_complete",
+        "acquire": {
+          "local_compute": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ],
+          "left_memory": [
+            {
+              "bank": "src1",
+              "index": 3
+            },
+            {
+              "bank": "dest",
+              "index": 3
+            }
+          ],
+          "right_memory": [
+            {
+              "bank": "src1",
+              "index": 4
+            },
+            {
+              "bank": "dest",
+              "index": 4
+            }
+          ],
+          "left_fabric": [
+            {
+              "bank": "dest",
+              "index": 5
+            },
+            {
+              "bank": "src1",
+              "index": 5
+            }
+          ],
+          "right_fabric": [
+            {
+              "bank": "dest",
+              "index": 6
+            },
+            {
+              "bank": "src1",
+              "index": 6
+            }
+          ]
+        },
+        "release": [
+          "local_compute",
+          "left_memory",
+          "right_memory",
+          "left_fabric",
+          "right_fabric"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "silu_product",
+        "acquire": {
+          "gating": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ]
+        },
+        "release": [
+          "gating"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "down_projection_complete",
+        "acquire": {
+          "local_compute": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ],
+          "left_memory": [
+            {
+              "bank": "src1",
+              "index": 3
+            },
+            {
+              "bank": "dest",
+              "index": 3
+            }
+          ],
+          "right_memory": [
+            {
+              "bank": "src1",
+              "index": 4
+            },
+            {
+              "bank": "dest",
+              "index": 4
+            }
+          ],
+          "left_fabric": [
+            {
+              "bank": "dest",
+              "index": 5
+            },
+            {
+              "bank": "src1",
+              "index": 5
+            }
+          ],
+          "right_fabric": [
+            {
+              "bank": "dest",
+              "index": 6
+            },
+            {
+              "bank": "src1",
+              "index": 6
+            }
+          ]
+        },
+        "release": [
+          "local_compute",
+          "left_memory",
+          "right_memory",
+          "left_fabric",
+          "right_fabric"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "final_residual",
+        "acquire": {
+          "add": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ]
+        },
+        "release": [
+          "add"
+        ],
+        "join_before_next": true
+      }
+    ],
+    "validation": {
+      "checked": true,
+      "numerical_storage_bytes": 11024,
+      "logical_values": 62,
+      "phases": 25,
+      "scope": "Declared numerical storage and explicit leases only; lowering callbacks, dynamic stack, SDK/compiler temporaries and diagnostic storage require separate target validation"
+    },
+    "mixed_allocation_bytes": 2880
+  },
+  "projection_prelude": {
+    "M": 64,
+    "K": 64,
+    "N": 64,
+    "P": 8,
+    "Mt": 8,
+    "Kt": 8,
+    "Nt": 8,
+    "left_length": 64,
+    "right_length": 64,
+    "output_length": 64,
+    "rounds": 8,
+    "weights": "static logical weights host-packed in row-major tiles with two-hop block-row alignment",
+    "activation": "logical column-major tiles aligned forward on device",
+    "result": "logical column-major tiles",
+    "right_descriptor": "contiguous feature vector; contraction increment Nt",
+    "k_block_rule": "cycle[(position(y)+position(x)-round)%P]",
+    "completion": "both-axis transfer and local DSR compute joined before buffer swap"
+  },
+  "output_weight_length": 64,
+  "score_length": 64,
+  "scale": 0.125,
+  "input_prefix_stages": [
+    {
+      "M": 64,
+      "K": 64,
+      "N": 64,
+      "P": 8,
+      "Mt": 8,
+      "Kt": 8,
+      "Nt": 8,
+      "left_length": 64,
+      "right_length": 64,
+      "output_length": 64,
+      "rounds": 8,
+      "weights": "static logical weights host-packed in row-major tiles with two-hop block-row alignment",
+      "activation": "logical column-major tiles aligned forward on device",
+      "result": "logical column-major tiles",
+      "right_descriptor": "contiguous feature vector; contraction increment Nt",
+      "k_block_rule": "cycle[(position(y)+position(x)-round)%P]",
+      "completion": "both-axis transfer and local DSR compute joined before buffer swap"
+    },
+    {
+      "M": 64,
+      "K": 64,
+      "N": 64,
+      "P": 8,
+      "Mt": 8,
+      "Kt": 8,
+      "Nt": 8,
+      "left_length": 64,
+      "right_length": 64,
+      "output_length": 64,
+      "rounds": 8,
+      "weights": "static logical weights host-packed in row-major tiles with two-hop block-row alignment",
+      "activation": "logical column-major tiles aligned forward on device",
+      "result": "logical column-major tiles",
+      "right_descriptor": "contiguous feature vector; contraction increment Nt",
+      "k_block_rule": "cycle[(position(y)+position(x)-round)%P]",
+      "completion": "both-axis transfer and local DSR compute joined before buffer swap"
+    },
+    {
+      "M": 64,
+      "K": 64,
+      "N": 64,
+      "P": 8,
+      "Mt": 8,
+      "Kt": 8,
+      "Nt": 8,
+      "left_length": 64,
+      "right_length": 64,
+      "output_length": 64,
+      "rounds": 8,
+      "weights": "static logical weights host-packed in row-major tiles with two-hop block-row alignment",
+      "activation": "logical column-major tiles aligned forward on device",
+      "result": "logical column-major tiles",
+      "right_descriptor": "contiguous feature vector; contraction increment Nt",
+      "k_block_rule": "cycle[(position(y)+position(x)-round)%P]",
+      "completion": "both-axis transfer and local DSR compute joined before buffer swap"
+    }
+  ],
+  "input_prefix_bounds": {
+    "q": {
+      "normalized_row": {
+        "target_l1_upper": 97.91370753787565,
+        "native_l1_upper": 96.04687690743599,
+        "row_l1_upper": 98.0,
+        "inverse_witness_sum": 0.43896484375,
+        "reduced_sum_upper": 1.0,
+        "positive_sum_depth": 72,
+        "enumerated_sums": 15361,
+        "dimension": 64,
+        "half_unit_roundoff": 0.00048828125,
+        "half_underflow_absolute": 2.9802322387695312e-08,
+        "scope": "Correlated row range using pinned SDK inverse model and declared source half row reduction; not an accuracy or arbitrary-CSL proof"
+      },
+      "weight_absolute": 0.00390625,
+      "projection_absolute": 0.395263671875,
+      "half_fma_depth": 64,
+      "scope": "Any permutation of N ordinary half FMA contributions; block-f32 policy requires its own bound",
+      "pair": {
+        "value_absolute": 0.395263671875,
+        "cosine_absolute": 1.0,
+        "sine_absolute": 1.0,
+        "target_absolute": 0.79052734375,
+        "native_absolute": 0.79052734375,
+        "output_absolute": 0.79052734375,
+        "scope": "Absolute range for either explicit pair order; separate half products then add/subtract, plus single-rounded native path. No unit-circle assumption or accuracy claim."
+      }
+    },
+    "k": {
+      "normalized_row": {
+        "target_l1_upper": 97.91370753787565,
+        "native_l1_upper": 96.04687690743599,
+        "row_l1_upper": 98.0,
+        "inverse_witness_sum": 0.43896484375,
+        "reduced_sum_upper": 1.0,
+        "positive_sum_depth": 72,
+        "enumerated_sums": 15361,
+        "dimension": 64,
+        "half_unit_roundoff": 0.00048828125,
+        "half_underflow_absolute": 2.9802322387695312e-08,
+        "scope": "Correlated row range using pinned SDK inverse model and declared source half row reduction; not an accuracy or arbitrary-CSL proof"
+      },
+      "weight_absolute": 0.00390625,
+      "projection_absolute": 0.395263671875,
+      "half_fma_depth": 64,
+      "scope": "Any permutation of N ordinary half FMA contributions; block-f32 policy requires its own bound",
+      "pair": {
+        "value_absolute": 0.395263671875,
+        "cosine_absolute": 1.0,
+        "sine_absolute": 1.0,
+        "target_absolute": 0.79052734375,
+        "native_absolute": 0.79052734375,
+        "output_absolute": 0.79052734375,
+        "scope": "Absolute range for either explicit pair order; separate half products then add/subtract, plus single-rounded native path. No unit-circle assumption or accuracy claim."
+      }
+    },
+    "v": {
+      "normalized_row": {
+        "target_l1_upper": 97.91370753787565,
+        "native_l1_upper": 96.04687690743599,
+        "row_l1_upper": 98.0,
+        "inverse_witness_sum": 0.43896484375,
+        "reduced_sum_upper": 1.0,
+        "positive_sum_depth": 72,
+        "enumerated_sums": 15361,
+        "dimension": 64,
+        "half_unit_roundoff": 0.00048828125,
+        "half_underflow_absolute": 2.9802322387695312e-08,
+        "scope": "Correlated row range using pinned SDK inverse model and declared source half row reduction; not an accuracy or arbitrary-CSL proof"
+      },
+      "projection_absolute": 0.3828139901161194,
+      "accumulation": "f32"
+    }
+  },
+  "input_composition": {
+    "expression": "Xn=RMS(X,gamma); Q,K,V=Xn*Wq/k/v; rotate Q,K; Z=attention*O+X; Y=Z+MLP(RMS(Z,gamma))",
+    "public_residual": "original X",
+    "shared_gamma": true,
+    "intermediate_host_transfer": false,
+    "projection_phases": [
+      6,
+      7,
+      8
+    ],
+    "pair_order": "odd_even",
+    "completion": "join V and synchronous Q/K pair transforms before resident score",
+    "normalized_owner": "one initial alignment, preserve completed live left pointer at K/V entries"
+  },
+  "precision_boundaries": [
+    {
+      "node": "v",
+      "operator": "matmul",
+      "compute_dtype": "f32",
+      "input_storage": [
+        "f16",
+        "f16"
+      ],
+      "output_storage": "f32",
+      "narrowing": false
+    },
+    {
+      "node": "probability",
+      "operator": "softmax",
+      "compute_dtype": "f32",
+      "input_storage": [
+        "f16"
+      ],
+      "output_storage": "f32",
+      "narrowing": false
+    },
+    {
+      "node": "attention",
+      "operator": "matmul",
+      "compute_dtype": "f32",
+      "input_storage": [
+        "f32",
+        "f32"
+      ],
+      "output_storage": "f32",
+      "narrowing": false
+    },
+    {
+      "node": "projection",
+      "operator": "matmul",
+      "compute_dtype": "f32",
+      "input_storage": [
+        "f32",
+        "f16"
+      ],
+      "output_storage": "f32",
+      "narrowing": false
+    },
+    {
+      "node": "z",
+      "operator": "add",
+      "compute_dtype": "f32",
+      "input_storage": [
+        "f32",
+        "f16"
+      ],
+      "output_storage": "f32",
+      "narrowing": false
+    },
+    {
+      "node": "x",
+      "operator": "rmsnorm",
+      "compute_dtype": "f32",
+      "input_storage": [
+        "f32",
+        "f16"
+      ],
+      "output_storage": "f16",
+      "narrowing": true
+    },
+    {
+      "node": "result",
+      "operator": "add",
+      "compute_dtype": "f32",
+      "input_storage": [
+        "f32",
+        "f16"
+      ],
+      "output_storage": "f16",
+      "narrowing": true
+    }
+  ],
+  "mixed_numerical_bounds": {
+    "value": 0.3828139901161194,
+    "probability_mass": 1.000004529953003,
+    "attention": 0.38281720876693726,
+    "projection": 0.19140934944152832,
+    "residual": 0.3164093792438507,
+    "normalized": {
+      "output": 12.0078125,
+      "pre_storage_upper": 12.000212076597842,
+      "positive_sum_depth": 72,
+      "sdk_sqrt_relative_error_allowance": 1.52587890625e-05,
+      "reciprocal_upper": 1000.0153496926292,
+      "epsilon_f32": 9.999999974752427e-07,
+      "scope": "Nonnegative f32 square/sum/divide, epsilon floor and correlated row norm; SDK normal-domain sqrt contract, gamma-first f32 operations then half storage. Range only."
+    },
+    "final_pre_half": 72.37891387939453,
+    "status": "development_conditional",
+    "pending": [
+      "SDK sqrt normal-domain rounding derivation",
+      "SDK exp finite nonnegative and zero-image domain certificate"
+    ],
+    "scope": "Range estimates conditional on documented SDK math properties; public compiler admission remains closed."
+  },
+  "typed_transport": [
+    {
+      "phase": 8,
+      "left": "f16",
+      "right": "f16",
+      "accumulator": "f32",
+      "result": "f32"
+    },
+    {
+      "phase": 4,
+      "left": "f32",
+      "right": "f32",
+      "accumulator": "f32",
+      "result": "f32"
+    },
+    {
+      "phase": 3,
+      "left": "f32",
+      "right": "f16",
+      "accumulator": "f32",
+      "result": "f32"
+    }
+  ],
+  "qualification": {
+    "admitted": false,
+    "scope": "development typed plan and code generation"
+  }
+}

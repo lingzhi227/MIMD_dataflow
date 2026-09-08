@@ -28,6 +28,40 @@ def optimize(m, enabled):
 
 
 def plan(m, partitions=1):
+    if m.get("profile") == "mesh_projected_cache_ffn.v1":
+        from mesh_projected_cache_ffn import plan as composed
+
+        return composed(m, partitions)
+
+    if m.get("profile") == "mesh_projected_cache.v1":
+        from mesh_projected_cache import plan as projected
+
+        return projected(m, partitions)
+    if m.get("profile") == "mesh_input_attention_mixed.v1":
+        from mesh_input_attention_mixed import plan as mixed_plan
+
+        return mixed_plan(m, partitions)
+
+    if m.get("profile") == "mesh_attention_tail.v1":
+        from mesh_attention_tail import plan as attention_tail_plan
+
+        return attention_tail_plan(m, partitions)
+    if m.get("profile") == "mesh_prefill_tail.v1":
+        from mesh_prefill_tail import plan as tail_plan
+
+        return tail_plan(m, partitions)
+    if m.get("profile") == "mesh_cache_attention.v1":
+        from mesh_cache_attention import plan as cache_plan
+
+        return cache_plan(m, partitions)
+    if m.get("profile") == "mesh_batched_feed_forward.v1":
+        from mesh_batched_feed_forward import plan as batch_ffn_plan
+
+        return batch_ffn_plan(m, partitions)
+    if m.get("profile") == "mesh_feed_forward.v1":
+        from mesh_feed_forward import plan as feed_forward_plan
+
+        return feed_forward_plan(m, partitions)
     if m.get("profile") == "mesh_projection_residual_rms.v1":
         from mesh_projection_residual_rms import plan as composition_plan
 
@@ -74,6 +108,14 @@ def plan(m, partitions=1):
         from mesh_softmax import plan as softmax_plan
 
         return softmax_plan(m, partitions)
+    if m.get("profile") == "mesh_batched_fanout.v1":
+        from mesh_batched_fanout import plan as batched_fanout
+
+        return batched_fanout(m, partitions)
+    if m.get("profile") == "mesh_batched_rms.v1":
+        from mesh_batched_rms import plan as batched_plan
+
+        return batched_plan(m, partitions)
     if m.get("profile") == "mesh_rms.v1":
         from mesh_rms import plan as rms_plan
 

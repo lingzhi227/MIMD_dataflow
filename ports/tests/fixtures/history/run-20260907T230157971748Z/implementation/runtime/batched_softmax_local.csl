@@ -1,0 +1,48 @@
+// Batch-major synchronous stable softmax local stages; caller owns collectives.
+// True first-element MAX, stationary half SUM, SDK exp and half reciprocal.
+// DSR1/2 are temporary leases ending at synchronous return. Finite inputs only.
+param batches:i16;param features:i16;
+comptime {@comptime_assert(batches>0 and features>0 and features%2==0);}
+const math=@import_module("<math>");
+const d1=@get_dsr(dsr_dest,1);const a1=@get_dsr(dsr_src0,1);const b1=@get_dsr(dsr_src1,1);
+const d2=@get_dsr(dsr_dest,2);const a2=@get_dsr(dsr_src0,2);
+var accumulator=@zeros([1]f16);var peak:f16=0.0;
+fn scale_max(input:[*]f16,scaled:[*]f16,maxima:[*]f16,scale:f16) void {
+ const input_d=@get_dsd(mem1d_dsd,.{.base_address=input,.extent=@as(u16,batches*features)});
+ const scaled_d=@get_dsd(mem1d_dsd,.{.base_address=scaled,.extent=@as(u16,batches*features)});
+ @fmulh(scaled_d,input_d,scale);
+ const acc=@get_dsd(mem1d_dsd,.{.base_address=&accumulator,.extent=1});
+ const element=@get_dsd(mem1d_dsd,.{.base_address=scaled,.extent=1});
+ @load_to_dsr(d2,acc,.{.save_address=false});@load_to_dsr(a2,acc,.{.save_address=false});
+ @load_to_dsr(b1,element,.{.save_address=true});
+ for(@range(i16,batches)) |i| {
+  accumulator[0]=scaled[i*features];
+  for(@range(i16,features)) |_| {@fmaxh(d2,a2,b1);}
+  maxima[i]=accumulator[0];
+ }
+}
+fn shifted_exp(value:f16) f16 {return math.exp_f16(value-peak);}
+fn exp_sum(scaled:[*]f16,maxima:[*]f16,exponents:[*]f16,sums:[*]f16) void {
+ var sd=@get_dsd(mem1d_dsd,.{.base_address=scaled,.extent=@as(u16,features)});
+ var ed=@get_dsd(mem1d_dsd,.{.base_address=exponents,.extent=@as(u16,features)});
+ for(@range(i16,batches)) |i| {
+  peak=maxima[i];@map(shifted_exp,sd,ed);
+  sd=@increment_dsd_offset(sd,features,f16);ed=@increment_dsd_offset(ed,features,f16);
+ }
+ const acc=@get_dsd(mem1d_dsd,.{.base_address=&accumulator,.extent=1});
+ const element=@get_dsd(mem1d_dsd,.{.base_address=exponents,.extent=1});
+ @load_to_dsr(d2,acc,.{.save_address=false});@load_to_dsr(a2,acc,.{.save_address=false});
+ @load_to_dsr(b1,element,.{.save_address=true});
+ for(@range(i16,batches)) |i| {
+  @fmovh(d2,0.0);for(@range(i16,features)) |_| {@faddh(d2,a2,b1);}
+  sums[i]=accumulator[0];
+ }
+}
+fn normalize(exponents:[*]f16,sums:[*]f16,output:[*]f16) void {
+ var ed=@get_dsd(mem1d_dsd,.{.base_address=exponents,.extent=@as(u16,features)});
+ var od=@get_dsd(mem1d_dsd,.{.base_address=output,.extent=@as(u16,features)});
+ for(@range(i16,batches)) |i| {
+  const inverse:f16=1.0/sums[i];@fmulh(od,ed,inverse);
+  ed=@increment_dsd_offset(ed,features,f16);od=@increment_dsd_offset(od,features,f16);
+ }
+}

@@ -1,0 +1,43 @@
+// Half-vector MAX through a caller-owned SDK gather/broadcast plane.
+// Shares the caller's existing collectives_2d instances: no duplicate import,
+// colors, queues or SDK FSM. Caller must serialize this helper with SUM.
+// Finite half operands only. No padding is read or written beyond length.
+param participants: u16;
+param capacity: u16;
+param f_gather: fn(u16,[*]u32,[*]u32,u16,local_task_id)void;
+param f_broadcast: fn(u16,[*]u32,u16,local_task_id)void;
+param f_callback: fn()void;
+param callback_task_id: local_task_id = @get_local_task_id(11);
+comptime { @comptime_assert(participants>0 and capacity>0); @comptime_assert(@as(u32,participants)*@as(u32,capacity)<=32767); }
+var send=@zeros([capacity]f32);
+var gathered=@zeros([participants*capacity]f32);
+var destination:[*]f16;
+var count:u16=0; var axis:u16=0; var phase:u16=0;
+var root:bool=false; var busy:bool=false;
+fn start(selected_axis:u16, coordinate:u16, source:[*]f16, output:[*]f16, length:u16) void {
+ @assert(!busy and selected_axis<=1 and coordinate<participants and length>0 and length<=capacity);
+ busy=true; axis=selected_axis; root=coordinate==0; count=length; destination=output; phase=0;
+ for(@range(u16,count)) |i| { send[i]=@as(f32,source[i]); }
+ f_gather(axis,@ptrcast([*]u32,&send),@ptrcast([*]u32,&gathered),count,callback_task_id);
+}
+task advance() void {
+ @assert(busy);
+ if(phase==0){
+  if(root){
+   for(@range(u16,count)) |i| {
+    var maximum:f32=gathered[i];
+    for(@range(u16,1,participants,1)) |p| {
+     const value=gathered[p*count+i];
+     if(value>maximum){maximum=value;}
+    }
+    send[i]=maximum;
+   }
+  }
+  phase=1; f_broadcast(axis,@ptrcast([*]u32,&send),count,callback_task_id);
+ } else {
+  @assert(phase==1);
+  for(@range(u16,count)) |i| {destination[i]=@as(f16,send[i]);}
+  busy=false; f_callback();
+ }
+}
+comptime { @bind_local_task(advance,callback_task_id); }

@@ -1,0 +1,95 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "relative_l2": 0.00018557518262246015,
+      "peak_scaled_error": 0.00029919286302230845,
+      "fixed_accuracy_passed": true,
+      "contract": "normalized-feed-forward-half-normwise-v1",
+      "mlp_delta": {
+        "relative_l2": 0.005503307122260493,
+        "peak_scaled_error": 0.006054691663087842,
+        "fixed_accuracy_passed": true
+      }
+    },
+    {
+      "relative_l2": 0.00018213325345272732,
+      "peak_scaled_error": 0.0003661641287310893,
+      "fixed_accuracy_passed": true,
+      "contract": "normalized-feed-forward-half-normwise-v1",
+      "mlp_delta": {
+        "relative_l2": 0.004855655668284155,
+        "peak_scaled_error": 0.0047870882757553,
+        "fixed_accuracy_passed": true
+      }
+    },
+    {
+      "relative_l2": 0.0,
+      "peak_scaled_error": 0.0,
+      "fixed_accuracy_passed": true,
+      "contract": "normalized-feed-forward-half-normwise-v1",
+      "mlp_delta": {
+        "relative_l2": 0.0,
+        "peak_scaled_error": 0.0,
+        "fixed_accuracy_passed": true
+      }
+    },
+    {
+      "relative_l2": 0.00019635578938289772,
+      "peak_scaled_error": 0.0004447011141906398,
+      "fixed_accuracy_passed": true,
+      "contract": "normalized-feed-forward-half-normwise-v1",
+      "mlp_delta": {
+        "relative_l2": 0.0009081690819975087,
+        "peak_scaled_error": 0.0010031443458030705,
+        "fixed_accuracy_passed": true
+      }
+    },
+    {
+      "relative_l2": 0.0,
+      "peak_scaled_error": 0.0,
+      "fixed_accuracy_passed": true,
+      "contract": "normalized-feed-forward-half-normwise-v1",
+      "mlp_delta": {
+        "relative_l2": 0.0,
+        "peak_scaled_error": 0.0,
+        "fixed_accuracy_passed": true
+      }
+    },
+    {
+      "relative_l2": 0.0012547084087449426,
+      "peak_scaled_error": 0.0012547084087449398,
+      "fixed_accuracy_passed": true,
+      "contract": "normalized-feed-forward-half-normwise-v1",
+      "mlp_delta": {
+        "relative_l2": 0.0014599887589956642,
+        "peak_scaled_error": 0.0014599887589956649,
+        "fixed_accuracy_passed": true
+      }
+    },
+    {
+      "relative_l2": 0.00031125368055384857,
+      "peak_scaled_error": 0.00031125368055384835,
+      "fixed_accuracy_passed": true,
+      "contract": "normalized-feed-forward-half-normwise-v1",
+      "mlp_delta": {
+        "relative_l2": 0.0029945537785244516,
+        "peak_scaled_error": 0.002994553778524466,
+        "fixed_accuracy_passed": true
+      }
+    },
+    {
+      "relative_l2": 0.0,
+      "peak_scaled_error": 0.0,
+      "fixed_accuracy_passed": true,
+      "contract": "normalized-feed-forward-half-normwise-v1",
+      "mlp_delta": {
+        "relative_l2": 0.0,
+        "peak_scaled_error": 0.0,
+        "fixed_accuracy_passed": true
+      }
+    }
+  ],
+  "failure": null,
+  "scope": "Predicted target arithmetic versus original-input fsum/sqrt/exp; separate delta gate. Not actual SDK observations; actual native delta has its own gate."
+}

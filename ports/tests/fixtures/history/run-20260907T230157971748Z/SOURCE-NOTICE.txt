@@ -1,0 +1,1 @@
+Batch-major pair-vector schedule derived from MeshInfra/WaferLLM Decode xq_rope/xk_rope, commit fd1c2daae37cd68706c03fc8009887ecee9900f8, Apache-2.0. Explicit input pair order and feature-axis replicas, four packed-half DSR products before output stores; broadcast supplied coefficients. No position generation, cache update or full model claim.

@@ -29,7 +29,7 @@ class SourceSoftmaxAdapter(unittest.TestCase):
         src = (ROOT / "projects/waferllm/upstream/Prefill/src/prefill.csl").read_text()
         actual = align_column_major_value(src)
         verified = (
-            ROOT / "tests/fixtures/verified-attention-prefill.csl"
+            ROOT / "tests/fixtures/history/attention-value-source-20260907T022427483584Z/prefill.csl"
         ).read_text()
         for start, end in (
             ("fn output_matmul()", "fn h1_matmul()"),
@@ -43,6 +43,21 @@ class SourceSoftmaxAdapter(unittest.TestCase):
         self.assertIn("dummy[i*seq_len_p_pe]", actual)
         with self.assertRaises(AssertionError):
             align_column_major_value(actual)
+
+    def test_value_stride_does_not_leak_into_following_projections(self):
+        src = (ROOT / "projects/waferllm/upstream/Prefill/src/prefill.csl").read_text()
+        text = align_column_major_value(src, value_phase_condition="hls_phase==-4")
+        body = text[text.index("fn matmul_compute()") : text.index("fn rmsnorm_x()")]
+        self.assertIn(
+            "if(hls_phase==-4){right_matrix_dsd = @increment_dsd_offset(right_matrix_dsd, 1, f16);}",
+            body,
+        )
+        self.assertIn(
+            "else{right_matrix_dsd = @increment_dsd_offset(right_matrix_dsd, Nt, f16);}",
+            body,
+        )
+        with self.assertRaises(AssertionError):
+            align_column_major_value(src, value_phase_condition="hls_phase=-4")
 
 
 if __name__ == "__main__":

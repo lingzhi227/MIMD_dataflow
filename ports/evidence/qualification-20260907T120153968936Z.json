@@ -1,0 +1,4234 @@
+{
+  "kind": "qualification_index_of_existing_sdk_runs",
+  "sdk": true,
+  "success": true,
+  "new_sdk_execution": false,
+  "source_controls": [
+    {
+      "path": "evidence/attention-tail64-counter-source-comparison.json",
+      "sha256": "eb4aa8d705d5f070baa3332d38d971de3351f1572082a89d3b512eb671dbabcf"
+    }
+  ],
+  "cases": [
+    {
+      "key": "waferllm/attention_tail_64x64x256_8x8_counters",
+      "artifact": "projects/waferllm/attention_tail_64x64x256_8x8_counters/run-20260907T114402035658Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "complete": true,
+        "completed_calls_valid": true,
+        "profile": "mesh_attention_tail.v1",
+        "epochs": 8,
+        "actors": 64,
+        "instrumentation": "counters",
+        "internal_half_observations": 0,
+        "observed_f32_accumulator_values": 294912,
+        "cases": [
+          {
+            "target_half_bits_exact": true,
+            "max_local_cycles": 116365,
+            "cycles_per_pe": [
+              [
+                115646,
+                115645,
+                115644,
+                115641,
+                115640,
+                115636,
+                115637,
+                115633
+              ],
+              [
+                115974,
+                115976,
+                115974,
+                115971,
+                115970,
+                115967,
+                115964,
+                115965
+              ],
+              [
+                116364,
+                116365,
+                116362,
+                116363,
+                116362,
+                116356,
+                116356,
+                116349
+              ],
+              [
+                116137,
+                116138,
+                116141,
+                116136,
+                116131,
+                116131,
+                116127,
+                116132
+              ],
+              [
+                116362,
+                116364,
+                116364,
+                116364,
+                116359,
+                116356,
+                116355,
+                116348
+              ],
+              [
+                116254,
+                116256,
+                116259,
+                116254,
+                116248,
+                116248,
+                116244,
+                116250
+              ],
+              [
+                116351,
+                116353,
+                116356,
+                116352,
+                116349,
+                116343,
+                116342,
+                116336
+              ],
+              [
+                116319,
+                116322,
+                116326,
+                116322,
+                116317,
+                116312,
+                116310,
+                116310
+              ]
+            ],
+            "core_numerical": {
+              "contract": "rectangular-mlp-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2": 0.005292726559185921,
+              "peak_scaled_error": 0.005818758969997007
+            },
+            "normalized_and_final_residual_bits_exact": true,
+            "ffn_numerical": {
+              "contract": "normalized-feed-forward-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "final_residual": {
+                "relative_l2": 0.00018589759820923594,
+                "peak_scaled_error": 0.00034483943488851354,
+                "fixed_accuracy_passed": true
+              },
+              "mlp_delta": {
+                "relative_l2": 0.005360644860928723,
+                "peak_scaled_error": 0.005883238591159517,
+                "fixed_accuracy_passed": true
+              }
+            },
+            "projection_and_live_Z_bits_exact": true,
+            "observed_attention_tail_numerical": {
+              "contract": "supplied-attention-tail-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "projection": {
+                "relative_l2": 0.001219346542406349,
+                "peak_scaled_error": 0.0033062946257636215,
+                "fixed_accuracy_passed": true
+              },
+              "mlp_delta": {
+                "relative_l2": 0.005364837350670552,
+                "peak_scaled_error": 0.005908176180670677,
+                "fixed_accuracy_passed": true
+              },
+              "final_residual": {
+                "relative_l2": 0.0002565682700471572,
+                "peak_scaled_error": 0.0006321105492315295,
+                "fixed_accuracy_passed": true
+              }
+            },
+            "numerical": {
+              "contract": "supplied-attention-tail-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "projection": {
+                "relative_l2": 0.0019474366710624466,
+                "peak_scaled_error": 0.004367968318788821,
+                "fixed_accuracy_passed": true
+              },
+              "mlp_delta": {
+                "relative_l2": 0.005364971074194288,
+                "peak_scaled_error": 0.005907100176921416,
+                "fixed_accuracy_passed": true
+              },
+              "final_residual": {
+                "relative_l2": 0.00025658650774631586,
+                "peak_scaled_error": 0.000633638265326745,
+                "fixed_accuracy_passed": true
+              }
+            },
+            "attention_numerical": {
+              "contract": "attention-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2": 0.0014390259764581355,
+              "peak_scaled_error": 0.004666910744131157
+            },
+            "attention_bits_and_protocol_exact": true
+          },
+          {
+            "target_half_bits_exact": true,
+            "max_local_cycles": 116365,
+            "cycles_per_pe": [
+              [
+                115647,
+                115647,
+                115646,
+                115644,
+                115643,
+                115640,
+                115639,
+                115636
+              ],
+              [
+                115974,
+                115974,
+                115977,
+                115972,
+                115973,
+                115968,
+                115965,
+                115965
+              ],
+              [
+                116364,
+                116365,
+                116362,
+                116363,
+                116362,
+                116356,
+                116356,
+                116349
+              ],
+              [
+                116137,
+                116138,
+                116137,
+                116136,
+                116134,
+                116131,
+                116128,
+                116131
+              ],
+              [
+                116362,
+                116363,
+                116361,
+                116360,
+                116362,
+                116356,
+                116356,
+                116349
+              ],
+              [
+                116254,
+                116256,
+                116253,
+                116255,
+                116256,
+                116250,
+                116247,
+                116248
+              ],
+              [
+                116351,
+                116353,
+                116353,
+                116350,
+                116354,
+                116346,
+                116346,
+                116337
+              ],
+              [
+                116319,
+                116322,
+                116320,
+                116322,
+                116323,
+                116312,
+                116314,
+                116309
+              ]
+            ],
+            "core_numerical": {
+              "contract": "rectangular-mlp-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2": 0.004776711967215314,
+              "peak_scaled_error": 0.006474196338563446
+            },
+            "normalized_and_final_residual_bits_exact": true,
+            "ffn_numerical": {
+              "contract": "normalized-feed-forward-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "final_residual": {
+                "relative_l2": 0.00018264749409983304,
+                "peak_scaled_error": 0.0004730502755005427,
+                "fixed_accuracy_passed": true
+              },
+              "mlp_delta": {
+                "relative_l2": 0.004907498853911824,
+                "peak_scaled_error": 0.006442983862342721,
+                "fixed_accuracy_passed": true
+              }
+            },
+            "projection_and_live_Z_bits_exact": true,
+            "observed_attention_tail_numerical": {
+              "contract": "supplied-attention-tail-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "projection": {
+                "relative_l2": 0.001193061791913451,
+                "peak_scaled_error": 0.003611606576433545,
+                "fixed_accuracy_passed": true
+              },
+              "mlp_delta": {
+                "relative_l2": 0.004918328821279925,
+                "peak_scaled_error": 0.006419828245060687,
+                "fixed_accuracy_passed": true
+              },
+              "final_residual": {
+                "relative_l2": 0.0002574775563521565,
+                "peak_scaled_error": 0.0006767144010624204,
+                "fixed_accuracy_passed": true
+              }
+            },
+            "numerical": {
+              "contract": "supplied-attention-tail-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "projection": {
+                "relative_l2": 0.001617749183810611,
+                "peak_scaled_error": 0.004725281630524933,
+                "fixed_accuracy_passed": true
+              },
+              "mlp_delta": {
+                "relative_l2": 0.004918411778059597,
+                "peak_scaled_error": 0.006419858607997629,
+                "fixed_accuracy_passed": true
+              },
+              "final_residual": {
+                "relative_l2": 0.00025751316823604154,
+                "peak_scaled_error": 0.000668053687107155,
+                "fixed_accuracy_passed": true
+              }
+            },
+            "attention_numerical": {
+              "contract": "attention-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2": 0.001217573121747946,
+              "peak_scaled_error": 0.002753875947090774
+            },
+            "attention_bits_and_protocol_exact": true
+          },
+          {
+            "target_half_bits_exact": true,
+            "max_local_cycles": 107405,
+            "cycles_per_pe": [
+              [
+                106683,
+                106683,
+                106684,
+                106680,
+                106682,
+                106680,
+                106679,
+                106676
+              ],
+              [
+                107013,
+                107014,
+                107020,
+                107012,
+                107012,
+                107009,
+                107007,
+                107004
+              ],
+              [
+                107404,
+                107405,
+                107402,
+                107403,
+                107402,
+                107396,
+                107396,
+                107389
+              ],
+              [
+                107177,
+                107178,
+                107185,
+                107175,
+                107174,
+                107172,
+                107167,
+                107169
+              ],
+              [
+                107400,
+                107403,
+                107403,
+                107400,
+                107399,
+                107396,
+                107394,
+                107388
+              ],
+              [
+                107294,
+                107296,
+                107303,
+                107294,
+                107291,
+                107289,
+                107285,
+                107290
+              ],
+              [
+                107390,
+                107390,
+                107396,
+                107389,
+                107389,
+                107386,
+                107382,
+                107377
+              ],
+              [
+                107359,
+                107362,
+                107366,
+                107359,
+                107358,
+                107355,
+                107351,
+                107352
+              ]
+            ],
+            "core_numerical": {
+              "contract": "rectangular-mlp-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2": 0.0,
+              "peak_scaled_error": 0.0
+            },
+            "normalized_and_final_residual_bits_exact": true,
+            "ffn_numerical": {
+              "contract": "normalized-feed-forward-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "final_residual": {
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0,
+                "fixed_accuracy_passed": true
+              },
+              "mlp_delta": {
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0,
+                "fixed_accuracy_passed": true
+              }
+            },
+            "projection_and_live_Z_bits_exact": true,
+            "observed_attention_tail_numerical": {
+              "contract": "supplied-attention-tail-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "projection": {
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0,
+                "fixed_accuracy_passed": true
+              },
+              "mlp_delta": {
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0,
+                "fixed_accuracy_passed": true
+              },
+              "final_residual": {
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0,
+                "fixed_accuracy_passed": true
+              }
+            },
+            "numerical": {
+              "contract": "supplied-attention-tail-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "projection": {
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0,
+                "fixed_accuracy_passed": true
+              },
+              "mlp_delta": {
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0,
+                "fixed_accuracy_passed": true
+              },
+              "final_residual": {
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0,
+                "fixed_accuracy_passed": true
+              }
+            },
+            "attention_numerical": {
+              "contract": "attention-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2": 0.0,
+              "peak_scaled_error": 0.0
+            },
+            "attention_bits_and_protocol_exact": true
+          },
+          {
+            "target_half_bits_exact": true,
+            "max_local_cycles": 116365,
+            "cycles_per_pe": [
+              [
+                115643,
+                115644,
+                115641,
+                115641,
+                115642,
+                115639,
+                115639,
+                115636
+              ],
+              [
+                115973,
+                115973,
+                115979,
+                115970,
+                115971,
+                115967,
+                115966,
+                115964
+              ],
+              [
+                116364,
+                116365,
+                116362,
+                116363,
+                116362,
+                116356,
+                116356,
+                116349
+              ],
+              [
+                116137,
+                116138,
+                116144,
+                116136,
+                116134,
+                116130,
+                116127,
+                116129
+              ],
+              [
+                116360,
+                116363,
+                116363,
+                116360,
+                116359,
+                116356,
+                116354,
+                116348
+              ],
+              [
+                116254,
+                116256,
+                116265,
+                116254,
+                116252,
+                116248,
+                116246,
+                116250
+              ],
+              [
+                116350,
+                116350,
+                116356,
+                116349,
+                116349,
+                116347,
+                116342,
+                116336
+              ],
+              [
+                116319,
+                116322,
+                116327,
+                116319,
+                116319,
+                116315,
+                116312,
+                116310
+              ]
+            ],
+            "core_numerical": {
+              "contract": "rectangular-mlp-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2": 0.0009158665723498371,
+              "peak_scaled_error": 0.0012827516558309407
+            },
+            "normalized_and_final_residual_bits_exact": true,
+            "ffn_numerical": {
+              "contract": "normalized-feed-forward-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "final_residual": {
+                "relative_l2": 0.0002167584840871206,
+                "peak_scaled_error": 0.0004442715340441506,
+                "fixed_accuracy_passed": true
+              },
+              "mlp_delta": {
+                "relative_l2": 0.0018204934463860653,
+                "peak_scaled_error": 0.00178936165758404,
+                "fixed_accuracy_passed": true
+              }
+            },
+            "projection_and_live_Z_bits_exact": true,
+            "observed_attention_tail_numerical": {
+              "contract": "supplied-attention-tail-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "projection": {
+                "relative_l2": 0.0028814333229679676,
+                "peak_scaled_error": 0.006985374372407771,
+                "fixed_accuracy_passed": true
+              },
+              "mlp_delta": {
+                "relative_l2": 0.0018205086379493268,
+                "peak_scaled_error": 0.00178937645819155,
+                "fixed_accuracy_passed": true
+              },
+              "final_residual": {
+                "relative_l2": 0.0002935269287106395,
+                "peak_scaled_error": 0.0006053577696073055,
+                "fixed_accuracy_passed": true
+              }
+            },
+            "numerical": {
+              "contract": "supplied-attention-tail-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "projection": {
+                "relative_l2": 0.004864367412899587,
+                "peak_scaled_error": 0.010579642124836936,
+                "fixed_accuracy_passed": true
+              },
+              "mlp_delta": {
+                "relative_l2": 0.0018205086041924506,
+                "peak_scaled_error": 0.0017893760047406804,
+                "fixed_accuracy_passed": true
+              },
+              "final_residual": {
+                "relative_l2": 0.0002932645247128459,
+                "peak_scaled_error": 0.0006003023899301703,
+                "fixed_accuracy_passed": true
+              }
+            },
+            "attention_numerical": {
+              "contract": "attention-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2": 0.001196088872699671,
+              "peak_scaled_error": 0.0022133042619713675
+            },
+            "attention_bits_and_protocol_exact": true
+          },
+          {
+            "target_half_bits_exact": true,
+            "max_local_cycles": 116365,
+            "cycles_per_pe": [
+              [
+                115642,
+                115640,
+                115643,
+                115636,
+                115642,
+                115637,
+                115639,
+                115636
+              ],
+              [
+                115973,
+                115973,
+                115981,
+                115968,
+                115974,
+                115966,
+                115967,
+                115963
+              ],
+              [
+                116364,
+                116365,
+                116362,
+                116363,
+                116362,
+                116356,
+                116356,
+                116349
+              ],
+              [
+                116137,
+                116138,
+                116146,
+                116136,
+                116135,
+                116133,
+                116128,
+                116129
+              ],
+              [
+                116360,
+                116363,
+                116363,
+                116360,
+                116359,
+                116356,
+                116354,
+                116348
+              ],
+              [
+                116254,
+                116256,
+                116265,
+                116254,
+                116253,
+                116249,
+                116246,
+                116250
+              ],
+              [
+                116350,
+                116350,
+                116356,
+                116349,
+                116349,
+                116347,
+                116342,
+                116336
+              ],
+              [
+                116319,
+                116322,
+                116327,
+                116319,
+                116319,
+                116315,
+                116312,
+                116310
+              ]
+            ],
+            "core_numerical": {
+              "contract": "rectangular-mlp-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2": 0.0,
+              "peak_scaled_error": 0.0
+            },
+            "normalized_and_final_residual_bits_exact": true,
+            "ffn_numerical": {
+              "contract": "normalized-feed-forward-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "final_residual": {
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0,
+                "fixed_accuracy_passed": true
+              },
+              "mlp_delta": {
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0,
+                "fixed_accuracy_passed": true
+              }
+            },
+            "projection_and_live_Z_bits_exact": true,
+            "observed_attention_tail_numerical": {
+              "contract": "supplied-attention-tail-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "projection": {
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0,
+                "fixed_accuracy_passed": true
+              },
+              "mlp_delta": {
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0,
+                "fixed_accuracy_passed": true
+              },
+              "final_residual": {
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0,
+                "fixed_accuracy_passed": true
+              }
+            },
+            "numerical": {
+              "contract": "supplied-attention-tail-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "projection": {
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0,
+                "fixed_accuracy_passed": true
+              },
+              "mlp_delta": {
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0,
+                "fixed_accuracy_passed": true
+              },
+              "final_residual": {
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0,
+                "fixed_accuracy_passed": true
+              }
+            },
+            "attention_numerical": {
+              "contract": "attention-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2": 0.0011997336376305871,
+              "peak_scaled_error": 0.0032591643734556004
+            },
+            "attention_bits_and_protocol_exact": true
+          },
+          {
+            "target_half_bits_exact": true,
+            "max_local_cycles": 116373,
+            "cycles_per_pe": [
+              [
+                115648,
+                115647,
+                115650,
+                115643,
+                115648,
+                115641,
+                115646,
+                115638
+              ],
+              [
+                115981,
+                115982,
+                115989,
+                115976,
+                115982,
+                115975,
+                115975,
+                115970
+              ],
+              [
+                116372,
+                116373,
+                116370,
+                116371,
+                116370,
+                116364,
+                116364,
+                116357
+              ],
+              [
+                116145,
+                116146,
+                116154,
+                116144,
+                116143,
+                116141,
+                116136,
+                116137
+              ],
+              [
+                116368,
+                116371,
+                116371,
+                116368,
+                116367,
+                116364,
+                116362,
+                116356
+              ],
+              [
+                116262,
+                116264,
+                116273,
+                116262,
+                116261,
+                116257,
+                116254,
+                116258
+              ],
+              [
+                116358,
+                116358,
+                116364,
+                116357,
+                116357,
+                116355,
+                116350,
+                116344
+              ],
+              [
+                116327,
+                116330,
+                116335,
+                116327,
+                116327,
+                116323,
+                116320,
+                116318
+              ]
+            ],
+            "core_numerical": {
+              "contract": "rectangular-mlp-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2": 0.0013881892991227938,
+              "peak_scaled_error": 0.0013881892991227972
+            },
+            "normalized_and_final_residual_bits_exact": true,
+            "ffn_numerical": {
+              "contract": "normalized-feed-forward-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "final_residual": {
+                "relative_l2": 0.0011402742545083993,
+                "peak_scaled_error": 0.0011402742545083967,
+                "fixed_accuracy_passed": true
+              },
+              "mlp_delta": {
+                "relative_l2": 0.0014201001168660408,
+                "peak_scaled_error": 0.001420100116866039,
+                "fixed_accuracy_passed": true
+              }
+            },
+            "projection_and_live_Z_bits_exact": true,
+            "observed_attention_tail_numerical": {
+              "contract": "supplied-attention-tail-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "projection": {
+                "relative_l2": 0.0002365317517529823,
+                "peak_scaled_error": 0.000609979260705136,
+                "fixed_accuracy_passed": true
+              },
+              "mlp_delta": {
+                "relative_l2": 0.0014201019637371803,
+                "peak_scaled_error": 0.0014201117712037414,
+                "fixed_accuracy_passed": true
+              },
+              "final_residual": {
+                "relative_l2": 0.0011460775615291057,
+                "peak_scaled_error": 0.001176316762550527,
+                "fixed_accuracy_passed": true
+              }
+            },
+            "numerical": {
+              "contract": "supplied-attention-tail-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "projection": {
+                "relative_l2": 9.1552734375e-05,
+                "peak_scaled_error": 0.0009765624999999998,
+                "fixed_accuracy_passed": true
+              },
+              "mlp_delta": {
+                "relative_l2": 0.0014201001168660408,
+                "peak_scaled_error": 0.001420100116866039,
+                "fixed_accuracy_passed": true
+              },
+              "final_residual": {
+                "relative_l2": 0.0011402742545083993,
+                "peak_scaled_error": 0.0011402742545083967,
+                "fixed_accuracy_passed": true
+              }
+            },
+            "attention_numerical": {
+              "contract": "attention-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2": 0.0005228223174747201,
+              "peak_scaled_error": 0.0019531249999999987
+            },
+            "attention_bits_and_protocol_exact": true
+          },
+          {
+            "target_half_bits_exact": true,
+            "max_local_cycles": 116365,
+            "cycles_per_pe": [
+              [
+                115640,
+                115639,
+                115642,
+                115635,
+                115640,
+                115633,
+                115638,
+                115630
+              ],
+              [
+                115973,
+                115974,
+                115981,
+                115968,
+                115974,
+                115966,
+                115967,
+                115962
+              ],
+              [
+                116364,
+                116365,
+                116362,
+                116363,
+                116362,
+                116356,
+                116356,
+                116349
+              ],
+              [
+                116137,
+                116138,
+                116146,
+                116136,
+                116135,
+                116133,
+                116128,
+                116129
+              ],
+              [
+                116360,
+                116363,
+                116363,
+                116360,
+                116359,
+                116356,
+                116354,
+                116348
+              ],
+              [
+                116254,
+                116256,
+                116265,
+                116254,
+                116253,
+                116249,
+                116246,
+                116250
+              ],
+              [
+                116350,
+                116350,
+                116356,
+                116349,
+                116349,
+                116347,
+                116342,
+                116336
+              ],
+              [
+                116319,
+                116322,
+                116327,
+                116319,
+                116319,
+                116315,
+                116312,
+                116310
+              ]
+            ],
+            "core_numerical": {
+              "contract": "rectangular-mlp-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2": 0.0030642459713308245,
+              "peak_scaled_error": 0.003064245971330822
+            },
+            "normalized_and_final_residual_bits_exact": true,
+            "ffn_numerical": {
+              "contract": "normalized-feed-forward-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "final_residual": {
+                "relative_l2": 0.00031125368055384857,
+                "peak_scaled_error": 0.00031125368055384835,
+                "fixed_accuracy_passed": true
+              },
+              "mlp_delta": {
+                "relative_l2": 0.002994553778526553,
+                "peak_scaled_error": 0.0029945537785265653,
+                "fixed_accuracy_passed": true
+              }
+            },
+            "projection_and_live_Z_bits_exact": true,
+            "observed_attention_tail_numerical": {
+              "contract": "supplied-attention-tail-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "projection": {
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0,
+                "fixed_accuracy_passed": true
+              },
+              "mlp_delta": {
+                "relative_l2": 0.002994553778526553,
+                "peak_scaled_error": 0.0029945537785265653,
+                "fixed_accuracy_passed": true
+              },
+              "final_residual": {
+                "relative_l2": 0.00031125368055384857,
+                "peak_scaled_error": 0.00031125368055384835,
+                "fixed_accuracy_passed": true
+              }
+            },
+            "numerical": {
+              "contract": "supplied-attention-tail-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "projection": {
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0,
+                "fixed_accuracy_passed": true
+              },
+              "mlp_delta": {
+                "relative_l2": 0.002994553778526553,
+                "peak_scaled_error": 0.0029945537785265653,
+                "fixed_accuracy_passed": true
+              },
+              "final_residual": {
+                "relative_l2": 0.00031125368055384857,
+                "peak_scaled_error": 0.00031125368055384835,
+                "fixed_accuracy_passed": true
+              }
+            },
+            "attention_numerical": {
+              "contract": "attention-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2": 0.0,
+              "peak_scaled_error": 0.0
+            },
+            "attention_bits_and_protocol_exact": true
+          },
+          {
+            "target_half_bits_exact": true,
+            "max_local_cycles": 116360,
+            "cycles_per_pe": [
+              [
+                115642,
+                115640,
+                115642,
+                115640,
+                115641,
+                115638,
+                115639,
+                115636
+              ],
+              [
+                115975,
+                115973,
+                115978,
+                115968,
+                115970,
+                115966,
+                115967,
+                115964
+              ],
+              [
+                116357,
+                116359,
+                116353,
+                116358,
+                116353,
+                116358,
+                116353,
+                116353
+              ],
+              [
+                116137,
+                116139,
+                116141,
+                116134,
+                116133,
+                116131,
+                116129,
+                116129
+              ],
+              [
+                116358,
+                116360,
+                116354,
+                116357,
+                116355,
+                116356,
+                116351,
+                116353
+              ],
+              [
+                116254,
+                116254,
+                116257,
+                116250,
+                116249,
+                116248,
+                116246,
+                116248
+              ],
+              [
+                116346,
+                116348,
+                116342,
+                116345,
+                116346,
+                116346,
+                116341,
+                116345
+              ],
+              [
+                116317,
+                116318,
+                116314,
+                116315,
+                116312,
+                116314,
+                116312,
+                116313
+              ]
+            ],
+            "core_numerical": {
+              "contract": "rectangular-mlp-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2": 0.0,
+              "peak_scaled_error": 0.0
+            },
+            "normalized_and_final_residual_bits_exact": true,
+            "ffn_numerical": {
+              "contract": "normalized-feed-forward-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "final_residual": {
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0,
+                "fixed_accuracy_passed": true
+              },
+              "mlp_delta": {
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0,
+                "fixed_accuracy_passed": true
+              }
+            },
+            "projection_and_live_Z_bits_exact": true,
+            "observed_attention_tail_numerical": {
+              "contract": "supplied-attention-tail-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "projection": {
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0,
+                "fixed_accuracy_passed": true
+              },
+              "mlp_delta": {
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0,
+                "fixed_accuracy_passed": true
+              },
+              "final_residual": {
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0,
+                "fixed_accuracy_passed": true
+              }
+            },
+            "numerical": {
+              "contract": "supplied-attention-tail-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "projection": {
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0,
+                "fixed_accuracy_passed": true
+              },
+              "mlp_delta": {
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0,
+                "fixed_accuracy_passed": true
+              },
+              "final_residual": {
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0,
+                "fixed_accuracy_passed": true
+              }
+            },
+            "attention_numerical": {
+              "contract": "attention-half-normwise-v1",
+              "fixed_accuracy_passed": true,
+              "relative_l2": 0.0,
+              "peak_scaled_error": 0.0
+            },
+            "attention_bits_and_protocol_exact": true
+          }
+        ],
+        "performance_scope": "Whole supplied-Q/K/V single-head unmasked attention/output/RMS/MLP/final-residual resident chain; local WSE3 simulator intervals, not full Prefill/Decode or hardware throughput.",
+        "normalization_and_delta_half_observations": 65536,
+        "prelude_internal_half_observations": 0,
+        "projection_and_live_Z_half_observations": 65536,
+        "attention_internal_half_observations": 0,
+        "attention_mandatory_half_observations": 98304
+      },
+      "linked_static_memory": {
+        "scope": "linked static SRAM sections by ELF class; not runtime stack usage",
+        "elf_classes": 64,
+        "max_static_high_water_bytes": 26688,
+        "min_unallocated_static_bytes": 22464,
+        "classes": [
+          {
+            "elf": "out_0_0.elf",
+            "sha256": "225638af9c13bd7b4c16f1ca5b3f0479b7738fefb2c534747bb249709ccd95e5",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_0_1.elf",
+            "sha256": "5a4d919594e18d85ab90e4b9803f49dd6b464c3a9ee6c1e49b318e83480d5e0d",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_10_0.elf",
+            "sha256": "efa3a9d386b0facd4ca5bbad84008a296c52b27ea85692fb9e76b85792327afc",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_11_0.elf",
+            "sha256": "b6781115a75259da34f1a90c8bf05ee78a8e47dc68000f9ba0285b319dd4ef20",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_12_0.elf",
+            "sha256": "2dfbada869482968b70d08082ccb25fec4a57556f5d20baf35f3ffee29e49cf2",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_12_1.elf",
+            "sha256": "83cf6720a04787f9ee38f034d11467e408af1b8348afc6968166f273986f2e62",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_13_0.elf",
+            "sha256": "1de2dcde61b386e0e9f95da081af34ab79110684af8474ab3326ef1955cf962f",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_14_0.elf",
+            "sha256": "af41d85a09bc2cefcdd06d962132666ae2ea9879d33cb06e32bfc8af0fd1ba83",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_14_1.elf",
+            "sha256": "85de26a67a9c73121f39a2317fff2295991d689d9a4514d9c4cdc281b08def87",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_15_0.elf",
+            "sha256": "87134deb1e8ed83596f4ff60e8b50afbd84ded33c1c88093543147d8be3bf853",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_16_0.elf",
+            "sha256": "61a57b68de55929f38e95331ad9b107200d0fe29a0b9712c3822fd274ed97292",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_17_0.elf",
+            "sha256": "c50fe5defb2afc8ab28a288b300b63af2b1e20f40516b330b6d6e19750a2fed6",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_18_0.elf",
+            "sha256": "eb51aab3aab5cc32df3c30dc34aca8f9381fc1fa1d4020c9ff4213e51dee3fe6",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_18_1.elf",
+            "sha256": "7981ae363e404a35e043cf6b38b25bcc1482c04c262c9c5b47fc8209c52f6395",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_19_0.elf",
+            "sha256": "a1b048b5071c5b21561a9998d75e3660c67886e082b23d0d2d58452960337bf0",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_1_0.elf",
+            "sha256": "d5749838530ee592c392c1ff7909bdf7fd3bcf4ac045f7a0442b1c11ef7f0e30",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_20_0.elf",
+            "sha256": "19d92504dd0fd9aa41e244e31eacd7c4c3414c37f4677692e680c27ca501379b",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_20_1.elf",
+            "sha256": "2b79c0ab08e5545ce15a0940d8c99417c6f60a77141aa7251ecc6fcb4cdd7e7c",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_21_0.elf",
+            "sha256": "6f4cd24190ce3a63f549d1e256ccb25603240effdea2db8e6a8bc96270eb8019",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_22_0.elf",
+            "sha256": "81bb52b040bef49049932304f34a53083e7e1ebfda60357561ec214ba75163c5",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_23_0.elf",
+            "sha256": "ef2692a4e9bdc5ea3421634797ec1569061ee74c83a881e9025b28cdf423b49b",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_24_0.elf",
+            "sha256": "f08362241013e1d42d7ec5ddddb0addd1afd96cac03d8266947de37a062d1e1b",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_24_1.elf",
+            "sha256": "1320f04896a94ae0f3b869a145a2fd430c6e2bfe2277f68db84b63b2c3147b83",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_25_0.elf",
+            "sha256": "978857ae435d1927a7c14c637ba6468ab93b27a785fbf621827957d2772560bb",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_26_0.elf",
+            "sha256": "c85db5527a11ec17e3271474faac3b8a99d70a4dcf8b85651d0d0cfc39240adf",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_26_1.elf",
+            "sha256": "6c5b5405d5664fcebe64ebf42b2900c001dbbbca87067e319fc0139c09910b27",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_27_0.elf",
+            "sha256": "2642407af37095892d67ac1f354a578b9bb0b4abf6c9a8811772f7c295a6f998",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_28_0.elf",
+            "sha256": "11a9525ae79a22348e3456cbe358f1750901a58367c88f2cf86bcd73deaffcf8",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_29_0.elf",
+            "sha256": "234e5103f555c2649971f881cc17024455fb18c9745b71798747f8e61899f0f2",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_2_0.elf",
+            "sha256": "55a11b4b1a22e2c5444cbd26e5f62954595af7eea24cfb40058feef9024a5ede",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_2_1.elf",
+            "sha256": "f499c677e3adf4886d38c2b8a1684d64ecddd8c6cc18e01e6e53abbe148b6b87",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_30_0.elf",
+            "sha256": "1723af2bb50b2dcec6f07b4d3addbfe46888422405392a9f6e7eb53b7b278ba7",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_30_1.elf",
+            "sha256": "c521cf9732388a2cd5990fe5be18da264a5972bf010ad2abfbe15544847cb83f",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_31_0.elf",
+            "sha256": "0c7ad4b00cdde6e5b02d988669ea3f1c80ceb2ae501d8810d3c56471ae13ad13",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_32_0.elf",
+            "sha256": "6ac079461a64339f042c6059c2760f63df8dcf92f4b7a7d0f36bd3e6c730480c",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_32_1.elf",
+            "sha256": "275b1a653d3bfa32b17afab955791987a2a3fe7afbe0a3fbe27c119bc5e7c06e",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_33_0.elf",
+            "sha256": "0dec9f33adea152276f1e286e798e6aa24d0d073c0c0bc0e8e72a95679bc4c9c",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_34_0.elf",
+            "sha256": "f7103ffb1150e706d70560bb0c7b1ced0b58173e53303b838aff34cbd28b0c43",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_35_0.elf",
+            "sha256": "af2e7d859bfbd9ecf622fff3d5be106e763f7dc082fe303931d57c88bd00c1a2",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_36_0.elf",
+            "sha256": "bc1ea5ee35fe4a0aa65984e35061cbe6fb45a6278c889fb523e354dcd94568fa",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_36_1.elf",
+            "sha256": "48888130309e5c40b7b792f0295c6aee81555ea89bbba57055074313dca91729",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_37_0.elf",
+            "sha256": "7d4cd1273471fa360ab1921d504ada3386128d6ba0d7f2f7212f4ef7c8ae9476",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_38_0.elf",
+            "sha256": "7cefe2a85c936f3fa428e5617c4ab7c3db491608e6e3150af2552cfb9b68782c",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_38_1.elf",
+            "sha256": "0f5f394b839fca5cbd21c501061b67fbb09c033cd466524cb0d3d5ca41f5bd45",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_39_0.elf",
+            "sha256": "2d7951872b50fb0eec5c24d5c06b079ff264c1889fd7e341ef7ec5b766de6c8b",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_3_0.elf",
+            "sha256": "41e2cdf02b5adf87cffcc7eab98484f04c25f9e9e14c0b885abee1d406cc31fd",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_40_0.elf",
+            "sha256": "b381f4fa4be8ddcc7a8aeaa640761aa5c3bcdd10688390cdfa39f40a1736a359",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_41_0.elf",
+            "sha256": "0d0d4a0457a49db3fd7f0acf84a88b2743cf7414a3c39cdbbeeddc4e03acc838",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_42_0.elf",
+            "sha256": "d1747c0ba18e7e6c4d4ec9c06cc45bbd2c5d9c2141fead15801cdbfd1ddbf7f2",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_42_1.elf",
+            "sha256": "62e663c1836369fe4954867a7fac9fb3c3556a13c992adc1947f1d1831c3ce30",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_43_0.elf",
+            "sha256": "9e9923cb77615cc1153b923e4e0e43f8e6f5ca3d54cacc7668068147823669d8",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_44_0.elf",
+            "sha256": "85fd887c056de49d0d6a2ef8d3a67daba8cfa6084d78446304da49323eb2b196",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_44_1.elf",
+            "sha256": "04fa3397e77a507fa4938413fe6ca66775e30e40a94854ab0b059c28e05d8c57",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_45_0.elf",
+            "sha256": "b802aa9bd9c28db8c5e2d0345a668c65b9ac0338d1f1c5a3ff8f7124da714fd1",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_46_0.elf",
+            "sha256": "a0bff7b630d575e4c4449c9d1006365e8f8a518c529db46fcc1ddb14abe7b8ba",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_47_0.elf",
+            "sha256": "b692769d5105758030168070e3ad3d6eb5c3f43f21d06522fb874e1f56d0d428",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_4_0.elf",
+            "sha256": "fe5053c8537a477a13f57db2ea54e43b7762e27945c6010b2d6b6619f898b33b",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_5_0.elf",
+            "sha256": "f398140f7089402a53a6c29a1541e9f5897a67620bc826ce498bc239737bedef",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_6_0.elf",
+            "sha256": "139bb92ff5cf30bdc724a3602a0785887c538820487378706e96957347b18516",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_6_1.elf",
+            "sha256": "7ac2e801e0ffc931296f9b1028bb9a3a045170c3eab8e6d03b6a477389ddf9f0",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_7_0.elf",
+            "sha256": "0b7576616f4b1fd63e32e1b908cfaa08cadc6e4ef4ca05135cafc3fe47253140",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_8_0.elf",
+            "sha256": "d49f9c88844c7881260901bf46554dcd7f1e12b02b3f410a560d379071827613",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_8_1.elf",
+            "sha256": "c9a10ce301b18f34975277aa024778ee6293177a099dd11faedb2b17f877e58f",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          },
+          {
+            "elf": "out_9_0.elf",
+            "sha256": "cd2726cab20d937403dc906b5cfd5c310e4dfd77f0b03d02b4740524c0d53442",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 368
+              },
+              {
+                "name": ".text",
+                "start": 368,
+                "size": 12772
+              },
+              {
+                "name": ".data",
+                "start": 13140,
+                "size": 152
+              },
+              {
+                "name": ".bss",
+                "start": 13292,
+                "size": 12372
+              },
+              {
+                "name": ".task_table",
+                "start": 25664,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 26688,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 26688,
+            "unallocated_static_bytes": 22464
+          }
+        ]
+      },
+      "linked_static_memory_sha256": "6c4542f9af10bdf7cb3b33a6806cdf267ca12463cbd9575b68219704a0d018b6",
+      "native_application_checks": [
+        {
+          "relative_l2": 0.00025542232198353743,
+          "peak_scaled_error": 0.0004726092757125633,
+          "fixed_accuracy_passed": true,
+          "contract": "supplied-qkv-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.0015408796990888708,
+            "peak_scaled_error": 0.004949532427345204,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.0020165337600256605,
+            "peak_scaled_error": 0.0045914923557614645,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.005371044926448931,
+            "peak_scaled_error": 0.006236653618817285,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.0012033365465954167,
+            "peak_scaled_error": 0.002822483844819743,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 0.00022247056394285712,
+            "peak_scaled_error": 0.0005116745864044361,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 6.103515625e-05
+          }
+        },
+        {
+          "relative_l2": 0.00025692037383814956,
+          "peak_scaled_error": 0.000668053687107155,
+          "fixed_accuracy_passed": true,
+          "contract": "supplied-qkv-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.0011801145518078695,
+            "peak_scaled_error": 0.002991132817453637,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.001578790431718904,
+            "peak_scaled_error": 0.0029496248045643926,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0047290575117568765,
+            "peak_scaled_error": 0.004801065060941385,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.0011862498468635497,
+            "peak_scaled_error": 0.0030654704059954,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 0.00022044345228771915,
+            "peak_scaled_error": 0.00048955969649619,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 6.866455078125e-05
+          }
+        },
+        {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true,
+          "contract": "supplied-qkv-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.0011848881918855346,
+            "peak_scaled_error": 0.0030442913911733925,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 0.00022010234034635634,
+            "peak_scaled_error": 0.00048515331193202686,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 6.866455078125e-05
+          }
+        },
+        {
+          "relative_l2": 0.00029730707395729826,
+          "peak_scaled_error": 0.0006003023899301703,
+          "fixed_accuracy_passed": true,
+          "contract": "supplied-qkv-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.0011354001279954683,
+            "peak_scaled_error": 0.001352476550929735,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.006963272021885828,
+            "peak_scaled_error": 0.006963272021885813,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0009081578482033441,
+            "peak_scaled_error": 0.0010031804938660503,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 0.0
+          }
+        },
+        {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true,
+          "contract": "supplied-qkv-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.0011223240331499293,
+            "peak_scaled_error": 0.003781629507669893,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.0012034969038557163,
+            "peak_scaled_error": 0.0026021939475329783,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 0.0002208534449162714,
+            "peak_scaled_error": 0.0005004603901605542,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 5.340576171875e-05
+          }
+        },
+        {
+          "relative_l2": 0.0011402742545123668,
+          "peak_scaled_error": 0.0011402742545123681,
+          "fixed_accuracy_passed": true,
+          "contract": "supplied-qkv-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.0004958519534079566,
+            "peak_scaled_error": 0.0009765625,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.0004727762873788351,
+            "peak_scaled_error": 0.0009765625,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.001420100116870991,
+            "peak_scaled_error": 0.0014201001168709865,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.001141603735688532,
+            "peak_scaled_error": 0.0016715577073550256,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 0.00022372529392403063,
+            "peak_scaled_error": 0.0004883566048570941,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 6.866455078125e-05
+          }
+        },
+        {
+          "relative_l2": 0.00031125368055384857,
+          "peak_scaled_error": 0.00031125368055384835,
+          "fixed_accuracy_passed": true,
+          "contract": "supplied-qkv-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0029945537785244516,
+            "peak_scaled_error": 0.002994553778524466,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 0.0
+          }
+        },
+        {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true,
+          "contract": "supplied-qkv-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.00117545906154211,
+            "peak_scaled_error": 0.0026096403724559245,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 0.000223657373337202,
+            "peak_scaled_error": 0.0004932273362629829,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 0.0001068115234375
+          }
+        }
+      ],
+      "device_application_checks": [
+        {
+          "relative_l2": 0.0002565865077463157,
+          "peak_scaled_error": 0.000633638265326745,
+          "fixed_accuracy_passed": true,
+          "contract": "supplied-qkv-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.0014390259764581255,
+            "peak_scaled_error": 0.004666910744131913,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.0019474366710624362,
+            "peak_scaled_error": 0.004367968318788595,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.005364971074194267,
+            "peak_scaled_error": 0.005907100176921239,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.0006266167405708159,
+            "peak_scaled_error": 0.0009610176490958324,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 0.00042750030216610137,
+            "peak_scaled_error": 0.0012855394900188985,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 0.0009765625
+          }
+        },
+        {
+          "relative_l2": 0.0002575131682360415,
+          "peak_scaled_error": 0.000668053687107155,
+          "fixed_accuracy_passed": true,
+          "contract": "supplied-qkv-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.001217573121747949,
+            "peak_scaled_error": 0.0027538759470907732,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.0016177491838106216,
+            "peak_scaled_error": 0.004725281630524704,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.004918411778059598,
+            "peak_scaled_error": 0.006419858607997598,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.000613814334408591,
+            "peak_scaled_error": 0.0010051680359784796,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 0.0004329040559770684,
+            "peak_scaled_error": 0.0014019862968491982,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 0.0009765625
+          }
+        },
+        {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true,
+          "contract": "supplied-qkv-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.0006107781082703264,
+            "peak_scaled_error": 0.0006055440057549299,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 0.00046533556144639327,
+            "peak_scaled_error": 0.0013067009964055556,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 0.0009765625
+          }
+        },
+        {
+          "relative_l2": 0.00029326452471284246,
+          "peak_scaled_error": 0.0006003023899301703,
+          "fixed_accuracy_passed": true,
+          "contract": "supplied-qkv-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.001196088872699671,
+            "peak_scaled_error": 0.0022133042619713675,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.004864367412899587,
+            "peak_scaled_error": 0.010579642124836936,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0018205086041925373,
+            "peak_scaled_error": 0.0017893760047406812,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 0.0
+          }
+        },
+        {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true,
+          "contract": "supplied-qkv-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.0011997336376305848,
+            "peak_scaled_error": 0.003259164373455466,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.0006425052824265426,
+            "peak_scaled_error": 0.0008261637174068612,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 0.0004213315426855566,
+            "peak_scaled_error": 0.0013744106964109614,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 0.0009765625
+          }
+        },
+        {
+          "relative_l2": 0.0011402742545123668,
+          "peak_scaled_error": 0.0011402742545123681,
+          "fixed_accuracy_passed": true,
+          "contract": "supplied-qkv-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.0005228223174747258,
+            "peak_scaled_error": 0.001953125,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 9.1552734375e-05,
+            "peak_scaled_error": 0.0009765625,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.001420100116870991,
+            "peak_scaled_error": 0.0014201001168709865,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.0006099190509261142,
+            "peak_scaled_error": 0.000719216694742373,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 0.0004653997260320648,
+            "peak_scaled_error": 0.0013667462508225705,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 0.0009765625
+          }
+        },
+        {
+          "relative_l2": 0.00031125368055384857,
+          "peak_scaled_error": 0.00031125368055384835,
+          "fixed_accuracy_passed": true,
+          "contract": "supplied-qkv-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0029945537785244516,
+            "peak_scaled_error": 0.002994553778524466,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 0.0
+          }
+        },
+        {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true,
+          "contract": "supplied-qkv-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.0006107107176890307,
+            "peak_scaled_error": 0.0007533116319956876,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 0.00044192970314220053,
+            "peak_scaled_error": 0.0013415903454217833,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 0.0009765625
+          }
+        }
+      ],
+      "native_application_source": "Actual C++ stdout plus five separately executed Clang-range branch observations, unchanged public outputs; independent original-nine-input fsum/sqrt/exp review of score/probability/attention/projection/delta/final.",
+      "qualification_sha256": "95a8772488ca4042add8d2c5cd349d71ec680b142498792b7b70c8f2171932c1",
+      "results_sha256": "e071d33a227f67b85e1fa35a569163c519bf0bb5e80829c56be31f91d4a6b9b6",
+      "numerical_validation": {
+        "contract": "supplied-qkv-attention-tail-half-normwise-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "relative_l2_limit": 0.02,
+        "max_error_over_reference_peak_limit": 0.03,
+        "zero_reference_requires_exact_zero": true,
+        "per_component_accuracy_not_implied": true
+      }
+    }
+  ]
+}

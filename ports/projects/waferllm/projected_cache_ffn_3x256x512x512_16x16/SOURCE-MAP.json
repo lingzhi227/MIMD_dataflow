@@ -1,0 +1,154 @@
+{
+  "source": "projects/waferllm/upstream/Decode/src/decode.csl",
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "source_sha256": "88921a433a9cf205ffdacbe7c5b0ff644d27788b70fdbdf1377b6d2984bdabeb",
+  "hls_sha256": "86c98a3a3dfebb54fddaf4cdc468483669ce550102d850cd409fa62bbfc3b97a",
+  "generator_sha256": "2e6db69307f4babb139ab747018cdfd36f5de8b885f5d3d98cb5266a6261a007",
+  "stages": [
+    {
+      "hls_value": "normalized",
+      "source_function": "rmsnorm_x",
+      "source_start_line": 348,
+      "source_end_line": 377,
+      "function_sha256": "d4c3efdd2c19ce6b9178e33726cc248cc8e2b316a25391e45521c09b5864821b",
+      "mapping": "Correct RMS mathematics over original X and gamma; reuse qualified repaired CSL RMS module and SDK SUM."
+    },
+    {
+      "hls_value": "query",
+      "source_function": "xq_matvec_mult",
+      "source_start_line": 379,
+      "source_end_line": 392,
+      "function_sha256": "2cb81b52c1f93599116e67f666ee992bf4958306a1024c72fc4d50b0211f60d7",
+      "mapping": "Q local half block1/f32 merge; fused SDK QKV SUM. Block1 selected by unchanged 2% L2 / 3% peak original-input gates."
+    },
+    {
+      "hls_value": "new_key",
+      "source_function": "xk_matvec_mult",
+      "source_start_line": 394,
+      "source_end_line": 408,
+      "function_sha256": "48ea6e29516b87e6dbe114bf738d801c866c1b64dbb013c288956b23cffa45e8",
+      "mapping": "Local half block16/f32 merge; fused SDK QKV SUM. New rotated K and projected V are auxiliary outputs."
+    },
+    {
+      "hls_value": "new_value",
+      "source_function": "xv_matvec_mult",
+      "source_start_line": 410,
+      "source_end_line": 424,
+      "function_sha256": "e004542311840a4496752d2dd8ba96db40cc02555978e8a264c8594a8cc61ee1",
+      "mapping": "Local half block16/f32 merge; fused SDK QKV SUM. New rotated K and projected V are auxiliary outputs."
+    },
+    {
+      "hls_value": "rotated_query",
+      "source_function": "xq_rope",
+      "source_start_line": 426,
+      "source_end_line": 465,
+      "function_sha256": "ca31a89ebdc245769cbb891f986ca41bdcbaa98ce8f9b4b825a54d956858c770",
+      "mapping": "Explicit odd_even four-product transform; known odd-offset reset defect repaired."
+    },
+    {
+      "hls_value": "rotated_key",
+      "source_function": "xk_rope",
+      "source_start_line": 467,
+      "source_end_line": 508,
+      "function_sha256": "ce2365199fbc10af3277cb09aca00225422b9032e33fdfc75c718e744f957a0e",
+      "mapping": "Same coefficient contract and repaired offset; remains a public output."
+    },
+    {
+      "hls_value": "score",
+      "source_function": "score_matvec_mult",
+      "source_start_line": 510,
+      "source_end_line": 530,
+      "function_sha256": "5f5de61b840cf9448008eb91415fd3a0f69f8d92031f3a2e7ec006ca9413a759",
+      "mapping": "Read-only cache, feature-X contraction, half block16/f32 merge; source scalar factor represented by softmax scale."
+    },
+    {
+      "hls_value": "probability",
+      "source_function": "softmax_score",
+      "source_start_line": 532,
+      "source_end_line": 566,
+      "function_sha256": "1a103bcd2beb664fdd93081afd06778d6431eaf6fd35db5edd23c9fdb5a33e9e",
+      "mapping": "Stable original mathematical softmax; negative MAX seeding and row/DSD defects repaired; SDK half exp/reciprocal."
+    },
+    {
+      "hls_value": "context",
+      "source_function": "output_matvec_mult",
+      "source_start_line": 568,
+      "source_end_line": 583,
+      "function_sha256": "514de1f2e4c596babfb19b1fe999756f159fd77ddd5f4a54ee491b7cfd0db51b",
+      "mapping": "Read-only supplied V cache, sequence-Y contraction and SDK SUM; no new-V append."
+    },
+    {
+      "hls_value": "delta",
+      "source_function": "o_matvec_mult",
+      "source_start_line": 585,
+      "source_end_line": 600,
+      "function_sha256": "6638bf7a2a00a5150af1939ded018f06d873e2c5fc80802cfa31d9e23828be73",
+      "mapping": "Half block16/f32 merge; feature-X SDK SUM restores feature Y."
+    },
+    {
+      "hls_value": "attention_residual_Z",
+      "source_function": "attn_residual_add",
+      "source_start_line": 602,
+      "source_end_line": 607,
+      "function_sha256": "4631039542882fdabc4e7392bbba1611c1eac56ac18d1a6093d68e3ab420a55a",
+      "mapping": "Actual X plus attention delta remains resident and feeds both FFN RMS and the final residual."
+    },
+    {
+      "hls_value": "ffn_normalized",
+      "source_function": "rmsnorm_z",
+      "source_start_line": 609,
+      "source_end_line": 638,
+      "function_sha256": "557f632f5d5248d0b6b701620518b7e621fe23abceb644f1fdce61cbf2f11fe0",
+      "mapping": "Mathematical RMS uses original resident Z, shared gamma and epsilon. Repair the pinned source's squared-scratch numerator. Prescale local square sums in f32 before SDK SUM/broadcast and half narrowing; explicit statistic=mean."
+    },
+    {
+      "hls_value": "up",
+      "source_function": "up_matvec_mult",
+      "source_start_line": 640,
+      "source_end_line": 653,
+      "function_sha256": "8122e16baa15682f2db919eea7a4853715d7e9acb9e39aea115cb9a5b8de441f",
+      "mapping": "Y-input / X-hidden ownership, half block4/f32 local merge; fused UP/GATE SDK Y SUM."
+    },
+    {
+      "hls_value": "gate",
+      "source_function": "gate_matvec_mult",
+      "source_start_line": 655,
+      "source_end_line": 669,
+      "function_sha256": "1899cca3ed9c5d25f37ff92475bc6ca5beb697d4ad3992254730c7c214d1eb52",
+      "mapping": "Same input and fused communication as UP; separate weights and disjoint output offset."
+    },
+    {
+      "hls_value": "activation",
+      "source_function": "z2_silu",
+      "source_start_line": 672,
+      "source_end_line": 680,
+      "function_sha256": "d051aedd65f9c65b23ca99817736a53fa8121f6ce124303b7537d0886a3dcdd7",
+      "mapping": "Same SiLU equation, stable exp(-abs(x)) implementation using SDK half math; not literal source fast_exp arithmetic."
+    },
+    {
+      "hls_value": "hidden",
+      "source_function": "z3_mat",
+      "source_start_line": 682,
+      "source_end_line": 687,
+      "function_sha256": "6cab8e308a79568d95ede4c435dfb81cdd6bcd6b5400f77247c9c7d76e54517a",
+      "mapping": "Local half UP times SiLU(GATE), with explicit value lifetime through DOWN."
+    },
+    {
+      "hls_value": "ffn_delta",
+      "source_function": "down_matvec_mult",
+      "source_start_line": 689,
+      "source_end_line": 704,
+      "function_sha256": "30f203586e563193d20080ea472997c577b85aee16683e273707bc8f32709a12",
+      "mapping": "X-hidden / Y-output ownership, half block4/f32 local merge and SDK X SUM."
+    },
+    {
+      "hls_value": "final_result",
+      "source_function": "ffn_residual_add",
+      "source_start_line": 706,
+      "source_end_line": 711,
+      "function_sha256": "4f743d62caa27e19ae5df9196bc58838adf17be2490be1e4448405430cab9775",
+      "mapping": "Original resident attention residual Z plus reduced FFN delta; one outer host completion after the full graph."
+    }
+  ],
+  "scope": "18 mathematical stages from the pinned migrated WSE3/SDK2.10.0 Decode tree. Not the paper's original WSE2 performance, full Decode, cache append, heads/GQA, masks or automatic position semantics. Source-compute control replaces only nine local contractions; RMS, pair transforms, softmax, SiLU and SDK communication are shared."
+}

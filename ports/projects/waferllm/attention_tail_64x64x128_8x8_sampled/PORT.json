@@ -1,0 +1,14 @@
+{
+  "project": "waferllm",
+  "kernel": "attention_tail_64x64x128_8x8_sampled",
+  "status": "source_ready",
+  "partitions": 1,
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "origins": [
+    "Prefill/src/prefill.csl scores_matmul/softmax/output_matmul/h1_matmul/z_add/rmsnorm_z/z1_matmul/z2_matmul/z3_comp/h2_matmul/add_result"
+  ],
+  "contract": "Resident supplied-Q/K/V single-head unmasked attention and output tail 64x64 via 128 hidden features on 8x8 PEs. Typed rotating-root QK, stable SDK-half softmax, aligned column-major PV, half output projection, residual, RMSNorm, block-f32 up/gate/down, SiLU/multiply and final postprojection Z add. Shared forward two-hop DSR engine, CSL RMS/accumulator libraries and joined completion. Immutable public inputs; no intermediate host transfer. Eight SDK calls; independent actual native/device score, probability/mass, attention, projection, delta and final accuracy; exact staged half/f32 observations, mutation checks, ELF memory and three matched adapted-source calls. Not full Prefill/Decode or hardware performance.",
+  "fixture": "attention_tail:64:64:128:8",
+  "instrumentation": "sampled",
+  "source_comparison": "evidence/attention-tail64f128-sampled-source-comparison.json"
+}

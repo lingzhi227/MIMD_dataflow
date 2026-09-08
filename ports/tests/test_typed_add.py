@@ -9,6 +9,8 @@ sys.path.insert(0, str(ROOT / "toolchain"))
 from frontend import parse
 
 
+from host_compiler import executable as host_compiler
+
 class TypedAdd(unittest.TestCase):
     def test_native_half_ties_cancellation_and_subnormals(self):
         with tempfile.TemporaryDirectory() as td:
@@ -24,7 +26,7 @@ for(auto v:c.data)std::cout<<std::setprecision(9)<<float(v)<<" ";}
 """)
             subprocess.run(
                 [
-                    "clang++",
+                    host_compiler(),
                     "-std=c++17",
                     "-I",
                     str(ROOT / "toolchain/include"),

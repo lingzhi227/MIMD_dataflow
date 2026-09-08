@@ -25,6 +25,34 @@ class SDKWatchdog(unittest.TestCase):
                     )
             self.assertLess(time.monotonic() - started, 8)
 
+    def test_completed_call_failure_terminates_owned_process(self):
+        import json
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            code = f"from pathlib import Path;import time;Path({str(root/'ready')!r}).write_text('ready');time.sleep(30)"
+
+            def checker():
+                if (root / "ready").exists():
+                    raise ValueError("completed branch mismatch")
+
+            started = time.monotonic()
+            with (root / "sdk.log").open("w") as log:
+                with self.assertRaisesRegex(ValueError, "completed branch mismatch"):
+                    run_sdk(
+                        [sys.executable, "-c", code],
+                        root,
+                        dict(os.environ),
+                        log,
+                        20,
+                        progress_check=checker,
+                    )
+            self.assertLess(time.monotonic() - started, 8)
+            self.assertEqual(
+                json.loads((root / "execution-stage.json").read_text())["state"],
+                "sdk_failed",
+            )
+
     def test_timeout_terminates_job(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

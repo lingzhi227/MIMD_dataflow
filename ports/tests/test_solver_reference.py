@@ -6,6 +6,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
+from host_compiler import executable as host_compiler
+
 class SolverReference(unittest.TestCase):
     def test_cg_reasons_and_true_residual(self):
         source = r"""
@@ -64,7 +66,7 @@ int main(){
             (root / "test.cpp").write_text(source)
             subprocess.run(
                 [
-                    "clang++",
+                    host_compiler(),
                     "-std=c++17",
                     "-ffp-contract=off",
                     "-fsanitize=undefined",
@@ -88,7 +90,7 @@ int main(){
             )
             subprocess.run(
                 [
-                    "clang++",
+                    host_compiler(),
                     "-std=c++17",
                     "-DMW_EPOCHS=1",
                     "-DMW_BOUND=64",

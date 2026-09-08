@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "scope": "Same original inputs and fixed accuracy gates; native failure and separately predicted target failure retained. No SDK result inferred.",
+  "native_unblocked_failure": {
+    "epoch": 2,
+    "error": "AssertionError(('context', 0.04872190150311814, 0.057291666666666664))"
+  },
+  "target_shard64_failure": {
+    "epoch": 6,
+    "passed": false,
+    "error": "AssertionError(('delta', 0.021744889242696346, 0.02118533319226973))"
+  },
+  "blocked32_native_and_target_passed": true,
+  "artifacts": {
+    "projects/waferllm/cache_attention_5x256x512_8x8/run-20260907T214858391453Z/manifest.json": "f03adb0fa623cefde93302290fa3162f468093ebb3a1dbfe5df10374258b3c18",
+    "projects/waferllm/cache_attention_5x256x512_8x8/run-20260907T214858391453Z/application-gate.json": "0582a376b44532bbe35e5b451a9f57a8ff534526df14fc0f870662a122e4394d",
+    "projects/waferllm/cache_attention_5x256x512_8x8/run-20260907T215130589417Z/manifest.json": "b650f4c5a8e496876d50a91525af2bd0b54f84d1db1028b5ab9b2f23105beca0",
+    "projects/waferllm/cache_attention_5x256x512_8x8/run-20260907T215130589417Z/application-gate.json": "65cb934b1b6cf9c23dd5e93958d21d6fb3f551a5993b4c460aa229fdbfcb720b",
+    "projects/waferllm/cache_attention_5x256x512_8x8/run-20260907T220401939966Z/manifest.json": "ea8eee6c7472a4a8f9de4eade1b48e22457cfba6e61a5fec08a609696ff2cad4",
+    "projects/waferllm/cache_attention_5x256x512_8x8/run-20260907T220401939966Z/application-gate.json": "2fc857e0659873b8ac41b5cb3b6db5176a5c10d2d33d6da7351edb2e94620fdd",
+    "projects/waferllm/cache_attention_5x256x512_8x8/run-20260907T220401939966Z/target-application-gate.json": "8806fcf92a7143c260e21866ba108d144424419d0dc41902fa1f794f9d6fb6ff",
+    "experiments/review_cache_attention_boundaries.py": "ed20b6cdb7ae9d23e38cbcfa79e817209daaef0829b33e153456f1d19fdc4e2c"
+  }
+}

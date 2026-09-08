@@ -1,0 +1,11 @@
+param rows:i16;param cols:i16;param length:i16;param sampled:i16;
+const memcpy=@import_module("<memcpy/get_params>",.{.width=cols,.height=rows});
+layout {
+ @set_rectangle(cols,rows);
+ for(@range(i16,rows)) |y| {for(@range(i16,cols)) |x| {
+ @set_tile_code(x,y,"pe.csl",.{.memcpy_params=memcpy.get_params(x),.length=length,.sampled=sampled});
+ }}
+ @export_name("up",[*]f16,true);@export_name("gate",[*]f16,true);@export_name("result",[*]f16,true);
+ @export_name("activated",[*]f16,true);@export_name("progress",[*]u16,true);@export_name("timing",[*]u16,true);
+ @export_name("hls_main",fn()void);
+}

@@ -1,0 +1,33 @@
+// Extracted schedule from WaferLLM fd1c2daae37cd68706c03fc8009887ecee9900f8
+// Prefill/src/comm_lib/comm_pe.csl mv_allreduce_add_x. Standalone row vector API.
+// Root consumes EAST then WEST. Synchronous calls own IQ/OQ3,4,6 and src1 DSR2.
+param x:i16;param cols:i16;param extent:i16;
+param rs:color;param rr:color;param ls:color;param lr:color;param bd:color;
+const ri=@get_input_queue(3);const ro=@get_output_queue(3);
+const li=@get_input_queue(4);const lo=@get_output_queue(4);
+const bi=@get_input_queue(6);const bo=@get_output_queue(6);
+const rsend=@get_dsd(fabout_dsd,.{.extent=extent,.output_queue=ro});
+const rrecv=@get_dsd(fabin_dsd,.{.extent=extent,.input_queue=ri});
+const lsend=@get_dsd(fabout_dsd,.{.extent=extent,.output_queue=lo});
+const lrecv=@get_dsd(fabin_dsd,.{.extent=extent,.input_queue=li});
+const bsend=@get_dsd(fabout_dsd,.{.extent=extent,.output_queue=bo});
+const brecv=@get_dsd(fabin_dsd,.{.extent=extent,.input_queue=bi});
+var dummy=@zeros([1]f16);
+const base=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{extent}->dummy[i]});
+const src=@get_dsr(dsr_src1,2);
+fn allreduce_add(value:[*]f16) void {
+ const d=@set_dsd_base_addr(base,value);@load_to_dsr(src,d);
+ if(x==cols/2){@faddh(d,lrecv,src);@faddh(d,rrecv,src);@mov16(bsend,src);}
+ else {
+  if(x==0){@fmovh(rsend,src);}
+  else if(x==cols-1){@fmovh(lsend,src);}
+  else if(x<cols/2){@faddh(rsend,rrecv,src);}
+  else{@faddh(lsend,lrecv,src);}
+  @mov16(d,brecv);
+ }
+}
+comptime {
+ @initialize_queue(ri,.{.color=rr});@initialize_queue(ro,.{.color=rs});
+ @initialize_queue(li,.{.color=lr});@initialize_queue(lo,.{.color=ls});
+ @initialize_queue(bi,.{.color=bd});@initialize_queue(bo,.{.color=bd});
+}

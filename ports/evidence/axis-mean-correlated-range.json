@@ -1,0 +1,30 @@
+{
+  "l1_bound": 258.62955768587676,
+  "elementwise_bound": 16.171875,
+  "mean_witness": 0.00685882568359375,
+  "lower_factor_exact": [
+    "14159429023971653265112826723630927161164925886897066256254369192694580396495921975953449824083520533999851295422133538165035448999212196583279624762271017147109375",
+    "14396524142538228424993723224595141948383030778566133225922417832357880258148761185020930195532450742879746914027266864394266451377581759004827248578768524336431104"
+  ],
+  "absolute_mean_loss_exact": [
+    "3",
+    "33554432"
+  ],
+  "statistic_plan": {
+    "local_square_bound": 1195.0,
+    "local_sum_bound": 38240.0,
+    "scaled_send_bound": 149.375,
+    "reduced_f32_bound": 1195.000498592943,
+    "narrowed_mean_bound": 1196.0,
+    "standard_rms": true,
+    "private_buffer_bytes": 8,
+    "callback_task": 12,
+    "added_colors": 0,
+    "added_queues": 0,
+    "serialization": "borrow caller SDK SUM/broadcast planes until callback; do not overlap SUM/MAX/mean",
+    "proof": "Half product and monotone local addition recurrence must remain finite; exact dyadic half-to-f32 scaling, conservative P-1 f32 addition envelope, outward half ceiling.",
+    "limitation": "Range only. Final half statistic quantization and epsilon-sensitive inverse require an independent accuracy gate. No global memory-fit or performance claim."
+  },
+  "proof": "M >= (1-u16)^(Nt+2)*(1-u32)^(P-1)*T/N - (eta16+eta16/2). Exact dyadic prescaling. Enumerate half M; T<=N*(M+loss)/A; Cauchy-Schwarz and pinned SDK inverse. Gamma-first/final relative and gradual-underflow rounding retained.",
+  "scope": "Finite correlated range only, not a numerical accuracy guarantee or HLS admission."
+}

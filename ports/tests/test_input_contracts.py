@@ -14,13 +14,15 @@ from input_contracts import (
 )
 
 
+from host_compiler import executable as host_compiler
+
 class InputContracts(unittest.TestCase):
     def test_frontend_optional_bound_and_legacy_nodes(self):
         original = ROOT / "projects/waferllm/attention_64x128_8x8/hls.cpp"
         baseline = parse(original)
         frozen = json.loads(
             (
-                ROOT / "tests/fixtures/legacy-attention-frontend.json"
+                ROOT / "tests/fixtures/history/run-20260907T032800549283Z/01_frontend_ir.json"
             ).read_text()
         )
         self.assertEqual(baseline["nodes"], frozen["nodes"])
@@ -49,7 +51,7 @@ int main(){spatial::inputs["x"]={0.125f};auto a=spatial::input<1,1,spatial::f16>
             exe = Path(td) / "test"
             subprocess.run(
                 [
-                    "clang++",
+                    host_compiler(),
                     "-std=c++17",
                     "-I",
                     str(ROOT / "toolchain/include"),

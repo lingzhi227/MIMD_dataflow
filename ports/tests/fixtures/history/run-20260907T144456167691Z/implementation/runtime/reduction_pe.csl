@@ -1,0 +1,33 @@
+param memcpy_params;param c2d_params;param local_length:u16;param valid:u16;param norm:u16;
+const sys=@import_module("<memcpy/memcpy>",memcpy_params);
+const blas=@import_module("blas.csl");
+const math=@import_module("<math>");
+const time=@import_module("<time>");
+const collective=@import_module("scalar_allreduce.csl",.{.c2d_params=c2d_params,.f_callback=after_collective});
+const COMPUTE=@get_local_task_id(9);
+var x=@zeros([local_length]f32);var y=@zeros([local_length]f32);
+var result=[1]f32{0.0};var witness=@zeros([4]f32);var progress=@zeros([2]u16);var timing=@zeros([6]u16);
+var started=@zeros([3]u16);var ended=@zeros([3]u16);var phase:u16=0;
+var alpha:f32=1.0;var inverse:f32=1.0;
+var xp:[*]f32=&x;var yp:[*]f32=&y;var rp:[*]f32=&result;var wp:[*]f32=&witness;var pp:[*]u16=&progress;var tp:[*]u16=&timing;
+const xd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{local_length}->x[i]});
+fn main() void {collective.init();time.enable_tsc();progress[0]=0;phase=0;@activate(COMPUTE);}
+task compute() void {
+ time.get_timestamp(&started);var local:f32=0.0;
+ if(norm==0){if(valid>0){local=blas.dot(@as(i16,valid),&x,&y);}witness[0]=local;witness[1]=0.0;witness[2]=0.0;witness[3]=0.0;collective.start(local,false);}
+ else {if(valid>0){const d=@set_dsd_length(xd,valid);@map(blas.reduce_fabs,d,&local,&local);}witness[0]=local;collective.start(local,true);}
+}
+fn after_collective() void {
+ progress[0]+=1;
+ if(norm!=0 and phase==0){
+  phase=1;witness[1]=collective.result[0];
+  blas.approx(collective.result[0],&alpha,&inverse);
+  var local:f32=0.0;
+  if(valid>0){const d=@set_dsd_length(xd,valid);@map(blas.reduce_scale_square,d,inverse,&local,&local);}
+  witness[2]=local;witness[3]=alpha;collective.start(local,false);return;
+ }
+ result[0]=if(norm==0) collective.result[0] else math.sqrt(collective.result[0])*alpha;
+ time.get_timestamp(&ended);for(@range(u16,3)) |i| {timing[i]=started[i];timing[i+3]=ended[i];}
+ progress[1]+=1;sys.unblock_cmd_stream();
+}
+comptime {@bind_local_task(compute,COMPUTE);@export_symbol(main);@export_symbol(xp,"x");@export_symbol(yp,"y");@export_symbol(rp,"result");@export_symbol(wp,"witness");@export_symbol(pp,"progress");@export_symbol(tp,"timing");}

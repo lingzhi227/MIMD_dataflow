@@ -1,0 +1,15 @@
+{
+  "project": "waferllm",
+  "kernel": "input_attention_64x64x256_8x8_counters",
+  "status": "development_numerical_failure",
+  "partitions": 1,
+  "instrumentation": "counters",
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "origins": [
+    "Prefill/src/prefill.csl rmsnorm_x/xq_matmul/xk_matmul/xv_matmul/xq_rope/xk_rope/score_matmul through add_result"
+  ],
+  "contract": "Shared gamma and original X residual, resident 31-node single-head unmasked chain. Generated CSL diagnostic execution exists, but the full half-output numerical contract fails cancellation case3. Not in qualified catalog; generic compiler dispatch remains rejected.",
+  "diagnostic_codegen": "evidence/input-attention-codegen-20260907T130338205990Z",
+  "diagnostic_cancellation": "evidence/input-attention-codegen-20260907T130756542610Z",
+  "next": "Explicit mixed storage/accumulation/transport precision, including probability normalization and V/PV/O/Z; same eight cases and unchanged gates."
+}

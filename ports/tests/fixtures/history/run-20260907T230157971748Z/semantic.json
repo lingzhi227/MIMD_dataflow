@@ -1,0 +1,109 @@
+{
+  "version": "hls.ports.f32.v1",
+  "nodes": [
+    {
+      "id": "x",
+      "op": "input",
+      "shape": [
+        5,
+        1024
+      ],
+      "inputs": [],
+      "line": 4,
+      "dtype": "f16",
+      "host": "x",
+      "interval": null
+    },
+    {
+      "id": "cosine",
+      "op": "input",
+      "shape": [
+        1,
+        512
+      ],
+      "inputs": [],
+      "line": 5,
+      "dtype": "f16",
+      "host": "cosine",
+      "interval": null
+    },
+    {
+      "id": "sine",
+      "op": "input",
+      "shape": [
+        1,
+        512
+      ],
+      "inputs": [],
+      "line": 6,
+      "dtype": "f16",
+      "host": "sine",
+      "interval": null
+    },
+    {
+      "id": "rotated",
+      "op": "rotate_pairs",
+      "shape": [
+        5,
+        1024
+      ],
+      "inputs": [
+        "x",
+        "cosine",
+        "sine"
+      ],
+      "line": 8,
+      "dtype": "f16",
+      "pair_order": "odd_even",
+      "dataflow": {
+        "rows": 8,
+        "cols": 8,
+        "partition": "features",
+        "axis": "x",
+        "layout": "batch_major",
+        "coefficients": "feature_pairs",
+        "compute": "dsr",
+        "fp": "relaxed"
+      },
+      "interval": null
+    },
+    {
+      "id": "sink4",
+      "op": "output",
+      "shape": [
+        5,
+        1024
+      ],
+      "inputs": [
+        "rotated"
+      ],
+      "line": 9,
+      "host": "rotated",
+      "dtype": "f16",
+      "interval": null
+    }
+  ],
+  "states": {},
+  "source": "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/projects/waferllm/batched_pair_rotation_5x1024_8x8_x/hls.cpp",
+  "source_sha256": "b9673422e530d338a934e0ae66973262e546ddb387d6abc9410de53b081c4d2b",
+  "frontend_command": [
+    "clang++",
+    "-std=c++17",
+    "-Werror",
+    "-Wno-unknown-pragmas",
+    "-I",
+    "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/toolchain/include",
+    "-Xclang",
+    "-ast-dump=json",
+    "-Xclang",
+    "-ast-dump-filter=design",
+    "-fsyntax-only",
+    "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/projects/waferllm/batched_pair_rotation_5x1024_8x8_x/hls.cpp"
+  ],
+  "clang_version": "Apple clang version 21.0.0 (clang-2100.1.1.101)",
+  "instrumentation": "sampled",
+  "profile": "mesh_pair_rotation.v1",
+  "epochs": 6,
+  "input_bound": 8,
+  "rewrites": []
+}

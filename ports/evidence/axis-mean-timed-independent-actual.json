@@ -1,0 +1,70 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "epoch": 0,
+      "divisor": 256,
+      "values": 6144,
+      "relative_l2": 4.5913672884742865e-10,
+      "relative_peak": 4.5913672884742865e-10
+    },
+    {
+      "epoch": 1,
+      "divisor": 256,
+      "values": 6144,
+      "relative_l2": 4.18561963042353e-10,
+      "relative_peak": 4.1856196304235297e-10
+    },
+    {
+      "epoch": 2,
+      "divisor": 1,
+      "values": 6144,
+      "relative_l2": 0.0,
+      "relative_peak": 0.0
+    },
+    {
+      "epoch": 3,
+      "divisor": 256,
+      "values": 6144,
+      "relative_l2": 0.0009535398449035798,
+      "relative_peak": 0.0016869528365952304
+    },
+    {
+      "epoch": 4,
+      "divisor": 128,
+      "values": 6144,
+      "relative_l2": 0.000986253608122458,
+      "relative_peak": 0.0017486245749932475
+    },
+    {
+      "epoch": 5,
+      "divisor": 256,
+      "values": 6144,
+      "relative_l2": 0.007276700466513488,
+      "relative_peak": 0.009322210410820273
+    },
+    {
+      "epoch": 6,
+      "divisor": 512,
+      "values": 6144,
+      "relative_l2": 0.0003505366552422644,
+      "relative_peak": 0.0006247581534121645
+    },
+    {
+      "epoch": 7,
+      "divisor": 256,
+      "values": 6144,
+      "relative_l2": 0.001101178067070181,
+      "relative_peak": 0.001684429866472435
+    }
+  ],
+  "values_checked": 49152,
+  "files": {
+    "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/evidence/sdk-axis-mean-20260908T014359000421Z/inputs.json": "2f0b3287cb5b515af9570683f3ffab274f32c747843153daae2f56a56a3c2bbd",
+    "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/evidence/sdk-axis-mean-20260908T014359000421Z/results.json": "497c09fd34d795e1725060a82b228af992d28c76c71b10c7ff88fe750a6bcdfb",
+    "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/evidence/sdk-axis-mean-20260908T014359000421Z/provenance.json": "b023da2154ad066f9cde10ab73933bf90f6b0d74e6a18241d0e290ae64c6f1dc",
+    "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/evidence/sdk-axis-mean-20260908T014359000421Z/execution.json": "0ccbfb15f8456cf94ae82ae0a68d223ba171f152e0e3c9116c792ef7f301ede7",
+    "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/experiments/axis_mean/review_actual.py": "adb5e5d6e0bb702786ae09de5b0a3c3a0a5b38254cb0c6247b4e730f67fbb982"
+  },
+  "scope": "Standard-library original-input equation and actual half word decoding; no target arithmetic predictor. Eight RMS/generalized cases; no end-to-end HLS or throughput claim."
+}

@@ -1,0 +1,1099 @@
+{
+  "success": true,
+  "independent_native_application_gate": {
+    "passed": true,
+    "dimensions": {
+      "M": 64,
+      "N": 64,
+      "F": 256
+    },
+    "checks": [
+      {
+        "relative_l2": 0.00018557732274107622,
+        "peak_scaled_error": 0.00029919286302230845,
+        "fixed_accuracy_passed": true,
+        "contract": "normalized-feed-forward-half-normwise-v1",
+        "mlp_delta": {
+          "relative_l2": 0.005414179451264248,
+          "peak_scaled_error": 0.0063845386507104755,
+          "fixed_accuracy_passed": true
+        }
+      },
+      {
+        "relative_l2": 0.00018213368612161825,
+        "peak_scaled_error": 0.0003661641287310893,
+        "fixed_accuracy_passed": true,
+        "contract": "normalized-feed-forward-half-normwise-v1",
+        "mlp_delta": {
+          "relative_l2": 0.004790023246885981,
+          "peak_scaled_error": 0.004716229825317583,
+          "fixed_accuracy_passed": true
+        }
+      },
+      {
+        "relative_l2": 0.0,
+        "peak_scaled_error": 0.0,
+        "fixed_accuracy_passed": true,
+        "contract": "normalized-feed-forward-half-normwise-v1",
+        "mlp_delta": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        }
+      },
+      {
+        "relative_l2": 0.00019635578938289772,
+        "peak_scaled_error": 0.0004447011141906398,
+        "fixed_accuracy_passed": true,
+        "contract": "normalized-feed-forward-half-normwise-v1",
+        "mlp_delta": {
+          "relative_l2": 0.0009081690819975087,
+          "peak_scaled_error": 0.0010031443458030705,
+          "fixed_accuracy_passed": true
+        }
+      },
+      {
+        "relative_l2": 0.0,
+        "peak_scaled_error": 0.0,
+        "fixed_accuracy_passed": true,
+        "contract": "normalized-feed-forward-half-normwise-v1",
+        "mlp_delta": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        }
+      },
+      {
+        "relative_l2": 0.0012547084087449426,
+        "peak_scaled_error": 0.0012547084087449398,
+        "fixed_accuracy_passed": true,
+        "contract": "normalized-feed-forward-half-normwise-v1",
+        "mlp_delta": {
+          "relative_l2": 0.0014599887589956642,
+          "peak_scaled_error": 0.0014599887589956649,
+          "fixed_accuracy_passed": true
+        }
+      },
+      {
+        "relative_l2": 0.00031125368055384857,
+        "peak_scaled_error": 0.00031125368055384835,
+        "fixed_accuracy_passed": true,
+        "contract": "normalized-feed-forward-half-normwise-v1",
+        "mlp_delta": {
+          "relative_l2": 0.0029945537785244516,
+          "peak_scaled_error": 0.002994553778524466,
+          "fixed_accuracy_passed": true
+        }
+      },
+      {
+        "relative_l2": 0.0,
+        "peak_scaled_error": 0.0,
+        "fixed_accuracy_passed": true,
+        "contract": "normalized-feed-forward-half-normwise-v1",
+        "mlp_delta": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        }
+      }
+    ],
+    "failure": null,
+    "native_output_sha256": "1620b5deffa966fb27a057a6f953144bd2dd09030c3a13d2f7558604246cbd8b",
+    "reference_sha256": "b720df834d5cf8af59a0bda0ae527da355ccde01c1d6c19d0f86ba2bb904a57d",
+    "gate_driver_sha256": "2d808d6a2b99646dba5551927c6913b77e69b268309bb65f8ae0153914486b3a",
+    "scope": "Actual C++ stdout independently checked against original-input application mathematics before SDK",
+    "native_observation": {
+      "path": "native-observation",
+      "report_sha256": "b13141d3bd446b3f92ea56b56797a544dbbf6193e014d56c47b83d2ef6de244e",
+      "node": "delta",
+      "host": "__native_observed"
+    }
+  },
+  "predicted_target_application_gate": {
+    "passed": true,
+    "checks": [
+      {
+        "relative_l2": 0.00018557518262246015,
+        "peak_scaled_error": 0.00029919286302230845,
+        "fixed_accuracy_passed": true,
+        "contract": "normalized-feed-forward-half-normwise-v1",
+        "mlp_delta": {
+          "relative_l2": 0.005503307122260493,
+          "peak_scaled_error": 0.006054691663087842,
+          "fixed_accuracy_passed": true
+        }
+      },
+      {
+        "relative_l2": 0.00018213325345272732,
+        "peak_scaled_error": 0.0003661641287310893,
+        "fixed_accuracy_passed": true,
+        "contract": "normalized-feed-forward-half-normwise-v1",
+        "mlp_delta": {
+          "relative_l2": 0.004855655668284155,
+          "peak_scaled_error": 0.0047870882757553,
+          "fixed_accuracy_passed": true
+        }
+      },
+      {
+        "relative_l2": 0.0,
+        "peak_scaled_error": 0.0,
+        "fixed_accuracy_passed": true,
+        "contract": "normalized-feed-forward-half-normwise-v1",
+        "mlp_delta": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        }
+      },
+      {
+        "relative_l2": 0.00019635578938289772,
+        "peak_scaled_error": 0.0004447011141906398,
+        "fixed_accuracy_passed": true,
+        "contract": "normalized-feed-forward-half-normwise-v1",
+        "mlp_delta": {
+          "relative_l2": 0.0009081690819975087,
+          "peak_scaled_error": 0.0010031443458030705,
+          "fixed_accuracy_passed": true
+        }
+      },
+      {
+        "relative_l2": 0.0,
+        "peak_scaled_error": 0.0,
+        "fixed_accuracy_passed": true,
+        "contract": "normalized-feed-forward-half-normwise-v1",
+        "mlp_delta": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        }
+      },
+      {
+        "relative_l2": 0.0012547084087449426,
+        "peak_scaled_error": 0.0012547084087449398,
+        "fixed_accuracy_passed": true,
+        "contract": "normalized-feed-forward-half-normwise-v1",
+        "mlp_delta": {
+          "relative_l2": 0.0014599887589956642,
+          "peak_scaled_error": 0.0014599887589956649,
+          "fixed_accuracy_passed": true
+        }
+      },
+      {
+        "relative_l2": 0.00031125368055384857,
+        "peak_scaled_error": 0.00031125368055384835,
+        "fixed_accuracy_passed": true,
+        "contract": "normalized-feed-forward-half-normwise-v1",
+        "mlp_delta": {
+          "relative_l2": 0.0029945537785244516,
+          "peak_scaled_error": 0.002994553778524466,
+          "fixed_accuracy_passed": true
+        }
+      },
+      {
+        "relative_l2": 0.0,
+        "peak_scaled_error": 0.0,
+        "fixed_accuracy_passed": true,
+        "contract": "normalized-feed-forward-half-normwise-v1",
+        "mlp_delta": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        }
+      }
+    ],
+    "failure": null,
+    "scope": "Predicted target arithmetic versus original-input fsum/sqrt/exp; separate delta gate. Not actual SDK observations; actual native delta has its own gate."
+  },
+  "frozen_codegen_preflight": {
+    "passed": true,
+    "generated_files": [
+      "SOURCE-NOTICE.txt",
+      "WaferLLM-LICENSE.txt",
+      "block_accumulate.csl",
+      "gated_local.csl",
+      "inference_comm.csl",
+      "inference_routes.csl",
+      "layout.csl",
+      "pe.csl",
+      "rms_local.csl"
+    ]
+  },
+  "timeout_seconds": 5400,
+  "bundle": "/home/lingzhi/cerebras/csl-hls/ports/projects/waferllm/feed_forward_64x64x256_8x8_all_blocked_counters/run-20260907T090013451671Z",
+  "source_sha256": "1bdd0b0d78bffd393a9c7a80e33ec75fb4f3941a6245f594004019c035b78d80",
+  "driver_sha256": "5587115e91c012d8aba58c41d9abcc426c7b7fbcfa769c5985a161dea1163c75",
+  "native_build_location": "preserved source bundle; executable and native/IR reference hashed in manifest",
+  "started": "2026-09-07T09:01:51.628424+00:00",
+  "sdk_sha256": "fff17e81c61dcb6012bdee2941a6fdc570f5c8604967530e7b7108651258193d",
+  "audit": {
+    "passed": true,
+    "complete": true,
+    "completed_calls_valid": true,
+    "profile": "mesh_feed_forward.v1",
+    "epochs": 8,
+    "actors": 64,
+    "instrumentation": "counters",
+    "internal_half_observations": 0,
+    "observed_f32_accumulator_values": 294912,
+    "cases": [
+      {
+        "target_half_bits_exact": true,
+        "max_local_cycles": 85370,
+        "cycles_per_pe": [
+          [
+            84912,
+            84906,
+            84900,
+            84905,
+            84904,
+            84900,
+            84898,
+            84895
+          ],
+          [
+            84988,
+            84985,
+            84983,
+            84985,
+            84982,
+            84984,
+            84975,
+            84970
+          ],
+          [
+            85365,
+            85367,
+            85359,
+            85366,
+            85360,
+            85358,
+            85357,
+            85350
+          ],
+          [
+            85136,
+            85138,
+            85132,
+            85136,
+            85138,
+            85136,
+            85128,
+            85123
+          ],
+          [
+            85365,
+            85370,
+            85359,
+            85366,
+            85363,
+            85358,
+            85357,
+            85349
+          ],
+          [
+            85254,
+            85256,
+            85253,
+            85255,
+            85258,
+            85252,
+            85245,
+            85245
+          ],
+          [
+            85354,
+            85357,
+            85347,
+            85358,
+            85356,
+            85349,
+            85347,
+            85337
+          ],
+          [
+            85322,
+            85324,
+            85317,
+            85322,
+            85325,
+            85318,
+            85314,
+            85309
+          ]
+        ],
+        "core_numerical": {
+          "contract": "rectangular-mlp-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2": 0.0054463886580852425,
+          "peak_scaled_error": 0.005974526779837372
+        },
+        "numerical": {
+          "contract": "normalized-feed-forward-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "final_residual": {
+            "relative_l2": 0.0001855751826224602,
+            "peak_scaled_error": 0.00029919286302230845,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.005503307122260507,
+            "peak_scaled_error": 0.0060546916630876985,
+            "fixed_accuracy_passed": true
+          }
+        },
+        "normalized_and_final_residual_bits_exact": true
+      },
+      {
+        "target_half_bits_exact": true,
+        "max_local_cycles": 85373,
+        "cycles_per_pe": [
+          [
+            84910,
+            84908,
+            84907,
+            84905,
+            84903,
+            84898,
+            84889,
+            84894
+          ],
+          [
+            84988,
+            84986,
+            84982,
+            84985,
+            84981,
+            84985,
+            84976,
+            84970
+          ],
+          [
+            85373,
+            85368,
+            85367,
+            85366,
+            85365,
+            85360,
+            85358,
+            85351
+          ],
+          [
+            85135,
+            85137,
+            85133,
+            85137,
+            85134,
+            85139,
+            85129,
+            85123
+          ],
+          [
+            85368,
+            85369,
+            85363,
+            85364,
+            85365,
+            85360,
+            85358,
+            85351
+          ],
+          [
+            85256,
+            85258,
+            85250,
+            85255,
+            85258,
+            85257,
+            85247,
+            85244
+          ],
+          [
+            85357,
+            85357,
+            85351,
+            85353,
+            85357,
+            85353,
+            85347,
+            85339
+          ],
+          [
+            85325,
+            85326,
+            85318,
+            85323,
+            85325,
+            85324,
+            85316,
+            85308
+          ]
+        ],
+        "core_numerical": {
+          "contract": "rectangular-mlp-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2": 0.004750028141381263,
+          "peak_scaled_error": 0.004545309032400508
+        },
+        "numerical": {
+          "contract": "normalized-feed-forward-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "final_residual": {
+            "relative_l2": 0.00018213325345272738,
+            "peak_scaled_error": 0.0003661641287310893,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0048556556682841515,
+            "peak_scaled_error": 0.004787088275755608,
+            "fixed_accuracy_passed": true
+          }
+        },
+        "normalized_and_final_residual_bits_exact": true
+      },
+      {
+        "target_half_bits_exact": true,
+        "max_local_cycles": 76413,
+        "cycles_per_pe": [
+          [
+            75950,
+            75948,
+            75946,
+            75945,
+            75936,
+            75938,
+            75929,
+            75934
+          ],
+          [
+            76027,
+            76025,
+            76020,
+            76025,
+            76021,
+            76025,
+            76016,
+            76010
+          ],
+          [
+            76413,
+            76408,
+            76407,
+            76406,
+            76405,
+            76400,
+            76398,
+            76391
+          ],
+          [
+            76176,
+            76177,
+            76172,
+            76177,
+            76176,
+            76179,
+            76169,
+            76163
+          ],
+          [
+            76408,
+            76409,
+            76403,
+            76404,
+            76405,
+            76400,
+            76398,
+            76391
+          ],
+          [
+            76297,
+            76298,
+            76290,
+            76295,
+            76300,
+            76297,
+            76287,
+            76284
+          ],
+          [
+            76397,
+            76397,
+            76391,
+            76393,
+            76397,
+            76393,
+            76387,
+            76379
+          ],
+          [
+            76365,
+            76366,
+            76358,
+            76363,
+            76366,
+            76364,
+            76355,
+            76348
+          ]
+        ],
+        "core_numerical": {
+          "contract": "rectangular-mlp-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0
+        },
+        "numerical": {
+          "contract": "normalized-feed-forward-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "final_residual": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          }
+        },
+        "normalized_and_final_residual_bits_exact": true
+      },
+      {
+        "target_half_bits_exact": true,
+        "max_local_cycles": 85373,
+        "cycles_per_pe": [
+          [
+            84907,
+            84905,
+            84901,
+            84906,
+            84901,
+            84897,
+            84898,
+            84895
+          ],
+          [
+            84989,
+            84984,
+            84983,
+            84984,
+            84981,
+            84984,
+            84976,
+            84971
+          ],
+          [
+            85373,
+            85368,
+            85367,
+            85366,
+            85365,
+            85360,
+            85358,
+            85351
+          ],
+          [
+            85138,
+            85137,
+            85133,
+            85137,
+            85132,
+            85138,
+            85127,
+            85123
+          ],
+          [
+            85368,
+            85369,
+            85363,
+            85364,
+            85365,
+            85360,
+            85358,
+            85351
+          ],
+          [
+            85256,
+            85258,
+            85250,
+            85255,
+            85256,
+            85258,
+            85245,
+            85245
+          ],
+          [
+            85357,
+            85357,
+            85351,
+            85353,
+            85357,
+            85353,
+            85347,
+            85339
+          ],
+          [
+            85325,
+            85326,
+            85318,
+            85323,
+            85325,
+            85323,
+            85313,
+            85309
+          ]
+        ],
+        "core_numerical": {
+          "contract": "rectangular-mlp-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2": 0.0009028586607060527,
+          "peak_scaled_error": 0.001025336375433886
+        },
+        "numerical": {
+          "contract": "normalized-feed-forward-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "final_residual": {
+            "relative_l2": 0.0001963557893828978,
+            "peak_scaled_error": 0.0004447011141906398,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0009081690819973954,
+            "peak_scaled_error": 0.00100314434580316,
+            "fixed_accuracy_passed": true
+          }
+        },
+        "normalized_and_final_residual_bits_exact": true
+      },
+      {
+        "target_half_bits_exact": true,
+        "max_local_cycles": 85373,
+        "cycles_per_pe": [
+          [
+            84910,
+            84907,
+            84906,
+            84905,
+            84903,
+            84905,
+            84896,
+            84894
+          ],
+          [
+            84988,
+            84985,
+            84980,
+            84984,
+            84981,
+            84987,
+            84975,
+            84971
+          ],
+          [
+            85373,
+            85368,
+            85367,
+            85366,
+            85365,
+            85360,
+            85358,
+            85351
+          ],
+          [
+            85136,
+            85140,
+            85132,
+            85138,
+            85136,
+            85140,
+            85129,
+            85123
+          ],
+          [
+            85368,
+            85369,
+            85363,
+            85364,
+            85365,
+            85360,
+            85358,
+            85351
+          ],
+          [
+            85257,
+            85259,
+            85250,
+            85256,
+            85260,
+            85259,
+            85247,
+            85242
+          ],
+          [
+            85357,
+            85357,
+            85351,
+            85353,
+            85357,
+            85353,
+            85347,
+            85340
+          ],
+          [
+            85325,
+            85326,
+            85318,
+            85325,
+            85326,
+            85324,
+            85315,
+            85308
+          ]
+        ],
+        "core_numerical": {
+          "contract": "rectangular-mlp-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0
+        },
+        "numerical": {
+          "contract": "normalized-feed-forward-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "final_residual": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          }
+        },
+        "normalized_and_final_residual_bits_exact": true
+      },
+      {
+        "target_half_bits_exact": true,
+        "max_local_cycles": 85373,
+        "cycles_per_pe": [
+          [
+            84906,
+            84906,
+            84904,
+            84902,
+            84901,
+            84903,
+            84898,
+            84888
+          ],
+          [
+            84990,
+            84984,
+            84983,
+            84984,
+            84981,
+            84985,
+            84976,
+            84972
+          ],
+          [
+            85373,
+            85368,
+            85367,
+            85366,
+            85365,
+            85360,
+            85358,
+            85351
+          ],
+          [
+            85138,
+            85137,
+            85133,
+            85135,
+            85132,
+            85140,
+            85127,
+            85123
+          ],
+          [
+            85368,
+            85369,
+            85363,
+            85364,
+            85365,
+            85360,
+            85358,
+            85351
+          ],
+          [
+            85256,
+            85259,
+            85250,
+            85256,
+            85256,
+            85260,
+            85245,
+            85244
+          ],
+          [
+            85357,
+            85357,
+            85351,
+            85353,
+            85357,
+            85353,
+            85347,
+            85339
+          ],
+          [
+            85325,
+            85326,
+            85318,
+            85325,
+            85325,
+            85323,
+            85313,
+            85307
+          ]
+        ],
+        "core_numerical": {
+          "contract": "rectangular-mlp-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2": 0.0013881892991227949,
+          "peak_scaled_error": 0.0013881892991227972
+        },
+        "numerical": {
+          "contract": "normalized-feed-forward-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "final_residual": {
+            "relative_l2": 0.0012547084087513156,
+            "peak_scaled_error": 0.0012547084087513169,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0014599887590030856,
+            "peak_scaled_error": 0.0014599887590030867,
+            "fixed_accuracy_passed": true
+          }
+        },
+        "normalized_and_final_residual_bits_exact": true
+      },
+      {
+        "target_half_bits_exact": true,
+        "max_local_cycles": 85373,
+        "cycles_per_pe": [
+          [
+            84910,
+            84907,
+            84906,
+            84905,
+            84903,
+            84905,
+            84896,
+            84894
+          ],
+          [
+            84988,
+            84985,
+            84980,
+            84984,
+            84981,
+            84987,
+            84975,
+            84971
+          ],
+          [
+            85373,
+            85368,
+            85367,
+            85366,
+            85365,
+            85360,
+            85358,
+            85351
+          ],
+          [
+            85136,
+            85140,
+            85132,
+            85138,
+            85136,
+            85140,
+            85129,
+            85123
+          ],
+          [
+            85368,
+            85369,
+            85363,
+            85364,
+            85365,
+            85360,
+            85358,
+            85351
+          ],
+          [
+            85257,
+            85259,
+            85250,
+            85256,
+            85260,
+            85259,
+            85247,
+            85242
+          ],
+          [
+            85357,
+            85357,
+            85351,
+            85353,
+            85357,
+            85353,
+            85347,
+            85340
+          ],
+          [
+            85325,
+            85326,
+            85318,
+            85325,
+            85326,
+            85324,
+            85315,
+            85308
+          ]
+        ],
+        "core_numerical": {
+          "contract": "rectangular-mlp-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2": 0.0030642459713308224,
+          "peak_scaled_error": 0.003064245971330822
+        },
+        "numerical": {
+          "contract": "normalized-feed-forward-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "final_residual": {
+            "relative_l2": 0.0003112536805538487,
+            "peak_scaled_error": 0.00031125368055384835,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.002994553778526562,
+            "peak_scaled_error": 0.0029945537785265653,
+            "fixed_accuracy_passed": true
+          }
+        },
+        "normalized_and_final_residual_bits_exact": true
+      },
+      {
+        "target_half_bits_exact": true,
+        "max_local_cycles": 85369,
+        "cycles_per_pe": [
+          [
+            84903,
+            84904,
+            84906,
+            84904,
+            84900,
+            84899,
+            84894,
+            84894
+          ],
+          [
+            84983,
+            84985,
+            84983,
+            84981,
+            84978,
+            84980,
+            84973,
+            84970
+          ],
+          [
+            85367,
+            85369,
+            85361,
+            85368,
+            85360,
+            85362,
+            85354,
+            85354
+          ],
+          [
+            85138,
+            85136,
+            85129,
+            85136,
+            85130,
+            85136,
+            85125,
+            85123
+          ],
+          [
+            85364,
+            85366,
+            85358,
+            85363,
+            85361,
+            85360,
+            85357,
+            85351
+          ],
+          [
+            85255,
+            85256,
+            85249,
+            85254,
+            85253,
+            85254,
+            85243,
+            85246
+          ],
+          [
+            85353,
+            85353,
+            85348,
+            85352,
+            85352,
+            85350,
+            85345,
+            85340
+          ],
+          [
+            85321,
+            85323,
+            85316,
+            85321,
+            85322,
+            85320,
+            85311,
+            85312
+          ]
+        ],
+        "core_numerical": {
+          "contract": "rectangular-mlp-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0
+        },
+        "numerical": {
+          "contract": "normalized-feed-forward-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "final_residual": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          }
+        },
+        "normalized_and_final_residual_bits_exact": true
+      }
+    ],
+    "performance_scope": "Supplied Z -> RMS -> shared gated MLP -> Z residual, local WSE3 simulator intervals. Explicit block-f32 down and observed narrowed delta; no full Prefill/Decode or hardware throughput claim",
+    "normalization_and_delta_half_observations": 65536
+  }
+}

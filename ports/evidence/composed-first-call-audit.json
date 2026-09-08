@@ -1,0 +1,89 @@
+{
+  "passed": true,
+  "completed_calls": 1,
+  "complete": false,
+  "cases": [
+    {
+      "epoch": 0,
+      "metrics": {
+        "normalized": {
+          "relative_l2": 0.0,
+          "relative_peak": 0.0
+        },
+        "rotated_query": {
+          "relative_l2": 0.0,
+          "relative_peak": 0.0
+        },
+        "rotated_key": {
+          "relative_l2": 0.0,
+          "relative_peak": 0.0
+        },
+        "score": {
+          "relative_l2": 0.0,
+          "relative_peak": 0.0
+        },
+        "probability": {
+          "relative_l2": 0.0,
+          "relative_peak": 0.0
+        },
+        "context": {
+          "relative_l2": 0.0,
+          "relative_peak": 0.0
+        },
+        "delta": {
+          "relative_l2": 0.00025415161981554886,
+          "relative_peak": 0.00039275755076391346
+        },
+        "result": {
+          "relative_l2": 0.00016550283533795426,
+          "relative_peak": 0.0002398237816560875
+        },
+        "ffn_normalized": {
+          "relative_l2": 0.0,
+          "relative_peak": 0.0
+        },
+        "activation": {
+          "relative_l2": 0.0,
+          "relative_peak": 0.0
+        },
+        "hidden": {
+          "relative_l2": 0.0,
+          "relative_peak": 0.0
+        },
+        "ffn_delta": {
+          "relative_l2": 0.0,
+          "relative_peak": 0.0
+        },
+        "final_result": {
+          "relative_l2": 0.00016550283533795426,
+          "relative_peak": 0.0002398237816560875
+        },
+        "query": {
+          "relative_l2": 0.0,
+          "relative_peak": 0.0
+        },
+        "key_projection": {
+          "relative_l2": 0.0,
+          "relative_peak": 0.0
+        },
+        "value_projection": {
+          "relative_l2": 0.0,
+          "relative_peak": 0.0
+        },
+        "up": {
+          "relative_l2": 0.0,
+          "relative_peak": 0.0
+        },
+        "gate": {
+          "relative_l2": 0.0,
+          "relative_peak": 0.0
+        }
+      },
+      "probability_mass_error": 0.0,
+      "min_cycles": 75783,
+      "max_cycles": 75798,
+      "numeric_halfwords": 1521664
+    }
+  ],
+  "scope": "Actual all-PE half words, immutable inputs, 18 original-input numerical stages, probability mass, lifecycle/queues and instrumented simulator cycles. No real-hardware throughput or whole-source performance claim."
+}

@@ -1,0 +1,16 @@
+{
+  "project": "waferllm",
+  "kernel": "batched_rms_3x512_8x8_g2",
+  "status": "source_ready",
+  "fixture": "batched_rms:3:512",
+  "partitions": 1,
+  "instrumentation": "sampled",
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "origins": [
+    "Decode/src/decode.csl rmsnorm_x",
+    "Decode/src/comm_lib/comm_pe.csl grouped Y-axis all_reduce_bsz"
+  ],
+  "contract": "Three batch rows and512features on8x8PEs; feature-y sharding, batch-major local vectors, x replicas, two grouped trees, explicit zero SIMD padding. Corrected source RMS arithmetic in reusable CSL module. No in-call axis reconfiguration, whole Decode or hardware performance claim.",
+  "source_comparison": "evidence/batched-rms-source-comparison.json",
+  "qualification": "Eight standard SDK calls, same-host C++ on two hosts, independent RMS accuracy, exact source local/reduced/results and replicas, odd batch padding, 28 mutation rejections, linked ELF and scoped simulator cycle comparison."
+}

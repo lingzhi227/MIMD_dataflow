@@ -1,0 +1,175 @@
+// HLS adaptation of Matrix-algorithms Cannon, commit016156e79b63fe45e118580da8db694285b6c6d9.
+param px:u16;param py:u16;
+param memcpy_params;
+
+// Matrix dimensions
+param M_per_pe: i16;
+param N_per_pe: i16;
+param grid_height: u16;
+param grid_width: u16;
+
+// Colors
+param recv_A_color: color;
+param send_A_color: color;
+param recv_B_color: color;
+param send_B_color: color;
+
+const sys_mod = @import_module("<memcpy/memcpy>", memcpy_params);
+const layout_mod = @import_module("<layout>");
+
+var Matrix_1: [M_per_pe*N_per_pe] f32;
+var A_ptr: [*]f32 = &Matrix_1;
+var A_full_dsd = @get_dsd(mem1d_dsd, .{.tensor_access = |i|{M_per_pe*N_per_pe} -> Matrix_1[i]});
+
+var Matrix_2: [M_per_pe*N_per_pe] f32;
+var B_ptr: [*]f32 = &Matrix_2;
+var B_row_dsd = @get_dsd(mem1d_dsd, .{.tensor_access = |i|{N_per_pe} -> Matrix_2[i]});
+var B_full_dsd = @get_dsd(mem1d_dsd, .{.tensor_access = |i|{M_per_pe*N_per_pe} -> Matrix_2[i]});
+
+var Matrix_3: [M_per_pe*N_per_pe] f32;
+var Temp_ptr: [*]f32 = &Matrix_3;
+var Temp_full_dsd =  @get_dsd(mem1d_dsd, .{.tensor_access = |i|{M_per_pe*N_per_pe} -> Matrix_3[i]});
+
+var C = @zeros([M_per_pe*N_per_pe]f32);
+var C_ptr: [*]f32 = &C;
+var C_row_dsd = @get_dsd(mem1d_dsd, .{.tensor_access = |i|{N_per_pe} -> C[i]});
+
+var out_dsd_A = @get_dsd(fabout_dsd, .{
+                          .extent = M_per_pe*N_per_pe,
+                          .output_queue = @get_output_queue(2)
+});
+var in_dsd_A = @get_dsd(fabin_dsd, .{
+                          .extent = M_per_pe*N_per_pe,
+                          .input_queue = @get_input_queue(2)
+});
+
+var out_dsd_B = @get_dsd(fabout_dsd, .{
+                          .extent = M_per_pe*N_per_pe,
+                          .output_queue = @get_output_queue(3)
+});
+var in_dsd_B = @get_dsd(fabin_dsd, .{
+                          .extent = M_per_pe*N_per_pe,
+                          .input_queue = @get_input_queue(3)
+});
+
+fn compute_C() void {
+  for (@range(i16, M_per_pe)) |row| {
+    for (@range(i16, N_per_pe)) |col| {
+      const a = A_ptr[row*N_per_pe + col];
+      @fmacs(C_row_dsd, C_row_dsd, B_row_dsd, a);
+      B_row_dsd = @increment_dsd_offset(B_row_dsd, N_per_pe, f32);
+    }
+    B_row_dsd = @increment_dsd_offset(B_row_dsd, -M_per_pe*N_per_pe, f32);
+    C_row_dsd = @increment_dsd_offset(C_row_dsd, N_per_pe, f32);
+  }
+  C_row_dsd = @increment_dsd_offset(C_row_dsd, -M_per_pe*N_per_pe, f32);
+}
+
+fn send_A() void {
+  progress[1]+=1;
+  @fmovs(out_dsd_A, A_full_dsd);
+}
+fn recv_A() void {
+  @fmovs(Temp_full_dsd, in_dsd_A);
+}
+
+fn send_B() void {
+  progress[2]+=1;
+  @fmovs(out_dsd_B, B_full_dsd);
+}
+fn recv_B() void {
+  @fmovs(Temp_full_dsd, in_dsd_B);
+}
+
+fn compute() void {
+  for (@range(i16, @as(i16,grid_width) - 1)) |iter| {
+    record_round();
+    if (px % 2 == 0) {
+      send_A();
+      recv_A();
+    } else {
+      recv_A();
+      send_A();
+    }
+    var aux_ptr = A_ptr;
+    A_ptr = Temp_ptr;
+    Temp_ptr = aux_ptr;
+    A_full_dsd = @set_dsd_base_addr(A_full_dsd, A_ptr);
+    Temp_full_dsd = @set_dsd_base_addr(Temp_full_dsd, Temp_ptr);
+    if (py % 2 == 0) {
+      send_B();
+      recv_B();
+    } else {
+      recv_B();
+      send_B();
+    }
+    aux_ptr = B_ptr;
+    B_ptr = Temp_ptr;
+    Temp_ptr = aux_ptr;
+    B_full_dsd = @set_dsd_base_addr(B_full_dsd, B_ptr);
+    B_row_dsd = @set_dsd_base_addr(B_row_dsd, B_ptr);
+    Temp_full_dsd = @set_dsd_base_addr(Temp_full_dsd, Temp_ptr);
+  }
+  record_round();
+  finish();
+}
+
+// SDK memcpy follows the exported pointer's runtime value. Keep the host ABI
+// separate from working pointers, which rotate among three matrix buffers.
+var host_A_ptr:[*]f32=&Matrix_1;
+var host_B_ptr:[*]f32=&Matrix_2;
+comptime {
+  @export_symbol(host_A_ptr, "A");
+  @export_symbol(host_B_ptr, "B");
+  @export_symbol(C_ptr, "C");
+  @export_symbol(main);
+  @initialize_queue(@get_input_queue(2),.{.color=recv_A_color});
+  @initialize_queue(@get_output_queue(2),.{.color=send_A_color});
+  @initialize_queue(@get_input_queue(3),.{.color=recv_B_color});
+  @initialize_queue(@get_output_queue(3),.{.color=send_B_color});
+}
+const timestamp=@import_module("<time>");
+const tile_config=@import_module("<tile_config>");
+var history=@zeros([grid_width*@as(u16,M_per_pe*N_per_pe)]f32);
+var witness=@zeros([grid_width*4]f32);
+var timing=@zeros([grid_width*6]u16);var total_timing=@zeros([6]u16);
+var started=@zeros([3]u16);var ended=@zeros([3]u16);
+var total_start=@zeros([3]u16);var total_end=@zeros([3]u16);
+var progress=@zeros([4]u16);var queue_last=@zeros([2]u16);
+const cd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{M_per_pe*N_per_pe}->C[i]});
+const hd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{M_per_pe*N_per_pe}->history[i]});
+fn record_round() void {
+ const step=progress[0];
+ witness[4*step]=A_ptr[0];witness[4*step+1]=A_ptr[M_per_pe*N_per_pe-1];
+ witness[4*step+2]=B_ptr[0];witness[4*step+3]=B_ptr[M_per_pe*N_per_pe-1];
+ timestamp.get_timestamp(&started);compute_C();timestamp.get_timestamp(&ended);
+ for(@range(u16,3)) |i| {timing[step*6+i]=started[i];timing[step*6+i+3]=ended[i];}
+ const h=@increment_dsd_offset(hd,@as(i16,step)*M_per_pe*N_per_pe,f32);@fmovs(h,cd);
+ progress[0]+=1;
+}
+fn finish() void {
+ const iq=tile_config.input_queue_status.get();const oq=tile_config.output_queue_status.get();
+ queue_last[0]=@as(u16,iq.empty);queue_last[1]=@as(u16,oq.empty);
+ timestamp.get_timestamp(&total_end);
+ for(@range(u16,3)) |i| {total_timing[i]=total_start[i];total_timing[i+3]=total_end[i];}
+ sys_mod.unblock_cmd_stream();
+}
+fn main() void {
+ timestamp.enable_tsc();timestamp.get_timestamp(&total_start);
+ progress[0]=0;progress[1]=0;progress[2]=0;progress[3]+=1;
+ A_ptr=&Matrix_1;B_ptr=&Matrix_2;Temp_ptr=&Matrix_3;
+ A_full_dsd=@set_dsd_base_addr(A_full_dsd,A_ptr);
+ B_full_dsd=@set_dsd_base_addr(B_full_dsd,B_ptr);
+ B_row_dsd=@set_dsd_base_addr(B_row_dsd,B_ptr);
+ Temp_full_dsd=@set_dsd_base_addr(Temp_full_dsd,Temp_ptr);
+ C_row_dsd=@set_dsd_base_addr(C_row_dsd,&C);
+ @fmovs(cd,0.0);compute();
+}
+var history_ptr:[*]f32=&history;var witness_ptr:[*]f32=&witness;
+var timing_ptr:[*]u16=&timing;var total_timing_ptr:[*]u16=&total_timing;
+var progress_ptr:[*]u16=&progress;var queue_ptr:[*]u16=&queue_last;
+comptime {
+ @export_symbol(history_ptr,"history");@export_symbol(witness_ptr,"witness");
+ @export_symbol(timing_ptr,"timing");@export_symbol(total_timing_ptr,"total_timing");
+ @export_symbol(progress_ptr,"progress");@export_symbol(queue_ptr,"queue_last");
+}

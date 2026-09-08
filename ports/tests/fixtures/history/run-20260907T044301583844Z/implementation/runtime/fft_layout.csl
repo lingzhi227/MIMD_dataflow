@@ -1,0 +1,23 @@
+// HLS region adapter; SDK owns FFT, transpose routes, tasks and DSDs.
+param N:u16;
+param P:i16;
+param inverse:i16;
+param normalization:i16;
+param sampled:i16;
+param restore:i16;
+const memcpy=@import_module("<memcpy/get_params>", .{.width=P,.height=P});
+const helper=@import_module("<kernels/fft/get_params>", .{.width=P});
+layout {
+ @set_rectangle(P,P);
+ for (@range(i16,P)) |y| {for (@range(i16,P)) |x| {
+  @set_tile_code(x,y,"pe.csl",.{.N=N,.fft_params=helper.get_params(x,y,f32),.memcpy_params=memcpy.get_params(x),.inverse=inverse,.normalization=normalization,.sampled=(sampled != 0),.restore_layout=(restore != 0)});
+ }}
+ @export_name("phase_samples",[*]f32,true);
+ @export_name("phase_counts",[*]u16,true);
+ @export_name("X",[*]f32,true);
+ @export_name("twiddle_array",[*]f32,true);
+ @export_name("timing",[*]u16,true);
+ @export_name("progress",[*]u16,true);
+ @export_name("queues",[*]u16,true);
+ @export_name("main",fn()void);
+}

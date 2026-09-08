@@ -1,0 +1,56 @@
+// SPDX-License-Identifier: Apache-2.0
+param memcpy_params;param P:i16;param B:i16;param Nt:i16;param groups:i16;param epsilon:f16;param sampled:i16;param Ft:i16;param C:i16;
+const fused_len:i16=C*B*Ft;const capacity:i16=if(fused_len>((B+1)/2)*2) fused_len else ((B+1)/2)*2;
+const padded:i16=((B+1)/2)*2;const size:i16=P/groups;
+const sys=@import_module("<memcpy/memcpy>",memcpy_params);
+const layout_mod=@import_module("<layout>");const time=@import_module("<time>");
+const config=@import_module("<tile_config>");
+const rms_local=@import_module("batched_rms_local.csl",.{.batches=B,.features=Nt,.global_features=P*Nt,.epsilon=epsilon});
+const mm_local=@import_module("batched_matmul_local.csl",.{.batches=B,.inner=Nt,.columns=Ft});
+const comm=@import_module("axis_grouped_reduce_dynamic.csl",.{.P=P,.bsz=capacity,.pe_num_p_group=size,.root_1st_phase=size/2,.root_2nd_phase=(groups/2)*size+size/2,
+ .reduce_1st_color_0=@get_color(8),.reduce_1st_color_1=@get_color(7),.reduce_2nd_color_0=@get_color(6),.reduce_2nd_color_1=@get_color(5),.broadcast_color=@get_color(9)});
+var X=@zeros([B*Nt]f16);var W=@zeros([Nt]f16);var result=@zeros([B*Nt]f16);
+var scratch=@zeros([B*Nt]f16);var sums=@zeros([padded]f16);
+const histlen:i16=if(sampled!=0) 2*padded else 1;var history=@zeros([histlen]f16);
+var weights=@zeros([C*Nt*Ft]f16);var projections=@zeros([fused_len]f16);
+const plen:i16=if(sampled!=0) fused_len else 1;var partial=@zeros([plen]f16);
+var progress=@zeros([8]u16);var timing=@zeros([6]u16);var queues=@zeros([2]u16);
+var start=@zeros([3]u16);var finish=@zeros([3]u16);var px:i16=0;var py:i16=0;
+var ready:bool=false;
+const sumd=@get_dsd(mem1d_dsd,.{.base_address=&sums,.extent=@as(u16,padded)});
+const histd=@get_dsd(mem1d_dsd,.{.base_address=&history,.extent=@as(u16,padded)});
+fn init_task() void {
+ px=@as(i16,layout_mod.get_x_coord());py=@as(i16,layout_mod.get_y_coord());
+ comm.init(px,py,px/size,px%size,py/size,py%size);ready=true;progress[0]=1;
+ sys.unblock_cmd_stream();
+}
+fn hls_main() void {
+ @assert(ready);
+ time.enable_tsc();time.get_timestamp(&start);
+ for(@range(i16,6)) |i| {progress[i+1]=0;}
+ @fmovh(sumd,0.0);
+ rms_local.square_sum(&X,&scratch,&sums);progress[1]=1;
+ if(sampled!=0){@mov16(histd,sumd);}
+ comm.set_extent(@as(u16,padded));
+ comm.all_reduce_bsz(py,py/size,py%size,&sums);progress[2]=1;
+ if(sampled!=0){const next=@increment_dsd_offset(histd,padded,f16);@mov16(next,sumd);}
+ rms_local.normalize(&X,&W,&result,&sums);progress[3]=1;
+ for(@range(i16,C)) |i| {
+  mm_local.compute(&result, @ptrcast([*]f16,&weights[i*Nt*Ft]), @ptrcast([*]f16,&projections[i*B*Ft]));
+ }
+ progress[4]=1;
+ const pd=@get_dsd(mem1d_dsd,.{.base_address=&projections,.extent=@as(u16,fused_len)});
+ if(sampled!=0){const hd=@get_dsd(mem1d_dsd,.{.base_address=&partial,.extent=@as(u16,fused_len)});@mov16(hd,pd);}
+ comm.set_extent(@as(u16,fused_len));comm.all_reduce_bsz(py,py/size,py%size,&projections);progress[5]=1;
+ // Do not change axis here: local broadcast return is not a global join.
+ progress[6]=1;progress[7]+=1;
+ time.get_timestamp(&finish);time.disable_tsc();
+ for(@range(i16,3)) |i| {timing[i]=start[i];timing[i+3]=finish[i];}
+ const qi=config.input_queue_status.get();const qo=config.output_queue_status.get();
+ queues[0]=@as(u16,qi.empty);queues[1]=@as(u16,qo.empty);
+ sys.unblock_cmd_stream();
+}
+var xp:[*]f16=&X;var wp:[*]f16=&W;var rp:[*]f16=&result;var sp:[*]f16=&sums;var hp:[*]f16=&history;
+var pp:[*]u16=&progress;var tp:[*]u16=&timing;var qp:[*]u16=&queues;
+var wsp:[*]f16=&weights;var psp:[*]f16=&projections;var php:[*]f16=&partial;
+comptime {@export_symbol(wsp,"weights");@export_symbol(psp,"projections");@export_symbol(php,"partial");@export_symbol(xp,"X");@export_symbol(wp,"W");@export_symbol(rp,"result");@export_symbol(sp,"sums");@export_symbol(hp,"history");@export_symbol(pp,"progress");@export_symbol(tp,"timing");@export_symbol(qp,"queues");@export_symbol(init_task);@export_symbol(hls_main);}

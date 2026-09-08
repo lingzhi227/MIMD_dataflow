@@ -1,3 +1,100 @@
+## 2026-09-07 11:11 UTC — all three17-node profiles qualified; next23-node connection
+
+-64sample102500202051 completes eight SDK calls,3,670,016 internalhalf observations and294,912 f32 accumulator values.82mutations110853129954 rejected; sampled/counter outputs and retained half/f32 snapshots match across all8calls. Source ratios1.03439–1.03817 include fullprefixobservers. Static36656B/PE; unallocated12496B. Registered qualification-20260907T111009334622Z.json; catalog130.
+- All three SDK-host Clang17 frozen native builds pass actual eight-input projection/delta/final math gates and produce identical CSL to executed bundles. Complete isolated package evidence/prefill-tail-native-clang17-20260907T1100Z is mirrored locally; reference dependencies and driver hashed. No source fixture or tolerance changes.
+- All current SDK jobs are complete. Old unrelated dsd-receive PID326407 remains untouched. Preparing reviewed canonical authoring sync with backups; excludes upstream/reference/coordination/frozen runs, immutable evidence copied only when missing. Continue the concrete23-node resident attention connection described in the backlog after checkpoint sync.
+
+## 2026-09-07 11:03 UTC — larger17-node tail qualified; SDK-host native reproduction in isolated evidence
+
+-128×64counter102725432573 completes eight SDK calls and54mutation rejections110000634361. Source comparison145310/144410,145310/144412,127390/126492cycles: +.622–.710%. Static30272B/PE, unallocated18880B. Registered qualification-20260907T110057556215Z.json; catalog129. Cancellation deltaL2 .00299455378 and final .00031125368; projection exactly zero.
+- Sampled64 completes seven calls; final call in progress.64counter actual SDK-host Clang17 frozen rebuild and independent projection/delta/final checks pass in evidence/prefill-tail-native-clang17-20260907T1100Z/counter64-review.json. Generated CSL is identical to executed bundle. The source fixtures and checker helper are copied into that fresh evidence package, with hashes; no canonical remote authoring mutation.128counter and64sampled fresh native builds also underway.
+
+## 2026-09-07 10:51 UTC — following attention connection specified; SDK checks continue
+
+- Backlog now names a pending23-node supplied-Q/K/V → score → scaled softmax → V contraction → output projection → 17-node tail, with exact source functions and single-head/unmasked boundary. It requires resident column-major output handoff, strided-to-contiguous right DSD reset, a single shared phase dispatcher/task binding, retained Z, derived output range and separate attention/projection/delta/final gates. QKV projection/RoPE/head/mask/cache remain later work.
+-64sampled first3calls validate1,376,256 internalhalf observations;128×64 first3calls pass frozen audit including zero call. SDK iterations remain active. No speculative23-node implementation or registration has been added.
+
+## 2026-09-07 10:40 UTC — full prior catalog native and target compatibility PASS
+
+- evidence/run-20260907T102959865295Z.json passes all127 prior profiles through actual C++ and independent checks; new17nodecounter registration is separate. evidence/prefill-tail-prior-native-codegen-review.json compares each against pre-extension091043647698 (124) or094558490426 (3FFN), and all127 generated CSL sets are byte-identical.
+- A preliminary comparison against latest standalone historical qualification.json files found46identical of58 controls;12 differ because those controls use other instrumentation or predate existing FFT interface/observer changes. The preliminary report is preserved as prefill-tail-old-catalog-codegen-review.json and is not a regression/SDK-pass claim. Same-source pre-extension native comparison resolves this turn's change scope.
+- Larger128×64 source control and sampled64 SDK remain in progress. No active/canonical remote toolchain writes. Complete current runs before source qualification or subsequent stages.
+
+## 2026-09-07 10:35 UTC — first 17-node HLS tail qualified
+
+- Counter run-20260907T102005944852Z completed eight SDK2.10.1 calls, with 294912 f32 accumulator observations and exact projection/Z/normalized/delta/final half snapshots. Independent original-input maximum relative L2: projection .00120310, delta .00537423, final .00114027. Eight actual C++ projection/delta/final checks and target preflight passed before execution.
+-54 mutation cases rejected (prefill-tail-audit-mutations-20260907T103342897943Z.json). Matched source projection/Z/normalized/down/final and three accumulators exactly match all three source calls. Source comparison93214/92275,93204/92281,84244/83315cycles: +1.000–1.115% local WSE3 simulator overhead including immutable-input/snapshot differences. Linked static21712B/PE, unallocated27440B; no dynamic-stack/hardware claim.
+- Registered evidence/qualification-20260907T103428102484Z.json; catalog128. Sampled64 SDK and larger128×64 source control102741323756 remain active; no canonical remote toolchain mutation. Larger HLS102725432573 already passes eight native and target gates and waits for a simulator slot.
+- Actual early debugger invocation found no saved results before the first sampled call. Preserved /tmp/prefill-tail-sampled-debug.log; current CLI now reports unavailable/zero completed calls rather than a NoneType traceback. New regression passes;227 tests total (226 full suite plus seven affected tail tests). This diagnostic-only change does not alter CSL.
+
+## 2026-09-07 10:25 UTC — 17-node tail enters real SDK validation
+
+- Added structural composition of supplied attention/output weight/original residual, half projection, retained Z, RMS and all-block-f32 MLP with final Z residual. Shared CSL projection callbacks run a joined prelude; no new application colors, queues or tasks. Storage plan declares 11 phases and retains postprojection Z through the final add.
+- Source control prefill-tail-source-20260907T100400857864Z completed three SDK calls; independently checked projection, delta and final against original-input fsum/sqrt/exp. Executed review is evidence/prefill-tail64-source-executed-review.json.
+- HLS counter bundle run-20260907T102005944852Z passed eight actual C++ projection/delta/final checks and target preflight. 224 unit tests pass, including historical FFN CSL byte compatibility, commuted/renamed graph semantics, wrong residual and lifetime/resource rejection. First two real SDK calls complete and frozen partial audit passes every half/f32/protocol observation; full eight-call qualification and source performance comparison are pending.
+- Initial new test used the wrong historical target subfolder and removed a join flag despite releasing all leases; preserved /tmp/prefill-tail-tests.log. Corrected the test path and mutation to withhold completion release. No compiler semantic relaxation.
+- Current authoring additions remain local while the frozen SDK bundle is active. Existing remote authoring and completed/failed evidence untouched.
+
+## 2026-09-07 09:59 UTC — SDK-host frontend portability fixed and executed; proceeding to17-node tail
+
+- First authoring whitelist sync826files completed,45changedexisting andzero remote-newer conflicts; backup authoring-backup-20260907T094741Z. Existingimmutable reports copied onlywhenmissing; reference/upstream/run/coordination trees excludedfromauthoring writes.
+- SDK-host affected tests exposed defaultClang14 x86 `_Float16` rejection. Failurelog remote-affected-tests.log preserved. Added one shared HLS_CLANGXX executable selection forAST/native commands, preservingdefaultclang++ andexplicitcommand/version evidence. InstalledClang17.0.6 works; no systemsymlink/globalcompiler change.220localunit testsPASS;13remoteaffectedtestsPASS withHLS_CLANGXX=/usr/bin/clang++-17.
+- Remoteuniformrunner095418695872 rebuilt all3FFN profiles,actualC++/native delta/final gatesPASS. remote-clang17-generated-csl-review.json confirms everygeneratedCSL/notice/license file byte-identical toexecutedSDKbundles. No extraSDK runneededforthishost-onlyselection change. Docs recordexacthostsetting. Hostcompiler follow-up files backedup separately.
+- Continue17-node suppliedattention-output tail fromsource h1_matmul -> z_add -> rmsnorm_z -> MLP -> add_result. PreservepostprojectionZ; checkprojection,MLPdelta andfinal againstwholeoriginalinputs.13-node milestones arecomplete,17-node lowering/control isnotyetqualified.
+
+## 2026-09-07 09:47 UTC — final current-toolchain FFN native regression PASS
+
+- Uniform runner run-20260907T094558490426Z rebuilds all3registeredFFN profiles fromthecurrent frontend/compiler/runtime and passes actual C++ delta/final plus targetdelta gates.219unit tests and priorfull124native regression remainpassing; only metadata/frozen-debug changes followedthefullrun and were tested separately. Status regeneratedfor127boundedprofiles.
+- AllSDKcallscompleted; no backgroundSDK work remains fromthiscontinuation. Reviewed authoring-only sync is next, with backups and no deletion. Frozenrun/source/reference/coordination trees are excludedfromauthoring updates; existingimmutable report files will notbe replaced.
+
+## 2026-09-07 09:45 UTC — all three FFN profiles complete and registered
+
+-64sample090228568221 completes8SDKcalls,3,342,336 internalhalf and294,912f32 observations;64mutations094313429100 rejected. Samehalf/f32outputs as64counter acrossall8calls. Matched source ratio1.03247–1.03633 includesfullprefixobservations. Static34064B/PE. Registration094431763130.
+-128×64counter091416894851 completes8SDKcalls,589,824f32values;43mutations094050719086 rejected. Original-input maxdeltaL2 .00528514; source135112/135112/117195 versusHLS135899/135899/117979cycles(+.582–.669%). Static28720B/PE. Registration094135951366. Togetherwith64counter registration091310420053, catalog127.
+- All current SDK jobs finished. No hardware/fullPrefill/Decode claim. Final three-profile uniform native regression running againstcurrentauthoring code; docs updated. Canonicalremote authoring sync will use reviewed whitelist and backups, excludingreferences/upstream/frozenruns/coordination.
+
+## 2026-09-07 09:31 UTC — resource inventory and frozen debugging verified
+
+- Full124 actualnative regression run-20260907T091043647698Z PASS; FFN uniform runner native entry091509474185 PASS; aftermetadata092324608630 PASS.219unit tests PASS afterfrozen-inspection helper.
+- Added nine-phase/20-value numerical lifetime model,7072B for64counter, and explicitRMS DSR2 leases omitted by inheritedMLP-only inventory. feed-forward-lifetime-metadata-review.json confirmsbyte-identicalgeneratedfiles for64counter/sample and128×64counter; no claim of SDK temporary/stack control-flow proof. Historical plans untouched.
+- Current debugger completed-call arithmetic/protocol audit uses the bundle's frozen implementation with one result snapshot; currentselected-viewhelper is separatelyhashed. Historicalcountercase6 debug0927 passes afterauthoringmetadata changed; deliberateRMSprogress corruption rejected.
+- Source128×64 control091432577918 completed3SDKcalls, separateoriginalmathandhalf/f32observationsPASS. HLS128×64counter091416894851 started09:23with5400s/8threads; staticELF28720B/PE,20432Bstaticallyfree.64sample090228568221 stillactive. Max2simulators, canonicalremote toolchainunchanged.
+- Measured source all-block versusdown-only precision-plus-observation cost8.06–9.10% onmatchedfirst3calls; separatefrom~0.88–0.99% HLSoverhead againstsameall-block policy. docs/FEED-FORWARD.md records algorithm, resources, evidence, diagnostics andlimitedscope.
+
+## 2026-09-07 09:15 UTC — first FFN profile registered; scale extension underway
+
+- Counter090013451671 registered by qualification-20260907T091310420053Z.json after8SDKcalls,43mutations,20560BstaticELF,actualnative/device independent delta/final checks and matched source sixport half/f32 comparison. Source ratio1.00879–1.00989 onfirst3calls. Catalog125; status regenerated. Maxdevice delta L2 .00550331;case6 .00299455. FullPrefill/Decode remainsopen.
+- Sampled090228568221 continues8SDKcalls with34064Bstatic highwater; observers impose significant host D2H time, not device interval. Larger rectangular128×64→256→64 counter native/target build underway withsame frontend/precision, source091432577918 prepared. Max2simulators; no canonicalremote sync.
+- A read-only128×128→512 plan check rejects the existing weight bound because conservative gate/up bounds exceed validated SDK SiLU domain. No generated run or relaxed domain. The128×64 extension retains the validated64-feature normalization domain. Connecting17-node tail remainsnext composition boundary aftercurrentqualification.
+
+## 2026-09-07 09:12 UTC — counter eight-call SDK PASS; memory wording corrected
+
+- Counter090013451671 completed all8calls, frozen SDK auditPASS. Case6 actual device delta relativeL2 .002994553778526553; no fixture/tolerance changes. Source comparison and corruption qualification now running; sampled remains active.
+- Correct09:08 prose: ELF report max_static_high_water_bytes is20560B/PE, min_unallocated_static_bytes28592B/PE. Those two printed fields were transposed in my previous prose; JSON evidence was correct and unchanged. docs corrected. Runtime stack remains unmeasured.
+-215unit tests PASS aftermandatorydelta/regression integration. Full124actualnative regression is running. Failed integration logs copied into evidence/feed-forward-integration-failures-0914.
+
+## 2026-09-07 09:08 UTC — FFN SDK stages pass; source control complete
+
+- Initial all-block counter085254234645 was rejected before SDK by the top-level-only artifact path validator. Preserved log `/tmp/ffn-all-counter-sdk.log`; no actual CSL execution occurred in that attempt, correcting the08:57 launch wording. Safe nested artifact support and traversal/symlink/corruption tests added; fresh counter090013451671 is executing8calls. First completed call exact target half/f32 and original-input math, documented in feed-forward64-counter-partial-debug-0907.json. Current runtime atcase5/6; sampled090228568221 also executing. Max2simulators,8threads,remote canonicalunchanged.
+- All-block source090130004244 completed3SDKcalls; feed-forward64-all-block-source-executed-review.json confirms normalized/up/gate/down/final bits and upper/downf32, separate delta/final math. Source prep's initial ambiguous step-marker assertion is preserved in /tmp/ffn-all-source-prepare.log; fresh source uses the precise matmul branch marker.
+- Counter static ELF highwater28592B/PE (stackexcluded).214unitPASS beforelatest regression integration;6FFN tests cover observed/unavailable debugger and mandatory separate delta. General run_ports now uses actual native diagnostic, target preflight and actual device delta math. Added source/instrumentation comparators, corruption harness and strict registrar; not yet run qualification while SDK calls remain.
+
+## 2026-09-07 08:57 UTC — all-projection FFN precision gates pass; SDK validation started
+
+- Large postnorm128×256 completed eight SDK calls and registration; catalog124. Static33008B/PE, original-input maximum relativeL2 .00238852, 37 mutation rejections; matched source sampled local interval overhead about1.82–1.84%. Full Prefill remains unqualified.
+- Initial13-node FFN down-only precision bundles preserved. Spatial target prediction failed the unchanged nonuniform-gamma cancellation case6: delta relativeL2 .56203086 / peak .97305391, while the final residual masked this. Actual diagnostic C++ delta passed (.00299455). No fixture or threshold changed.
+- Shared MLP compiler now supports explicit block-f32 up/gate as well as down, with bounded shared accumulator storage and retained upper f32 observations. New counter bundle run-20260907T085254234645Z passes all eight actual native delta/final gates and target delta/final gates; case6 target delta relativeL2 .00299455378. These are pre-SDK checks, not device proof. Current full211 tests pass, including byte-identical legacy MLP CSL generation.
+- Fresh frozen counter bundle copied to workstation; SDK2.10.1 execution started with5400s budget,8threads. Canonical remote toolchain unchanged. Source matching all-projection precision, sampled instrumentation, debugger/registration and scoped performance remain pending.
+
+## 2026-09-07 08:11 UTC — two postnorm profiles registered; large execution and next source tail continue
+
+-64sample071024411920 registered074658560657,64counter074355434925 registered075638935137: eight calls each, exact outputs/inverse and immutable/protocol checks,37/30mutation rejections, static11296/9600B. Sampled372736 internalhalf observations; counter retains4096 inverse values. Matched repairedsource local overhead~5.2–5.3%sampled/~1.26–1.35%counter; instrumentation comparator confirms same algorithm/templates/batches/options and outputs. Currentcatalog123.
+- Counter comparison's old false sampled-exact field meant unobserved; preservedv1 plus explicit correction andv2 null/observedfalse. Prior comparator script archived byhash under evidence/analysis-helpers. No numeric/timingchange.
+-128×256 sourceboth073806102044/library073806108372 complete3calls target+math; sixstagearrays bit-identical, source66353–66369/library66347–66363cycles. HLS128sample073732225890 at6/8 calls, static33008B, completed-calldebug075430 passes partial audit; no fullqualificationyet. Max2simulators with newsourceFFNbelow.
+- CorrelatedRMSrange proof tightens outputbound12.015625/24.03125 from2234/6704 using own rounded-square lowerbound and exhaustive inverse suffix maxima. New region_lifetimes pass checks scheduled storage intervals, public lifetimes, explicit resource acquire/release/join. Numericalstorage1056/11360B equalsplan; excludesdiagnostics/SDK/stack. Both metadata-reviewreports confirm byte-identicalCSL for allthreebundles; historicalplanspreserved.207unitPASS and full123actualnative regression completePASS afterintegration.
+- Next finite boundary is13-node suppliedZ -> RMS -> up/gate/SiLU/product -> blockeddown -> Z+down, then17-node suppliedattentionoutput projectiontail. Source add_result preservespostprojectionZ, not the earlierresidualR; no finalnormalization. docs/RESIDENT-PREFILL-TAIL.md recordslifetimesandgaps. New sourceprobe feed-forward-source080836373657 preparedwithrepairedRMSlibrary,gatecarry,blockeddown andthreecalls; preflight original-input mathPASS, checkingMLPdelta separately(.00568maxL2) so finalresidual cannotmaskerrors. SDK started08:10, timeout2400/max2. It issource-only, notnewHLSqualification.
+- Keepcanonicalremote toolchain unchanged untilactiveSDKbatchends. Then review andsyncauthoredfiles only, preservingupstreams/runs/coordination. FullPrefill/Decode,QKV/RoPEconnection,masks/heads/cache,hardwareclaimsremainopen.
+
 ## 2026-09-07 07:44 UTC — source RMS defects isolated by execution; HLS composition running
 
 - All four64 source controls complete3calls. Original valid-zero stale descriptor behavior is bit-exact but mathematical error huge; descriptor-only dense relativeL2.101–.103 still fails. Explicit both-repairs and extracted rms_local library pass target and independent original-input math. Six observed stage arrays agree bitwise between both/library; local source8460cycles versus library8448–8456. These are isolated adapted Prefill functions, not full Prefill.
@@ -802,3 +899,503 @@ claim is made. Full failed traces remain on workstation.
 当前基线并非生产 backend，也没有宣称同条件性能优势。原生布局/SDK memcpy 与 HLS 间隔布局/column streaming 不同，FMA 策略也不同；总 simulator cycles 只记录，不能直接求加速比。没有实机性能结论。当前 46 项 HLS catalog 的覆盖范围未扩张成完整上游应用。
 
 下一项具体工作：独立原生 CSL adapter 去掉不必要的 benchmark allreduce 依赖；把库调用、连续 region 所有权、回调完成与显式浮点策略纳入 scheduled IR，再连接现有 HLS 前端与统一验证路径。继续保留 ordered/non-FMA 后端。
+
+
+## 2026-09-07 attention-tail integration (11:45 UTC)
+
+Continued beyond the qualified 17-node supplied-attention tail to a 23-node supplied-Q/K/V resident chain. Original WaferLLM source control `evidence/attention-tail-source-20260907T112321109190Z` passed three SDK calls and original-nine-input independent mathematical review. Raw exported logits are QK before scale; softmax applies scale internally. The source descriptor adapter is phase-scoped so PV uses column-major stride while later projection/MLP restore contiguous contraction.
+
+The frontend now lowers six typed matmuls, transpose, stable softmax, two residual additions, RMSNorm and SiLU/multiply through one composed shared CSL engine. Nine public tensors stay immutable; only final completion returns to the host. Up/gate storage is borrowed by logits/exponents before the MLP, with 16 joined lifetime phases. A conservative softmax probability-mass/half-FMA bound provides the internal A range instead of inventing a public input bound. Counter64 and counter128 plans fit; full sampled64/F256 rejects the budget, while sampled64/F128 fits. This is still single-head unmasked supplied-Q/K/V, not a full Prefill/Decode model.
+
+Preserved build114318919664: native compiler and five branch observers completed, but independent gate invocation omitted the scale parameter and failed before SDK. Fixed argument wiring without modifying inputs/tolerances; fresh114402035658 passed eight actual native and eight predicted-target checks, including score/probability/attention/projection/delta/final. Initial source112053676036 likewise preserved before SDK following its fixture signature error. Logs retained in `evidence/attention-tail-integration-1145`. Seven new structural/resource/export/compatibility tests and seven existing tail tests pass; full suite in progress. SDK execution of new HLS23 chain is pending at this checkpoint; no qualification claim yet.
+
+
+### 11:58 UTC follow-up
+
+HLS64/F256114402035658 has completed six saved SDK calls; first-three frozen audit passes, with cycles116365/116365/107405 versus matched source116531/116534/107574. These remain partial execution observations until all eight calls qualify. Native/target gates also pass eight cases for rectangular128/F256114821711402 and sampled64/F128115235234637. Source128/F256115026419348 is executing after preflight; source64/F128115329737842 is prepared and preflight-passed, not yet executed. At most two SDK simulations are active, eight threads each. No canonical remote authoring update occurred during these batches.
+
+Added actual-stage debugger, five-branch-required catalog numerical contract, independent device checker, frozen source comparison/registration and corruption-audit drivers. Complete regression suite237PASS. All130 prior profiles regenerate byte-identical CSL against preserved native/SDK bundles; `attention-tail-prior130-codegen-review.json` records the comparison. SDK-host Clang17 actual five-branch checks are in progress in a separate evidence package. No new catalog qualification yet.
+
+
+### 12:02 UTC qualified first23-node profile
+
+Counter64/F256114402035658 completed8SDKcalls and all protocol/stage checks. `qualification-20260907T120153968936Z.json` registers it after87 mutation rejections and independent five-branch/final original-input device mathematics. Max relativeL2 score.0006425053, probability.0004653997, attention.0014390260, projection.0048643674, delta.0053649711, final.0011402743. Source11 observed half/f32 port groups match exactly for3calls; HLS/source cycle ratios.998575/.998550/.998429. Static ELF26688B/PE, free22464B. SDK-host Clang17 eight cases/five branches PASS with byte-identical generated CSL. Catalog131; status regenerated.
+
+128source115026419348 completed3SDKcalls and original-input review passed. HLS128114821711402 and sampled64/F128115235234637 now execute concurrently, at most2simulators. Source64/F128 remains prepared/preflight-only until a slot is available. Continue both profiles, sampled protocol witnesses, matched source and resource qualification; no claim they have passed yet.
+
+
+### 12:16 UTC prefix preparation while existing SDK batches continue
+
+128 first-call frozen audit passes; sampled first-call audit passes449024 internalhalf observations. Actual ELF36720B/PE and37104B/PE, respectively. All three profile SDK-host Clang17 native five-branch/eight-case rebuilds pass with identical CSL. Source128 three-call execution and independent review pass. Counter128 and sampled SDK batches remain active; sourceF128 waits for a simulator slot.
+
+Added31-node authoring proposal with source-shared gamma and R=X, explicit odd_even broadcast pair transforms; frontend parser test passes and intentionally asserts that the unimplemented semantic lowering rejects it. Added an unselected correlated RMS-row-L1/projection range module with four tests, including prior real SDK observations. The first test guessed an overly strict comparison constant (>3 versus actual2.99609375); corrected the test to>2.9 without changing range calculation or numerical gates. Initial/corrected logs preserved. These preparatory pieces do not claim31-node CSL generation/execution. Full updated regression is running.
+
+
+### 12:34 UTC second23-node qualification and next source control
+
+Counter128/F256114821711402 passed all8SDKcalls,87 mutations122625626024, full original-input math and exact11-port-group source comparison. Registered122757875519; catalog132/status regenerated. Max relativeL2 score.0006258714, probability.0004523688, attention.0018135329, projection.0054639725, delta.0052502036, final.0011402743. Source timing ratios.976107/.976112/.973775; linked static36720B/PE. Independent coordinator math agrees. Sampled64/F128115235234637 is processing call7; its source115329737842 completed3SDKcalls and original-input review.
+
+Prepared source-only31-node input-attention control122338297913, with eleven-input fixtures and full original-input prefix/tail fsum/sqrt/exp preflight. Explicit shared gamma and original X residual, original odd_even broadcasts, input RMS repair, live K/V branch-owner repair and row-sized pair scratch. Fresh control now runs SDK alongside the sampled HLS, at most2simulators. No31-node HLS lowering claim. Added pair range module: declared Q/K projection bound.39526367 becomes rotated bound.79052734 without a unit-circle assumption. Complete243-test suitePASS. A first local adapter-edit helper assertion left authoring unchanged and its CLI call rejected an unrecognized flag; no source bundle/SDK was produced. Corrected the helper, preserved its log, and created the fresh control above.
+
+
+### 12:38 UTC executed31-node source control
+
+Input-attention source122338297913 completed three real SDK calls. Full source review `input-attention64-source-executed-review.json` passes exact observed input RMS/rawQKV/rotatedQK/score/probability/A/output projection/Z/normalizedZ/MLP/final and3f32 accumulators, plus independent original-eleven-input fsum/sqrt/exp. Max deltaL2.0054703, scoreL2.0019884 and finalL2.0002647 among these three cases; local pair rounding also passes. This is source-control evidence only: the31-node HLS lowering remains the next task. Sampled23-node bundle is finishing its eighth call. Do not stop at the completed counter milestones; complete sampled qualification and checkpoint before continuing the31-node HLS connection.
+
+
+### 12:47 UTC completed23-node milestone; next31-node plan
+
+Sample64/F128115235234637 passed all8SDKcalls,135 corruption rejections124243500758 and matched-source checks. Registration124511566933 brings catalog133.3592192 internalhalf observations and163840 f32 accumulators checked. Source/HLS11 observed groups and final up prefix match; sampled/source local ratios1.039085/1.038986/1.041291 include prefix-observer cost. Static37104B/PE, free12048B. Original-nine-input independent math and SDK-host Clang17 native rebuild pass. All three23-node profiles now qualify; no simulator job remains active.
+
+Next31-node source122338297913 passed3SDKcalls and full original-eleven-input review. Added unselected structural plan and25-phase lifetime plan with computed Q/K/V bounds and post-V row scratch reuse. Counter64/F256 plan35282B; other supported geometry/alias tests run in `test_input_attention_plan.py`. Initial manual planning used implicit sampled/F256 and correctly hit its existing memory rejection; explicit counter planning succeeds. Regular compiler still rejects31 nodes until CSL/runtime/native/device integration is complete. Preserve this checkpoint, then continue that integration; do not treat133 profiles as completion of the overall development queue.
+
+
+### 13:18 UTC31-node generated SDK diagnostic and preserved numerical failure
+
+Completed safe865-file authoring checkpoint125442, no remote conflicts and strict hashesPASS. Added shared31-node codegen hooks, synchronous in-place pair CSL library, hygienic verifier sinks and typed immutable eleven-input transport; existing23 generated CSL stays byte-identical. Full249testsPASS before final transport/numerical regression additions.
+
+Generated diagnostic130338205990 compiled and ran3SDKcalls;17 source port groups exactly match, original-input mathematics/progressPASS. HLS/source cycles141604/141396,141607/141397,132639/132435; static29840B/PE. Crucially eight-case native gate failscase3, and separately generated130756542610 executes that original case in actual SDK and reproduces finalL2.83062258. These are unqualified diagnostics; catalog133 is unchanged, regular31dispatch remains rejected.
+
+Actual native block-f32-only policies still failcase3final.07114369. Experimental retainedf32V/PV/O/Z native policy passes8cases,maxfinal.00640749; narrowerregionsfail. ActualSDK probability sensitivity indicates that native-only policy is insufficient evidence: observed half probabilities cause ZL2.05475395 versus.00614797 with f64 mathematical normalization. Next explicitly typed mixed-precision resident policy must include probability normalization/storage, preserve range/lifetime/communication/DSD ownership, then meet the same8case actualSDK gates. No data/tolerance changes. All failed runs/logs preserved; details and artifacts linked in RESIDENT-INPUT-PREFIX.md.
+
+Final local regression251PASS (`hls-input-attention-full-tests3.log`), and all133 prior profiles regenerate byte-identical CSL (`input-attention-prior133-codegen-review.json`). No new native/SDK runs are implied by that regeneration check. Both31 diagnostic SDK jobs completed; no SDK batch is active. Final authoring/evidence checkpoint follows.
+
+### Continued mixed frontend, target audit, and standard-driver validation
+
+The experimental 133613 mixed CSL passed all eight original eleven-input mathematical
+cases. Public precision.hpp/Clang parsing retains seven storage/compute boundaries;
+actual public C++ bundle134515 and its thirteen observed branches match the new native
+f32 interpreter exactly. The interpreter explicitly resolves double-rounding FMA
+midpoints through libm fmaf, including a scalar regression initially exposing a
+0-dimensional ndarray update issue; fixed and tested.
+
+Added canonical mixed structure, typed 25-phase storage/transport plan, pure shared
+CSL continuation, f32 range helpers, and shared SDK target audit. Scope is64x64/F256/P8
+counters. Current source-expression bounds use exact rational forward-error
+propagation; exhaustive16,777,216normalized inputs only certify the sqrt seed range.
+Actual SDK f32 probe142916 over[-80,0] failed the original2e-6exp accuracy gate at
+-79.70696(error4.5487e-6); preserved. Fresh143628 checks4096points each for sqrt and
+exp on[-12,0], same gatesPASS(maxsqrt8.211e-8,exp1.530e-6), exact truncation casts.
+This is sampled target evidence, not an all-binary32 ULP proof. Current derived
+shifted logits<=10.000001908; backend rejects derived domains outside[-12,0].
+
+Development typed142401616614 usesactualHLS→Clang→typedIR/plan→sharedCSL withnoadapter;
+all8SDKcallsPASS. Current-plan/auditor snapshot144222608116 independently rechecks
+original-input mathematics and unchanged twelve CSL files. Target audits check the
+half prefix,98304f32V/PV/O words,294912MLP f32 accumulators, residual/narrowing,
+immutable inputs and protocol. Static mixedELF35952B/PE,free13200. Coordinator
+independently confirmed all15actual numerical/accumulator groups exactly match
+133613 across8calls. Thirty physical-port mutation cases plus lifecycle/decoded
+output/word-range faults reject; initial queue mutation flipped an unowned bit,
+corrected to an owned bit without changing the queue contract.
+
+Connected the scoped backend to regular compile/IR/planner/backend/SDK/validate;
+265testsPASS and prior133profiles regeneratebyte-identicalCSL. Standardcompiler
+run144456167691 passed actualnative+13separateobservers and original-input gates.
+Its target preflight is explicitly prior actualSDKreplay with identical HLS/CSL/
+fixtures, NOT predicted target arithmetic. StandarddriverSDK is currently active;
+no catalog registration yet. Current debugger adds19typed producer/accumulator
+views, missing-observation handling and frozen completed-call audits. A later
+scale-literal fix preserves non-half-representable explicitf32softmax scales;
+default.125 CSL remainsbyte-identical. Fresh narrow-scale codegen testPASS.
+
+SDK-hostClang17 rebuilt the frozen standardbundle and all13nativebranches in
+`evidence/mixed-native-host-1500`;8mathcasesandidenticalCSLPASS. Precision-matched
+sourcecontrol retains upstream Prefill callbacks/half kernels and uses the same
+f32math/communication primitives for selected stages. First145817638193 compilation
+failed because compatibility shift functions accept legacyf16pointer carriers;
+corrected calls use their actual API (payload width still f32 DSD/mov32). Failure
+preserved; fresh150140448408sourcecontrol is active alongside standardHLS(max2sim).
+Do not overwrite canonical remote authoring while either runs. Canonical authoring
+checkpoint is still13:18; later work is local and frozen per-run snapshots.
+
+
+## 2026-09-07 15:28 UTC — formal mixed 31-node qualification
+
+Standard `run-20260907T144456167691Z` finished all eight SDK calls, one runtime;
+SIF hash fff17e81... unchanged. Source `150140448408` also finished eight calls.
+Frozen auditor, 85 actual-result corruptions rejected, 23 source/HLS port groups
+exact across all eight calls, original-eleven-input independent math passed.
+Source comparison final report is `input-attention-mixed-source-comparison-validated-execution.json`;
+it additionally verifies source execution/results hash and matching SDK image.
+Earlier `complete` and `sealed` reports are intermediate reviews, not registration
+inputs (review code was strengthened afterwards; they remain preserved).
+Static linked memory 35,952 bytes/PE, 13,200 unallocated; not runtime stack usage.
+Max-PE cycle ratios 1.0113682045–1.0121613944, with diagnostic stores, no host I/O.
+Standard HLS used SDK default five simulator threads and source used eight;
+these are simulated PE cycle comparisons, not host elapsed time or hardware.
+Final maximum relative L2 .006746241496, below unchanged .02 limit. Both hosts'
+actual Clang native builds and 13 branch observations passed. Catalog 134 via
+`qualification-20260907T152814610270Z.json`; this counts configurations, not 134
+complete applications. 266 unit tests plus two new reporting/fixture tests pass.
+The unified `run_ports` now dispatches fixture/native observers/replay/device math;
+replay remains explicitly prior actual SDK data, never a predicted oracle.
+Fresh unified native reproduction is executing. No SDK job from this continuation
+remains active. Unrelated older experiments are untouched.
+
+Completed-call debugger verified epoch3 f32 Z using frozen audit implementation.
+New evidence `input-attention-mixed-standard-debug-complete.json` retains raw words
+and separate view implementation identity. A premature comparison against a saved
+six-call snapshot correctly rejected incomplete execution; final registration
+only uses all-eight success. Failed source pointer API and wide exp probes remain
+preserved. Canonical remote authoring still awaits reviewed sync after documents.
+
+
+## 2026-09-07 15:40 UTC — next Decode source boundary investigated
+
+Unified native run152832355648 passed all eight fixtures and13branch observers.
+Status regenerated:134bounded configurations. Began next source-backed Decode
+batched linear-algebra boundary; no new HLS/catalog admission. Source RMS initially
+fails with X_tmp squared input, and changing only the input DSD still fails.
+Eight-call153456870135 captures pre/post collective: first local batch equals
+last feature square, second sums fully. Pointer-src0 repair153656391963 was
+compiler-rejected (unsupported faddh signature), preserved. Explicit stationary
+memory DSR recurrence plus X repair153833031675 now passes eight SDK calls;
+max repaired RMS relativeL2 .000573571. Source fast_exp actual samples also fail
+mathematical exp badly (-1→.984375). See docs/DECODE-BATCHED-LINEAR-ALGEBRA.md.
+These source probes guide future HLS/runtime work, and are not counted as an HLS
+port. No SDK job from this continuation remains. Final268unit suite PASS.
+
+
+15:48 UTC: extracted `runtime/batched_rms_local.csl`, actually imported by fresh
+Decode probe154512394628. Eight SDK calls match repaired source:8192output half
+words and1024sum half words; independent mathematical RMS still passes. New
+`decode-batched-rms-library-eight-review.json` binds current module bytes to
+executed source. No new HLS profile admitted. Authoring checkpoint154245 passed
+936remote hashes with backups/no conflicts, and immutable evidence plus newnative
+bundle mirrored. Runtime/probe/document additions after that checkpoint require
+a final small sync. All task SDK executions finished; remote268unit suite running.
+
+
+Remote268suite found one portability defect in test_input_attention_mixed_plan:
+Linux interpreter expf was compared bitwise to saved macOS native probability.
+84/4096 lanes differed by at most1.862645e-9 (oneulp); actual independent host
+native/SDK qualification remains valid. Test now compiles and executes the same
+observed C++ on the current host and retains exact branch comparisons, rather
+than loosening a tolerance or skipping Linux. First remote failure log preserved;
+corrected local affected tests and remote full rerun are being performed.
+
+
+15:52 UTC: corrected remote full268unit suite PASS (Clang17/Linux), local affected
+mixed-plan5PASS. Earlier local268fullPASS and remote failed cross-host comparison
+are both retained. Test fix executes actual same-host C++ rather than allowing
+an error. Qualification134dependency hashes rechecked unchanged. No active SDK
+or test process from this continuation remains. Final authoring whitelist and
+immutable log/evidence sync follow; final continuity manifest will record hashes.
+
+
+## 2026-09-07 16:18 UTC — batched RMS135 qualified, continue fanout
+
+Added shared rms_ir verifier, feature-Y/batch-major/replicated-X policy, grouped
+planner with even-half padding, extracted five-color axis_grouped_reduce runtime,
+standard transport/auditor/debugger and original-domain fixtures. PublicB3N512P8g2
+(native8/source8/SDK8) qualified via161741173353. SDK160212failed on reservedlayout
+identifier; corrected160529124015 passes. Source160729052136 preserves repaired
+original Decode arithmetic and full originalcomm module, strips unrelatedexports,
+pads sums without changing logicalB. Five raw groups all8exact,28mutationsreject,
+ELF8832B/PE,simcycle ratio1.013590844–1.013620072. Nativehost1613actualC++8PASS;
+first registrar stopped because an excludedpycachefile was hashed in its native
+provenance. Full original mirror restored that file; registrar135thenpassed
+without skippinghashes. Unifiednative161756779415PASS.271fulltestsPASS plusoldRMS4
+andnewplan3.134prior configurations regeneratebyte-identicalCSL. Actualdebugger
+inspectsp7_7/e7/groupedsum withzero padding; firstfrozenauditfull-batchonly.
+
+Nextgeneric normalizedgroupedfanout2/3: localprojectoutputs packedcontiguously,
+sameY-axisgroupednetwork, dynamiccollectiveextent in one instance to avoid duplicate
+queuebinding. All local producers must complete before fusedreduce. Keep each
+branch visible for original-input accuracy and rawpacked/unpacked checks.
+Canonicalauthoring remains155255untilnextreviewedsync; newrunsarefrozen/selfcontained.
+
+## 2026-09-07 16:45 — normalized batched fanout development
+
+Added shared structural normalized-fanout canonicalization, explicit resident
+batch/feature projection policy, generic two/three-branch planner, one-instance
+dynamic grouped DSD extent lowering, source-derived local DSR/map matmul, typed
+transport/auditor, branch witnesses, and debugger ownership views. Added QKV
+3x512x512 and rectangular UP/GATE5x256x512 HLS source subgraphs. Eight original
+fixtures exercise distinct weights, signs, zeros, tiny values, and impulses.
+C++/independent target-model checks pass; full274local tests passed in63.728s.
+Actual SDK compiler failures and fixes are documented in DECODE-BATCHED-LINEAR-ALGEBRA.
+QKV run20260907T163935599027Z has compiled and launched, with full SDK audit still
+running. Source control20260907T163736838606Z is also running. SDK-host native
+rebuild evidence/batched-qkv-native-host-1643 passed all eight checks and reproduced
+CSL bytes. No new catalog registration beyond135 yet. Remote authoring remains
+unchanged while these frozen jobs execute.
+
+## 2026-09-07 17:45 — actual route order, diagnostic boundaries, ongoing qualification
+
+Corrected the Decode grouped reference from an actual signed projection witness:
+the even midpoint consumes HEAD before TAIL. The first complete source/HLS call
+now matches every partial and reduced word. Shared batch-major RMS uses this
+reference; all eight existing135 observations and its schedule recheck unchanged.
+Two real SDK probes (g2/g4,171040) each passed8calls with2→8→2extent reuse,
+including640association-distinguishing lanes per independently reviewed probe.
+These primitive results do not qualify the full fanout application.
+
+SDK live-read investigation rejected observation shortcuts: read_symbol requires
+stop; tested debug-util/live ELF paths did not match current memcpy input words.
+All diagnostic I/O remains intact. The slower single-thread attempts were
+explicitly interrupted and preserved, not counted as full passes. Current
+complete jobs are QKV run20260907T170911843494Z and source control
+20260907T171118760254Z, both8threads with7200sbudget, original readback channel.
+Do not modify their implementation or timeout. A saved two-call prefix matches
+all10port groups; measured max-PE ratios are1.005605 and1.005604. Partial only.
+
+Future bundles now support explicit completed-call inspection, a fail-fast
+watchdog callback bound to the frozen auditor, atomic-snapshot stat/hash caching,
+and separate bank/index DSR leases. A versioned installed-SDK default-memcpy
+reservation check covers colors, queues and task namespaces. New middleware is
+not retrofitted into current SDK runs. UP/GATE remains the next full application
+configuration; native builds exist but SDK qualification/registration is pending.
+Remote canonical authoring remains unchanged during active frozen jobs.
+
+### 2026-09-07 18:12 UTC — SDK implementation-derived task reservation
+
+Installed WSE3 memcpyd2h derives local task21 from default D2H color21 and
+binds f_send_data. The reservation checker now includes this implementation
+binding as well as sys_params declarations, with the implementation SHA.
+Conservative persistent-context24 remains distinct from actual default-context
+slot availability. Six targeted tests pass; preceding middleware suite278pass.
+QKV/source complete runs remain untouched, each last observed at6 saved calls.
+Fresh UP/GATE run180940232501 includes the corrected contract.
+
+### 2026-09-07 18:28 UTC — QKV full qualification, UP/GATE running
+
+QKV170911 and source171118 both passed8 SDK calls. Full comparison binds frozen
+decoder and all10 port groups, original inputs, independent branch math and SDK
+hashes. MaxL2 .006320734; maxpeak .007224275; maxPEcycles13276–13279 and source
+ratio1.005603938–1.005605211. Static37168B/PE;48actual-data mutations rejected;
+SDK-host native1714 provenance305files verified and CSL identical. Registered
+configuration136 in qualification182741945418. UP/GATE180940 and original source
+181014 now running8calls with8threads each and7200s budget; no canonical sync.
+UP/GATE native1814 provenance308files verified; static20672B/PE,3ELFclasses.
+New source-order/port-renaming test confirms identical CSL and native evaluator
+outputs, bringing focused fanout tests to7. Real-prefix watchdog reproduction
+retains valid/corrupted snapshot bytes and checker/driver copies.
+
+### 2026-09-07 18:50 UTC — lifetime verification and handover probe preparation
+
+Shared region_lifetimes now checks batched numerical allocations and every local
+DSR completion token. Exported observations remain live through host readback;
+no runtime source or storage reuse changed. Full280tests passed63.949s, native
+QKV183602 passed8 and emits byte-identical CSL to qualified170911. Fresh metadata
+and prior frozen qualification remain separate.
+
+UP/GATE last observed6completed calls, frozen incremental audit passes.
+Prepared-only axis-handover g2/g4 probes184853 use a separate static alternating
+control ring, queue2, ready/configure/release sequence, old-operation/configuration
+skew and independent stdlib-half Y/X/Y checks. No simulator launched yet and no
+application imports the probe. Abstract protocol/topology review is not actual
+CSL execution or a production performance recommendation.
+
+### 2026-09-07 18:57 UTC — UP/GATE full qualification
+
+Standard180940 and source181014 passed all8 SDK calls. Full9port groups match,
+44mutations reject, independent maxL2 .006291459/maxpeak .007559182; cycles
+9245–9249, source ratio1.007735890–1.007739263. HLS/source static20672/20768B/PE;
+SDK-host native1814 full308file provenance and identical CSL verified. Registered
+137 in qualification185614692044. Frozen completed-audit8PASS/full_run_passedTrue
+is bound by qualification. No full FFN/Decode or hardware throughput claim.
+Both application simulators are now finished; authoring checkpoint may proceed
+after remote-newer review, before isolated axis-handover SDK probes start.
+
+### 2026-09-07 20:03 UTC — SDK independent planes and full batched FFN development
+
+The ring Y/X/Y handover probes184853 g2/g4 passed eight SDK calls but cost
+66223–67981 max-PE cycles including skew/data work. Independent SDK X/Y planes
+191700/191717 passed eight calls at7360–7934 cycles. These use different f32
+collective arithmetic;5120/6144 words differ from grouped-half, so this is not
+an application speedup or isolated barrier comparison. Reusable sdk_axis_reduce
+192718 passed odd logical extents3/11/5, in-place/out-of-place I/O, immutable
+inputs, nonzero tail canaries and callbacks. No application qualification added.
+
+Stable SDK half SiLU194744 exhaustively checked63488 finite encodings over eight
+SDK calls: target bits exact, finite outputs, magnitude bounded. Standard-math
+maxabs .004171106620460385, maxULP9;193 nonzero rounded standard results become
+zero, including both negative tails and near-zero rounding. Application accuracy
+remains independently gated.
+
+New batched_feed_forward_5x256x512_8x8 HLS source explicitly declares resident
+half computation and SDK f32 collectives. Structural thirteen-node FFN canonical
+IR is shared with the older tiled profile (nine existing focused tests pass).
+Typed bounds pass; initial complete numeric/observation storage plus1024-byte
+protocol/descriptor and16384-byte code/stack reserves total40676B/PE. Linked ELF
+must confirm this estimate. The controller uses SDK callbacks and separate planes,
+retains original X and raw gate, and exposes RMS/projection/activation/product/
+DOWN/residual witnesses. Native eight-case build200206 is running with per-stage
+original-input gates before the first SDK attempt. This is development, not138.
+
+### 2026-09-07 20:32 UTC — Full FFN native gates and SDK iteration
+
+Fresh200435 replaces the native-only200206 CSL reserved-name candidate without
+overwriting it. New runtime uses fused_len, and frozen audit bounds timestamps
+by0<cycles<2^32. Twelve focused and283 full tests passed before launch. All eight
+native cases and six actual native intermediate observers passed fixed2%L2/3%
+peak gates against original inputs; predicted target stages also pass. SDK200435
+compiled and is executing eight calls, eight simulator threads,4000s watchdog.
+Linked9ELF classes max38400B/PE,10752 unallocated static bytes; not stack usage.
+SDK-host native2013 passes all eight/six-observer checks with identical generated
+CSL; all365 provenance files mirrored and verified.
+
+Directed SDK association200921 passed eight calls on both planes:9728 logical
+words agree with reverse-linear f32 reduction,8512 distinguish forward order.
+This addresses the earlier exact-dyadic probe's inability to distinguish order.
+Original vecmat compute control201155 is also running; only local projection
+lowering differs. Do not label this an unmodified full Decode comparison.
+
+The shared project runner now supports batched_ffn fixtures and seals six actual
+native observers plus a separate predicted-target gate. Fresh native202543 passes
+all gates with byte-identical CSL to active200435. Its new debug/partial-audit
+metadata is not retrofitted into the active frozen run. Native-only evidence is
+not an additional SDK qualification. Fifteen focused tests cover storage callbacks,
+precision policies, graph renaming, damaged stage data and invalid48-bit timing.
+The independently reviewed first two SDK calls pass every raw group and all seven
+original-math stages; complete process and source-control checks remain pending.
+
+### 2026-09-07 21:05 UTC — Full FFN admitted as bounded profile138
+
+Main200435 and original-vecmat control201155 each passed all eight SDK calls.
+All15 compared raw groups match at every PE. HLS48491–59696 cycles, control
+48741–59946;250 fewer cycles per case, ratio .994870848–.995829580. This is local
+projection lowering overhead under a common SDK/RMS/SiLU schedule, not a full
+Decode or hardware claim. Full host diagnostic calls258.6–347.0s include complete
+weight and observer readback. All56 device stage gates pass; worstL2 .003391537
+at DOWN and .000885871 for final output.52 corrupted numerical/protocol/late-call
+snapshots reject. Native host365file provenance and nine ELF classes verified.
+Registered in qualification210527940077; STATUS now138 bounded configurations.
+
+L1 analysis retains elementwise finite-value proof and uses exact rational
+rounding/underflow bounds plus Cauchy-Schwarz. Native205552 passes all sealed
+actual/predicted stage gates and generates identical CSL. All40 observed SDK rows
+satisfy the exact inequalities; projection bound8.21875 replaces128 and resulting
+DOWN/residual range bounds are135.75/136.75. No broader input SDK qualification
+is inferred. Updated full suite289PASS68.362s. The initially overstrict comparison
+of host-derived f64 norm reports failed on ~1e-14 NumPy/BLAS differences; both
+hosts are independently fixed-gated, while raw words and integer cycle evidence
+remain exact. Failed comparison log is preserved.
+
+Next numerical boundary is the missing source-backed cache attention dataflow:
+score contraction, stable max/sum softmax, value contraction and output/residual,
+with externally supplied read-only queries/K/V. Cache update, RoPE generation,
+causal masking and independent per-request caches must remain explicit separate
+semantics, not silently claimed by this tail. Source inspection and layout/
+precision/resource contract precede that next implementation. Both current SDK
+jobs have exited; canonical checkpoint can now proceed.
+
+## 2026-09-07 22:19 UTC — supplied-cache attention in real SDK iteration
+
+Continued the linear-algebra queue after the 138th qualified bounded configuration. Added `cache_attention_5x256x512_8x8`: supplied rotated query, shared read-only K/V cache, unmasked score/softmax/PV/output/residual. Canonical attention IR is shared; physical K packing follows device feature-X contraction rather than the restored host packing. No cache append, causal mask or head selection is implied.
+
+MAX sharing the existing SDK SUM planes passed eight calls (`sdk-axis-max-20260907T213834656626Z`), and direct half softmax math passed all finite nonpositive exp inputs and all half denominators [1,512] (`sdk-softmax-math-20260907T213936783965Z`). All failures remain: initial MAX range syntax, native long-half PV accuracy, target shard64 cancellation accuracy, and LLVM PHI failures for mapped block merging. The working block implementation retains packed half DSR contractions with explicit float block merging.
+
+Actual HLS `run-20260907T220401939966Z` and unchanged original vecmat local-compute control `cache-attention-source-compute-20260907T220538494452Z` are running eight calls, at most two simulators with eight threads each. First two HLS calls passed the frozen all-PE auditor; batch completion/qualification remain pending. SDK-host native `cache-attention-native-host-2206` passed four observers and identical generated CSL. Linked static memory is 36640/37168 bytes per PE, nine classes each. Native-only `run-20260907T221440282260Z` raises planning reserve to40212 bytes and checks shared-runner/row-mass gates with identical seven CSL files. This is metadata validation, not a second SDK run.
+
+Authoring changes remain local while SDK jobs execute; no canonical remote toolchain sync. Full source comparison, raw-result mutations, registration, docs closure and final verified sync still required. Catalog remains138. The next action is to finish/debug this application, not to move to stencil or count a partial result.
+
+## 2026-09-07 22:56 UTC — supplied-cache attention qualified as139
+
+Full eight-call HLS and original vecmat control completed: 20 raw groups exact, five original-input mathematical stages and row-mass gates passed on device and two native hosts, 67 deliberate corruptions rejected. Qualification `evidence/qualification-20260907T225536946434Z.json` binds actual220401, comparison, memory, mutations and native-host provenance. Device max L2: context .008266679203, delta .005215773058, final .000206573928; max row-mass error .004951477051. Cycles52157/control52975 every call; static36640/control37168 bytes/PE. Scope is supplied shared-cache unmasked attention/output/residual, not full Decode, GQA, cache update or hardware performance.
+
+The signed-zero runtime probe225439 passed8calls and demonstrated the direct half DSR versus explicit float-merge distinction. Current target reference follows this fast path, with unchanged CSL. Earlier syntax/LLVM/numerical failures remain preserved. See `docs/SUPPLIED-CACHE-ATTENTION.md`. Next remain source-backed linear algebra composition and missing Decode pair-rotation semantics, not stencil expansion.
+
+## 2026-09-07 23:20 UTC — next Decode layout stage, source failure reproduced
+
+Added batch-major feature-axis ownership to shared rotate_pairs, preserving legacy tiled CSL. B5/N1024/8x8/X HLS230157 passed6SDKcalls and30mutations; native host2306 and full304tests pass. Source230412 completed6but FAILED because set_dsd_base_addr discards original odd offset. Isolated DSD231325 passed8and proves the cause. Repaired source231236 adds exactly odd+1 after base reset, is executing6calls, and must pass full comparison before registration. Input-preservation copy is inside source timing.
+
+Alias231538 passed8actualcalls: Q/K nonzero offsets, in-place/separate outputs, preservedV/sentinels. Initial230755 scalar-pointer compile failure retained. Current middleware adds atomic pair snapshots/strict completed-prefix auditing; native-only231817 emits identical3CSLfiles and all6existingHLS calls reaudited. No canonical sync while repaired SDK batch runs; current admitted count139.
+
+## 2026-09-07 23:22 UTC — Decode batch-major pair qualified as140
+
+Repaired-source231236 completed6SDKcalls and all6groups match HLS230157 exactly. Qualification `evidence/qualification-20260907T232229262682Z.json` binds source comparison, original failure/DSD cause, two native hosts,30mutations and3ELFclasses. HLS1878/source2081maxPEcycles everycall; source copy is included. HLS11200/source11408staticB/PE. Independent per-component math passed with worst error .007438659668, at most .577373 of allowed input-dependent envelope. Full305tests73.150s PASS; prefix-native231817 generates identical3CSLfiles and currentauditor passesall6actualcalls.
+
+Catalog140 denotes bounded configurations. This adds the source batch-major local transform and reusable CSL library, not complete Decode/head/cache semantics. Next item8 is actual device graph composition of normalized QKV, pair transforms and read-only-cache attention, with derived ranges, phase joins and resource/lifetime allocation. The existing isolated source modules must not be mistaken for an automatically supported whole graph. No stencil expansion yet. All current SDK jobs exited before checkpoint.
+
+## 2026-09-08 00:20 UTC — projected-cache graph executing
+
+The25-node B3/N256/S512/8×8 resident normalized-QKV/pairs/cache/output graph now
+passes native and target preflights, SDK-host native reconstruction and actual
+SDK compilation. The Q32 cancellation failure remains preserved; Q4 alone fixes
+the fixed native score gate under byte-identical inputs/reference. New blocked
+RMS L1 propagation covers local and global merge orders. Three public outputs
+retain newly computed K/V independently of the read-only supplied old cache.
+
+Actual run235739 and original Decode vecmat control000650 are executing eight
+calls each, max two8-threadsimulators. First call raw comparison and all eleven
+stage gates pass; HLS/source max PE cycles65606/66854. Static ELF footprints are
+46592/47744bytes perPE, nineclasses, versus HLS plan46816. No full-run admission
+yet. SDK-host native0008 has eight observers, eleven fixed gates and nine
+byte-identical generated CSL files. Full311unit tests passed after runner
+integration. A subsequent duplicate-output-name guard is being independently
+rebuilt natively; active SDK inputs and frozen code remain unchanged.
+
+Shared runner, stage debugger, completed-call auditor, source comparison,
+mutation and registration drivers now cover the graph. Registration remains
+blocked on actual full execution and its gates, rather than assumed from
+preflights. Canonical remote authoring remains unchanged during both jobs.
+
+## 2026-09-08 01:05 UTC — projected-cache graph qualified as141
+
+Eight actual SDK calls and eight original vecmat local-compute controls complete.
+All34comparable raw groups match;5,748,736numeric half words, eleven original-input
+stage gates, independent native observers on two hosts and107mutation rejections
+pass. Qualification `evidence/qualification-20260908T010554710275Z.json` binds the
+actual235739 run, source000650, nine ELF classes, source-function map and full
+native/gate/failure evidence. Maximum device L2 context .009427661525, delta
+.004134622524, final .000253391433; row-mass error .006225585938. Every call:
+HLS65606/source66854maxPEcycles (.981332456ratio); static46592/source47744B/PE.
+This is local-contraction control evidence, not full Decode or hardware.
+
+Current native-only003141 passes the same gates and emits identical9CSL files
+after duplicate-output-name and exact-integer certificate guards. Full312tests
+76.933s PASS. Q32 native failure and its historical stage-only seal mismatch are
+preserved. Missing debugger stages remain unavailable; partial snapshots retain
+their original inputs. No source trees or prior project results were edited.
+
+The next FFN boundary has a documented analysis-only counterexample: legal
+coherent inputs predict attentionZ=33, overflowing the next existing half RMS
+sum; naive added FFN weights exceed the perPE budget. Statistic precision/mean
+scaling and resource composition need actual SDK experiments before that next
+chain can be enabled. Both current simulators exited before canonical sync.
+
+## 2026-09-08 — actual mean-statistic RMS boundary
+
+Continued after configuration 141 into attention→FFN. Preserved a compile-only
+queue-observation failure, then completed eight actual SDK 2.10.1 calls proving
+ordinary SUM overflow and finite prescaled-mean normalization. Independent math
+review covers 49,152 outputs at unchanged 2%/3% gates. Added explicit runtime
+mean mode, serialized SDK helper, finite/correlated range candidates and an
+observation-preserving memory inventory. P8 composition exceeds SRAM; P16 is
+an unqualified storage candidate. See `docs/MEAN-STATISTIC-RMS.md`. The 317-test
+regression passed; seven affected range tests passed after the correlated proof
+extension. No additional HLS configuration is admitted by this primitive work.
+
+### Continued: 16-way primitives and composed parent
+
+Completed eight-call P16 mean and eight-call P16 MAX/SUM probes; independent
+mean math checks cover 98,304 actual outputs. Added explicit mean pragma/type
+contract, a 35-node HLS attention+FFN candidate and reuse of existing structural
+verifiers. The parent computes its own P16 attention bound (Z≤34.0625), FFN
+ranges and 23-phase storage leases (39,934 bytes/PE). 327 regressions passed,
+with affected lifetime tests run afterward. Complete parent CSL emission and
+application qualification remain pending; qualification count stays 141.
+
+### Continued: complete resident composition and standard pipeline
+
+Implemented caller-owned CSL attention region, mean-statistic boundary and FFN
+continuation, shared SDK planes and typed 50-port host/debug ABI. The standard
+35-node HLS compiler bundle is `run-20260908T030001167477Z`. Eight native cases
+and eighteen observed stages pass on two hosts. Q4 failed the fixed score peak
+gate; Q1 passes with unchanged inputs. The first ELF exposed an underestimated
+reserve; current plan is 44,030 bytes and actual standard/source-control linked
+maxima are 42,064/43,984 bytes across nine ELF classes each.
+
+Full eight-call SDK and source-compute runs are active with six-hour budgets.
+Preserved the earlier one-call, intentionally interrupted budget experiments.
+No full-composition admission yet. All 331 regression tests pass after fixing
+explicit-precision dispatch, plus the added lifecycle guard test. A sealed
+supplemental driver rejects 119 mutations of the real first-call snapshot;
+the frozen original auditor and later launch/partial-success guards are
+explicitly distinguished. Current authoring emits identical CSL, schedule,
+semantic IR and native output to the executing bundle. The independent stdlib
+fixture and standard runner's fifteen additional native observers pass all
+eighteen stage gates. Full-result mutations and final comparisons remain due.

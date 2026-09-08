@@ -1,0 +1,27 @@
+// Source algorithm: WaferLLM Prefill silu_kernel and z3_comp, pinned fd1c2da.
+// The activation's private buffer becomes the product destination at last use.
+param memcpy_params;param length:i16;param sampled:i16;
+const sys=@import_module("<memcpy/memcpy>",memcpy_params);
+const math=@import_module("<math>");const time=@import_module("<time>");
+var up=@zeros([length]f16);var gate=@zeros([length]f16);var result=@zeros([length]f16);
+var activated=@zeros([if(sampled!=0) length else 1]f16);
+var progress=@zeros([3]u16);var timing=@zeros([6]u16);var start=@zeros([3]u16);var end=@zeros([3]u16);
+const ud=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{length}->up[i]});
+const gd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{length}->gate[i]});
+const rd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{length}->result[i]});
+const ad=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{length}->activated[i]});
+const dest=@get_dsr(dsr_dest,1);const src0=@get_dsr(dsr_src0,1);const src1=@get_dsr(dsr_src1,1);
+fn silu_value(x:f16) f16 {return x/(@as(f16,1.0)+math.exp_f16(-x));}
+fn hls_main() void {
+ time.enable_tsc();time.get_timestamp(&start);progress[0]=0;progress[1]=0;
+ @map(silu_value,gd,rd);
+ if(sampled!=0){@fmovh(ad,rd);}progress[0]=1;
+ @load_to_dsr(dest,rd);@load_to_dsr(src0,ud);@load_to_dsr(src1,rd);
+ @fmulh(dest,src0,src1);progress[1]=1;progress[2]+=1;
+ time.get_timestamp(&end);time.disable_tsc();
+ for(@range(i16,3)) |i| {timing[i]=start[i];timing[i+3]=end[i];}
+ sys.unblock_cmd_stream();
+}
+var uptr:[*]f16=&up;var gptr:[*]f16=&gate;var rptr:[*]f16=&result;var aptr:[*]f16=&activated;
+var pptr:[*]u16=&progress;var tptr:[*]u16=&timing;
+comptime {@export_symbol(uptr,"up");@export_symbol(gptr,"gate");@export_symbol(rptr,"result");@export_symbol(aptr,"activated");@export_symbol(pptr,"progress");@export_symbol(tptr,"timing");@export_symbol(hls_main);}

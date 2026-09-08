@@ -1,0 +1,1944 @@
+{
+  "passed": true,
+  "scope": "Compare executed HLS composition to a precision-matched pinned source engine.\n\nBoth use shared f32 communication/math primitives; this measures composition\nand observation overhead, not independent primitive implementations or hardware.\n",
+  "source_mathematics_eight_passed": true,
+  "precision_matched": true,
+  "cases": [
+    {
+      "epoch": 0,
+      "source_original_input_mathematics": {
+        "relative_l2": 0.00018393648217469383,
+        "peak_scaled_error": 0.00028831740618633664,
+        "fixed_accuracy_passed": true,
+        "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+        "attention": {
+          "relative_l2": 0.0005224783404976707,
+          "peak_scaled_error": 0.00044835892775793145,
+          "fixed_accuracy_passed": true
+        },
+        "projection": {
+          "relative_l2": 0.0004741279496541597,
+          "peak_scaled_error": 0.0004894760258045913,
+          "fixed_accuracy_passed": true
+        },
+        "mlp_delta": {
+          "relative_l2": 0.005338488891679567,
+          "peak_scaled_error": 0.0054870669801551815,
+          "fixed_accuracy_passed": true
+        },
+        "score": {
+          "relative_l2": 0.0019246237363989306,
+          "peak_scaled_error": 0.0017135741983992933,
+          "fixed_accuracy_passed": true
+        },
+        "probability": {
+          "relative_l2": 6.917968993885386e-07,
+          "peak_scaled_error": 2.849261746049328e-06,
+          "fixed_accuracy_passed": true,
+          "max_row_mass_error": 1.1641532182693481e-07
+        },
+        "input_normalized": {
+          "relative_l2": 0.000468290564273139,
+          "peak_scaled_error": 0.0014050121015713294,
+          "fixed_accuracy_passed": true
+        },
+        "q_raw": {
+          "relative_l2": 0.0012825363496906158,
+          "peak_scaled_error": 0.001984416080255278,
+          "fixed_accuracy_passed": true
+        },
+        "k_raw": {
+          "relative_l2": 0.001275041971910748,
+          "peak_scaled_error": 0.001790154614677354,
+          "fixed_accuracy_passed": true
+        },
+        "v_raw": {
+          "relative_l2": 0.000472644352662832,
+          "peak_scaled_error": 0.0007611841211172057,
+          "fixed_accuracy_passed": true
+        },
+        "q": {
+          "relative_l2": 0.0012825363496906158,
+          "peak_scaled_error": 0.001984416080255278,
+          "fixed_accuracy_passed": true,
+          "local_pair_rounding_passed": true
+        },
+        "k": {
+          "relative_l2": 0.001275041971910748,
+          "peak_scaled_error": 0.001790154614677354,
+          "fixed_accuracy_passed": true,
+          "local_pair_rounding_passed": true
+        },
+        "v": {
+          "relative_l2": 0.000472644352662832,
+          "peak_scaled_error": 0.0007611841211172057,
+          "fixed_accuracy_passed": true
+        }
+      },
+      "exact_port_groups": 23,
+      "hls_max_pe_cycles": 171084,
+      "source_max_pe_cycles": 169155,
+      "ratio_of_max_pe_cycles": 1.011403742129999,
+      "hls_cycles_per_pe": [
+        [
+          169664,
+          169660,
+          169660,
+          169653,
+          169651,
+          169649,
+          169647,
+          169644
+        ],
+        [
+          169810,
+          169813,
+          169803,
+          169806,
+          169799,
+          169799,
+          169800,
+          169794
+        ],
+        [
+          171082,
+          171084,
+          171078,
+          171076,
+          171076,
+          171074,
+          171068,
+          171067
+        ],
+        [
+          170483,
+          170485,
+          170477,
+          170479,
+          170477,
+          170473,
+          170476,
+          170472
+        ],
+        [
+          171082,
+          171083,
+          171076,
+          171077,
+          171077,
+          171075,
+          171070,
+          171065
+        ],
+        [
+          170955,
+          170957,
+          170953,
+          170953,
+          170953,
+          170952,
+          170946,
+          170944
+        ],
+        [
+          171072,
+          171074,
+          171065,
+          171068,
+          171071,
+          171068,
+          171060,
+          171054
+        ],
+        [
+          171039,
+          171041,
+          171033,
+          171038,
+          171040,
+          171038,
+          171030,
+          171023
+        ]
+      ],
+      "source_cycles_per_pe": [
+        [
+          167575,
+          167575,
+          167570,
+          167575,
+          167567,
+          167573,
+          167573,
+          167570
+        ],
+        [
+          167707,
+          167710,
+          167701,
+          167711,
+          167701,
+          167709,
+          167703,
+          167706
+        ],
+        [
+          169147,
+          169149,
+          169149,
+          169147,
+          169143,
+          169139,
+          169137,
+          169131
+        ],
+        [
+          168466,
+          168463,
+          168466,
+          168455,
+          168466,
+          168455,
+          168459,
+          168448
+        ],
+        [
+          169151,
+          169155,
+          169151,
+          169151,
+          169145,
+          169142,
+          169138,
+          169132
+        ],
+        [
+          169035,
+          169038,
+          169036,
+          169039,
+          169028,
+          169027,
+          169022,
+          169018
+        ],
+        [
+          169135,
+          169139,
+          169138,
+          169139,
+          169130,
+          169130,
+          169123,
+          169116
+        ],
+        [
+          169103,
+          169108,
+          169108,
+          169109,
+          169098,
+          169099,
+          169091,
+          169085
+        ]
+      ]
+    },
+    {
+      "epoch": 1,
+      "source_original_input_mathematics": {
+        "relative_l2": 0.0001838157615846221,
+        "peak_scaled_error": 0.0003840657948907667,
+        "fixed_accuracy_passed": true,
+        "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+        "attention": {
+          "relative_l2": 0.0004927351635997248,
+          "peak_scaled_error": 0.0005826798468283676,
+          "fixed_accuracy_passed": true
+        },
+        "projection": {
+          "relative_l2": 0.0005692667118737023,
+          "peak_scaled_error": 0.0005511099812845335,
+          "fixed_accuracy_passed": true
+        },
+        "mlp_delta": {
+          "relative_l2": 0.004711881504403188,
+          "peak_scaled_error": 0.004521954066471207,
+          "fixed_accuracy_passed": true
+        },
+        "score": {
+          "relative_l2": 0.0019883838320162634,
+          "peak_scaled_error": 0.002224597390409521,
+          "fixed_accuracy_passed": true
+        },
+        "probability": {
+          "relative_l2": 7.849308002339168e-07,
+          "peak_scaled_error": 3.3520052420703656e-06,
+          "fixed_accuracy_passed": true,
+          "max_row_mass_error": 1.0337680578231812e-07
+        },
+        "input_normalized": {
+          "relative_l2": 0.0004978316189980936,
+          "peak_scaled_error": 0.0011756527180233395,
+          "fixed_accuracy_passed": true
+        },
+        "q_raw": {
+          "relative_l2": 0.0012939585202334108,
+          "peak_scaled_error": 0.0022726026024403197,
+          "fixed_accuracy_passed": true
+        },
+        "k_raw": {
+          "relative_l2": 0.0012993339514169276,
+          "peak_scaled_error": 0.002261549807663584,
+          "fixed_accuracy_passed": true
+        },
+        "v_raw": {
+          "relative_l2": 0.0004891600518432321,
+          "peak_scaled_error": 0.0007310505257891024,
+          "fixed_accuracy_passed": true
+        },
+        "q": {
+          "relative_l2": 0.0013330862685911023,
+          "peak_scaled_error": 0.0026980385802560826,
+          "fixed_accuracy_passed": true,
+          "local_pair_rounding_passed": true
+        },
+        "k": {
+          "relative_l2": 0.0013387497322653978,
+          "peak_scaled_error": 0.0021181730116151556,
+          "fixed_accuracy_passed": true,
+          "local_pair_rounding_passed": true
+        },
+        "v": {
+          "relative_l2": 0.0004891600518432321,
+          "peak_scaled_error": 0.0007310505257891024,
+          "fixed_accuracy_passed": true
+        }
+      },
+      "exact_port_groups": 23,
+      "hls_max_pe_cycles": 171082,
+      "source_max_pe_cycles": 169150,
+      "ratio_of_max_pe_cycles": 1.0114218149571386,
+      "hls_cycles_per_pe": [
+        [
+          169646,
+          169638,
+          169641,
+          169636,
+          169637,
+          169631,
+          169634,
+          169630
+        ],
+        [
+          169798,
+          169796,
+          169791,
+          169790,
+          169787,
+          169783,
+          169785,
+          169781
+        ],
+        [
+          171079,
+          171082,
+          171078,
+          171076,
+          171077,
+          171076,
+          171070,
+          171069
+        ],
+        [
+          170473,
+          170470,
+          170467,
+          170463,
+          170464,
+          170462,
+          170460,
+          170460
+        ],
+        [
+          171077,
+          171080,
+          171077,
+          171079,
+          171074,
+          171075,
+          171069,
+          171064
+        ],
+        [
+          170951,
+          170952,
+          170951,
+          170950,
+          170946,
+          170952,
+          170941,
+          170939
+        ],
+        [
+          171068,
+          171069,
+          171069,
+          171067,
+          171064,
+          171068,
+          171058,
+          171057
+        ],
+        [
+          171035,
+          171037,
+          171037,
+          171035,
+          171031,
+          171038,
+          171025,
+          171026
+        ]
+      ],
+      "source_cycles_per_pe": [
+        [
+          167826,
+          167823,
+          167823,
+          167819,
+          167819,
+          167816,
+          167815,
+          167810
+        ],
+        [
+          168015,
+          168008,
+          168008,
+          168008,
+          167999,
+          168007,
+          168000,
+          167999
+        ],
+        [
+          169146,
+          169148,
+          169148,
+          169146,
+          169142,
+          169138,
+          169136,
+          169130
+        ],
+        [
+          168602,
+          168603,
+          168601,
+          168600,
+          168594,
+          168591,
+          168586,
+          168583
+        ],
+        [
+          169148,
+          169149,
+          169150,
+          169147,
+          169144,
+          169141,
+          169137,
+          169131
+        ],
+        [
+          169032,
+          169037,
+          169034,
+          169031,
+          169026,
+          169024,
+          169021,
+          169017
+        ],
+        [
+          169132,
+          169135,
+          169137,
+          169132,
+          169129,
+          169129,
+          169121,
+          169115
+        ],
+        [
+          169101,
+          169104,
+          169106,
+          169102,
+          169096,
+          169099,
+          169090,
+          169084
+        ]
+      ]
+    },
+    {
+      "epoch": 2,
+      "source_original_input_mathematics": {
+        "relative_l2": 0.0,
+        "peak_scaled_error": 0.0,
+        "fixed_accuracy_passed": true,
+        "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+        "attention": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "projection": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "mlp_delta": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "score": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "probability": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true,
+          "max_row_mass_error": 0.0
+        },
+        "input_normalized": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "q_raw": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "k_raw": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "v_raw": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "q": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true,
+          "local_pair_rounding_passed": true
+        },
+        "k": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true,
+          "local_pair_rounding_passed": true
+        },
+        "v": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        }
+      },
+      "exact_port_groups": 23,
+      "hls_max_pe_cycles": 162127,
+      "source_max_pe_cycles": 160179,
+      "ratio_of_max_pe_cycles": 1.0121613944399703,
+      "hls_cycles_per_pe": [
+        [
+          160792,
+          160792,
+          160790,
+          160787,
+          160787,
+          160783,
+          160783,
+          160778
+        ],
+        [
+          160990,
+          160989,
+          160993,
+          160981,
+          160992,
+          160979,
+          160985,
+          160977
+        ],
+        [
+          162125,
+          162127,
+          162126,
+          162125,
+          162124,
+          162123,
+          162116,
+          162115
+        ],
+        [
+          161525,
+          161522,
+          161525,
+          161515,
+          161521,
+          161513,
+          161515,
+          161514
+        ],
+        [
+          162124,
+          162126,
+          162122,
+          162125,
+          162123,
+          162122,
+          162117,
+          162114
+        ],
+        [
+          161998,
+          161999,
+          161998,
+          161997,
+          161996,
+          161994,
+          161990,
+          161993
+        ],
+        [
+          162114,
+          162116,
+          162115,
+          162114,
+          162114,
+          162112,
+          162106,
+          162108
+        ],
+        [
+          162082,
+          162085,
+          162084,
+          162081,
+          162082,
+          162080,
+          162075,
+          162078
+        ]
+      ],
+      "source_cycles_per_pe": [
+        [
+          158727,
+          158729,
+          158722,
+          158726,
+          158716,
+          158723,
+          158711,
+          158714
+        ],
+        [
+          158869,
+          158872,
+          158864,
+          158872,
+          158857,
+          158865,
+          158855,
+          158854
+        ],
+        [
+          160177,
+          160179,
+          160177,
+          160178,
+          160177,
+          160174,
+          160171,
+          160171
+        ],
+        [
+          159595,
+          159597,
+          159590,
+          159590,
+          159590,
+          159588,
+          159589,
+          159587
+        ],
+        [
+          160176,
+          160179,
+          160179,
+          160177,
+          160177,
+          160175,
+          160172,
+          160173
+        ],
+        [
+          160064,
+          160064,
+          160063,
+          160060,
+          160062,
+          160059,
+          160057,
+          160051
+        ],
+        [
+          160162,
+          160163,
+          160165,
+          160161,
+          160161,
+          160159,
+          160158,
+          160157
+        ],
+        [
+          160131,
+          160132,
+          160134,
+          160130,
+          160129,
+          160129,
+          160129,
+          160124
+        ]
+      ]
+    },
+    {
+      "epoch": 3,
+      "source_original_input_mathematics": {
+        "relative_l2": 0.00674624149598021,
+        "peak_scaled_error": 0.00825089003408192,
+        "fixed_accuracy_passed": true,
+        "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+        "attention": {
+          "relative_l2": 3.2332479041587554e-05,
+          "peak_scaled_error": 3.271102093142166e-05,
+          "fixed_accuracy_passed": true
+        },
+        "projection": {
+          "relative_l2": 3.2108971571124644e-05,
+          "peak_scaled_error": 3.223666565472579e-05,
+          "fixed_accuracy_passed": true
+        },
+        "mlp_delta": {
+          "relative_l2": 0.009775545012325908,
+          "peak_scaled_error": 0.011124315837956736,
+          "fixed_accuracy_passed": true
+        },
+        "score": {
+          "relative_l2": 0.00044325296315346675,
+          "peak_scaled_error": 0.0007184430366952353,
+          "fixed_accuracy_passed": true
+        },
+        "probability": {
+          "relative_l2": 0.00019895942622591913,
+          "peak_scaled_error": 0.00042748451232910156,
+          "fixed_accuracy_passed": true,
+          "max_row_mass_error": 1.341104507446289e-07
+        },
+        "input_normalized": {
+          "relative_l2": 3.199948801643653e-05,
+          "peak_scaled_error": 3.1999488016472485e-05,
+          "fixed_accuracy_passed": true
+        },
+        "q_raw": {
+          "relative_l2": 0.0005972342894124884,
+          "peak_scaled_error": 0.0013189643400134557,
+          "fixed_accuracy_passed": true
+        },
+        "k_raw": {
+          "relative_l2": 0.0005972342894124884,
+          "peak_scaled_error": 0.0013189643400134557,
+          "fixed_accuracy_passed": true
+        },
+        "v_raw": {
+          "relative_l2": 3.199948801637772e-05,
+          "peak_scaled_error": 3.1999488016377854e-05,
+          "fixed_accuracy_passed": true
+        },
+        "q": {
+          "relative_l2": 0.0005972342894124884,
+          "peak_scaled_error": 0.0013189643400134557,
+          "fixed_accuracy_passed": true,
+          "local_pair_rounding_passed": true
+        },
+        "k": {
+          "relative_l2": 0.0005972342894124884,
+          "peak_scaled_error": 0.0013189643400134557,
+          "fixed_accuracy_passed": true,
+          "local_pair_rounding_passed": true
+        },
+        "v": {
+          "relative_l2": 3.199948801637772e-05,
+          "peak_scaled_error": 3.1999488016377854e-05,
+          "fixed_accuracy_passed": true
+        }
+      },
+      "exact_port_groups": 23,
+      "hls_max_pe_cycles": 171078,
+      "source_max_pe_cycles": 169154,
+      "ratio_of_max_pe_cycles": 1.0113742506828098,
+      "hls_cycles_per_pe": [
+        [
+          169745,
+          169746,
+          169740,
+          169742,
+          169736,
+          169738,
+          169733,
+          169731
+        ],
+        [
+          169951,
+          169952,
+          169940,
+          169948,
+          169938,
+          169948,
+          169939,
+          169940
+        ],
+        [
+          171076,
+          171078,
+          171070,
+          171076,
+          171069,
+          171069,
+          171062,
+          171061
+        ],
+        [
+          170486,
+          170483,
+          170487,
+          170477,
+          170482,
+          170475,
+          170475,
+          170469
+        ],
+        [
+          171075,
+          171076,
+          171069,
+          171074,
+          171069,
+          171071,
+          171065,
+          171058
+        ],
+        [
+          170951,
+          170952,
+          170946,
+          170949,
+          170951,
+          170946,
+          170942,
+          170937
+        ],
+        [
+          171065,
+          171068,
+          171058,
+          171065,
+          171062,
+          171062,
+          171054,
+          171048
+        ],
+        [
+          171034,
+          171035,
+          171025,
+          171033,
+          171032,
+          171031,
+          171023,
+          171018
+        ]
+      ],
+      "source_cycles_per_pe": [
+        [
+          167826,
+          167824,
+          167822,
+          167817,
+          167820,
+          167815,
+          167817,
+          167815
+        ],
+        [
+          168018,
+          168014,
+          168011,
+          168005,
+          168010,
+          168006,
+          168008,
+          168007
+        ],
+        [
+          169153,
+          169154,
+          169146,
+          169146,
+          169145,
+          169138,
+          169138,
+          169136
+        ],
+        [
+          168603,
+          168601,
+          168603,
+          168600,
+          168596,
+          168597,
+          168589,
+          168588
+        ],
+        [
+          169154,
+          169154,
+          169147,
+          169150,
+          169141,
+          169143,
+          169137,
+          169139
+        ],
+        [
+          169034,
+          169037,
+          169028,
+          169036,
+          169029,
+          169027,
+          169023,
+          169024
+        ],
+        [
+          169137,
+          169141,
+          169129,
+          169139,
+          169128,
+          169126,
+          169122,
+          169126
+        ],
+        [
+          169104,
+          169108,
+          169097,
+          169109,
+          169097,
+          169095,
+          169090,
+          169095
+        ]
+      ]
+    },
+    {
+      "epoch": 4,
+      "source_original_input_mathematics": {
+        "relative_l2": 0.0,
+        "peak_scaled_error": 0.0,
+        "fixed_accuracy_passed": true,
+        "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+        "attention": {
+          "relative_l2": 0.0005528298520809795,
+          "peak_scaled_error": 0.0008172493734110061,
+          "fixed_accuracy_passed": true
+        },
+        "projection": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "mlp_delta": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "score": {
+          "relative_l2": 0.0019692732491647874,
+          "peak_scaled_error": 0.0020680514696575056,
+          "fixed_accuracy_passed": true
+        },
+        "probability": {
+          "relative_l2": 7.37438264812519e-07,
+          "peak_scaled_error": 2.8448367989870057e-06,
+          "fixed_accuracy_passed": true,
+          "max_row_mass_error": 1.0617077350616455e-07
+        },
+        "input_normalized": {
+          "relative_l2": 0.00047668074469460036,
+          "peak_scaled_error": 0.0010986693174810862,
+          "fixed_accuracy_passed": true
+        },
+        "q_raw": {
+          "relative_l2": 0.001289392407778988,
+          "peak_scaled_error": 0.001741918048753525,
+          "fixed_accuracy_passed": true
+        },
+        "k_raw": {
+          "relative_l2": 0.001272834390495931,
+          "peak_scaled_error": 0.0020686724169901183,
+          "fixed_accuracy_passed": true
+        },
+        "v_raw": {
+          "relative_l2": 0.0004721865487264632,
+          "peak_scaled_error": 0.0006850054579398055,
+          "fixed_accuracy_passed": true
+        },
+        "q": {
+          "relative_l2": 0.0013254573443582673,
+          "peak_scaled_error": 0.0015471649521240657,
+          "fixed_accuracy_passed": true,
+          "local_pair_rounding_passed": true
+        },
+        "k": {
+          "relative_l2": 0.0013170246143563889,
+          "peak_scaled_error": 0.002101471825928056,
+          "fixed_accuracy_passed": true,
+          "local_pair_rounding_passed": true
+        },
+        "v": {
+          "relative_l2": 0.0004721865487264632,
+          "peak_scaled_error": 0.0006850054579398055,
+          "fixed_accuracy_passed": true
+        }
+      },
+      "exact_port_groups": 23,
+      "hls_max_pe_cycles": 171085,
+      "source_max_pe_cycles": 169143,
+      "ratio_of_max_pe_cycles": 1.0114814092217828,
+      "hls_cycles_per_pe": [
+        [
+          169743,
+          169743,
+          169740,
+          169742,
+          169737,
+          169738,
+          169735,
+          169732
+        ],
+        [
+          169942,
+          169944,
+          169940,
+          169944,
+          169934,
+          169945,
+          169936,
+          169937
+        ],
+        [
+          171079,
+          171081,
+          171079,
+          171079,
+          171079,
+          171071,
+          171071,
+          171064
+        ],
+        [
+          170489,
+          170487,
+          170489,
+          170481,
+          170483,
+          170475,
+          170475,
+          170467
+        ],
+        [
+          171083,
+          171085,
+          171079,
+          171081,
+          171075,
+          171073,
+          171070,
+          171063
+        ],
+        [
+          170954,
+          170956,
+          170953,
+          170951,
+          170947,
+          170948,
+          170942,
+          170940
+        ],
+        [
+          171070,
+          171074,
+          171069,
+          171072,
+          171065,
+          171066,
+          171058,
+          171053
+        ],
+        [
+          171038,
+          171040,
+          171038,
+          171038,
+          171031,
+          171035,
+          171025,
+          171023
+        ]
+      ],
+      "source_cycles_per_pe": [
+        [
+          167820,
+          167819,
+          167819,
+          167816,
+          167816,
+          167810,
+          167811,
+          167807
+        ],
+        [
+          168025,
+          168020,
+          168025,
+          168016,
+          168017,
+          168006,
+          168012,
+          168004
+        ],
+        [
+          169140,
+          169143,
+          169140,
+          169142,
+          169140,
+          169135,
+          169135,
+          169134
+        ],
+        [
+          168587,
+          168593,
+          168587,
+          168592,
+          168581,
+          168592,
+          168580,
+          168582
+        ],
+        [
+          169141,
+          169143,
+          169142,
+          169140,
+          169141,
+          169136,
+          169136,
+          169134
+        ],
+        [
+          169026,
+          169026,
+          169021,
+          169026,
+          169022,
+          169016,
+          169017,
+          169015
+        ],
+        [
+          169124,
+          169127,
+          169128,
+          169125,
+          169129,
+          169119,
+          169121,
+          169118
+        ],
+        [
+          169094,
+          169095,
+          169093,
+          169092,
+          169097,
+          169087,
+          169087,
+          169087
+        ]
+      ]
+    },
+    {
+      "epoch": 5,
+      "source_original_input_mathematics": {
+        "relative_l2": 0.0013740819835103438,
+        "peak_scaled_error": 0.00137408198351034,
+        "fixed_accuracy_passed": true,
+        "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+        "attention": {
+          "relative_l2": 3.204147713231146e-05,
+          "peak_scaled_error": 3.25148832023514e-05,
+          "fixed_accuracy_passed": true
+        },
+        "projection": {
+          "relative_l2": 3.195613240857745e-05,
+          "peak_scaled_error": 3.242223826949243e-05,
+          "fixed_accuracy_passed": true
+        },
+        "mlp_delta": {
+          "relative_l2": 0.00145633795102578,
+          "peak_scaled_error": 0.0014563379510257727,
+          "fixed_accuracy_passed": true
+        },
+        "score": {
+          "relative_l2": 0.001555600007941941,
+          "peak_scaled_error": 0.003942102211704824,
+          "fixed_accuracy_passed": true
+        },
+        "probability": {
+          "relative_l2": 1.0080060079865314e-06,
+          "peak_scaled_error": 1.9073486328125e-06,
+          "fixed_accuracy_passed": true,
+          "max_row_mass_error": 5.960464477539063e-08
+        },
+        "input_normalized": {
+          "relative_l2": 3.1999488016440514e-05,
+          "peak_scaled_error": 3.1999488016440535e-05,
+          "fixed_accuracy_passed": true
+        },
+        "q_raw": {
+          "relative_l2": 0.001047590608456577,
+          "peak_scaled_error": 0.0010156307527311689,
+          "fixed_accuracy_passed": true
+        },
+        "k_raw": {
+          "relative_l2": 0.0012068343906615367,
+          "peak_scaled_error": 0.0024089398154128363,
+          "fixed_accuracy_passed": true
+        },
+        "v_raw": {
+          "relative_l2": 3.199948801645022e-05,
+          "peak_scaled_error": 3.199948801641719e-05,
+          "fixed_accuracy_passed": true
+        },
+        "q": {
+          "relative_l2": 0.001047590608456577,
+          "peak_scaled_error": 0.0010156307527311689,
+          "fixed_accuracy_passed": true,
+          "local_pair_rounding_passed": true
+        },
+        "k": {
+          "relative_l2": 0.0012068343906615367,
+          "peak_scaled_error": 0.0024089398154128363,
+          "fixed_accuracy_passed": true,
+          "local_pair_rounding_passed": true
+        },
+        "v": {
+          "relative_l2": 3.199948801645022e-05,
+          "peak_scaled_error": 3.199948801641719e-05,
+          "fixed_accuracy_passed": true
+        }
+      },
+      "exact_port_groups": 23,
+      "hls_max_pe_cycles": 171075,
+      "source_max_pe_cycles": 169148,
+      "ratio_of_max_pe_cycles": 1.0113923900962472,
+      "hls_cycles_per_pe": [
+        [
+          169739,
+          169739,
+          169738,
+          169731,
+          169735,
+          169730,
+          169732,
+          169726
+        ],
+        [
+          169945,
+          169936,
+          169945,
+          169929,
+          169940,
+          169928,
+          169936,
+          169930
+        ],
+        [
+          171072,
+          171075,
+          171065,
+          171068,
+          171065,
+          171067,
+          171059,
+          171059
+        ],
+        [
+          170480,
+          170484,
+          170475,
+          170478,
+          170468,
+          170476,
+          170467,
+          170468
+        ],
+        [
+          171073,
+          171074,
+          171065,
+          171068,
+          171066,
+          171066,
+          171060,
+          171058
+        ],
+        [
+          170946,
+          170947,
+          170941,
+          170945,
+          170940,
+          170940,
+          170934,
+          170936
+        ],
+        [
+          171062,
+          171065,
+          171055,
+          171058,
+          171059,
+          171057,
+          171051,
+          171051
+        ],
+        [
+          171029,
+          171031,
+          171022,
+          171026,
+          171027,
+          171025,
+          171017,
+          171021
+        ]
+      ],
+      "source_cycles_per_pe": [
+        [
+          167821,
+          167820,
+          167820,
+          167817,
+          167817,
+          167814,
+          167816,
+          167811
+        ],
+        [
+          168011,
+          168005,
+          168011,
+          168002,
+          168004,
+          168000,
+          168005,
+          167999
+        ],
+        [
+          169147,
+          169144,
+          169146,
+          169142,
+          169145,
+          169140,
+          169139,
+          169138
+        ],
+        [
+          168591,
+          168588,
+          168589,
+          168585,
+          168579,
+          168583,
+          168573,
+          168573
+        ],
+        [
+          169147,
+          169145,
+          169148,
+          169143,
+          169144,
+          169141,
+          169138,
+          169138
+        ],
+        [
+          169026,
+          169027,
+          169028,
+          169024,
+          169027,
+          169024,
+          169021,
+          169025
+        ],
+        [
+          169129,
+          169129,
+          169135,
+          169127,
+          169129,
+          169126,
+          169124,
+          169126
+        ],
+        [
+          169097,
+          169097,
+          169103,
+          169095,
+          169098,
+          169095,
+          169092,
+          169096
+        ]
+      ]
+    },
+    {
+      "epoch": 6,
+      "source_original_input_mathematics": {
+        "relative_l2": 0.00031125368055384857,
+        "peak_scaled_error": 0.00031125368055384835,
+        "fixed_accuracy_passed": true,
+        "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+        "attention": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "projection": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "mlp_delta": {
+          "relative_l2": 0.0029945537785244516,
+          "peak_scaled_error": 0.002994553778524466,
+          "fixed_accuracy_passed": true
+        },
+        "score": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "probability": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true,
+          "max_row_mass_error": 0.0
+        },
+        "input_normalized": {
+          "relative_l2": 3.199948801644459e-05,
+          "peak_scaled_error": 3.199948801645745e-05,
+          "fixed_accuracy_passed": true
+        },
+        "q_raw": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "k_raw": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "v_raw": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "q": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true,
+          "local_pair_rounding_passed": true
+        },
+        "k": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true,
+          "local_pair_rounding_passed": true
+        },
+        "v": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        }
+      },
+      "exact_port_groups": 23,
+      "hls_max_pe_cycles": 171078,
+      "source_max_pe_cycles": 169149,
+      "ratio_of_max_pe_cycles": 1.0114041466399446,
+      "hls_cycles_per_pe": [
+        [
+          169722,
+          169720,
+          169720,
+          169716,
+          169718,
+          169711,
+          169713,
+          169709
+        ],
+        [
+          169881,
+          169884,
+          169873,
+          169877,
+          169867,
+          169870,
+          169863,
+          169863
+        ],
+        [
+          171076,
+          171078,
+          171071,
+          171076,
+          171069,
+          171068,
+          171062,
+          171061
+        ],
+        [
+          170479,
+          170481,
+          170472,
+          170475,
+          170463,
+          170468,
+          170464,
+          170464
+        ],
+        [
+          171075,
+          171076,
+          171069,
+          171074,
+          171070,
+          171070,
+          171066,
+          171059
+        ],
+        [
+          170949,
+          170949,
+          170946,
+          170947,
+          170945,
+          170946,
+          170939,
+          170935
+        ],
+        [
+          171064,
+          171067,
+          171058,
+          171063,
+          171062,
+          171062,
+          171054,
+          171048
+        ],
+        [
+          171032,
+          171034,
+          171027,
+          171033,
+          171031,
+          171031,
+          171023,
+          171018
+        ]
+      ],
+      "source_cycles_per_pe": [
+        [
+          167822,
+          167821,
+          167817,
+          167816,
+          167813,
+          167812,
+          167810,
+          167808
+        ],
+        [
+          168017,
+          168013,
+          168012,
+          168002,
+          168002,
+          167995,
+          167997,
+          167995
+        ],
+        [
+          169145,
+          169149,
+          169138,
+          169140,
+          169137,
+          169138,
+          169130,
+          169130
+        ],
+        [
+          168578,
+          168585,
+          168577,
+          168583,
+          168569,
+          168580,
+          168569,
+          168567
+        ],
+        [
+          169146,
+          169148,
+          169139,
+          169141,
+          169137,
+          169137,
+          169132,
+          169133
+        ],
+        [
+          169026,
+          169027,
+          169019,
+          169025,
+          169021,
+          169023,
+          169014,
+          169019
+        ],
+        [
+          169129,
+          169131,
+          169122,
+          169127,
+          169125,
+          169124,
+          169117,
+          169120
+        ],
+        [
+          169097,
+          169098,
+          169090,
+          169096,
+          169094,
+          169094,
+          169085,
+          169091
+        ]
+      ]
+    },
+    {
+      "epoch": 7,
+      "source_original_input_mathematics": {
+        "relative_l2": 0.0,
+        "peak_scaled_error": 0.0,
+        "fixed_accuracy_passed": true,
+        "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+        "attention": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "projection": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "mlp_delta": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "score": {
+          "relative_l2": 0.001902449952194496,
+          "peak_scaled_error": 0.0020008692157567364,
+          "fixed_accuracy_passed": true
+        },
+        "probability": {
+          "relative_l2": 7.262730373000671e-07,
+          "peak_scaled_error": 3.0070691472244955e-06,
+          "fixed_accuracy_passed": true,
+          "max_row_mass_error": 1.1082738637924194e-07
+        },
+        "input_normalized": {
+          "relative_l2": 0.000485078403333731,
+          "peak_scaled_error": 0.0010369085847056136,
+          "fixed_accuracy_passed": true
+        },
+        "q_raw": {
+          "relative_l2": 0.0012647406897692026,
+          "peak_scaled_error": 0.002097733479983972,
+          "fixed_accuracy_passed": true
+        },
+        "k_raw": {
+          "relative_l2": 0.0012547900878803835,
+          "peak_scaled_error": 0.002602788339812565,
+          "fixed_accuracy_passed": true
+        },
+        "v_raw": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "q": {
+          "relative_l2": 0.0013124171560214663,
+          "peak_scaled_error": 0.0021349731830024674,
+          "fixed_accuracy_passed": true,
+          "local_pair_rounding_passed": true
+        },
+        "k": {
+          "relative_l2": 0.0012943264180829393,
+          "peak_scaled_error": 0.002438740301738487,
+          "fixed_accuracy_passed": true,
+          "local_pair_rounding_passed": true
+        },
+        "v": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        }
+      },
+      "exact_port_groups": 23,
+      "hls_max_pe_cycles": 171079,
+      "source_max_pe_cycles": 169156,
+      "ratio_of_max_pe_cycles": 1.0113682044976235,
+      "hls_cycles_per_pe": [
+        [
+          169646,
+          169646,
+          169644,
+          169640,
+          169642,
+          169634,
+          169636,
+          169632
+        ],
+        [
+          169800,
+          169798,
+          169794,
+          169790,
+          169794,
+          169788,
+          169790,
+          169788
+        ],
+        [
+          171079,
+          171077,
+          171078,
+          171072,
+          171070,
+          171064,
+          171062,
+          171056
+        ],
+        [
+          170476,
+          170475,
+          170470,
+          170468,
+          170471,
+          170470,
+          170472,
+          170467
+        ],
+        [
+          171076,
+          171078,
+          171077,
+          171074,
+          171070,
+          171066,
+          171062,
+          171056
+        ],
+        [
+          170951,
+          170952,
+          170955,
+          170949,
+          170948,
+          170944,
+          170940,
+          170939
+        ],
+        [
+          171065,
+          171067,
+          171069,
+          171064,
+          171060,
+          171061,
+          171052,
+          171046
+        ],
+        [
+          171034,
+          171035,
+          171037,
+          171032,
+          171027,
+          171030,
+          171021,
+          171018
+        ]
+      ],
+      "source_cycles_per_pe": [
+        [
+          167828,
+          167828,
+          167825,
+          167823,
+          167822,
+          167820,
+          167818,
+          167815
+        ],
+        [
+          168027,
+          168027,
+          168019,
+          168017,
+          168012,
+          168015,
+          168011,
+          168009
+        ],
+        [
+          169156,
+          169154,
+          169148,
+          169150,
+          169146,
+          169140,
+          169138,
+          169138
+        ],
+        [
+          168594,
+          168590,
+          168595,
+          168593,
+          168595,
+          168592,
+          168587,
+          168586
+        ],
+        [
+          169153,
+          169155,
+          169147,
+          169153,
+          169145,
+          169143,
+          169139,
+          169141
+        ],
+        [
+          169034,
+          169035,
+          169033,
+          169033,
+          169027,
+          169033,
+          169023,
+          169023
+        ],
+        [
+          169136,
+          169140,
+          169130,
+          169139,
+          169131,
+          169128,
+          169124,
+          169128
+        ],
+        [
+          169104,
+          169106,
+          169099,
+          169104,
+          169099,
+          169097,
+          169092,
+          169096
+        ]
+      ]
+    }
+  ],
+  "max_ratio": 1.0121613944399703,
+  "min_ratio": 1.0113682044976235,
+  "hashes": {
+    "projects/waferllm/input_attention_mixed_64x64x256_8x8_counters/run-20260907T144456167691Z/manifest.json": "69486f256a97172cee1470de16fec82c201acf21edf39faaf6c37aba2e769054",
+    "projects/waferllm/input_attention_mixed_64x64x256_8x8_counters/run-20260907T144456167691Z/results.json": "26d871e65ee2098414e59e9501c1c7dfd3c6480766aae58b031c21f8f185c65a",
+    "projects/waferllm/input_attention_mixed_64x64x256_8x8_counters/run-20260907T144456167691Z/qualification.json": "1135caa4dd703158f6f2ec146f574c725917cf12edd3671d3d4928c204f1ec19",
+    "evidence/input-attention-mixed-source-20260907T150140448408Z/provenance.json": "211dd9df5df3ee6cf0d88ba304165e0a5556a3ea4e54a0516420cf2bc280eb5d",
+    "evidence/input-attention-mixed-source-20260907T150140448408Z/results.json": "587a4a6047f90ee47e04815afec91bad55807eac226e0d6d565698e7582e8964",
+    "evidence/input-attention-mixed-source-20260907T150140448408Z/execution.json": "9b44b41c188543ff421abba2459ddca0d938cf351f3931f04a3ca2a8ee6a8b1b",
+    "experiments/compare_input_attention_mixed_source.py": "5e8833274a66fd12e09c7708e2e9594a9e18bc794982e87d6c41b8e2bfa051b2",
+    "input_attention_fixtures.py": "537556550c0dda6c2a9fbaad5c7d9050b7798afedc90baa00016a015898ae73d",
+    "attention_tail_fixtures.py": "5975f7aab68d6e9bd7a3075adc995ed4df4c6816b4ee99a547eff0409a2a5f8b",
+    "prefill_tail_fixtures.py": "9700a502d70926d6ec1846b0f8e06a37b11e4233dac7e188a2b28e52be4ebece",
+    "feed_forward_fixtures.py": "b720df834d5cf8af59a0bda0ae527da355ccde01c1d6c19d0f86ba2bb904a57d"
+  },
+  "timing_scope": "WSE3 simulator per-PE cycle intervals; complete resident chain; includes observers, excludes host I/O; no hardware/full-model throughput claim."
+}

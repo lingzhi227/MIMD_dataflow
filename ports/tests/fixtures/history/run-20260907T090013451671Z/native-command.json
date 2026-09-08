@@ -1,0 +1,18 @@
+[
+  "clang++",
+  "-std=c++17",
+  "-ffp-contract=off",
+  "-DMW_BOUND=2",
+  "-DMW_EPOCHS=8",
+  "-DMW_MAX_INPUT=16384",
+  "-Werror",
+  "-Wno-unknown-pragmas",
+  "-fsanitize=undefined",
+  "-fno-sanitize-recover=all",
+  "-I",
+  "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/toolchain/include",
+  "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/projects/waferllm/feed_forward_64x64x256_8x8_all_blocked_counters/hls.cpp",
+  "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/toolchain/runtime/native.cpp",
+  "-o",
+  "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/projects/waferllm/feed_forward_64x64x256_8x8_all_blocked_counters/run-20260907T090013451671Z/native"
+]

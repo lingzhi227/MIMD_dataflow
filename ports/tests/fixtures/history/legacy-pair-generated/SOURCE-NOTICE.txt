@@ -1,0 +1,1 @@
+Pair-vector schedule inspired by MeshInfra/WaferLLM Prefill xq_rope, commit fd1c2daae37cd68706c03fc8009887ecee9900f8, Apache-2.0. Explicit input pair order; token-row-sized scratch; optional per-token coefficient vectors; immutable inputs; separate output and diagnostics. Standard rotation requires even_odd order and valid sine/cosine tables. No full RoPE model/inference claim.

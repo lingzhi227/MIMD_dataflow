@@ -11,6 +11,8 @@
 
 ## Direction confirmed by the user
 
+- Latest stopping condition, verified from the user's message in task `01a07763-54c2-74d0-87b3-f21cc4085999`: finish existing category 8 (WaferLLM remaining numerical stages and prefill/decode composition), then stop development, report evidence and unsupported scope, and wait for new instructions. Do not start categories 9–12, other applications, the proposed SDK residual backfill, or Qwen. This supersedes automatic continuation through the full queue. A single composition profile passing does not by itself close category 8; audit its accepted source-backed scope and remaining obligations first.
+
 - Work sequentially in this order: linear algebra, other numerical kernels, stencil, physical simulation, then other applications. Do not continue expanding stencil ahead of the linear-algebra queue.
 - For each algorithm, express its high-performance dataflow in the HLS frontend, synthesize through the shared toolchain, run/debug the resulting CSL in SDK 2.10.1, and retain correctness plus scoped performance evidence. Develop the algorithm library and toolchain together. Mathematical equation coverage alone is not completion.
 

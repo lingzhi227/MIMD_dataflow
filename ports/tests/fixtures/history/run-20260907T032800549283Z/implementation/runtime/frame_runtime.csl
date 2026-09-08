@@ -1,0 +1,44 @@
+// Owned full-frame asynchronous DSD transport.
+// Store only while idle. Local completion releases ownership; it is not a remote ACK.
+param width:u16;
+var buffer=@zeros([width]f32);
+var busy:bool=false;
+const source=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{width}->buffer[i]});
+fn store(i:u16,value:f32) void {@assert(!busy and i<width);buffer[i]=value;}
+// Vector copy from resident memory; optional single alignment word is zeroed.
+fn load(ptr:[*]f32,offset:i16,count:u16) void {
+ @assert(!busy and count>0 and (count==width or count+1==width));
+ var incoming=@set_dsd_base_addr(source,ptr);
+ incoming=@increment_dsd_offset(incoming,offset,f32);
+ incoming=@set_dsd_length(incoming,count);
+ const target=@set_dsd_length(source,count);
+ @fmovs(target,incoming);
+ if(count<width){buffer[count]=0.0;}
+}
+fn send(comptime queue:output_queue,comptime done:local_task_id) void {
+ @assert(!busy);busy=true;
+ const target=@get_dsd(fabout_dsd,.{.extent=width,.output_queue=queue});
+ @fmovs(target,source,.{.async=true,.activate=done,.ut_id=@get_ut_id(0)});
+}
+fn release() void {@assert(busy);busy=false;}
+comptime{@comptime_assert(@is_arch("wse3"));}
+
+// Independent receive ownership allows one receive and one send concurrently.
+var receive_buffer=@zeros([width]f32);
+var receiving:bool=false;
+const receive_memory=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{width}->receive_buffer[i]});
+fn post_receive(comptime queue:input_queue,comptime done:local_task_id) void {
+ @assert(!receiving);receiving=true;
+ const fabric=@get_dsd(fabin_dsd,.{.extent=width,.input_queue=queue});
+ @fmovs(receive_memory,fabric,.{.async=true,.activate=done});
+}
+fn release_receive(ptr:[*]f32,offset:i16,count:u16) void {
+ @assert(receiving and count>0 and (count==width or count+1==width));
+ var target=@set_dsd_base_addr(receive_memory,ptr);
+ target=@increment_dsd_offset(target,offset,f32);
+ target=@set_dsd_length(target,count);
+ const incoming=@set_dsd_length(receive_memory,count);
+ @fmovs(target,incoming);
+ if(count<width){@assert(receive_buffer[count]==0.0);}
+ receiving=false;
+}

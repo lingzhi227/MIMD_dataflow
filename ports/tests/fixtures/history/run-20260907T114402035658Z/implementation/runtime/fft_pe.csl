@@ -1,0 +1,65 @@
+// Adapt SDK fft3d_rpc entry/exit; arithmetic and all four transposes remain SDK code.
+param N:u16;
+param fft_params;
+param memcpy_params;
+param inverse:i16;
+param normalization:i16;
+param sampled:bool;
+param restore_layout:bool;
+const sys=@import_module("<memcpy/memcpy>",memcpy_params);
+const timer=@import_module("<timer>",.{.timerCount=1});
+const config=@import_module("<tile_config>");
+const library=if(sampled or !restore_layout) "fft_driver.csl" else "<kernels/fft/fft3d>";
+const fft=@import_module(library,.{
+ .fft_params=fft_params,.N=N,.WIDTH=fft_params.width,
+ .colors=[4]color{@get_color(4),@get_color(5),@get_color(6),@get_color(7)},
+ .callback=done,
+ @OBSERVED_PARAMETER@
+});
+const T=N/@as(u16,fft_params.width);
+const SAMPLES=4*T*T;
+const STAGES:u16=if(restore_layout) 7 else 5;
+var phase_samples=@zeros([if(sampled) STAGES*SAMPLES else 1]f32);
+var ptr_phase_samples:[*]f32=&phase_samples;
+var phase_counts=@zeros([7]u16);
+var ptr_phase_counts:[*]u16=&phase_counts;
+fn observe(phase:u16) void {
+ if(sampled) {
+ phase_counts[phase]+=1;
+ // First/last complex value of every local pencil, not a full tensor history.
+ for (@range(u16,T*T)) |p| {
+  phase_samples[phase*SAMPLES+4*p]=X[2*p];
+  phase_samples[phase*SAMPLES+4*p+1]=X[2*p+1];
+  phase_samples[phase*SAMPLES+4*p+2]=X[2*((N-1)*T*T+p)];
+  phase_samples[phase*SAMPLES+4*p+3]=X[2*((N-1)*T*T+p)+1];
+ }
+ }
+}
+var X=@zeros([fft.ARRAY_LEN]f32);
+var ptr_X:[*]f32=&X;
+var aux=@zeros([N]f32);
+var timing=@zeros(timer.timerType32);
+var ptr_timing:[*]u16=&timing;
+var progress=@zeros([2]u16);
+var ptr_progress:[*]u16=&progress;
+var queues=@zeros([2]u16);
+var ptr_queues:[*]u16=&queues;
+fn main() void {
+ progress[0]+=1;
+ if(sampled) {for (@range(u16,7)) |i| {phase_counts[i]=0;}}
+ timer.enable();timer.start(0);
+ fft.csfftExecC2C(&X,&X,&aux,@as(fft.fft.fft_normalization,normalization),if(inverse != 0) fft.fft.fft_direction.CSFFT_INVERSE else fft.fft.fft_direction.CSFFT_FORWARD);
+}
+fn done() void {
+ timer.stop(0);timer.elapsed(0,@ptrcast(*[timer.timestamp_size]u16,&timing));
+ progress[1]+=1;
+ const iq=config.input_queue_status.get();const oq=config.output_queue_status.get();
+ queues[0]=@as(u16,iq.empty);queues[1]=@as(u16,oq.empty);
+ sys.unblock_cmd_stream();
+}
+comptime {
+ @export_symbol(ptr_phase_samples,"phase_samples");@export_symbol(ptr_phase_counts,"phase_counts");
+ @export_symbol(ptr_X,"X");@export_symbol(fft.ptr_twiddle,"twiddle_array");
+ @export_symbol(ptr_timing,"timing");@export_symbol(ptr_progress,"progress");
+ @export_symbol(ptr_queues,"queues");@export_symbol(main);
+}

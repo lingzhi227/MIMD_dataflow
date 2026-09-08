@@ -1,0 +1,8811 @@
+{
+  "profile": "mesh_attention_tail.v1",
+  "M": 64,
+  "N": 64,
+  "F": 256,
+  "P": 8,
+  "rows": 8,
+  "cols": 8,
+  "Mt": 8,
+  "Nt": 8,
+  "Ft": 32,
+  "length": 64,
+  "hidden_length": 256,
+  "weight_length": 256,
+  "epochs": 8,
+  "instrumentation": "counters",
+  "projection_stages": [
+    {
+      "M": 64,
+      "K": 64,
+      "N": 256,
+      "P": 8,
+      "Mt": 8,
+      "Kt": 8,
+      "Nt": 32,
+      "left_length": 64,
+      "right_length": 256,
+      "output_length": 256,
+      "rounds": 8,
+      "weights": "static logical weights host-packed in row-major tiles with two-hop block-row alignment",
+      "activation": "logical column-major tiles aligned forward on device",
+      "result": "logical column-major tiles",
+      "right_descriptor": "contiguous feature vector; contraction increment Nt",
+      "k_block_rule": "cycle[(position(y)+position(x)-round)%P]",
+      "completion": "both-axis transfer and local DSR compute joined before buffer swap",
+      "accumulation": "block_f32",
+      "partial_type": "f16",
+      "merge_type": "f32",
+      "block_size": 8,
+      "output_rounding": "f16 after final f32 merge; optional rounded prefix observations"
+    },
+    {
+      "M": 64,
+      "K": 64,
+      "N": 256,
+      "P": 8,
+      "Mt": 8,
+      "Kt": 8,
+      "Nt": 32,
+      "left_length": 64,
+      "right_length": 256,
+      "output_length": 256,
+      "rounds": 8,
+      "weights": "static logical weights host-packed in row-major tiles with two-hop block-row alignment",
+      "activation": "logical column-major tiles aligned forward on device",
+      "result": "logical column-major tiles",
+      "right_descriptor": "contiguous feature vector; contraction increment Nt",
+      "k_block_rule": "cycle[(position(y)+position(x)-round)%P]",
+      "completion": "both-axis transfer and local DSR compute joined before buffer swap",
+      "accumulation": "block_f32",
+      "partial_type": "f16",
+      "merge_type": "f32",
+      "block_size": 8,
+      "output_rounding": "f16 after final f32 merge; optional rounded prefix observations"
+    },
+    {
+      "M": 64,
+      "K": 256,
+      "N": 64,
+      "P": 8,
+      "Mt": 8,
+      "Kt": 32,
+      "Nt": 8,
+      "left_length": 256,
+      "right_length": 256,
+      "output_length": 64,
+      "rounds": 8,
+      "weights": "static logical weights host-packed in row-major tiles with two-hop block-row alignment",
+      "activation": "logical column-major tiles aligned forward on device",
+      "result": "logical column-major tiles",
+      "right_descriptor": "contiguous feature vector; contraction increment Nt",
+      "k_block_rule": "cycle[(position(y)+position(x)-round)%P]",
+      "completion": "both-axis transfer and local DSR compute joined before buffer swap",
+      "accumulation": "block_f32",
+      "partial_type": "f16",
+      "merge_type": "f32",
+      "block_size": 32,
+      "output_rounding": "f16 after final f32 merge; optional rounded prefix observations"
+    }
+  ],
+  "memory_per_pe": {
+    "resident_arrays": 4480,
+    "observations": 16,
+    "descriptors_control_reserve": 2048,
+    "sdk_code_tasks_stack_reserve": 16384,
+    "shared_up_gate_block_accumulator_and_readouts": 5120,
+    "wide_accumulator_and_conversion_scratch": 768,
+    "normalization_and_delta_observers": 292,
+    "projection_prelude_inputs_live_Z_and_observers": 526,
+    "attention_public_KV_and_observers": 728,
+    "attention_code_descriptor_reserve": 2048
+  },
+  "numerical_bounds": {
+    "inputs": [
+      12.0,
+      0.0078125,
+      0.0078125,
+      0.0078125
+    ],
+    "up": 6.0,
+    "gate": 6.0,
+    "hidden": 36.0,
+    "output": 72.0,
+    "reason": "monotone half-FMA bounds; validated SDK half SiLU magnitude <= gate magnitude"
+  },
+  "stages": [
+    "copy immutable X/U and forward-align X",
+    "up contraction with joined double buffers",
+    "copy G and carry completed left ownership",
+    "gate contraction with joined double buffers",
+    "resident SDK map SiLU and DSR in-place multiply",
+    "copy D and forward-align hidden",
+    "down contraction into dead X work storage",
+    "drain queues and return"
+  ],
+  "descriptor_entry_states": {
+    "right": "contiguous stride1 reset on every projection entry; increment Nt",
+    "compute": "DSR1 loaded for each contraction; gating only after both-axis join"
+  },
+  "ownership": {
+    "intermediate_host_transfer": false,
+    "inputs": "immutable X/U/G/D",
+    "up": "becomes hidden after last up read",
+    "x_work": "becomes output after gate completes",
+    "weights": "one private work/receive pair reused after each joined projection",
+    "gate": "becomes activated gate in place"
+  },
+  "resources": {
+    "colors": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "input_queues": [
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "output_queues": [
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "local_tasks": [
+      19,
+      20,
+      25,
+      26
+    ],
+    "microthreads": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "compute_dsr": 1,
+    "communication_dsrs": [
+      3,
+      4,
+      5,
+      6
+    ],
+    "explicit_dsr_lease": {
+      "compute": [
+        {
+          "bank": "dest",
+          "index": 1
+        },
+        {
+          "bank": "src0",
+          "index": 1
+        },
+        {
+          "bank": "src1",
+          "index": 1
+        }
+      ],
+      "communication": {
+        "left_memory": [
+          {
+            "bank": "src1",
+            "index": 3
+          },
+          {
+            "bank": "dest",
+            "index": 3
+          }
+        ],
+        "right_memory": [
+          {
+            "bank": "src1",
+            "index": 4
+          },
+          {
+            "bank": "dest",
+            "index": 4
+          }
+        ],
+        "left_fabric": [
+          {
+            "bank": "dest",
+            "index": 5
+          },
+          {
+            "bank": "src1",
+            "index": 5
+          }
+        ],
+        "right_fabric": [
+          {
+            "bank": "dest",
+            "index": 6
+          },
+          {
+            "bank": "src1",
+            "index": 6
+          }
+        ]
+      },
+      "completion": "all four explicit microthread operations join before lease reuse",
+      "scope": "explicit DSR reservations; compiler/SDK temporary allocation is not enumerated"
+    },
+    "completion": "two-axis completion joins before next step; phase-exclusive reuse",
+    "explicit_dsr_phases": {
+      "local_square_sum": [
+        {
+          "bank": "dest",
+          "index": 1
+        },
+        {
+          "bank": "src0",
+          "index": 1
+        },
+        {
+          "bank": "src1",
+          "index": 1
+        },
+        {
+          "bank": "dest",
+          "index": 2
+        },
+        {
+          "bank": "src0",
+          "index": 2
+        },
+        {
+          "bank": "src1",
+          "index": 2
+        }
+      ],
+      "row_collective": [
+        {
+          "bank": "src1",
+          "index": 2
+        }
+      ],
+      "inverse": "SDK-managed temporaries; no explicit user DSR lease",
+      "normalize": [
+        {
+          "bank": "dest",
+          "index": 1
+        },
+        {
+          "bank": "src0",
+          "index": 1
+        },
+        {
+          "bank": "src1",
+          "index": 1
+        }
+      ],
+      "projections": {
+        "compute": [
+          {
+            "bank": "dest",
+            "index": 1
+          },
+          {
+            "bank": "src0",
+            "index": 1
+          },
+          {
+            "bank": "src1",
+            "index": 1
+          }
+        ],
+        "communication": {
+          "left_memory": [
+            {
+              "bank": "src1",
+              "index": 3
+            },
+            {
+              "bank": "dest",
+              "index": 3
+            }
+          ],
+          "right_memory": [
+            {
+              "bank": "src1",
+              "index": 4
+            },
+            {
+              "bank": "dest",
+              "index": 4
+            }
+          ],
+          "left_fabric": [
+            {
+              "bank": "dest",
+              "index": 5
+            },
+            {
+              "bank": "src1",
+              "index": 5
+            }
+          ],
+          "right_fabric": [
+            {
+              "bank": "dest",
+              "index": 6
+            },
+            {
+              "bank": "src1",
+              "index": 6
+            }
+          ]
+        },
+        "completion": "all four explicit microthread operations join before lease reuse",
+        "scope": "explicit DSR reservations; compiler/SDK temporary allocation is not enumerated"
+      },
+      "gating": [
+        {
+          "bank": "dest",
+          "index": 1
+        },
+        {
+          "bank": "src0",
+          "index": 1
+        },
+        {
+          "bank": "src1",
+          "index": 1
+        }
+      ],
+      "final_residual": [
+        {
+          "bank": "dest",
+          "index": 1
+        },
+        {
+          "bank": "src0",
+          "index": 1
+        },
+        {
+          "bank": "src1",
+          "index": 1
+        }
+      ],
+      "projection_prelude": {
+        "compute": [
+          {
+            "bank": "dest",
+            "index": 1
+          },
+          {
+            "bank": "src0",
+            "index": 1
+          },
+          {
+            "bank": "src1",
+            "index": 1
+          }
+        ],
+        "communication": {
+          "left_memory": [
+            {
+              "bank": "src1",
+              "index": 3
+            },
+            {
+              "bank": "dest",
+              "index": 3
+            }
+          ],
+          "right_memory": [
+            {
+              "bank": "src1",
+              "index": 4
+            },
+            {
+              "bank": "dest",
+              "index": 4
+            }
+          ],
+          "left_fabric": [
+            {
+              "bank": "dest",
+              "index": 5
+            },
+            {
+              "bank": "src1",
+              "index": 5
+            }
+          ],
+          "right_fabric": [
+            {
+              "bank": "dest",
+              "index": 6
+            },
+            {
+              "bank": "src1",
+              "index": 6
+            }
+          ]
+        },
+        "completion": "all four explicit microthread operations join before lease reuse",
+        "scope": "explicit DSR reservations; compiler/SDK temporary allocation is not enumerated"
+      },
+      "attention": {
+        "colors": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "input_queues": [
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "output_queues": [
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "active_input_queues": [
+          5,
+          7
+        ],
+        "active_output_queues": [
+          5,
+          7
+        ],
+        "microthreads": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "local_tasks": [
+          19,
+          20,
+          25,
+          26
+        ],
+        "compute_dsrs": [
+          1
+        ],
+        "communication_dsrs": [
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "explicit_dsr_lease": {
+          "compute": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ],
+          "communication": {
+            "left_memory": [
+              {
+                "bank": "src1",
+                "index": 3
+              },
+              {
+                "bank": "dest",
+                "index": 3
+              }
+            ],
+            "right_memory": [
+              {
+                "bank": "src1",
+                "index": 4
+              },
+              {
+                "bank": "dest",
+                "index": 4
+              }
+            ],
+            "left_fabric": [
+              {
+                "bank": "dest",
+                "index": 5
+              },
+              {
+                "bank": "src1",
+                "index": 5
+              }
+            ],
+            "right_fabric": [
+              {
+                "bank": "dest",
+                "index": 6
+              },
+              {
+                "bank": "src1",
+                "index": 6
+              }
+            ]
+          },
+          "completion": "all four explicit microthread operations join before lease reuse",
+          "scope": "explicit DSR reservations; compiler/SDK temporary allocation is not enumerated"
+        },
+        "phase_resources": {
+          "normalization": {
+            "colors": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11
+            ],
+            "input_queues": [
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "output_queues": [
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "active_input_queues": [
+              3,
+              4,
+              5,
+              6
+            ],
+            "active_output_queues": [
+              3,
+              4,
+              5,
+              6
+            ],
+            "microthreads": [
+              2,
+              3
+            ],
+            "local_tasks": [
+              19,
+              20,
+              25,
+              26
+            ],
+            "compute_dsrs": [
+              1
+            ],
+            "reduction_dsrs": [
+              1,
+              2
+            ],
+            "async_communication_dsrs": [
+              4,
+              6
+            ],
+            "explicit_dsr_phases": {
+              "local_compute": [
+                {
+                  "bank": "dest",
+                  "index": 1
+                },
+                {
+                  "bank": "src0",
+                  "index": 1
+                },
+                {
+                  "bank": "src1",
+                  "index": 1
+                }
+              ],
+              "overlapped_exchange": {
+                "right_memory": [
+                  {
+                    "bank": "src1",
+                    "index": 4
+                  },
+                  {
+                    "bank": "dest",
+                    "index": 4
+                  }
+                ],
+                "right_fabric": [
+                  {
+                    "bank": "dest",
+                    "index": 6
+                  },
+                  {
+                    "bank": "src1",
+                    "index": 6
+                  }
+                ]
+              },
+              "joined_reduction": [
+                {
+                  "bank": "dest",
+                  "index": 1
+                },
+                {
+                  "bank": "src0",
+                  "index": 1
+                },
+                {
+                  "bank": "src1",
+                  "index": 1
+                },
+                {
+                  "bank": "dest",
+                  "index": 2
+                },
+                {
+                  "bank": "src0",
+                  "index": 2
+                }
+              ]
+            },
+            "reuse": "score joins all vertical traffic before softmax borrows DSR1/2 and row queues3/4/6; no new colors/tasks/UTs",
+            "softmax_explicit_dsr_phases": {
+              "local_math": [
+                {
+                  "bank": "dest",
+                  "index": 1
+                },
+                {
+                  "bank": "src0",
+                  "index": 1
+                },
+                {
+                  "bank": "src1",
+                  "index": 1
+                }
+              ],
+              "row_collective": [
+                {
+                  "bank": "src1",
+                  "index": 2
+                }
+              ]
+            }
+          },
+          "value": {
+            "colors": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11
+            ],
+            "input_queues": [
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "output_queues": [
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "active_input_queues": [
+              5,
+              7
+            ],
+            "active_output_queues": [
+              5,
+              7
+            ],
+            "microthreads": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "local_tasks": [
+              19,
+              20,
+              25,
+              26
+            ],
+            "compute_dsrs": [
+              1
+            ],
+            "communication_dsrs": [
+              3,
+              4,
+              5,
+              6
+            ],
+            "explicit_dsr_lease": {
+              "compute": [
+                {
+                  "bank": "dest",
+                  "index": 1
+                },
+                {
+                  "bank": "src0",
+                  "index": 1
+                },
+                {
+                  "bank": "src1",
+                  "index": 1
+                }
+              ],
+              "communication": {
+                "left_memory": [
+                  {
+                    "bank": "src1",
+                    "index": 3
+                  },
+                  {
+                    "bank": "dest",
+                    "index": 3
+                  }
+                ],
+                "right_memory": [
+                  {
+                    "bank": "src1",
+                    "index": 4
+                  },
+                  {
+                    "bank": "dest",
+                    "index": 4
+                  }
+                ],
+                "left_fabric": [
+                  {
+                    "bank": "dest",
+                    "index": 5
+                  },
+                  {
+                    "bank": "src1",
+                    "index": 5
+                  }
+                ],
+                "right_fabric": [
+                  {
+                    "bank": "dest",
+                    "index": 6
+                  },
+                  {
+                    "bank": "src1",
+                    "index": 6
+                  }
+                ]
+              },
+              "completion": "all four explicit microthread operations join before lease reuse",
+              "scope": "explicit DSR reservations; compiler/SDK temporary allocation is not enumerated"
+            }
+          }
+        },
+        "reuse": "score and softmax drain communication before value reuses queues3..7, tasks19/20/25/26, UT0..3 and DSR1/2/3/4/5/6; phase dispatch preserves joins"
+      }
+    }
+  },
+  "nodes": [
+    {
+      "id": "p0_0",
+      "tile": [
+        0,
+        0
+      ],
+      "place": [
+        4,
+        1
+      ]
+    },
+    {
+      "id": "p1_0",
+      "tile": [
+        1,
+        0
+      ],
+      "place": [
+        5,
+        1
+      ]
+    },
+    {
+      "id": "p2_0",
+      "tile": [
+        2,
+        0
+      ],
+      "place": [
+        6,
+        1
+      ]
+    },
+    {
+      "id": "p3_0",
+      "tile": [
+        3,
+        0
+      ],
+      "place": [
+        7,
+        1
+      ]
+    },
+    {
+      "id": "p4_0",
+      "tile": [
+        4,
+        0
+      ],
+      "place": [
+        8,
+        1
+      ]
+    },
+    {
+      "id": "p5_0",
+      "tile": [
+        5,
+        0
+      ],
+      "place": [
+        9,
+        1
+      ]
+    },
+    {
+      "id": "p6_0",
+      "tile": [
+        6,
+        0
+      ],
+      "place": [
+        10,
+        1
+      ]
+    },
+    {
+      "id": "p7_0",
+      "tile": [
+        7,
+        0
+      ],
+      "place": [
+        11,
+        1
+      ]
+    },
+    {
+      "id": "p0_1",
+      "tile": [
+        0,
+        1
+      ],
+      "place": [
+        4,
+        2
+      ]
+    },
+    {
+      "id": "p1_1",
+      "tile": [
+        1,
+        1
+      ],
+      "place": [
+        5,
+        2
+      ]
+    },
+    {
+      "id": "p2_1",
+      "tile": [
+        2,
+        1
+      ],
+      "place": [
+        6,
+        2
+      ]
+    },
+    {
+      "id": "p3_1",
+      "tile": [
+        3,
+        1
+      ],
+      "place": [
+        7,
+        2
+      ]
+    },
+    {
+      "id": "p4_1",
+      "tile": [
+        4,
+        1
+      ],
+      "place": [
+        8,
+        2
+      ]
+    },
+    {
+      "id": "p5_1",
+      "tile": [
+        5,
+        1
+      ],
+      "place": [
+        9,
+        2
+      ]
+    },
+    {
+      "id": "p6_1",
+      "tile": [
+        6,
+        1
+      ],
+      "place": [
+        10,
+        2
+      ]
+    },
+    {
+      "id": "p7_1",
+      "tile": [
+        7,
+        1
+      ],
+      "place": [
+        11,
+        2
+      ]
+    },
+    {
+      "id": "p0_2",
+      "tile": [
+        0,
+        2
+      ],
+      "place": [
+        4,
+        3
+      ]
+    },
+    {
+      "id": "p1_2",
+      "tile": [
+        1,
+        2
+      ],
+      "place": [
+        5,
+        3
+      ]
+    },
+    {
+      "id": "p2_2",
+      "tile": [
+        2,
+        2
+      ],
+      "place": [
+        6,
+        3
+      ]
+    },
+    {
+      "id": "p3_2",
+      "tile": [
+        3,
+        2
+      ],
+      "place": [
+        7,
+        3
+      ]
+    },
+    {
+      "id": "p4_2",
+      "tile": [
+        4,
+        2
+      ],
+      "place": [
+        8,
+        3
+      ]
+    },
+    {
+      "id": "p5_2",
+      "tile": [
+        5,
+        2
+      ],
+      "place": [
+        9,
+        3
+      ]
+    },
+    {
+      "id": "p6_2",
+      "tile": [
+        6,
+        2
+      ],
+      "place": [
+        10,
+        3
+      ]
+    },
+    {
+      "id": "p7_2",
+      "tile": [
+        7,
+        2
+      ],
+      "place": [
+        11,
+        3
+      ]
+    },
+    {
+      "id": "p0_3",
+      "tile": [
+        0,
+        3
+      ],
+      "place": [
+        4,
+        4
+      ]
+    },
+    {
+      "id": "p1_3",
+      "tile": [
+        1,
+        3
+      ],
+      "place": [
+        5,
+        4
+      ]
+    },
+    {
+      "id": "p2_3",
+      "tile": [
+        2,
+        3
+      ],
+      "place": [
+        6,
+        4
+      ]
+    },
+    {
+      "id": "p3_3",
+      "tile": [
+        3,
+        3
+      ],
+      "place": [
+        7,
+        4
+      ]
+    },
+    {
+      "id": "p4_3",
+      "tile": [
+        4,
+        3
+      ],
+      "place": [
+        8,
+        4
+      ]
+    },
+    {
+      "id": "p5_3",
+      "tile": [
+        5,
+        3
+      ],
+      "place": [
+        9,
+        4
+      ]
+    },
+    {
+      "id": "p6_3",
+      "tile": [
+        6,
+        3
+      ],
+      "place": [
+        10,
+        4
+      ]
+    },
+    {
+      "id": "p7_3",
+      "tile": [
+        7,
+        3
+      ],
+      "place": [
+        11,
+        4
+      ]
+    },
+    {
+      "id": "p0_4",
+      "tile": [
+        0,
+        4
+      ],
+      "place": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "p1_4",
+      "tile": [
+        1,
+        4
+      ],
+      "place": [
+        5,
+        5
+      ]
+    },
+    {
+      "id": "p2_4",
+      "tile": [
+        2,
+        4
+      ],
+      "place": [
+        6,
+        5
+      ]
+    },
+    {
+      "id": "p3_4",
+      "tile": [
+        3,
+        4
+      ],
+      "place": [
+        7,
+        5
+      ]
+    },
+    {
+      "id": "p4_4",
+      "tile": [
+        4,
+        4
+      ],
+      "place": [
+        8,
+        5
+      ]
+    },
+    {
+      "id": "p5_4",
+      "tile": [
+        5,
+        4
+      ],
+      "place": [
+        9,
+        5
+      ]
+    },
+    {
+      "id": "p6_4",
+      "tile": [
+        6,
+        4
+      ],
+      "place": [
+        10,
+        5
+      ]
+    },
+    {
+      "id": "p7_4",
+      "tile": [
+        7,
+        4
+      ],
+      "place": [
+        11,
+        5
+      ]
+    },
+    {
+      "id": "p0_5",
+      "tile": [
+        0,
+        5
+      ],
+      "place": [
+        4,
+        6
+      ]
+    },
+    {
+      "id": "p1_5",
+      "tile": [
+        1,
+        5
+      ],
+      "place": [
+        5,
+        6
+      ]
+    },
+    {
+      "id": "p2_5",
+      "tile": [
+        2,
+        5
+      ],
+      "place": [
+        6,
+        6
+      ]
+    },
+    {
+      "id": "p3_5",
+      "tile": [
+        3,
+        5
+      ],
+      "place": [
+        7,
+        6
+      ]
+    },
+    {
+      "id": "p4_5",
+      "tile": [
+        4,
+        5
+      ],
+      "place": [
+        8,
+        6
+      ]
+    },
+    {
+      "id": "p5_5",
+      "tile": [
+        5,
+        5
+      ],
+      "place": [
+        9,
+        6
+      ]
+    },
+    {
+      "id": "p6_5",
+      "tile": [
+        6,
+        5
+      ],
+      "place": [
+        10,
+        6
+      ]
+    },
+    {
+      "id": "p7_5",
+      "tile": [
+        7,
+        5
+      ],
+      "place": [
+        11,
+        6
+      ]
+    },
+    {
+      "id": "p0_6",
+      "tile": [
+        0,
+        6
+      ],
+      "place": [
+        4,
+        7
+      ]
+    },
+    {
+      "id": "p1_6",
+      "tile": [
+        1,
+        6
+      ],
+      "place": [
+        5,
+        7
+      ]
+    },
+    {
+      "id": "p2_6",
+      "tile": [
+        2,
+        6
+      ],
+      "place": [
+        6,
+        7
+      ]
+    },
+    {
+      "id": "p3_6",
+      "tile": [
+        3,
+        6
+      ],
+      "place": [
+        7,
+        7
+      ]
+    },
+    {
+      "id": "p4_6",
+      "tile": [
+        4,
+        6
+      ],
+      "place": [
+        8,
+        7
+      ]
+    },
+    {
+      "id": "p5_6",
+      "tile": [
+        5,
+        6
+      ],
+      "place": [
+        9,
+        7
+      ]
+    },
+    {
+      "id": "p6_6",
+      "tile": [
+        6,
+        6
+      ],
+      "place": [
+        10,
+        7
+      ]
+    },
+    {
+      "id": "p7_6",
+      "tile": [
+        7,
+        6
+      ],
+      "place": [
+        11,
+        7
+      ]
+    },
+    {
+      "id": "p0_7",
+      "tile": [
+        0,
+        7
+      ],
+      "place": [
+        4,
+        8
+      ]
+    },
+    {
+      "id": "p1_7",
+      "tile": [
+        1,
+        7
+      ],
+      "place": [
+        5,
+        8
+      ]
+    },
+    {
+      "id": "p2_7",
+      "tile": [
+        2,
+        7
+      ],
+      "place": [
+        6,
+        8
+      ]
+    },
+    {
+      "id": "p3_7",
+      "tile": [
+        3,
+        7
+      ],
+      "place": [
+        7,
+        8
+      ]
+    },
+    {
+      "id": "p4_7",
+      "tile": [
+        4,
+        7
+      ],
+      "place": [
+        8,
+        8
+      ]
+    },
+    {
+      "id": "p5_7",
+      "tile": [
+        5,
+        7
+      ],
+      "place": [
+        9,
+        8
+      ]
+    },
+    {
+      "id": "p6_7",
+      "tile": [
+        6,
+        7
+      ],
+      "place": [
+        10,
+        8
+      ]
+    },
+    {
+      "id": "p7_7",
+      "tile": [
+        7,
+        7
+      ],
+      "place": [
+        11,
+        8
+      ]
+    }
+  ],
+  "down_accumulation": "block_f32",
+  "down_block_size": 32,
+  "accumulator_observation": "final raw binary32 accumulator words; per-round half-rounded prefixes in sampled mode",
+  "epsilon": 1e-06,
+  "normalization_bounds": {
+    "square": 0.03668212890625,
+    "local_square_sum": 0.293212890625,
+    "reduced_square_sum": 2.345703125,
+    "inverse": 993.0,
+    "weighted": 0.287353515625,
+    "output": 12.0,
+    "proof": "Monotone nonnegative source half tree; exhaustive representable reduced-sum SDK inverse model. Each rounded input square bounds its reduced sum from below; inverse suffix maxima retain that correlation through gamma-first rounding. Range safety, not an accuracy guarantee."
+  },
+  "input_bindings": {
+    "q": "x",
+    "k": "attention_k",
+    "v": "attention_v",
+    "output_weight": "output_weight",
+    "residual": "residual",
+    "gamma": "gamma",
+    "up_weight": "up_weight",
+    "gate_weight": "gate_weight",
+    "down_weight": "down_weight"
+  },
+  "composition": {
+    "expression": "A=softmax(scale*Q*K^T)*V; Z=A*O+R; Y=Z+MLP(RMSNorm(Z,gamma))",
+    "intermediate_host_transfer": false,
+    "phases": {
+      "score": 5,
+      "value": 4,
+      "output_projection": 3,
+      "up": 0,
+      "gate": 1,
+      "down": 2
+    },
+    "entry_reset": "contiguous score right DSD; value stride Mt then contiguous output projection",
+    "borrowed": "up/gate: score/exponents then value probability/receive; xwork/xrecv: K then V then tail work",
+    "completion": "single task binding; join each producer before reuse; only final Z residual unblocks host"
+  },
+  "storage_lifetimes": {
+    "storage": {
+      "x": 128,
+      "xwork": 128,
+      "xrecv": 128,
+      "u": 512,
+      "g": 512,
+      "d": 512,
+      "ww": 512,
+      "wr": 512,
+      "up": 512,
+      "gate": 512,
+      "hr": 512,
+      "gamma": 16,
+      "rms_rows": 16,
+      "hidden_accumulator": 1024,
+      "hidden_widened": 1024,
+      "down_accumulator": 256,
+      "down_widened": 256,
+      "output_weight": 128,
+      "residual": 128,
+      "post_projection_z": 128,
+      "attention_k": 128,
+      "attention_v": 128,
+      "attention_peaks": 16,
+      "attention_sums": 16
+    },
+    "values": [
+      {
+        "name": "public_Q",
+        "storage": "x",
+        "bytes": 128,
+        "first": 0,
+        "last": 15,
+        "immutable": true
+      },
+      {
+        "name": "public_u",
+        "storage": "u",
+        "bytes": 512,
+        "first": 0,
+        "last": 15,
+        "immutable": true
+      },
+      {
+        "name": "public_g",
+        "storage": "g",
+        "bytes": 512,
+        "first": 0,
+        "last": 15,
+        "immutable": true
+      },
+      {
+        "name": "public_d",
+        "storage": "d",
+        "bytes": 512,
+        "first": 0,
+        "last": 15,
+        "immutable": true
+      },
+      {
+        "name": "public_gamma",
+        "storage": "gamma",
+        "bytes": 16,
+        "first": 0,
+        "last": 15,
+        "immutable": true
+      },
+      {
+        "name": "Z_to_normalized_then_rotating_X",
+        "storage": "xwork",
+        "bytes": 128,
+        "first": 6,
+        "last": 12,
+        "immutable": false
+      },
+      {
+        "name": "down_then_final_residual",
+        "storage": "xwork",
+        "bytes": 128,
+        "first": 14,
+        "last": 15,
+        "immutable": false
+      },
+      {
+        "name": "local_square_scratch",
+        "storage": "xrecv",
+        "bytes": 128,
+        "first": 7,
+        "last": 7,
+        "immutable": false
+      },
+      {
+        "name": "rotating_normalized_receive",
+        "storage": "xrecv",
+        "bytes": 128,
+        "first": 11,
+        "last": 12,
+        "immutable": false
+      },
+      {
+        "name": "row_square_sum_to_inverse",
+        "storage": "rms_rows",
+        "bytes": 16,
+        "first": 7,
+        "last": 10,
+        "immutable": false
+      },
+      {
+        "name": "up_to_hidden_then_rotating_send",
+        "storage": "up",
+        "bytes": 512,
+        "first": 11,
+        "last": 14,
+        "immutable": false
+      },
+      {
+        "name": "gate_to_silu",
+        "storage": "gate",
+        "bytes": 512,
+        "first": 12,
+        "last": 13,
+        "immutable": false
+      },
+      {
+        "name": "hidden_receive",
+        "storage": "hr",
+        "bytes": 512,
+        "first": 14,
+        "last": 14,
+        "immutable": false
+      },
+      {
+        "name": "projection_ww",
+        "storage": "ww",
+        "bytes": 512,
+        "first": 11,
+        "last": 14,
+        "immutable": false
+      },
+      {
+        "name": "projection_wr",
+        "storage": "wr",
+        "bytes": 512,
+        "first": 11,
+        "last": 14,
+        "immutable": false
+      },
+      {
+        "name": "up_f32_accumulator",
+        "storage": "hidden_accumulator",
+        "bytes": 1024,
+        "first": 11,
+        "last": 11,
+        "immutable": false
+      },
+      {
+        "name": "gate_f32_accumulator",
+        "storage": "hidden_accumulator",
+        "bytes": 1024,
+        "first": 12,
+        "last": 12,
+        "immutable": false
+      },
+      {
+        "name": "hidden_partial_conversion",
+        "storage": "hidden_widened",
+        "bytes": 1024,
+        "first": 11,
+        "last": 12,
+        "immutable": false
+      },
+      {
+        "name": "down_f32_accumulator",
+        "storage": "down_accumulator",
+        "bytes": 256,
+        "first": 14,
+        "last": 14,
+        "immutable": false
+      },
+      {
+        "name": "down_partial_conversion",
+        "storage": "down_widened",
+        "bytes": 256,
+        "first": 14,
+        "last": 14,
+        "immutable": false
+      },
+      {
+        "name": "public_output_weight",
+        "storage": "output_weight",
+        "bytes": 128,
+        "first": 0,
+        "last": 15,
+        "immutable": true
+      },
+      {
+        "name": "public_residual",
+        "storage": "residual",
+        "bytes": 128,
+        "first": 0,
+        "last": 15,
+        "immutable": true
+      },
+      {
+        "name": "projection_then_live_Z",
+        "storage": "post_projection_z",
+        "bytes": 128,
+        "first": 5,
+        "last": 15,
+        "immutable": false
+      },
+      {
+        "name": "prelude_xwork",
+        "storage": "xwork",
+        "bytes": 128,
+        "first": 5,
+        "last": 5,
+        "immutable": false
+      },
+      {
+        "name": "prelude_xrecv",
+        "storage": "xrecv",
+        "bytes": 128,
+        "first": 5,
+        "last": 5,
+        "immutable": false
+      },
+      {
+        "name": "prelude_ww",
+        "storage": "ww",
+        "bytes": 512,
+        "first": 5,
+        "last": 5,
+        "immutable": false
+      },
+      {
+        "name": "prelude_wr",
+        "storage": "wr",
+        "bytes": 512,
+        "first": 5,
+        "last": 5,
+        "immutable": false
+      },
+      {
+        "name": "public_attention_k",
+        "storage": "attention_k",
+        "bytes": 128,
+        "first": 0,
+        "last": 15,
+        "immutable": true
+      },
+      {
+        "name": "public_attention_v",
+        "storage": "attention_v",
+        "bytes": 128,
+        "first": 0,
+        "last": 15,
+        "immutable": true
+      },
+      {
+        "name": "K_then_V_rotating_xwork",
+        "storage": "xwork",
+        "bytes": 128,
+        "first": 0,
+        "last": 4,
+        "immutable": false
+      },
+      {
+        "name": "K_then_V_rotating_xrecv",
+        "storage": "xrecv",
+        "bytes": 128,
+        "first": 0,
+        "last": 4,
+        "immutable": false
+      },
+      {
+        "name": "score_to_probability_then_rotating_left",
+        "storage": "up",
+        "bytes": 128,
+        "first": 0,
+        "last": 4,
+        "immutable": false
+      },
+      {
+        "name": "score_partial_to_exp_then_value_receive",
+        "storage": "gate",
+        "bytes": 128,
+        "first": 0,
+        "last": 4,
+        "immutable": false
+      },
+      {
+        "name": "resident_attention_output",
+        "storage": "post_projection_z",
+        "bytes": 128,
+        "first": 4,
+        "last": 4,
+        "immutable": false
+      },
+      {
+        "name": "softmax_local_to_global_max",
+        "storage": "attention_peaks",
+        "bytes": 16,
+        "first": 1,
+        "last": 2,
+        "immutable": false
+      },
+      {
+        "name": "softmax_sum_to_inverse",
+        "storage": "attention_sums",
+        "bytes": 16,
+        "first": 2,
+        "last": 3,
+        "immutable": false
+      }
+    ],
+    "phases": [
+      {
+        "name": "score_and_root_reductions_complete",
+        "acquire": {
+          "score_numeric": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            },
+            {
+              "bank": "dest",
+              "index": 2
+            },
+            {
+              "bank": "src0",
+              "index": 2
+            }
+          ],
+          "right_memory": [
+            {
+              "bank": "src1",
+              "index": 4
+            },
+            {
+              "bank": "dest",
+              "index": 4
+            }
+          ],
+          "right_fabric": [
+            {
+              "bank": "dest",
+              "index": 6
+            },
+            {
+              "bank": "src1",
+              "index": 6
+            }
+          ]
+        },
+        "release": [
+          "score_numeric",
+          "right_memory",
+          "right_fabric"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "softmax_maximum_complete",
+        "acquire": {
+          "local_max": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ],
+          "row_max": [
+            {
+              "bank": "src1",
+              "index": 2
+            }
+          ]
+        },
+        "release": [
+          "local_max",
+          "row_max"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "softmax_exponent_sum_complete",
+        "acquire": {
+          "local_exp_sum": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ],
+          "row_sum": [
+            {
+              "bank": "src1",
+              "index": 2
+            }
+          ]
+        },
+        "release": [
+          "local_exp_sum",
+          "row_sum"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "softmax_normalized",
+        "acquire": {
+          "normalize": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ]
+        },
+        "release": [
+          "normalize"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "value_alignment_and_contraction_complete",
+        "acquire": {
+          "local_compute": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ],
+          "left_memory": [
+            {
+              "bank": "src1",
+              "index": 3
+            },
+            {
+              "bank": "dest",
+              "index": 3
+            }
+          ],
+          "right_memory": [
+            {
+              "bank": "src1",
+              "index": 4
+            },
+            {
+              "bank": "dest",
+              "index": 4
+            }
+          ],
+          "left_fabric": [
+            {
+              "bank": "dest",
+              "index": 5
+            },
+            {
+              "bank": "src1",
+              "index": 5
+            }
+          ],
+          "right_fabric": [
+            {
+              "bank": "dest",
+              "index": 6
+            },
+            {
+              "bank": "src1",
+              "index": 6
+            }
+          ]
+        },
+        "release": [
+          "local_compute",
+          "left_memory",
+          "right_memory",
+          "left_fabric",
+          "right_fabric"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "output_projection_complete",
+        "acquire": {
+          "local_compute": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ],
+          "left_memory": [
+            {
+              "bank": "src1",
+              "index": 3
+            },
+            {
+              "bank": "dest",
+              "index": 3
+            }
+          ],
+          "right_memory": [
+            {
+              "bank": "src1",
+              "index": 4
+            },
+            {
+              "bank": "dest",
+              "index": 4
+            }
+          ],
+          "left_fabric": [
+            {
+              "bank": "dest",
+              "index": 5
+            },
+            {
+              "bank": "src1",
+              "index": 5
+            }
+          ],
+          "right_fabric": [
+            {
+              "bank": "dest",
+              "index": 6
+            },
+            {
+              "bank": "src1",
+              "index": 6
+            }
+          ]
+        },
+        "release": [
+          "local_compute",
+          "left_memory",
+          "right_memory",
+          "left_fabric",
+          "right_fabric"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "post_projection_residual",
+        "acquire": {
+          "add": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ]
+        },
+        "release": [
+          "add"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "local_square_sum",
+        "acquire": {
+          "square": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            },
+            {
+              "bank": "dest",
+              "index": 2
+            },
+            {
+              "bank": "src0",
+              "index": 2
+            },
+            {
+              "bank": "src1",
+              "index": 2
+            }
+          ]
+        },
+        "release": [
+          "square"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "row_collective",
+        "acquire": {
+          "row": [
+            {
+              "bank": "src1",
+              "index": 2
+            }
+          ]
+        },
+        "release": [
+          "row"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "inverse",
+        "acquire": {
+          "synchronous_sdk_math": []
+        },
+        "release": [
+          "synchronous_sdk_math"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "normalize",
+        "acquire": {
+          "scale": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ]
+        },
+        "release": [
+          "scale"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "up_projection_complete",
+        "acquire": {
+          "local_compute": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ],
+          "left_memory": [
+            {
+              "bank": "src1",
+              "index": 3
+            },
+            {
+              "bank": "dest",
+              "index": 3
+            }
+          ],
+          "right_memory": [
+            {
+              "bank": "src1",
+              "index": 4
+            },
+            {
+              "bank": "dest",
+              "index": 4
+            }
+          ],
+          "left_fabric": [
+            {
+              "bank": "dest",
+              "index": 5
+            },
+            {
+              "bank": "src1",
+              "index": 5
+            }
+          ],
+          "right_fabric": [
+            {
+              "bank": "dest",
+              "index": 6
+            },
+            {
+              "bank": "src1",
+              "index": 6
+            }
+          ]
+        },
+        "release": [
+          "local_compute",
+          "left_memory",
+          "right_memory",
+          "left_fabric",
+          "right_fabric"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "gate_projection_complete",
+        "acquire": {
+          "local_compute": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ],
+          "left_memory": [
+            {
+              "bank": "src1",
+              "index": 3
+            },
+            {
+              "bank": "dest",
+              "index": 3
+            }
+          ],
+          "right_memory": [
+            {
+              "bank": "src1",
+              "index": 4
+            },
+            {
+              "bank": "dest",
+              "index": 4
+            }
+          ],
+          "left_fabric": [
+            {
+              "bank": "dest",
+              "index": 5
+            },
+            {
+              "bank": "src1",
+              "index": 5
+            }
+          ],
+          "right_fabric": [
+            {
+              "bank": "dest",
+              "index": 6
+            },
+            {
+              "bank": "src1",
+              "index": 6
+            }
+          ]
+        },
+        "release": [
+          "local_compute",
+          "left_memory",
+          "right_memory",
+          "left_fabric",
+          "right_fabric"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "silu_product",
+        "acquire": {
+          "gating": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ]
+        },
+        "release": [
+          "gating"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "down_projection_complete",
+        "acquire": {
+          "local_compute": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ],
+          "left_memory": [
+            {
+              "bank": "src1",
+              "index": 3
+            },
+            {
+              "bank": "dest",
+              "index": 3
+            }
+          ],
+          "right_memory": [
+            {
+              "bank": "src1",
+              "index": 4
+            },
+            {
+              "bank": "dest",
+              "index": 4
+            }
+          ],
+          "left_fabric": [
+            {
+              "bank": "dest",
+              "index": 5
+            },
+            {
+              "bank": "src1",
+              "index": 5
+            }
+          ],
+          "right_fabric": [
+            {
+              "bank": "dest",
+              "index": 6
+            },
+            {
+              "bank": "src1",
+              "index": 6
+            }
+          ]
+        },
+        "release": [
+          "local_compute",
+          "left_memory",
+          "right_memory",
+          "left_fabric",
+          "right_fabric"
+        ],
+        "join_before_next": true
+      },
+      {
+        "name": "final_residual",
+        "acquire": {
+          "add": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ]
+        },
+        "release": [
+          "add"
+        ],
+        "join_before_next": true
+      }
+    ],
+    "validation": {
+      "checked": true,
+      "numerical_storage_bytes": 7744,
+      "logical_values": 36,
+      "phases": 16,
+      "scope": "Declared numerical storage and explicit leases only; lowering callbacks, dynamic stack, SDK/compiler temporaries and diagnostic storage require separate target validation"
+    }
+  },
+  "projection_prelude": {
+    "M": 64,
+    "K": 64,
+    "N": 64,
+    "P": 8,
+    "Mt": 8,
+    "Kt": 8,
+    "Nt": 8,
+    "left_length": 64,
+    "right_length": 64,
+    "output_length": 64,
+    "rounds": 8,
+    "weights": "static logical weights host-packed in row-major tiles with two-hop block-row alignment",
+    "activation": "logical column-major tiles aligned forward on device",
+    "result": "logical column-major tiles",
+    "right_descriptor": "contiguous feature vector; contraction increment Nt",
+    "k_block_rule": "cycle[(position(y)+position(x)-round)%P]",
+    "completion": "both-axis transfer and local DSR compute joined before buffer swap"
+  },
+  "prelude_numerical_bounds": {
+    "projection": 0.0665283203125,
+    "residual_sum": 0.1915283203125,
+    "normalization": {
+      "square": 0.03668212890625,
+      "local_square_sum": 0.293212890625,
+      "reduced_square_sum": 2.345703125,
+      "inverse": 993.0,
+      "weighted": 0.287353515625,
+      "output": 12.0,
+      "proof": "Monotone nonnegative source half tree; exhaustive representable reduced-sum SDK inverse model. Each rounded input square bounds its reduced sum from below; inverse suffix maxima retain that correlation through gamma-first rounding. Range safety, not an accuracy guarantee."
+    }
+  },
+  "output_weight_length": 64,
+  "attention_schedule": {
+    "profile": "mesh_attention.v1",
+    "M": 64,
+    "N": 64,
+    "P": 8,
+    "rows": 8,
+    "cols": 8,
+    "Mt": 8,
+    "Nt": 8,
+    "length": 64,
+    "score_length": 64,
+    "epochs": 8,
+    "instrumentation": "counters",
+    "memory_per_pe": {
+      "resident_buffers": 768,
+      "observations": 4,
+      "control": 144,
+      "sdk_code_stack_reserve": 16384,
+      "softmax_local_vectors": 32,
+      "softmax_observations": 4,
+      "softmax_descriptors_control": 1024,
+      "value_input_work_output": 384,
+      "value_observations": 10,
+      "value_descriptors_control": 2048
+    },
+    "cycle": [
+      0,
+      2,
+      4,
+      6,
+      7,
+      5,
+      3,
+      1
+    ],
+    "transpose": {
+      "kind": "logical_view",
+      "materialized": false,
+      "input_layout": "column-major token/feature tiles"
+    },
+    "resources": {
+      "colors": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "input_queues": [
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "output_queues": [
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "active_input_queues": [
+        5,
+        7
+      ],
+      "active_output_queues": [
+        5,
+        7
+      ],
+      "microthreads": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "local_tasks": [
+        19,
+        20,
+        25,
+        26
+      ],
+      "compute_dsrs": [
+        1
+      ],
+      "communication_dsrs": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "explicit_dsr_lease": {
+        "compute": [
+          {
+            "bank": "dest",
+            "index": 1
+          },
+          {
+            "bank": "src0",
+            "index": 1
+          },
+          {
+            "bank": "src1",
+            "index": 1
+          }
+        ],
+        "communication": {
+          "left_memory": [
+            {
+              "bank": "src1",
+              "index": 3
+            },
+            {
+              "bank": "dest",
+              "index": 3
+            }
+          ],
+          "right_memory": [
+            {
+              "bank": "src1",
+              "index": 4
+            },
+            {
+              "bank": "dest",
+              "index": 4
+            }
+          ],
+          "left_fabric": [
+            {
+              "bank": "dest",
+              "index": 5
+            },
+            {
+              "bank": "src1",
+              "index": 5
+            }
+          ],
+          "right_fabric": [
+            {
+              "bank": "dest",
+              "index": 6
+            },
+            {
+              "bank": "src1",
+              "index": 6
+            }
+          ]
+        },
+        "completion": "all four explicit microthread operations join before lease reuse",
+        "scope": "explicit DSR reservations; compiler/SDK temporary allocation is not enumerated"
+      },
+      "phase_resources": {
+        "normalization": {
+          "colors": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "input_queues": [
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "output_queues": [
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "active_input_queues": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "active_output_queues": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "microthreads": [
+            2,
+            3
+          ],
+          "local_tasks": [
+            19,
+            20,
+            25,
+            26
+          ],
+          "compute_dsrs": [
+            1
+          ],
+          "reduction_dsrs": [
+            1,
+            2
+          ],
+          "async_communication_dsrs": [
+            4,
+            6
+          ],
+          "explicit_dsr_phases": {
+            "local_compute": [
+              {
+                "bank": "dest",
+                "index": 1
+              },
+              {
+                "bank": "src0",
+                "index": 1
+              },
+              {
+                "bank": "src1",
+                "index": 1
+              }
+            ],
+            "overlapped_exchange": {
+              "right_memory": [
+                {
+                  "bank": "src1",
+                  "index": 4
+                },
+                {
+                  "bank": "dest",
+                  "index": 4
+                }
+              ],
+              "right_fabric": [
+                {
+                  "bank": "dest",
+                  "index": 6
+                },
+                {
+                  "bank": "src1",
+                  "index": 6
+                }
+              ]
+            },
+            "joined_reduction": [
+              {
+                "bank": "dest",
+                "index": 1
+              },
+              {
+                "bank": "src0",
+                "index": 1
+              },
+              {
+                "bank": "src1",
+                "index": 1
+              },
+              {
+                "bank": "dest",
+                "index": 2
+              },
+              {
+                "bank": "src0",
+                "index": 2
+              }
+            ]
+          },
+          "reuse": "score joins all vertical traffic before softmax borrows DSR1/2 and row queues3/4/6; no new colors/tasks/UTs",
+          "softmax_explicit_dsr_phases": {
+            "local_math": [
+              {
+                "bank": "dest",
+                "index": 1
+              },
+              {
+                "bank": "src0",
+                "index": 1
+              },
+              {
+                "bank": "src1",
+                "index": 1
+              }
+            ],
+            "row_collective": [
+              {
+                "bank": "src1",
+                "index": 2
+              }
+            ]
+          }
+        },
+        "value": {
+          "colors": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "input_queues": [
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "output_queues": [
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "active_input_queues": [
+            5,
+            7
+          ],
+          "active_output_queues": [
+            5,
+            7
+          ],
+          "microthreads": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "local_tasks": [
+            19,
+            20,
+            25,
+            26
+          ],
+          "compute_dsrs": [
+            1
+          ],
+          "communication_dsrs": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "explicit_dsr_lease": {
+            "compute": [
+              {
+                "bank": "dest",
+                "index": 1
+              },
+              {
+                "bank": "src0",
+                "index": 1
+              },
+              {
+                "bank": "src1",
+                "index": 1
+              }
+            ],
+            "communication": {
+              "left_memory": [
+                {
+                  "bank": "src1",
+                  "index": 3
+                },
+                {
+                  "bank": "dest",
+                  "index": 3
+                }
+              ],
+              "right_memory": [
+                {
+                  "bank": "src1",
+                  "index": 4
+                },
+                {
+                  "bank": "dest",
+                  "index": 4
+                }
+              ],
+              "left_fabric": [
+                {
+                  "bank": "dest",
+                  "index": 5
+                },
+                {
+                  "bank": "src1",
+                  "index": 5
+                }
+              ],
+              "right_fabric": [
+                {
+                  "bank": "dest",
+                  "index": 6
+                },
+                {
+                  "bank": "src1",
+                  "index": 6
+                }
+              ]
+            },
+            "completion": "all four explicit microthread operations join before lease reuse",
+            "scope": "explicit DSR reservations; compiler/SDK temporary allocation is not enumerated"
+          }
+        }
+      },
+      "reuse": "score and softmax drain communication before value reuses queues3..7, tasks19/20/25/26, UT0..3 and DSR1/2/3/4/5/6; phase dispatch preserves joins"
+    },
+    "stages": [
+      "copy immutable K to private send storage",
+      "rotate K vertically while local QK-transpose partial computes",
+      "reduce partial east-first to current K token root",
+      "join vertical send/receive and compute/reduction completion before swap",
+      "borrow completed partial buffer for exponents",
+      "scale and local max; row maximum collective",
+      "SDK map exp and local sum; row sum collective",
+      "normalize resident probability",
+      "snapshot optional probability/exponent witnesses",
+      "borrow completed exponent and K receive buffers for value contraction",
+      "device V vertical and probability horizontal alignment",
+      "overlap both-axis transfer with strided DSR value contraction",
+      "join completion and return output"
+    ],
+    "root_rule": "cycle[(position(y)-round)%P]",
+    "nodes": [
+      {
+        "id": "p0_0",
+        "tile": [
+          0,
+          0
+        ],
+        "place": [
+          4,
+          1
+        ]
+      },
+      {
+        "id": "p1_0",
+        "tile": [
+          1,
+          0
+        ],
+        "place": [
+          5,
+          1
+        ]
+      },
+      {
+        "id": "p2_0",
+        "tile": [
+          2,
+          0
+        ],
+        "place": [
+          6,
+          1
+        ]
+      },
+      {
+        "id": "p3_0",
+        "tile": [
+          3,
+          0
+        ],
+        "place": [
+          7,
+          1
+        ]
+      },
+      {
+        "id": "p4_0",
+        "tile": [
+          4,
+          0
+        ],
+        "place": [
+          8,
+          1
+        ]
+      },
+      {
+        "id": "p5_0",
+        "tile": [
+          5,
+          0
+        ],
+        "place": [
+          9,
+          1
+        ]
+      },
+      {
+        "id": "p6_0",
+        "tile": [
+          6,
+          0
+        ],
+        "place": [
+          10,
+          1
+        ]
+      },
+      {
+        "id": "p7_0",
+        "tile": [
+          7,
+          0
+        ],
+        "place": [
+          11,
+          1
+        ]
+      },
+      {
+        "id": "p0_1",
+        "tile": [
+          0,
+          1
+        ],
+        "place": [
+          4,
+          2
+        ]
+      },
+      {
+        "id": "p1_1",
+        "tile": [
+          1,
+          1
+        ],
+        "place": [
+          5,
+          2
+        ]
+      },
+      {
+        "id": "p2_1",
+        "tile": [
+          2,
+          1
+        ],
+        "place": [
+          6,
+          2
+        ]
+      },
+      {
+        "id": "p3_1",
+        "tile": [
+          3,
+          1
+        ],
+        "place": [
+          7,
+          2
+        ]
+      },
+      {
+        "id": "p4_1",
+        "tile": [
+          4,
+          1
+        ],
+        "place": [
+          8,
+          2
+        ]
+      },
+      {
+        "id": "p5_1",
+        "tile": [
+          5,
+          1
+        ],
+        "place": [
+          9,
+          2
+        ]
+      },
+      {
+        "id": "p6_1",
+        "tile": [
+          6,
+          1
+        ],
+        "place": [
+          10,
+          2
+        ]
+      },
+      {
+        "id": "p7_1",
+        "tile": [
+          7,
+          1
+        ],
+        "place": [
+          11,
+          2
+        ]
+      },
+      {
+        "id": "p0_2",
+        "tile": [
+          0,
+          2
+        ],
+        "place": [
+          4,
+          3
+        ]
+      },
+      {
+        "id": "p1_2",
+        "tile": [
+          1,
+          2
+        ],
+        "place": [
+          5,
+          3
+        ]
+      },
+      {
+        "id": "p2_2",
+        "tile": [
+          2,
+          2
+        ],
+        "place": [
+          6,
+          3
+        ]
+      },
+      {
+        "id": "p3_2",
+        "tile": [
+          3,
+          2
+        ],
+        "place": [
+          7,
+          3
+        ]
+      },
+      {
+        "id": "p4_2",
+        "tile": [
+          4,
+          2
+        ],
+        "place": [
+          8,
+          3
+        ]
+      },
+      {
+        "id": "p5_2",
+        "tile": [
+          5,
+          2
+        ],
+        "place": [
+          9,
+          3
+        ]
+      },
+      {
+        "id": "p6_2",
+        "tile": [
+          6,
+          2
+        ],
+        "place": [
+          10,
+          3
+        ]
+      },
+      {
+        "id": "p7_2",
+        "tile": [
+          7,
+          2
+        ],
+        "place": [
+          11,
+          3
+        ]
+      },
+      {
+        "id": "p0_3",
+        "tile": [
+          0,
+          3
+        ],
+        "place": [
+          4,
+          4
+        ]
+      },
+      {
+        "id": "p1_3",
+        "tile": [
+          1,
+          3
+        ],
+        "place": [
+          5,
+          4
+        ]
+      },
+      {
+        "id": "p2_3",
+        "tile": [
+          2,
+          3
+        ],
+        "place": [
+          6,
+          4
+        ]
+      },
+      {
+        "id": "p3_3",
+        "tile": [
+          3,
+          3
+        ],
+        "place": [
+          7,
+          4
+        ]
+      },
+      {
+        "id": "p4_3",
+        "tile": [
+          4,
+          3
+        ],
+        "place": [
+          8,
+          4
+        ]
+      },
+      {
+        "id": "p5_3",
+        "tile": [
+          5,
+          3
+        ],
+        "place": [
+          9,
+          4
+        ]
+      },
+      {
+        "id": "p6_3",
+        "tile": [
+          6,
+          3
+        ],
+        "place": [
+          10,
+          4
+        ]
+      },
+      {
+        "id": "p7_3",
+        "tile": [
+          7,
+          3
+        ],
+        "place": [
+          11,
+          4
+        ]
+      },
+      {
+        "id": "p0_4",
+        "tile": [
+          0,
+          4
+        ],
+        "place": [
+          4,
+          5
+        ]
+      },
+      {
+        "id": "p1_4",
+        "tile": [
+          1,
+          4
+        ],
+        "place": [
+          5,
+          5
+        ]
+      },
+      {
+        "id": "p2_4",
+        "tile": [
+          2,
+          4
+        ],
+        "place": [
+          6,
+          5
+        ]
+      },
+      {
+        "id": "p3_4",
+        "tile": [
+          3,
+          4
+        ],
+        "place": [
+          7,
+          5
+        ]
+      },
+      {
+        "id": "p4_4",
+        "tile": [
+          4,
+          4
+        ],
+        "place": [
+          8,
+          5
+        ]
+      },
+      {
+        "id": "p5_4",
+        "tile": [
+          5,
+          4
+        ],
+        "place": [
+          9,
+          5
+        ]
+      },
+      {
+        "id": "p6_4",
+        "tile": [
+          6,
+          4
+        ],
+        "place": [
+          10,
+          5
+        ]
+      },
+      {
+        "id": "p7_4",
+        "tile": [
+          7,
+          4
+        ],
+        "place": [
+          11,
+          5
+        ]
+      },
+      {
+        "id": "p0_5",
+        "tile": [
+          0,
+          5
+        ],
+        "place": [
+          4,
+          6
+        ]
+      },
+      {
+        "id": "p1_5",
+        "tile": [
+          1,
+          5
+        ],
+        "place": [
+          5,
+          6
+        ]
+      },
+      {
+        "id": "p2_5",
+        "tile": [
+          2,
+          5
+        ],
+        "place": [
+          6,
+          6
+        ]
+      },
+      {
+        "id": "p3_5",
+        "tile": [
+          3,
+          5
+        ],
+        "place": [
+          7,
+          6
+        ]
+      },
+      {
+        "id": "p4_5",
+        "tile": [
+          4,
+          5
+        ],
+        "place": [
+          8,
+          6
+        ]
+      },
+      {
+        "id": "p5_5",
+        "tile": [
+          5,
+          5
+        ],
+        "place": [
+          9,
+          6
+        ]
+      },
+      {
+        "id": "p6_5",
+        "tile": [
+          6,
+          5
+        ],
+        "place": [
+          10,
+          6
+        ]
+      },
+      {
+        "id": "p7_5",
+        "tile": [
+          7,
+          5
+        ],
+        "place": [
+          11,
+          6
+        ]
+      },
+      {
+        "id": "p0_6",
+        "tile": [
+          0,
+          6
+        ],
+        "place": [
+          4,
+          7
+        ]
+      },
+      {
+        "id": "p1_6",
+        "tile": [
+          1,
+          6
+        ],
+        "place": [
+          5,
+          7
+        ]
+      },
+      {
+        "id": "p2_6",
+        "tile": [
+          2,
+          6
+        ],
+        "place": [
+          6,
+          7
+        ]
+      },
+      {
+        "id": "p3_6",
+        "tile": [
+          3,
+          6
+        ],
+        "place": [
+          7,
+          7
+        ]
+      },
+      {
+        "id": "p4_6",
+        "tile": [
+          4,
+          6
+        ],
+        "place": [
+          8,
+          7
+        ]
+      },
+      {
+        "id": "p5_6",
+        "tile": [
+          5,
+          6
+        ],
+        "place": [
+          9,
+          7
+        ]
+      },
+      {
+        "id": "p6_6",
+        "tile": [
+          6,
+          6
+        ],
+        "place": [
+          10,
+          7
+        ]
+      },
+      {
+        "id": "p7_6",
+        "tile": [
+          7,
+          6
+        ],
+        "place": [
+          11,
+          7
+        ]
+      },
+      {
+        "id": "p0_7",
+        "tile": [
+          0,
+          7
+        ],
+        "place": [
+          4,
+          8
+        ]
+      },
+      {
+        "id": "p1_7",
+        "tile": [
+          1,
+          7
+        ],
+        "place": [
+          5,
+          8
+        ]
+      },
+      {
+        "id": "p2_7",
+        "tile": [
+          2,
+          7
+        ],
+        "place": [
+          6,
+          8
+        ]
+      },
+      {
+        "id": "p3_7",
+        "tile": [
+          3,
+          7
+        ],
+        "place": [
+          7,
+          8
+        ]
+      },
+      {
+        "id": "p4_7",
+        "tile": [
+          4,
+          7
+        ],
+        "place": [
+          8,
+          8
+        ]
+      },
+      {
+        "id": "p5_7",
+        "tile": [
+          5,
+          7
+        ],
+        "place": [
+          9,
+          8
+        ]
+      },
+      {
+        "id": "p6_7",
+        "tile": [
+          6,
+          7
+        ],
+        "place": [
+          10,
+          8
+        ]
+      },
+      {
+        "id": "p7_7",
+        "tile": [
+          7,
+          7
+        ],
+        "place": [
+          11,
+          8
+        ]
+      }
+    ],
+    "score_schedule": {
+      "profile": "mesh_score.v1",
+      "M": 64,
+      "N": 64,
+      "P": 8,
+      "rows": 8,
+      "cols": 8,
+      "Mt": 8,
+      "Nt": 8,
+      "length": 64,
+      "score_length": 64,
+      "epochs": 8,
+      "instrumentation": "counters",
+      "memory_per_pe": {
+        "resident_buffers": 768,
+        "observations": 4,
+        "control": 144,
+        "sdk_code_stack_reserve": 16384
+      },
+      "cycle": [
+        0,
+        2,
+        4,
+        6,
+        7,
+        5,
+        3,
+        1
+      ],
+      "transpose": {
+        "kind": "logical_view",
+        "materialized": false,
+        "input_layout": "column-major token/feature tiles"
+      },
+      "resources": {
+        "colors": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "input_queues": [
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "output_queues": [
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "active_input_queues": [
+          3,
+          4,
+          5
+        ],
+        "active_output_queues": [
+          3,
+          4,
+          5
+        ],
+        "microthreads": [
+          2,
+          3
+        ],
+        "local_tasks": [
+          19,
+          20,
+          25,
+          26
+        ],
+        "compute_dsrs": [
+          1
+        ],
+        "reduction_dsrs": [
+          1,
+          2
+        ],
+        "async_communication_dsrs": [
+          4,
+          6
+        ],
+        "explicit_dsr_phases": {
+          "local_compute": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ],
+          "overlapped_exchange": {
+            "right_memory": [
+              {
+                "bank": "src1",
+                "index": 4
+              },
+              {
+                "bank": "dest",
+                "index": 4
+              }
+            ],
+            "right_fabric": [
+              {
+                "bank": "dest",
+                "index": 6
+              },
+              {
+                "bank": "src1",
+                "index": 6
+              }
+            ]
+          },
+          "joined_reduction": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            },
+            {
+              "bank": "dest",
+              "index": 2
+            },
+            {
+              "bank": "src0",
+              "index": 2
+            }
+          ]
+        },
+        "reuse": "local FMA completes before synchronous root reduction reuses DSR1"
+      },
+      "stages": [
+        "copy immutable K to private send storage",
+        "rotate K vertically while local QK-transpose partial computes",
+        "reduce partial east-first to current K token root",
+        "join vertical send/receive and compute/reduction completion before swap"
+      ],
+      "root_rule": "cycle[(position(y)-round)%P]",
+      "nodes": [
+        {
+          "id": "p0_0",
+          "tile": [
+            0,
+            0
+          ],
+          "place": [
+            4,
+            1
+          ]
+        },
+        {
+          "id": "p1_0",
+          "tile": [
+            1,
+            0
+          ],
+          "place": [
+            5,
+            1
+          ]
+        },
+        {
+          "id": "p2_0",
+          "tile": [
+            2,
+            0
+          ],
+          "place": [
+            6,
+            1
+          ]
+        },
+        {
+          "id": "p3_0",
+          "tile": [
+            3,
+            0
+          ],
+          "place": [
+            7,
+            1
+          ]
+        },
+        {
+          "id": "p4_0",
+          "tile": [
+            4,
+            0
+          ],
+          "place": [
+            8,
+            1
+          ]
+        },
+        {
+          "id": "p5_0",
+          "tile": [
+            5,
+            0
+          ],
+          "place": [
+            9,
+            1
+          ]
+        },
+        {
+          "id": "p6_0",
+          "tile": [
+            6,
+            0
+          ],
+          "place": [
+            10,
+            1
+          ]
+        },
+        {
+          "id": "p7_0",
+          "tile": [
+            7,
+            0
+          ],
+          "place": [
+            11,
+            1
+          ]
+        },
+        {
+          "id": "p0_1",
+          "tile": [
+            0,
+            1
+          ],
+          "place": [
+            4,
+            2
+          ]
+        },
+        {
+          "id": "p1_1",
+          "tile": [
+            1,
+            1
+          ],
+          "place": [
+            5,
+            2
+          ]
+        },
+        {
+          "id": "p2_1",
+          "tile": [
+            2,
+            1
+          ],
+          "place": [
+            6,
+            2
+          ]
+        },
+        {
+          "id": "p3_1",
+          "tile": [
+            3,
+            1
+          ],
+          "place": [
+            7,
+            2
+          ]
+        },
+        {
+          "id": "p4_1",
+          "tile": [
+            4,
+            1
+          ],
+          "place": [
+            8,
+            2
+          ]
+        },
+        {
+          "id": "p5_1",
+          "tile": [
+            5,
+            1
+          ],
+          "place": [
+            9,
+            2
+          ]
+        },
+        {
+          "id": "p6_1",
+          "tile": [
+            6,
+            1
+          ],
+          "place": [
+            10,
+            2
+          ]
+        },
+        {
+          "id": "p7_1",
+          "tile": [
+            7,
+            1
+          ],
+          "place": [
+            11,
+            2
+          ]
+        },
+        {
+          "id": "p0_2",
+          "tile": [
+            0,
+            2
+          ],
+          "place": [
+            4,
+            3
+          ]
+        },
+        {
+          "id": "p1_2",
+          "tile": [
+            1,
+            2
+          ],
+          "place": [
+            5,
+            3
+          ]
+        },
+        {
+          "id": "p2_2",
+          "tile": [
+            2,
+            2
+          ],
+          "place": [
+            6,
+            3
+          ]
+        },
+        {
+          "id": "p3_2",
+          "tile": [
+            3,
+            2
+          ],
+          "place": [
+            7,
+            3
+          ]
+        },
+        {
+          "id": "p4_2",
+          "tile": [
+            4,
+            2
+          ],
+          "place": [
+            8,
+            3
+          ]
+        },
+        {
+          "id": "p5_2",
+          "tile": [
+            5,
+            2
+          ],
+          "place": [
+            9,
+            3
+          ]
+        },
+        {
+          "id": "p6_2",
+          "tile": [
+            6,
+            2
+          ],
+          "place": [
+            10,
+            3
+          ]
+        },
+        {
+          "id": "p7_2",
+          "tile": [
+            7,
+            2
+          ],
+          "place": [
+            11,
+            3
+          ]
+        },
+        {
+          "id": "p0_3",
+          "tile": [
+            0,
+            3
+          ],
+          "place": [
+            4,
+            4
+          ]
+        },
+        {
+          "id": "p1_3",
+          "tile": [
+            1,
+            3
+          ],
+          "place": [
+            5,
+            4
+          ]
+        },
+        {
+          "id": "p2_3",
+          "tile": [
+            2,
+            3
+          ],
+          "place": [
+            6,
+            4
+          ]
+        },
+        {
+          "id": "p3_3",
+          "tile": [
+            3,
+            3
+          ],
+          "place": [
+            7,
+            4
+          ]
+        },
+        {
+          "id": "p4_3",
+          "tile": [
+            4,
+            3
+          ],
+          "place": [
+            8,
+            4
+          ]
+        },
+        {
+          "id": "p5_3",
+          "tile": [
+            5,
+            3
+          ],
+          "place": [
+            9,
+            4
+          ]
+        },
+        {
+          "id": "p6_3",
+          "tile": [
+            6,
+            3
+          ],
+          "place": [
+            10,
+            4
+          ]
+        },
+        {
+          "id": "p7_3",
+          "tile": [
+            7,
+            3
+          ],
+          "place": [
+            11,
+            4
+          ]
+        },
+        {
+          "id": "p0_4",
+          "tile": [
+            0,
+            4
+          ],
+          "place": [
+            4,
+            5
+          ]
+        },
+        {
+          "id": "p1_4",
+          "tile": [
+            1,
+            4
+          ],
+          "place": [
+            5,
+            5
+          ]
+        },
+        {
+          "id": "p2_4",
+          "tile": [
+            2,
+            4
+          ],
+          "place": [
+            6,
+            5
+          ]
+        },
+        {
+          "id": "p3_4",
+          "tile": [
+            3,
+            4
+          ],
+          "place": [
+            7,
+            5
+          ]
+        },
+        {
+          "id": "p4_4",
+          "tile": [
+            4,
+            4
+          ],
+          "place": [
+            8,
+            5
+          ]
+        },
+        {
+          "id": "p5_4",
+          "tile": [
+            5,
+            4
+          ],
+          "place": [
+            9,
+            5
+          ]
+        },
+        {
+          "id": "p6_4",
+          "tile": [
+            6,
+            4
+          ],
+          "place": [
+            10,
+            5
+          ]
+        },
+        {
+          "id": "p7_4",
+          "tile": [
+            7,
+            4
+          ],
+          "place": [
+            11,
+            5
+          ]
+        },
+        {
+          "id": "p0_5",
+          "tile": [
+            0,
+            5
+          ],
+          "place": [
+            4,
+            6
+          ]
+        },
+        {
+          "id": "p1_5",
+          "tile": [
+            1,
+            5
+          ],
+          "place": [
+            5,
+            6
+          ]
+        },
+        {
+          "id": "p2_5",
+          "tile": [
+            2,
+            5
+          ],
+          "place": [
+            6,
+            6
+          ]
+        },
+        {
+          "id": "p3_5",
+          "tile": [
+            3,
+            5
+          ],
+          "place": [
+            7,
+            6
+          ]
+        },
+        {
+          "id": "p4_5",
+          "tile": [
+            4,
+            5
+          ],
+          "place": [
+            8,
+            6
+          ]
+        },
+        {
+          "id": "p5_5",
+          "tile": [
+            5,
+            5
+          ],
+          "place": [
+            9,
+            6
+          ]
+        },
+        {
+          "id": "p6_5",
+          "tile": [
+            6,
+            5
+          ],
+          "place": [
+            10,
+            6
+          ]
+        },
+        {
+          "id": "p7_5",
+          "tile": [
+            7,
+            5
+          ],
+          "place": [
+            11,
+            6
+          ]
+        },
+        {
+          "id": "p0_6",
+          "tile": [
+            0,
+            6
+          ],
+          "place": [
+            4,
+            7
+          ]
+        },
+        {
+          "id": "p1_6",
+          "tile": [
+            1,
+            6
+          ],
+          "place": [
+            5,
+            7
+          ]
+        },
+        {
+          "id": "p2_6",
+          "tile": [
+            2,
+            6
+          ],
+          "place": [
+            6,
+            7
+          ]
+        },
+        {
+          "id": "p3_6",
+          "tile": [
+            3,
+            6
+          ],
+          "place": [
+            7,
+            7
+          ]
+        },
+        {
+          "id": "p4_6",
+          "tile": [
+            4,
+            6
+          ],
+          "place": [
+            8,
+            7
+          ]
+        },
+        {
+          "id": "p5_6",
+          "tile": [
+            5,
+            6
+          ],
+          "place": [
+            9,
+            7
+          ]
+        },
+        {
+          "id": "p6_6",
+          "tile": [
+            6,
+            6
+          ],
+          "place": [
+            10,
+            7
+          ]
+        },
+        {
+          "id": "p7_6",
+          "tile": [
+            7,
+            6
+          ],
+          "place": [
+            11,
+            7
+          ]
+        },
+        {
+          "id": "p0_7",
+          "tile": [
+            0,
+            7
+          ],
+          "place": [
+            4,
+            8
+          ]
+        },
+        {
+          "id": "p1_7",
+          "tile": [
+            1,
+            7
+          ],
+          "place": [
+            5,
+            8
+          ]
+        },
+        {
+          "id": "p2_7",
+          "tile": [
+            2,
+            7
+          ],
+          "place": [
+            6,
+            8
+          ]
+        },
+        {
+          "id": "p3_7",
+          "tile": [
+            3,
+            7
+          ],
+          "place": [
+            7,
+            8
+          ]
+        },
+        {
+          "id": "p4_7",
+          "tile": [
+            4,
+            7
+          ],
+          "place": [
+            8,
+            8
+          ]
+        },
+        {
+          "id": "p5_7",
+          "tile": [
+            5,
+            7
+          ],
+          "place": [
+            9,
+            8
+          ]
+        },
+        {
+          "id": "p6_7",
+          "tile": [
+            6,
+            7
+          ],
+          "place": [
+            10,
+            8
+          ]
+        },
+        {
+          "id": "p7_7",
+          "tile": [
+            7,
+            7
+          ],
+          "place": [
+            11,
+            8
+          ]
+        }
+      ]
+    },
+    "softmax_schedule": {
+      "profile": "mesh_softmax.v1",
+      "rows": 8,
+      "cols": 8,
+      "M": 64,
+      "N": 64,
+      "Mt": 8,
+      "Nt": 8,
+      "scale": 0.125,
+      "instrumentation": "counters",
+      "epochs": 8,
+      "dtype": "f16",
+      "memory_per_pe": {
+        "data": 416,
+        "observations": 2,
+        "protocol": 128,
+        "code_stack_reserve": 16384
+      },
+      "stages": [
+        {
+          "kind": "scale_local_max",
+          "initializer": "negative_max_finite"
+        },
+        {
+          "kind": "row_allreduce",
+          "combine": "max"
+        },
+        {
+          "kind": "max_shift_sdk_exp_local_sum",
+          "elementwise": "map"
+        },
+        {
+          "kind": "row_allreduce",
+          "combine": "add",
+          "root_order": [
+            "east",
+            "west"
+          ]
+        },
+        {
+          "kind": "reciprocal"
+        },
+        {
+          "kind": "row_vector_scale"
+        }
+      ],
+      "resources": {
+        "colors": [
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "input_queues": [
+          3,
+          4,
+          6
+        ],
+        "output_queues": [
+          3,
+          4,
+          6
+        ],
+        "compute_dsr": 1,
+        "reduction_src1_dsr": 2,
+        "local_tasks": [],
+        "host_bindings": "fixed input/result/exponent storage; one host invocation",
+        "elementwise_descriptors": "compiler-managed synchronous phase; no sharing with simultaneous work"
+      },
+      "nodes": [
+        {
+          "id": "p0_0",
+          "tile": [
+            0,
+            0
+          ],
+          "place": [
+            4,
+            1
+          ]
+        },
+        {
+          "id": "p1_0",
+          "tile": [
+            1,
+            0
+          ],
+          "place": [
+            5,
+            1
+          ]
+        },
+        {
+          "id": "p2_0",
+          "tile": [
+            2,
+            0
+          ],
+          "place": [
+            6,
+            1
+          ]
+        },
+        {
+          "id": "p3_0",
+          "tile": [
+            3,
+            0
+          ],
+          "place": [
+            7,
+            1
+          ]
+        },
+        {
+          "id": "p4_0",
+          "tile": [
+            4,
+            0
+          ],
+          "place": [
+            8,
+            1
+          ]
+        },
+        {
+          "id": "p5_0",
+          "tile": [
+            5,
+            0
+          ],
+          "place": [
+            9,
+            1
+          ]
+        },
+        {
+          "id": "p6_0",
+          "tile": [
+            6,
+            0
+          ],
+          "place": [
+            10,
+            1
+          ]
+        },
+        {
+          "id": "p7_0",
+          "tile": [
+            7,
+            0
+          ],
+          "place": [
+            11,
+            1
+          ]
+        },
+        {
+          "id": "p0_1",
+          "tile": [
+            0,
+            1
+          ],
+          "place": [
+            4,
+            2
+          ]
+        },
+        {
+          "id": "p1_1",
+          "tile": [
+            1,
+            1
+          ],
+          "place": [
+            5,
+            2
+          ]
+        },
+        {
+          "id": "p2_1",
+          "tile": [
+            2,
+            1
+          ],
+          "place": [
+            6,
+            2
+          ]
+        },
+        {
+          "id": "p3_1",
+          "tile": [
+            3,
+            1
+          ],
+          "place": [
+            7,
+            2
+          ]
+        },
+        {
+          "id": "p4_1",
+          "tile": [
+            4,
+            1
+          ],
+          "place": [
+            8,
+            2
+          ]
+        },
+        {
+          "id": "p5_1",
+          "tile": [
+            5,
+            1
+          ],
+          "place": [
+            9,
+            2
+          ]
+        },
+        {
+          "id": "p6_1",
+          "tile": [
+            6,
+            1
+          ],
+          "place": [
+            10,
+            2
+          ]
+        },
+        {
+          "id": "p7_1",
+          "tile": [
+            7,
+            1
+          ],
+          "place": [
+            11,
+            2
+          ]
+        },
+        {
+          "id": "p0_2",
+          "tile": [
+            0,
+            2
+          ],
+          "place": [
+            4,
+            3
+          ]
+        },
+        {
+          "id": "p1_2",
+          "tile": [
+            1,
+            2
+          ],
+          "place": [
+            5,
+            3
+          ]
+        },
+        {
+          "id": "p2_2",
+          "tile": [
+            2,
+            2
+          ],
+          "place": [
+            6,
+            3
+          ]
+        },
+        {
+          "id": "p3_2",
+          "tile": [
+            3,
+            2
+          ],
+          "place": [
+            7,
+            3
+          ]
+        },
+        {
+          "id": "p4_2",
+          "tile": [
+            4,
+            2
+          ],
+          "place": [
+            8,
+            3
+          ]
+        },
+        {
+          "id": "p5_2",
+          "tile": [
+            5,
+            2
+          ],
+          "place": [
+            9,
+            3
+          ]
+        },
+        {
+          "id": "p6_2",
+          "tile": [
+            6,
+            2
+          ],
+          "place": [
+            10,
+            3
+          ]
+        },
+        {
+          "id": "p7_2",
+          "tile": [
+            7,
+            2
+          ],
+          "place": [
+            11,
+            3
+          ]
+        },
+        {
+          "id": "p0_3",
+          "tile": [
+            0,
+            3
+          ],
+          "place": [
+            4,
+            4
+          ]
+        },
+        {
+          "id": "p1_3",
+          "tile": [
+            1,
+            3
+          ],
+          "place": [
+            5,
+            4
+          ]
+        },
+        {
+          "id": "p2_3",
+          "tile": [
+            2,
+            3
+          ],
+          "place": [
+            6,
+            4
+          ]
+        },
+        {
+          "id": "p3_3",
+          "tile": [
+            3,
+            3
+          ],
+          "place": [
+            7,
+            4
+          ]
+        },
+        {
+          "id": "p4_3",
+          "tile": [
+            4,
+            3
+          ],
+          "place": [
+            8,
+            4
+          ]
+        },
+        {
+          "id": "p5_3",
+          "tile": [
+            5,
+            3
+          ],
+          "place": [
+            9,
+            4
+          ]
+        },
+        {
+          "id": "p6_3",
+          "tile": [
+            6,
+            3
+          ],
+          "place": [
+            10,
+            4
+          ]
+        },
+        {
+          "id": "p7_3",
+          "tile": [
+            7,
+            3
+          ],
+          "place": [
+            11,
+            4
+          ]
+        },
+        {
+          "id": "p0_4",
+          "tile": [
+            0,
+            4
+          ],
+          "place": [
+            4,
+            5
+          ]
+        },
+        {
+          "id": "p1_4",
+          "tile": [
+            1,
+            4
+          ],
+          "place": [
+            5,
+            5
+          ]
+        },
+        {
+          "id": "p2_4",
+          "tile": [
+            2,
+            4
+          ],
+          "place": [
+            6,
+            5
+          ]
+        },
+        {
+          "id": "p3_4",
+          "tile": [
+            3,
+            4
+          ],
+          "place": [
+            7,
+            5
+          ]
+        },
+        {
+          "id": "p4_4",
+          "tile": [
+            4,
+            4
+          ],
+          "place": [
+            8,
+            5
+          ]
+        },
+        {
+          "id": "p5_4",
+          "tile": [
+            5,
+            4
+          ],
+          "place": [
+            9,
+            5
+          ]
+        },
+        {
+          "id": "p6_4",
+          "tile": [
+            6,
+            4
+          ],
+          "place": [
+            10,
+            5
+          ]
+        },
+        {
+          "id": "p7_4",
+          "tile": [
+            7,
+            4
+          ],
+          "place": [
+            11,
+            5
+          ]
+        },
+        {
+          "id": "p0_5",
+          "tile": [
+            0,
+            5
+          ],
+          "place": [
+            4,
+            6
+          ]
+        },
+        {
+          "id": "p1_5",
+          "tile": [
+            1,
+            5
+          ],
+          "place": [
+            5,
+            6
+          ]
+        },
+        {
+          "id": "p2_5",
+          "tile": [
+            2,
+            5
+          ],
+          "place": [
+            6,
+            6
+          ]
+        },
+        {
+          "id": "p3_5",
+          "tile": [
+            3,
+            5
+          ],
+          "place": [
+            7,
+            6
+          ]
+        },
+        {
+          "id": "p4_5",
+          "tile": [
+            4,
+            5
+          ],
+          "place": [
+            8,
+            6
+          ]
+        },
+        {
+          "id": "p5_5",
+          "tile": [
+            5,
+            5
+          ],
+          "place": [
+            9,
+            6
+          ]
+        },
+        {
+          "id": "p6_5",
+          "tile": [
+            6,
+            5
+          ],
+          "place": [
+            10,
+            6
+          ]
+        },
+        {
+          "id": "p7_5",
+          "tile": [
+            7,
+            5
+          ],
+          "place": [
+            11,
+            6
+          ]
+        },
+        {
+          "id": "p0_6",
+          "tile": [
+            0,
+            6
+          ],
+          "place": [
+            4,
+            7
+          ]
+        },
+        {
+          "id": "p1_6",
+          "tile": [
+            1,
+            6
+          ],
+          "place": [
+            5,
+            7
+          ]
+        },
+        {
+          "id": "p2_6",
+          "tile": [
+            2,
+            6
+          ],
+          "place": [
+            6,
+            7
+          ]
+        },
+        {
+          "id": "p3_6",
+          "tile": [
+            3,
+            6
+          ],
+          "place": [
+            7,
+            7
+          ]
+        },
+        {
+          "id": "p4_6",
+          "tile": [
+            4,
+            6
+          ],
+          "place": [
+            8,
+            7
+          ]
+        },
+        {
+          "id": "p5_6",
+          "tile": [
+            5,
+            6
+          ],
+          "place": [
+            9,
+            7
+          ]
+        },
+        {
+          "id": "p6_6",
+          "tile": [
+            6,
+            6
+          ],
+          "place": [
+            10,
+            7
+          ]
+        },
+        {
+          "id": "p7_6",
+          "tile": [
+            7,
+            6
+          ],
+          "place": [
+            11,
+            7
+          ]
+        },
+        {
+          "id": "p0_7",
+          "tile": [
+            0,
+            7
+          ],
+          "place": [
+            4,
+            8
+          ]
+        },
+        {
+          "id": "p1_7",
+          "tile": [
+            1,
+            7
+          ],
+          "place": [
+            5,
+            8
+          ]
+        },
+        {
+          "id": "p2_7",
+          "tile": [
+            2,
+            7
+          ],
+          "place": [
+            6,
+            8
+          ]
+        },
+        {
+          "id": "p3_7",
+          "tile": [
+            3,
+            7
+          ],
+          "place": [
+            7,
+            8
+          ]
+        },
+        {
+          "id": "p4_7",
+          "tile": [
+            4,
+            7
+          ],
+          "place": [
+            8,
+            8
+          ]
+        },
+        {
+          "id": "p5_7",
+          "tile": [
+            5,
+            7
+          ],
+          "place": [
+            9,
+            8
+          ]
+        },
+        {
+          "id": "p6_7",
+          "tile": [
+            6,
+            7
+          ],
+          "place": [
+            10,
+            8
+          ]
+        },
+        {
+          "id": "p7_7",
+          "tile": [
+            7,
+            7
+          ],
+          "place": [
+            11,
+            8
+          ]
+        }
+      ],
+      "elementwise": "map"
+    },
+    "scale": 0.125,
+    "ownership": {
+      "intermediate_host_transfer": false,
+      "probability": "score tile, then destructive left alignment",
+      "partial": "score partial -> softmax exponent -> value left scratch",
+      "receive": "completed K receive storage -> value receive scratch",
+      "public_inputs": "immutable Q/K/V; private K/V copies"
+    },
+    "normalization_schedule": {
+      "profile": "mesh_score_softmax.v1",
+      "M": 64,
+      "N": 64,
+      "P": 8,
+      "rows": 8,
+      "cols": 8,
+      "Mt": 8,
+      "Nt": 8,
+      "length": 64,
+      "score_length": 64,
+      "epochs": 8,
+      "instrumentation": "counters",
+      "memory_per_pe": {
+        "resident_buffers": 768,
+        "observations": 4,
+        "control": 144,
+        "sdk_code_stack_reserve": 16384,
+        "softmax_local_vectors": 32,
+        "softmax_observations": 4,
+        "softmax_descriptors_control": 1024
+      },
+      "cycle": [
+        0,
+        2,
+        4,
+        6,
+        7,
+        5,
+        3,
+        1
+      ],
+      "transpose": {
+        "kind": "logical_view",
+        "materialized": false,
+        "input_layout": "column-major token/feature tiles"
+      },
+      "resources": {
+        "colors": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "input_queues": [
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "output_queues": [
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "active_input_queues": [
+          3,
+          4,
+          5,
+          6
+        ],
+        "active_output_queues": [
+          3,
+          4,
+          5,
+          6
+        ],
+        "microthreads": [
+          2,
+          3
+        ],
+        "local_tasks": [
+          19,
+          20,
+          25,
+          26
+        ],
+        "compute_dsrs": [
+          1
+        ],
+        "reduction_dsrs": [
+          1,
+          2
+        ],
+        "async_communication_dsrs": [
+          4,
+          6
+        ],
+        "explicit_dsr_phases": {
+          "local_compute": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ],
+          "overlapped_exchange": {
+            "right_memory": [
+              {
+                "bank": "src1",
+                "index": 4
+              },
+              {
+                "bank": "dest",
+                "index": 4
+              }
+            ],
+            "right_fabric": [
+              {
+                "bank": "dest",
+                "index": 6
+              },
+              {
+                "bank": "src1",
+                "index": 6
+              }
+            ]
+          },
+          "joined_reduction": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            },
+            {
+              "bank": "dest",
+              "index": 2
+            },
+            {
+              "bank": "src0",
+              "index": 2
+            }
+          ]
+        },
+        "reuse": "score joins all vertical traffic before softmax borrows DSR1/2 and row queues3/4/6; no new colors/tasks/UTs",
+        "softmax_explicit_dsr_phases": {
+          "local_math": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ],
+          "row_collective": [
+            {
+              "bank": "src1",
+              "index": 2
+            }
+          ]
+        }
+      },
+      "stages": [
+        "copy immutable K to private send storage",
+        "rotate K vertically while local QK-transpose partial computes",
+        "reduce partial east-first to current K token root",
+        "join vertical send/receive and compute/reduction completion before swap",
+        "borrow completed partial buffer for exponents",
+        "scale and local max; row maximum collective",
+        "SDK map exp and local sum; row sum collective",
+        "normalize and release command stream"
+      ],
+      "root_rule": "cycle[(position(y)-round)%P]",
+      "nodes": [
+        {
+          "id": "p0_0",
+          "tile": [
+            0,
+            0
+          ],
+          "place": [
+            4,
+            1
+          ]
+        },
+        {
+          "id": "p1_0",
+          "tile": [
+            1,
+            0
+          ],
+          "place": [
+            5,
+            1
+          ]
+        },
+        {
+          "id": "p2_0",
+          "tile": [
+            2,
+            0
+          ],
+          "place": [
+            6,
+            1
+          ]
+        },
+        {
+          "id": "p3_0",
+          "tile": [
+            3,
+            0
+          ],
+          "place": [
+            7,
+            1
+          ]
+        },
+        {
+          "id": "p4_0",
+          "tile": [
+            4,
+            0
+          ],
+          "place": [
+            8,
+            1
+          ]
+        },
+        {
+          "id": "p5_0",
+          "tile": [
+            5,
+            0
+          ],
+          "place": [
+            9,
+            1
+          ]
+        },
+        {
+          "id": "p6_0",
+          "tile": [
+            6,
+            0
+          ],
+          "place": [
+            10,
+            1
+          ]
+        },
+        {
+          "id": "p7_0",
+          "tile": [
+            7,
+            0
+          ],
+          "place": [
+            11,
+            1
+          ]
+        },
+        {
+          "id": "p0_1",
+          "tile": [
+            0,
+            1
+          ],
+          "place": [
+            4,
+            2
+          ]
+        },
+        {
+          "id": "p1_1",
+          "tile": [
+            1,
+            1
+          ],
+          "place": [
+            5,
+            2
+          ]
+        },
+        {
+          "id": "p2_1",
+          "tile": [
+            2,
+            1
+          ],
+          "place": [
+            6,
+            2
+          ]
+        },
+        {
+          "id": "p3_1",
+          "tile": [
+            3,
+            1
+          ],
+          "place": [
+            7,
+            2
+          ]
+        },
+        {
+          "id": "p4_1",
+          "tile": [
+            4,
+            1
+          ],
+          "place": [
+            8,
+            2
+          ]
+        },
+        {
+          "id": "p5_1",
+          "tile": [
+            5,
+            1
+          ],
+          "place": [
+            9,
+            2
+          ]
+        },
+        {
+          "id": "p6_1",
+          "tile": [
+            6,
+            1
+          ],
+          "place": [
+            10,
+            2
+          ]
+        },
+        {
+          "id": "p7_1",
+          "tile": [
+            7,
+            1
+          ],
+          "place": [
+            11,
+            2
+          ]
+        },
+        {
+          "id": "p0_2",
+          "tile": [
+            0,
+            2
+          ],
+          "place": [
+            4,
+            3
+          ]
+        },
+        {
+          "id": "p1_2",
+          "tile": [
+            1,
+            2
+          ],
+          "place": [
+            5,
+            3
+          ]
+        },
+        {
+          "id": "p2_2",
+          "tile": [
+            2,
+            2
+          ],
+          "place": [
+            6,
+            3
+          ]
+        },
+        {
+          "id": "p3_2",
+          "tile": [
+            3,
+            2
+          ],
+          "place": [
+            7,
+            3
+          ]
+        },
+        {
+          "id": "p4_2",
+          "tile": [
+            4,
+            2
+          ],
+          "place": [
+            8,
+            3
+          ]
+        },
+        {
+          "id": "p5_2",
+          "tile": [
+            5,
+            2
+          ],
+          "place": [
+            9,
+            3
+          ]
+        },
+        {
+          "id": "p6_2",
+          "tile": [
+            6,
+            2
+          ],
+          "place": [
+            10,
+            3
+          ]
+        },
+        {
+          "id": "p7_2",
+          "tile": [
+            7,
+            2
+          ],
+          "place": [
+            11,
+            3
+          ]
+        },
+        {
+          "id": "p0_3",
+          "tile": [
+            0,
+            3
+          ],
+          "place": [
+            4,
+            4
+          ]
+        },
+        {
+          "id": "p1_3",
+          "tile": [
+            1,
+            3
+          ],
+          "place": [
+            5,
+            4
+          ]
+        },
+        {
+          "id": "p2_3",
+          "tile": [
+            2,
+            3
+          ],
+          "place": [
+            6,
+            4
+          ]
+        },
+        {
+          "id": "p3_3",
+          "tile": [
+            3,
+            3
+          ],
+          "place": [
+            7,
+            4
+          ]
+        },
+        {
+          "id": "p4_3",
+          "tile": [
+            4,
+            3
+          ],
+          "place": [
+            8,
+            4
+          ]
+        },
+        {
+          "id": "p5_3",
+          "tile": [
+            5,
+            3
+          ],
+          "place": [
+            9,
+            4
+          ]
+        },
+        {
+          "id": "p6_3",
+          "tile": [
+            6,
+            3
+          ],
+          "place": [
+            10,
+            4
+          ]
+        },
+        {
+          "id": "p7_3",
+          "tile": [
+            7,
+            3
+          ],
+          "place": [
+            11,
+            4
+          ]
+        },
+        {
+          "id": "p0_4",
+          "tile": [
+            0,
+            4
+          ],
+          "place": [
+            4,
+            5
+          ]
+        },
+        {
+          "id": "p1_4",
+          "tile": [
+            1,
+            4
+          ],
+          "place": [
+            5,
+            5
+          ]
+        },
+        {
+          "id": "p2_4",
+          "tile": [
+            2,
+            4
+          ],
+          "place": [
+            6,
+            5
+          ]
+        },
+        {
+          "id": "p3_4",
+          "tile": [
+            3,
+            4
+          ],
+          "place": [
+            7,
+            5
+          ]
+        },
+        {
+          "id": "p4_4",
+          "tile": [
+            4,
+            4
+          ],
+          "place": [
+            8,
+            5
+          ]
+        },
+        {
+          "id": "p5_4",
+          "tile": [
+            5,
+            4
+          ],
+          "place": [
+            9,
+            5
+          ]
+        },
+        {
+          "id": "p6_4",
+          "tile": [
+            6,
+            4
+          ],
+          "place": [
+            10,
+            5
+          ]
+        },
+        {
+          "id": "p7_4",
+          "tile": [
+            7,
+            4
+          ],
+          "place": [
+            11,
+            5
+          ]
+        },
+        {
+          "id": "p0_5",
+          "tile": [
+            0,
+            5
+          ],
+          "place": [
+            4,
+            6
+          ]
+        },
+        {
+          "id": "p1_5",
+          "tile": [
+            1,
+            5
+          ],
+          "place": [
+            5,
+            6
+          ]
+        },
+        {
+          "id": "p2_5",
+          "tile": [
+            2,
+            5
+          ],
+          "place": [
+            6,
+            6
+          ]
+        },
+        {
+          "id": "p3_5",
+          "tile": [
+            3,
+            5
+          ],
+          "place": [
+            7,
+            6
+          ]
+        },
+        {
+          "id": "p4_5",
+          "tile": [
+            4,
+            5
+          ],
+          "place": [
+            8,
+            6
+          ]
+        },
+        {
+          "id": "p5_5",
+          "tile": [
+            5,
+            5
+          ],
+          "place": [
+            9,
+            6
+          ]
+        },
+        {
+          "id": "p6_5",
+          "tile": [
+            6,
+            5
+          ],
+          "place": [
+            10,
+            6
+          ]
+        },
+        {
+          "id": "p7_5",
+          "tile": [
+            7,
+            5
+          ],
+          "place": [
+            11,
+            6
+          ]
+        },
+        {
+          "id": "p0_6",
+          "tile": [
+            0,
+            6
+          ],
+          "place": [
+            4,
+            7
+          ]
+        },
+        {
+          "id": "p1_6",
+          "tile": [
+            1,
+            6
+          ],
+          "place": [
+            5,
+            7
+          ]
+        },
+        {
+          "id": "p2_6",
+          "tile": [
+            2,
+            6
+          ],
+          "place": [
+            6,
+            7
+          ]
+        },
+        {
+          "id": "p3_6",
+          "tile": [
+            3,
+            6
+          ],
+          "place": [
+            7,
+            7
+          ]
+        },
+        {
+          "id": "p4_6",
+          "tile": [
+            4,
+            6
+          ],
+          "place": [
+            8,
+            7
+          ]
+        },
+        {
+          "id": "p5_6",
+          "tile": [
+            5,
+            6
+          ],
+          "place": [
+            9,
+            7
+          ]
+        },
+        {
+          "id": "p6_6",
+          "tile": [
+            6,
+            6
+          ],
+          "place": [
+            10,
+            7
+          ]
+        },
+        {
+          "id": "p7_6",
+          "tile": [
+            7,
+            6
+          ],
+          "place": [
+            11,
+            7
+          ]
+        },
+        {
+          "id": "p0_7",
+          "tile": [
+            0,
+            7
+          ],
+          "place": [
+            4,
+            8
+          ]
+        },
+        {
+          "id": "p1_7",
+          "tile": [
+            1,
+            7
+          ],
+          "place": [
+            5,
+            8
+          ]
+        },
+        {
+          "id": "p2_7",
+          "tile": [
+            2,
+            7
+          ],
+          "place": [
+            6,
+            8
+          ]
+        },
+        {
+          "id": "p3_7",
+          "tile": [
+            3,
+            7
+          ],
+          "place": [
+            7,
+            8
+          ]
+        },
+        {
+          "id": "p4_7",
+          "tile": [
+            4,
+            7
+          ],
+          "place": [
+            8,
+            8
+          ]
+        },
+        {
+          "id": "p5_7",
+          "tile": [
+            5,
+            7
+          ],
+          "place": [
+            9,
+            8
+          ]
+        },
+        {
+          "id": "p6_7",
+          "tile": [
+            6,
+            7
+          ],
+          "place": [
+            10,
+            8
+          ]
+        },
+        {
+          "id": "p7_7",
+          "tile": [
+            7,
+            7
+          ],
+          "place": [
+            11,
+            8
+          ]
+        }
+      ],
+      "score_schedule": {
+        "profile": "mesh_score.v1",
+        "M": 64,
+        "N": 64,
+        "P": 8,
+        "rows": 8,
+        "cols": 8,
+        "Mt": 8,
+        "Nt": 8,
+        "length": 64,
+        "score_length": 64,
+        "epochs": 8,
+        "instrumentation": "counters",
+        "memory_per_pe": {
+          "resident_buffers": 768,
+          "observations": 4,
+          "control": 144,
+          "sdk_code_stack_reserve": 16384
+        },
+        "cycle": [
+          0,
+          2,
+          4,
+          6,
+          7,
+          5,
+          3,
+          1
+        ],
+        "transpose": {
+          "kind": "logical_view",
+          "materialized": false,
+          "input_layout": "column-major token/feature tiles"
+        },
+        "resources": {
+          "colors": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "input_queues": [
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "output_queues": [
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "active_input_queues": [
+            3,
+            4,
+            5
+          ],
+          "active_output_queues": [
+            3,
+            4,
+            5
+          ],
+          "microthreads": [
+            2,
+            3
+          ],
+          "local_tasks": [
+            19,
+            20,
+            25,
+            26
+          ],
+          "compute_dsrs": [
+            1
+          ],
+          "reduction_dsrs": [
+            1,
+            2
+          ],
+          "async_communication_dsrs": [
+            4,
+            6
+          ],
+          "explicit_dsr_phases": {
+            "local_compute": [
+              {
+                "bank": "dest",
+                "index": 1
+              },
+              {
+                "bank": "src0",
+                "index": 1
+              },
+              {
+                "bank": "src1",
+                "index": 1
+              }
+            ],
+            "overlapped_exchange": {
+              "right_memory": [
+                {
+                  "bank": "src1",
+                  "index": 4
+                },
+                {
+                  "bank": "dest",
+                  "index": 4
+                }
+              ],
+              "right_fabric": [
+                {
+                  "bank": "dest",
+                  "index": 6
+                },
+                {
+                  "bank": "src1",
+                  "index": 6
+                }
+              ]
+            },
+            "joined_reduction": [
+              {
+                "bank": "dest",
+                "index": 1
+              },
+              {
+                "bank": "src0",
+                "index": 1
+              },
+              {
+                "bank": "src1",
+                "index": 1
+              },
+              {
+                "bank": "dest",
+                "index": 2
+              },
+              {
+                "bank": "src0",
+                "index": 2
+              }
+            ]
+          },
+          "reuse": "local FMA completes before synchronous root reduction reuses DSR1"
+        },
+        "stages": [
+          "copy immutable K to private send storage",
+          "rotate K vertically while local QK-transpose partial computes",
+          "reduce partial east-first to current K token root",
+          "join vertical send/receive and compute/reduction completion before swap"
+        ],
+        "root_rule": "cycle[(position(y)-round)%P]",
+        "nodes": [
+          {
+            "id": "p0_0",
+            "tile": [
+              0,
+              0
+            ],
+            "place": [
+              4,
+              1
+            ]
+          },
+          {
+            "id": "p1_0",
+            "tile": [
+              1,
+              0
+            ],
+            "place": [
+              5,
+              1
+            ]
+          },
+          {
+            "id": "p2_0",
+            "tile": [
+              2,
+              0
+            ],
+            "place": [
+              6,
+              1
+            ]
+          },
+          {
+            "id": "p3_0",
+            "tile": [
+              3,
+              0
+            ],
+            "place": [
+              7,
+              1
+            ]
+          },
+          {
+            "id": "p4_0",
+            "tile": [
+              4,
+              0
+            ],
+            "place": [
+              8,
+              1
+            ]
+          },
+          {
+            "id": "p5_0",
+            "tile": [
+              5,
+              0
+            ],
+            "place": [
+              9,
+              1
+            ]
+          },
+          {
+            "id": "p6_0",
+            "tile": [
+              6,
+              0
+            ],
+            "place": [
+              10,
+              1
+            ]
+          },
+          {
+            "id": "p7_0",
+            "tile": [
+              7,
+              0
+            ],
+            "place": [
+              11,
+              1
+            ]
+          },
+          {
+            "id": "p0_1",
+            "tile": [
+              0,
+              1
+            ],
+            "place": [
+              4,
+              2
+            ]
+          },
+          {
+            "id": "p1_1",
+            "tile": [
+              1,
+              1
+            ],
+            "place": [
+              5,
+              2
+            ]
+          },
+          {
+            "id": "p2_1",
+            "tile": [
+              2,
+              1
+            ],
+            "place": [
+              6,
+              2
+            ]
+          },
+          {
+            "id": "p3_1",
+            "tile": [
+              3,
+              1
+            ],
+            "place": [
+              7,
+              2
+            ]
+          },
+          {
+            "id": "p4_1",
+            "tile": [
+              4,
+              1
+            ],
+            "place": [
+              8,
+              2
+            ]
+          },
+          {
+            "id": "p5_1",
+            "tile": [
+              5,
+              1
+            ],
+            "place": [
+              9,
+              2
+            ]
+          },
+          {
+            "id": "p6_1",
+            "tile": [
+              6,
+              1
+            ],
+            "place": [
+              10,
+              2
+            ]
+          },
+          {
+            "id": "p7_1",
+            "tile": [
+              7,
+              1
+            ],
+            "place": [
+              11,
+              2
+            ]
+          },
+          {
+            "id": "p0_2",
+            "tile": [
+              0,
+              2
+            ],
+            "place": [
+              4,
+              3
+            ]
+          },
+          {
+            "id": "p1_2",
+            "tile": [
+              1,
+              2
+            ],
+            "place": [
+              5,
+              3
+            ]
+          },
+          {
+            "id": "p2_2",
+            "tile": [
+              2,
+              2
+            ],
+            "place": [
+              6,
+              3
+            ]
+          },
+          {
+            "id": "p3_2",
+            "tile": [
+              3,
+              2
+            ],
+            "place": [
+              7,
+              3
+            ]
+          },
+          {
+            "id": "p4_2",
+            "tile": [
+              4,
+              2
+            ],
+            "place": [
+              8,
+              3
+            ]
+          },
+          {
+            "id": "p5_2",
+            "tile": [
+              5,
+              2
+            ],
+            "place": [
+              9,
+              3
+            ]
+          },
+          {
+            "id": "p6_2",
+            "tile": [
+              6,
+              2
+            ],
+            "place": [
+              10,
+              3
+            ]
+          },
+          {
+            "id": "p7_2",
+            "tile": [
+              7,
+              2
+            ],
+            "place": [
+              11,
+              3
+            ]
+          },
+          {
+            "id": "p0_3",
+            "tile": [
+              0,
+              3
+            ],
+            "place": [
+              4,
+              4
+            ]
+          },
+          {
+            "id": "p1_3",
+            "tile": [
+              1,
+              3
+            ],
+            "place": [
+              5,
+              4
+            ]
+          },
+          {
+            "id": "p2_3",
+            "tile": [
+              2,
+              3
+            ],
+            "place": [
+              6,
+              4
+            ]
+          },
+          {
+            "id": "p3_3",
+            "tile": [
+              3,
+              3
+            ],
+            "place": [
+              7,
+              4
+            ]
+          },
+          {
+            "id": "p4_3",
+            "tile": [
+              4,
+              3
+            ],
+            "place": [
+              8,
+              4
+            ]
+          },
+          {
+            "id": "p5_3",
+            "tile": [
+              5,
+              3
+            ],
+            "place": [
+              9,
+              4
+            ]
+          },
+          {
+            "id": "p6_3",
+            "tile": [
+              6,
+              3
+            ],
+            "place": [
+              10,
+              4
+            ]
+          },
+          {
+            "id": "p7_3",
+            "tile": [
+              7,
+              3
+            ],
+            "place": [
+              11,
+              4
+            ]
+          },
+          {
+            "id": "p0_4",
+            "tile": [
+              0,
+              4
+            ],
+            "place": [
+              4,
+              5
+            ]
+          },
+          {
+            "id": "p1_4",
+            "tile": [
+              1,
+              4
+            ],
+            "place": [
+              5,
+              5
+            ]
+          },
+          {
+            "id": "p2_4",
+            "tile": [
+              2,
+              4
+            ],
+            "place": [
+              6,
+              5
+            ]
+          },
+          {
+            "id": "p3_4",
+            "tile": [
+              3,
+              4
+            ],
+            "place": [
+              7,
+              5
+            ]
+          },
+          {
+            "id": "p4_4",
+            "tile": [
+              4,
+              4
+            ],
+            "place": [
+              8,
+              5
+            ]
+          },
+          {
+            "id": "p5_4",
+            "tile": [
+              5,
+              4
+            ],
+            "place": [
+              9,
+              5
+            ]
+          },
+          {
+            "id": "p6_4",
+            "tile": [
+              6,
+              4
+            ],
+            "place": [
+              10,
+              5
+            ]
+          },
+          {
+            "id": "p7_4",
+            "tile": [
+              7,
+              4
+            ],
+            "place": [
+              11,
+              5
+            ]
+          },
+          {
+            "id": "p0_5",
+            "tile": [
+              0,
+              5
+            ],
+            "place": [
+              4,
+              6
+            ]
+          },
+          {
+            "id": "p1_5",
+            "tile": [
+              1,
+              5
+            ],
+            "place": [
+              5,
+              6
+            ]
+          },
+          {
+            "id": "p2_5",
+            "tile": [
+              2,
+              5
+            ],
+            "place": [
+              6,
+              6
+            ]
+          },
+          {
+            "id": "p3_5",
+            "tile": [
+              3,
+              5
+            ],
+            "place": [
+              7,
+              6
+            ]
+          },
+          {
+            "id": "p4_5",
+            "tile": [
+              4,
+              5
+            ],
+            "place": [
+              8,
+              6
+            ]
+          },
+          {
+            "id": "p5_5",
+            "tile": [
+              5,
+              5
+            ],
+            "place": [
+              9,
+              6
+            ]
+          },
+          {
+            "id": "p6_5",
+            "tile": [
+              6,
+              5
+            ],
+            "place": [
+              10,
+              6
+            ]
+          },
+          {
+            "id": "p7_5",
+            "tile": [
+              7,
+              5
+            ],
+            "place": [
+              11,
+              6
+            ]
+          },
+          {
+            "id": "p0_6",
+            "tile": [
+              0,
+              6
+            ],
+            "place": [
+              4,
+              7
+            ]
+          },
+          {
+            "id": "p1_6",
+            "tile": [
+              1,
+              6
+            ],
+            "place": [
+              5,
+              7
+            ]
+          },
+          {
+            "id": "p2_6",
+            "tile": [
+              2,
+              6
+            ],
+            "place": [
+              6,
+              7
+            ]
+          },
+          {
+            "id": "p3_6",
+            "tile": [
+              3,
+              6
+            ],
+            "place": [
+              7,
+              7
+            ]
+          },
+          {
+            "id": "p4_6",
+            "tile": [
+              4,
+              6
+            ],
+            "place": [
+              8,
+              7
+            ]
+          },
+          {
+            "id": "p5_6",
+            "tile": [
+              5,
+              6
+            ],
+            "place": [
+              9,
+              7
+            ]
+          },
+          {
+            "id": "p6_6",
+            "tile": [
+              6,
+              6
+            ],
+            "place": [
+              10,
+              7
+            ]
+          },
+          {
+            "id": "p7_6",
+            "tile": [
+              7,
+              6
+            ],
+            "place": [
+              11,
+              7
+            ]
+          },
+          {
+            "id": "p0_7",
+            "tile": [
+              0,
+              7
+            ],
+            "place": [
+              4,
+              8
+            ]
+          },
+          {
+            "id": "p1_7",
+            "tile": [
+              1,
+              7
+            ],
+            "place": [
+              5,
+              8
+            ]
+          },
+          {
+            "id": "p2_7",
+            "tile": [
+              2,
+              7
+            ],
+            "place": [
+              6,
+              8
+            ]
+          },
+          {
+            "id": "p3_7",
+            "tile": [
+              3,
+              7
+            ],
+            "place": [
+              7,
+              8
+            ]
+          },
+          {
+            "id": "p4_7",
+            "tile": [
+              4,
+              7
+            ],
+            "place": [
+              8,
+              8
+            ]
+          },
+          {
+            "id": "p5_7",
+            "tile": [
+              5,
+              7
+            ],
+            "place": [
+              9,
+              8
+            ]
+          },
+          {
+            "id": "p6_7",
+            "tile": [
+              6,
+              7
+            ],
+            "place": [
+              10,
+              8
+            ]
+          },
+          {
+            "id": "p7_7",
+            "tile": [
+              7,
+              7
+            ],
+            "place": [
+              11,
+              8
+            ]
+          }
+        ]
+      },
+      "softmax_schedule": {
+        "profile": "mesh_softmax.v1",
+        "rows": 8,
+        "cols": 8,
+        "M": 64,
+        "N": 64,
+        "Mt": 8,
+        "Nt": 8,
+        "scale": 0.125,
+        "instrumentation": "counters",
+        "epochs": 8,
+        "dtype": "f16",
+        "memory_per_pe": {
+          "data": 416,
+          "observations": 2,
+          "protocol": 128,
+          "code_stack_reserve": 16384
+        },
+        "stages": [
+          {
+            "kind": "scale_local_max",
+            "initializer": "negative_max_finite"
+          },
+          {
+            "kind": "row_allreduce",
+            "combine": "max"
+          },
+          {
+            "kind": "max_shift_sdk_exp_local_sum",
+            "elementwise": "map"
+          },
+          {
+            "kind": "row_allreduce",
+            "combine": "add",
+            "root_order": [
+              "east",
+              "west"
+            ]
+          },
+          {
+            "kind": "reciprocal"
+          },
+          {
+            "kind": "row_vector_scale"
+          }
+        ],
+        "resources": {
+          "colors": [
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "input_queues": [
+            3,
+            4,
+            6
+          ],
+          "output_queues": [
+            3,
+            4,
+            6
+          ],
+          "compute_dsr": 1,
+          "reduction_src1_dsr": 2,
+          "local_tasks": [],
+          "host_bindings": "fixed input/result/exponent storage; one host invocation",
+          "elementwise_descriptors": "compiler-managed synchronous phase; no sharing with simultaneous work"
+        },
+        "nodes": [
+          {
+            "id": "p0_0",
+            "tile": [
+              0,
+              0
+            ],
+            "place": [
+              4,
+              1
+            ]
+          },
+          {
+            "id": "p1_0",
+            "tile": [
+              1,
+              0
+            ],
+            "place": [
+              5,
+              1
+            ]
+          },
+          {
+            "id": "p2_0",
+            "tile": [
+              2,
+              0
+            ],
+            "place": [
+              6,
+              1
+            ]
+          },
+          {
+            "id": "p3_0",
+            "tile": [
+              3,
+              0
+            ],
+            "place": [
+              7,
+              1
+            ]
+          },
+          {
+            "id": "p4_0",
+            "tile": [
+              4,
+              0
+            ],
+            "place": [
+              8,
+              1
+            ]
+          },
+          {
+            "id": "p5_0",
+            "tile": [
+              5,
+              0
+            ],
+            "place": [
+              9,
+              1
+            ]
+          },
+          {
+            "id": "p6_0",
+            "tile": [
+              6,
+              0
+            ],
+            "place": [
+              10,
+              1
+            ]
+          },
+          {
+            "id": "p7_0",
+            "tile": [
+              7,
+              0
+            ],
+            "place": [
+              11,
+              1
+            ]
+          },
+          {
+            "id": "p0_1",
+            "tile": [
+              0,
+              1
+            ],
+            "place": [
+              4,
+              2
+            ]
+          },
+          {
+            "id": "p1_1",
+            "tile": [
+              1,
+              1
+            ],
+            "place": [
+              5,
+              2
+            ]
+          },
+          {
+            "id": "p2_1",
+            "tile": [
+              2,
+              1
+            ],
+            "place": [
+              6,
+              2
+            ]
+          },
+          {
+            "id": "p3_1",
+            "tile": [
+              3,
+              1
+            ],
+            "place": [
+              7,
+              2
+            ]
+          },
+          {
+            "id": "p4_1",
+            "tile": [
+              4,
+              1
+            ],
+            "place": [
+              8,
+              2
+            ]
+          },
+          {
+            "id": "p5_1",
+            "tile": [
+              5,
+              1
+            ],
+            "place": [
+              9,
+              2
+            ]
+          },
+          {
+            "id": "p6_1",
+            "tile": [
+              6,
+              1
+            ],
+            "place": [
+              10,
+              2
+            ]
+          },
+          {
+            "id": "p7_1",
+            "tile": [
+              7,
+              1
+            ],
+            "place": [
+              11,
+              2
+            ]
+          },
+          {
+            "id": "p0_2",
+            "tile": [
+              0,
+              2
+            ],
+            "place": [
+              4,
+              3
+            ]
+          },
+          {
+            "id": "p1_2",
+            "tile": [
+              1,
+              2
+            ],
+            "place": [
+              5,
+              3
+            ]
+          },
+          {
+            "id": "p2_2",
+            "tile": [
+              2,
+              2
+            ],
+            "place": [
+              6,
+              3
+            ]
+          },
+          {
+            "id": "p3_2",
+            "tile": [
+              3,
+              2
+            ],
+            "place": [
+              7,
+              3
+            ]
+          },
+          {
+            "id": "p4_2",
+            "tile": [
+              4,
+              2
+            ],
+            "place": [
+              8,
+              3
+            ]
+          },
+          {
+            "id": "p5_2",
+            "tile": [
+              5,
+              2
+            ],
+            "place": [
+              9,
+              3
+            ]
+          },
+          {
+            "id": "p6_2",
+            "tile": [
+              6,
+              2
+            ],
+            "place": [
+              10,
+              3
+            ]
+          },
+          {
+            "id": "p7_2",
+            "tile": [
+              7,
+              2
+            ],
+            "place": [
+              11,
+              3
+            ]
+          },
+          {
+            "id": "p0_3",
+            "tile": [
+              0,
+              3
+            ],
+            "place": [
+              4,
+              4
+            ]
+          },
+          {
+            "id": "p1_3",
+            "tile": [
+              1,
+              3
+            ],
+            "place": [
+              5,
+              4
+            ]
+          },
+          {
+            "id": "p2_3",
+            "tile": [
+              2,
+              3
+            ],
+            "place": [
+              6,
+              4
+            ]
+          },
+          {
+            "id": "p3_3",
+            "tile": [
+              3,
+              3
+            ],
+            "place": [
+              7,
+              4
+            ]
+          },
+          {
+            "id": "p4_3",
+            "tile": [
+              4,
+              3
+            ],
+            "place": [
+              8,
+              4
+            ]
+          },
+          {
+            "id": "p5_3",
+            "tile": [
+              5,
+              3
+            ],
+            "place": [
+              9,
+              4
+            ]
+          },
+          {
+            "id": "p6_3",
+            "tile": [
+              6,
+              3
+            ],
+            "place": [
+              10,
+              4
+            ]
+          },
+          {
+            "id": "p7_3",
+            "tile": [
+              7,
+              3
+            ],
+            "place": [
+              11,
+              4
+            ]
+          },
+          {
+            "id": "p0_4",
+            "tile": [
+              0,
+              4
+            ],
+            "place": [
+              4,
+              5
+            ]
+          },
+          {
+            "id": "p1_4",
+            "tile": [
+              1,
+              4
+            ],
+            "place": [
+              5,
+              5
+            ]
+          },
+          {
+            "id": "p2_4",
+            "tile": [
+              2,
+              4
+            ],
+            "place": [
+              6,
+              5
+            ]
+          },
+          {
+            "id": "p3_4",
+            "tile": [
+              3,
+              4
+            ],
+            "place": [
+              7,
+              5
+            ]
+          },
+          {
+            "id": "p4_4",
+            "tile": [
+              4,
+              4
+            ],
+            "place": [
+              8,
+              5
+            ]
+          },
+          {
+            "id": "p5_4",
+            "tile": [
+              5,
+              4
+            ],
+            "place": [
+              9,
+              5
+            ]
+          },
+          {
+            "id": "p6_4",
+            "tile": [
+              6,
+              4
+            ],
+            "place": [
+              10,
+              5
+            ]
+          },
+          {
+            "id": "p7_4",
+            "tile": [
+              7,
+              4
+            ],
+            "place": [
+              11,
+              5
+            ]
+          },
+          {
+            "id": "p0_5",
+            "tile": [
+              0,
+              5
+            ],
+            "place": [
+              4,
+              6
+            ]
+          },
+          {
+            "id": "p1_5",
+            "tile": [
+              1,
+              5
+            ],
+            "place": [
+              5,
+              6
+            ]
+          },
+          {
+            "id": "p2_5",
+            "tile": [
+              2,
+              5
+            ],
+            "place": [
+              6,
+              6
+            ]
+          },
+          {
+            "id": "p3_5",
+            "tile": [
+              3,
+              5
+            ],
+            "place": [
+              7,
+              6
+            ]
+          },
+          {
+            "id": "p4_5",
+            "tile": [
+              4,
+              5
+            ],
+            "place": [
+              8,
+              6
+            ]
+          },
+          {
+            "id": "p5_5",
+            "tile": [
+              5,
+              5
+            ],
+            "place": [
+              9,
+              6
+            ]
+          },
+          {
+            "id": "p6_5",
+            "tile": [
+              6,
+              5
+            ],
+            "place": [
+              10,
+              6
+            ]
+          },
+          {
+            "id": "p7_5",
+            "tile": [
+              7,
+              5
+            ],
+            "place": [
+              11,
+              6
+            ]
+          },
+          {
+            "id": "p0_6",
+            "tile": [
+              0,
+              6
+            ],
+            "place": [
+              4,
+              7
+            ]
+          },
+          {
+            "id": "p1_6",
+            "tile": [
+              1,
+              6
+            ],
+            "place": [
+              5,
+              7
+            ]
+          },
+          {
+            "id": "p2_6",
+            "tile": [
+              2,
+              6
+            ],
+            "place": [
+              6,
+              7
+            ]
+          },
+          {
+            "id": "p3_6",
+            "tile": [
+              3,
+              6
+            ],
+            "place": [
+              7,
+              7
+            ]
+          },
+          {
+            "id": "p4_6",
+            "tile": [
+              4,
+              6
+            ],
+            "place": [
+              8,
+              7
+            ]
+          },
+          {
+            "id": "p5_6",
+            "tile": [
+              5,
+              6
+            ],
+            "place": [
+              9,
+              7
+            ]
+          },
+          {
+            "id": "p6_6",
+            "tile": [
+              6,
+              6
+            ],
+            "place": [
+              10,
+              7
+            ]
+          },
+          {
+            "id": "p7_6",
+            "tile": [
+              7,
+              6
+            ],
+            "place": [
+              11,
+              7
+            ]
+          },
+          {
+            "id": "p0_7",
+            "tile": [
+              0,
+              7
+            ],
+            "place": [
+              4,
+              8
+            ]
+          },
+          {
+            "id": "p1_7",
+            "tile": [
+              1,
+              7
+            ],
+            "place": [
+              5,
+              8
+            ]
+          },
+          {
+            "id": "p2_7",
+            "tile": [
+              2,
+              7
+            ],
+            "place": [
+              6,
+              8
+            ]
+          },
+          {
+            "id": "p3_7",
+            "tile": [
+              3,
+              7
+            ],
+            "place": [
+              7,
+              8
+            ]
+          },
+          {
+            "id": "p4_7",
+            "tile": [
+              4,
+              7
+            ],
+            "place": [
+              8,
+              8
+            ]
+          },
+          {
+            "id": "p5_7",
+            "tile": [
+              5,
+              7
+            ],
+            "place": [
+              9,
+              8
+            ]
+          },
+          {
+            "id": "p6_7",
+            "tile": [
+              6,
+              7
+            ],
+            "place": [
+              10,
+              8
+            ]
+          },
+          {
+            "id": "p7_7",
+            "tile": [
+              7,
+              7
+            ],
+            "place": [
+              11,
+              8
+            ]
+          }
+        ],
+        "elementwise": "map"
+      },
+      "scale": 0.125,
+      "ownership": {
+        "score": "logical score tile becomes softmax in place",
+        "partial": "all root reductions complete before partial storage becomes exponents",
+        "intermediate_host_transfer": false
+      }
+    },
+    "value_schedule": {
+      "profile": "mesh_device_matmul.v1",
+      "M": 64,
+      "N": 64,
+      "P": 8,
+      "rows": 8,
+      "cols": 8,
+      "Mt": 8,
+      "Nt": 8,
+      "left_length": 64,
+      "length": 64,
+      "epochs": 8,
+      "instrumentation": "counters",
+      "cycle": [
+        0,
+        2,
+        4,
+        6,
+        7,
+        5,
+        3,
+        1
+      ],
+      "memory_per_pe": {
+        "resident_buffers": 896,
+        "observations": 6,
+        "control": 128,
+        "sdk_code_stack_reserve": 16384
+      },
+      "stages": [
+        "copy immutable logical input tiles into private working buffers",
+        "vertical RHS column-dependent prealignment",
+        "horizontal LHS row-dependent prealignment",
+        "overlap both-axis exchange with local DSR FMA through strided RHS view",
+        "join both directions before next buffer swap"
+      ],
+      "layout": {
+        "host": "logical column-major tiles, no host prealignment",
+        "rhs_access": "feature stride Mt, per-contraction offset1; no local transpose buffer"
+      },
+      "resources": {
+        "colors": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "input_queues": [
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "output_queues": [
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "active_input_queues": [
+          5,
+          7
+        ],
+        "active_output_queues": [
+          5,
+          7
+        ],
+        "microthreads": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "local_tasks": [
+          19,
+          20,
+          25,
+          26
+        ],
+        "compute_dsrs": [
+          1
+        ],
+        "communication_dsrs": [
+          3,
+          4,
+          5,
+          6
+        ],
+        "explicit_dsr_lease": {
+          "compute": [
+            {
+              "bank": "dest",
+              "index": 1
+            },
+            {
+              "bank": "src0",
+              "index": 1
+            },
+            {
+              "bank": "src1",
+              "index": 1
+            }
+          ],
+          "communication": {
+            "left_memory": [
+              {
+                "bank": "src1",
+                "index": 3
+              },
+              {
+                "bank": "dest",
+                "index": 3
+              }
+            ],
+            "right_memory": [
+              {
+                "bank": "src1",
+                "index": 4
+              },
+              {
+                "bank": "dest",
+                "index": 4
+              }
+            ],
+            "left_fabric": [
+              {
+                "bank": "dest",
+                "index": 5
+              },
+              {
+                "bank": "src1",
+                "index": 5
+              }
+            ],
+            "right_fabric": [
+              {
+                "bank": "dest",
+                "index": 6
+              },
+              {
+                "bank": "src1",
+                "index": 6
+              }
+            ]
+          },
+          "completion": "all four explicit microthread operations join before lease reuse",
+          "scope": "explicit DSR reservations; compiler/SDK temporary allocation is not enumerated"
+        }
+      },
+      "k_block_rule": "cycle[(position(y)+position(x)-round)%P]",
+      "nodes": [
+        {
+          "id": "p0_0",
+          "tile": [
+            0,
+            0
+          ],
+          "place": [
+            4,
+            1
+          ]
+        },
+        {
+          "id": "p1_0",
+          "tile": [
+            1,
+            0
+          ],
+          "place": [
+            5,
+            1
+          ]
+        },
+        {
+          "id": "p2_0",
+          "tile": [
+            2,
+            0
+          ],
+          "place": [
+            6,
+            1
+          ]
+        },
+        {
+          "id": "p3_0",
+          "tile": [
+            3,
+            0
+          ],
+          "place": [
+            7,
+            1
+          ]
+        },
+        {
+          "id": "p4_0",
+          "tile": [
+            4,
+            0
+          ],
+          "place": [
+            8,
+            1
+          ]
+        },
+        {
+          "id": "p5_0",
+          "tile": [
+            5,
+            0
+          ],
+          "place": [
+            9,
+            1
+          ]
+        },
+        {
+          "id": "p6_0",
+          "tile": [
+            6,
+            0
+          ],
+          "place": [
+            10,
+            1
+          ]
+        },
+        {
+          "id": "p7_0",
+          "tile": [
+            7,
+            0
+          ],
+          "place": [
+            11,
+            1
+          ]
+        },
+        {
+          "id": "p0_1",
+          "tile": [
+            0,
+            1
+          ],
+          "place": [
+            4,
+            2
+          ]
+        },
+        {
+          "id": "p1_1",
+          "tile": [
+            1,
+            1
+          ],
+          "place": [
+            5,
+            2
+          ]
+        },
+        {
+          "id": "p2_1",
+          "tile": [
+            2,
+            1
+          ],
+          "place": [
+            6,
+            2
+          ]
+        },
+        {
+          "id": "p3_1",
+          "tile": [
+            3,
+            1
+          ],
+          "place": [
+            7,
+            2
+          ]
+        },
+        {
+          "id": "p4_1",
+          "tile": [
+            4,
+            1
+          ],
+          "place": [
+            8,
+            2
+          ]
+        },
+        {
+          "id": "p5_1",
+          "tile": [
+            5,
+            1
+          ],
+          "place": [
+            9,
+            2
+          ]
+        },
+        {
+          "id": "p6_1",
+          "tile": [
+            6,
+            1
+          ],
+          "place": [
+            10,
+            2
+          ]
+        },
+        {
+          "id": "p7_1",
+          "tile": [
+            7,
+            1
+          ],
+          "place": [
+            11,
+            2
+          ]
+        },
+        {
+          "id": "p0_2",
+          "tile": [
+            0,
+            2
+          ],
+          "place": [
+            4,
+            3
+          ]
+        },
+        {
+          "id": "p1_2",
+          "tile": [
+            1,
+            2
+          ],
+          "place": [
+            5,
+            3
+          ]
+        },
+        {
+          "id": "p2_2",
+          "tile": [
+            2,
+            2
+          ],
+          "place": [
+            6,
+            3
+          ]
+        },
+        {
+          "id": "p3_2",
+          "tile": [
+            3,
+            2
+          ],
+          "place": [
+            7,
+            3
+          ]
+        },
+        {
+          "id": "p4_2",
+          "tile": [
+            4,
+            2
+          ],
+          "place": [
+            8,
+            3
+          ]
+        },
+        {
+          "id": "p5_2",
+          "tile": [
+            5,
+            2
+          ],
+          "place": [
+            9,
+            3
+          ]
+        },
+        {
+          "id": "p6_2",
+          "tile": [
+            6,
+            2
+          ],
+          "place": [
+            10,
+            3
+          ]
+        },
+        {
+          "id": "p7_2",
+          "tile": [
+            7,
+            2
+          ],
+          "place": [
+            11,
+            3
+          ]
+        },
+        {
+          "id": "p0_3",
+          "tile": [
+            0,
+            3
+          ],
+          "place": [
+            4,
+            4
+          ]
+        },
+        {
+          "id": "p1_3",
+          "tile": [
+            1,
+            3
+          ],
+          "place": [
+            5,
+            4
+          ]
+        },
+        {
+          "id": "p2_3",
+          "tile": [
+            2,
+            3
+          ],
+          "place": [
+            6,
+            4
+          ]
+        },
+        {
+          "id": "p3_3",
+          "tile": [
+            3,
+            3
+          ],
+          "place": [
+            7,
+            4
+          ]
+        },
+        {
+          "id": "p4_3",
+          "tile": [
+            4,
+            3
+          ],
+          "place": [
+            8,
+            4
+          ]
+        },
+        {
+          "id": "p5_3",
+          "tile": [
+            5,
+            3
+          ],
+          "place": [
+            9,
+            4
+          ]
+        },
+        {
+          "id": "p6_3",
+          "tile": [
+            6,
+            3
+          ],
+          "place": [
+            10,
+            4
+          ]
+        },
+        {
+          "id": "p7_3",
+          "tile": [
+            7,
+            3
+          ],
+          "place": [
+            11,
+            4
+          ]
+        },
+        {
+          "id": "p0_4",
+          "tile": [
+            0,
+            4
+          ],
+          "place": [
+            4,
+            5
+          ]
+        },
+        {
+          "id": "p1_4",
+          "tile": [
+            1,
+            4
+          ],
+          "place": [
+            5,
+            5
+          ]
+        },
+        {
+          "id": "p2_4",
+          "tile": [
+            2,
+            4
+          ],
+          "place": [
+            6,
+            5
+          ]
+        },
+        {
+          "id": "p3_4",
+          "tile": [
+            3,
+            4
+          ],
+          "place": [
+            7,
+            5
+          ]
+        },
+        {
+          "id": "p4_4",
+          "tile": [
+            4,
+            4
+          ],
+          "place": [
+            8,
+            5
+          ]
+        },
+        {
+          "id": "p5_4",
+          "tile": [
+            5,
+            4
+          ],
+          "place": [
+            9,
+            5
+          ]
+        },
+        {
+          "id": "p6_4",
+          "tile": [
+            6,
+            4
+          ],
+          "place": [
+            10,
+            5
+          ]
+        },
+        {
+          "id": "p7_4",
+          "tile": [
+            7,
+            4
+          ],
+          "place": [
+            11,
+            5
+          ]
+        },
+        {
+          "id": "p0_5",
+          "tile": [
+            0,
+            5
+          ],
+          "place": [
+            4,
+            6
+          ]
+        },
+        {
+          "id": "p1_5",
+          "tile": [
+            1,
+            5
+          ],
+          "place": [
+            5,
+            6
+          ]
+        },
+        {
+          "id": "p2_5",
+          "tile": [
+            2,
+            5
+          ],
+          "place": [
+            6,
+            6
+          ]
+        },
+        {
+          "id": "p3_5",
+          "tile": [
+            3,
+            5
+          ],
+          "place": [
+            7,
+            6
+          ]
+        },
+        {
+          "id": "p4_5",
+          "tile": [
+            4,
+            5
+          ],
+          "place": [
+            8,
+            6
+          ]
+        },
+        {
+          "id": "p5_5",
+          "tile": [
+            5,
+            5
+          ],
+          "place": [
+            9,
+            6
+          ]
+        },
+        {
+          "id": "p6_5",
+          "tile": [
+            6,
+            5
+          ],
+          "place": [
+            10,
+            6
+          ]
+        },
+        {
+          "id": "p7_5",
+          "tile": [
+            7,
+            5
+          ],
+          "place": [
+            11,
+            6
+          ]
+        },
+        {
+          "id": "p0_6",
+          "tile": [
+            0,
+            6
+          ],
+          "place": [
+            4,
+            7
+          ]
+        },
+        {
+          "id": "p1_6",
+          "tile": [
+            1,
+            6
+          ],
+          "place": [
+            5,
+            7
+          ]
+        },
+        {
+          "id": "p2_6",
+          "tile": [
+            2,
+            6
+          ],
+          "place": [
+            6,
+            7
+          ]
+        },
+        {
+          "id": "p3_6",
+          "tile": [
+            3,
+            6
+          ],
+          "place": [
+            7,
+            7
+          ]
+        },
+        {
+          "id": "p4_6",
+          "tile": [
+            4,
+            6
+          ],
+          "place": [
+            8,
+            7
+          ]
+        },
+        {
+          "id": "p5_6",
+          "tile": [
+            5,
+            6
+          ],
+          "place": [
+            9,
+            7
+          ]
+        },
+        {
+          "id": "p6_6",
+          "tile": [
+            6,
+            6
+          ],
+          "place": [
+            10,
+            7
+          ]
+        },
+        {
+          "id": "p7_6",
+          "tile": [
+            7,
+            6
+          ],
+          "place": [
+            11,
+            7
+          ]
+        },
+        {
+          "id": "p0_7",
+          "tile": [
+            0,
+            7
+          ],
+          "place": [
+            4,
+            8
+          ]
+        },
+        {
+          "id": "p1_7",
+          "tile": [
+            1,
+            7
+          ],
+          "place": [
+            5,
+            8
+          ]
+        },
+        {
+          "id": "p2_7",
+          "tile": [
+            2,
+            7
+          ],
+          "place": [
+            6,
+            8
+          ]
+        },
+        {
+          "id": "p3_7",
+          "tile": [
+            3,
+            7
+          ],
+          "place": [
+            7,
+            8
+          ]
+        },
+        {
+          "id": "p4_7",
+          "tile": [
+            4,
+            7
+          ],
+          "place": [
+            8,
+            8
+          ]
+        },
+        {
+          "id": "p5_7",
+          "tile": [
+            5,
+            7
+          ],
+          "place": [
+            9,
+            8
+          ]
+        },
+        {
+          "id": "p6_7",
+          "tile": [
+            6,
+            7
+          ],
+          "place": [
+            10,
+            8
+          ]
+        },
+        {
+          "id": "p7_7",
+          "tile": [
+            7,
+            7
+          ],
+          "place": [
+            11,
+            8
+          ]
+        }
+      ]
+    },
+    "descriptor_entry_states": {
+      "score_right": "contiguous stride1, reset every invocation after value phase",
+      "value_right": "stride Mt, contraction increment1",
+      "compute": "DSR1 reloaded for each local contraction; async communication uses distinct DSRs"
+    }
+  },
+  "score_length": 64,
+  "scale": 0.125,
+  "attention_output_bound": {
+    "value_input_absolute": 0.125,
+    "probability_mass_upper": 1.0368040985312932,
+    "denominator_upper": 66.28944958517688,
+    "value_output_absolute": 0.1337890625,
+    "positive_sum_depth_bound": 72,
+    "half_unit_roundoff": 0.00048828125,
+    "half_underflow_absolute": 2.9802322387695312e-08,
+    "exp_certificate": {
+      "operands": 31745,
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "zero_image": 1,
+      "table_sha256": "f45d050dd23b6f530892b17cf2c414c5d0422f419bfd6856e5d35d791ccbd624",
+      "scope": "Exhaustive finite nonpositive binary16 domain of the pinned SDK arithmetic model; source semantics and executed SDK comparisons bind this model to the target"
+    },
+    "assumptions": [
+      "finite half logits, positive scale and exact selected row maximum",
+      "exp(0)=1, every shifted exp in [0,1]",
+      "half local sums and phase-joined row reduction; reciprocal remains normal for this domain",
+      "half probability product and M fused half value updates",
+      "no masks, dropout, or modified probability normalization"
+    ],
+    "scope": "Range bound only; never a substitute for original-input branch accuracy"
+  }
+}

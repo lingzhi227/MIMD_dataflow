@@ -1,0 +1,98 @@
+// Experimental correctness baseline, not a production synchronization library.
+// Separate static control routes; one u32 token fits input/output queue2.
+// A ready token collects local completion. Configuration is forwarded only
+// after the caller installs routes; release starts only after every installation.
+param P: i16;
+param even: bool;
+comptime { @comptime_assert(P >= 2 and P % 2 == 0); }
+const config = @import_module("<tile_config>");
+const incoming = @get_color(if (even) 11 else 10);
+const outgoing = @get_color(if (even) 10 else 11);
+const iq = @get_input_queue(2);
+const oq = @get_output_queue(2);
+var word = @zeros([1]u32);
+const memory = @get_dsd(mem1d_dsd, .{ .base_address = &word, .extent = 1 });
+const send = @get_dsd(fabout_dsd, .{ .output_queue = oq, .extent = 1 });
+const receive = @get_dsd(fabin_dsd, .{ .input_queue = iq, .extent = 1 });
+var root: bool = false;
+var pending: bool = false;
+var sequence: u32 = 0;
+
+fn input_route(comptime from: direction) void {
+    config.color_config.reset_routes(incoming, .{ .rx = from, .tx = RAMP });
+}
+fn output_route(comptime to: direction) void {
+    config.color_config.reset_routes(outgoing, .{ .rx = RAMP, .tx = to });
+}
+
+fn init(x: i16, y: i16) void {
+    root = x == 0 and y == 0;
+    // Hamiltonian cycle: top row east, snake through columns1..P-1,
+    // then return north along column0. Every physical edge alternates colors.
+    if (x == 0) {
+        if (y == P - 1) { input_route(EAST); }
+        else { input_route(SOUTH); }
+        if (y == 0) { output_route(EAST); }
+        else { output_route(NORTH); }
+    } else if (y == 0) {
+        input_route(WEST);
+        if (x == P - 1) { output_route(SOUTH); }
+        else { output_route(EAST); }
+    } else if (y % 2 == 1) {
+        if (x == P - 1) { input_route(NORTH); }
+        else { input_route(EAST); }
+        if (x == 1 and y != P - 1) { output_route(SOUTH); }
+        else { output_route(WEST); }
+    } else {
+        if (x == 1) { input_route(NORTH); }
+        else { input_route(WEST); }
+        if (x == P - 1) { output_route(SOUTH); }
+        else { output_route(EAST); }
+    }
+}
+
+fn receive_expected() void {
+    @mov32(memory, receive);
+    @assert(word[0] == sequence);
+}
+fn send_current() void { @mov32(send, memory); }
+fn round_trip() void {
+    if (root) {
+        word[0] = sequence;
+        send_current();
+        receive_expected();
+    } else {
+        receive_expected();
+        send_current();
+    }
+    sequence += 1;
+}
+
+fn begin() void {
+    @assert(!pending);
+    round_trip(); // Ready: every participant must first finish old data work.
+    // A non-root must not configure merely on forwarding ready: later PEs
+    // might still be in old work. Wait for the root's configuration token.
+    if (!root) { receive_expected(); }
+    pending = true;
+}
+
+fn end() void {
+    @assert(pending);
+    // The caller has installed its new data routes before this acknowledgement.
+    if (root) {
+        word[0] = sequence;
+        send_current();
+        receive_expected();
+    } else {
+        send_current();
+    }
+    sequence += 1;
+    round_trip(); // Release only after the root observed every installation.
+    pending = false;
+}
+
+comptime {
+    @initialize_queue(iq, .{ .color = incoming });
+    @initialize_queue(oq, .{ .color = outgoing });
+}

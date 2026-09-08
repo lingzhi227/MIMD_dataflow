@@ -1,0 +1,189 @@
+// Resident CG controller over SDK-backed CSC trains and collectives.
+param c2dParams;
+param cg_max_iterations: u16;
+param solver_kind:u16=0;
+const cg_blas = @import_module("blas.csl");
+const cg_math = @import_module("<math>");
+const cg_cfg = @import_module("<tile_config>");
+const cg_collect = @import_module("scalar_allreduce.csl", .{
+ .c2d_params=c2dParams, .f_callback=cg_advance,
+ .vector_length=local_vec_sz, .transpose_chunk_length=local_vec_sz,
+ .x_queues=[2]u16{3,6}, .y_queues=[2]u16{5,7}
+});
+var cg_rhs=@zeros([local_vec_sz]f32);
+var cg_solution=@zeros([local_vec_sz]f32);
+var cg_r=@zeros([local_vec_sz]f32);
+var cg_p=@zeros([local_vec_sz]f32);
+var cg_limit=[1]u32{0};
+var cg_tolerances=@zeros([2]f32);
+var cg_reason=[1]u32{1};
+var cg_iterations=[1]u32{0};
+var cg_history=@zeros([cg_max_iterations+1]f32);
+var cg_true_norm=[1]f32{0.0};
+var cg_scalars=@zeros([3*cg_max_iterations]f32);
+// SpMV count, transpose count, scalar collective count, iteration count,
+// invocation count, successful queue boundary checks.
+var cg_progress=@zeros([6]u16);
+var cg_queue_last=@zeros([2]u16);
+var cg_timing=@zeros([6]u16);
+var cg_started=@zeros([3]u16);
+var cg_ended=@zeros([3]u16);
+var cg_state:u16=0;
+var cg_spmv_next:u16=0;
+var cg_norm_next:u16=0;
+var cg_norm_buffer:*[local_vec_sz]f32;
+var cg_norm_value:f32=0.0;
+var cg_norm_scale:f32=1.0;
+var cg_norm_inverse:f32=1.0;
+var cg_threshold:f32=0.0;
+var cg_xi:f32=0.0;
+var cg_rho:f32=0.0;
+var cg_rho_old:f32=0.0;
+var cg_k:u16=0;
+const cg_rd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{local_vec_sz}->cg_r[i]});
+const cg_pd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{local_vec_sz}->cg_p[i]});
+const cg_xd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{local_vec_sz}->cg_solution[i]});
+const cg_bd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{local_vec_sz}->cg_rhs[i]});
+const cg_yd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{local_vec_sz}->y_local_buf[i]});
+fn cg_finite(x:f32) bool {return (@bitcast(u32,x)&0x7f800000)!=0x7f800000;}
+fn cg_peak(v:f32,peak:*f32) f32 {
+ if(!cg_finite(v)){return @bitcast(f32,@as(u32,0x7f800000));}
+ return cg_blas.reduce_fabs(v,peak);
+}
+fn cg_quiet() bool {
+ const iq=cg_cfg.input_queue_status.get();const oq=cg_cfg.output_queue_status.get();
+ cg_queue_last[0]=@as(u16,iq.empty);cg_queue_last[1]=@as(u16,oq.empty);
+ const ok=(iq.empty&252)==252 and (oq.empty&252)==252;
+ if(ok){cg_progress[5]+=1;}
+ return ok;
+}
+fn cg_resource_error() void {
+ // Protocol failure, not a numerical solver result. Host audit rejects reason5.
+ cg_reason[0]=5;sys_mod.unblock_cmd_stream();
+}
+var cg_reduce_value:f32=0.0;
+var cg_reduce_max:bool=false;
+var cg_reduce_next:u16=0;
+var cg_apply_buffer:*[local_vec_sz]f32;
+fn cg_reduce(v:f32,maximum:bool,next:u16) void {
+ cg_reduce_value=v;cg_reduce_max=maximum;cg_reduce_next=next;
+ cg_state=98;cg_resume();
+}
+fn cg_norm(v:*[local_vec_sz]f32,next:u16) void {
+ cg_norm_buffer=v;cg_norm_next=next;cg_state=99;cg_resume();
+}
+fn cg_apply(v:*[local_vec_sz]f32,next:u16) void {
+ cg_apply_buffer=v;cg_spmv_next=next;cg_state=89;cg_resume();
+}
+fn cg_finalize(reason:u32) void {
+ cg_reason[0]=reason;cg_apply(&cg_solution,8);
+}
+fn cg_finish() void {
+ cg_iterations[0]=@as(u32,cg_k);cg_progress[3]=cg_k;
+ spmv_mod.completion_counts(&hls_progress);
+ hls_progress[10]=cg_progress[4];hls_partial=spmv_mod.partial_witness;
+ timestamp.get_timestamp(&cg_ended);
+ for(@range(u16,3)) |i| {cg_timing[i]=cg_started[i];cg_timing[i+3]=cg_ended[i];}
+ sys_mod.unblock_cmd_stream();
+}
+fn f_cg() void {
+ timestamp.enable_tsc();timestamp.get_timestamp(&cg_started);
+ cg_progress[4]+=1;
+ cg_progress[0]=0;cg_progress[1]=0;cg_progress[2]=0;cg_progress[3]=0;cg_progress[5]=0;
+ cg_k=0;cg_reason[0]=1;cg_iterations[0]=0;
+ solver_initialize();
+ for(@range(u16,cg_max_iterations+1)) |i| {cg_history[i]=0.0;}
+ for(@range(u16,3*cg_max_iterations)) |i| {cg_scalars[i]=0.0;}
+ if(!cg_quiet()){cg_resource_error();return;}
+ cg_collect.configure_queues();cg_collect.init();
+ solver_start();
+}
+// Keep the large controller on one task; sparse completion only schedules it.
+fn cg_resume() void {cg_collect.resume();}
+fn cg_advance() void {
+ if(cg_state==98){
+  cg_state=cg_reduce_next;cg_progress[2]+=1;
+  cg_collect.start(cg_reduce_value,cg_reduce_max);return;
+ }
+ if(cg_state==99){
+  const d=@set_dsd_base_addr(cg_rd,cg_norm_buffer);var peak:f32=0.0;
+  @map(cg_peak,d,&peak,&peak);cg_reduce(peak,true,100);return;
+ }
+ if(cg_state==89){
+  if(!cg_quiet()){cg_resource_error();return;}
+  cg_collect.configure_queues();cg_state=90;cg_progress[1]+=1;
+  @comptime_assert(spmvParams.pcols*local_vec_sz<=max_local_nnz_rows);
+  cg_collect.transpose(@ptrcast(*[local_vec_sz]u32,cg_apply_buffer),
+   @ptrcast(*[local_vec_sz]u32,&x_tx_buf),
+   @ptrcast(*[spmvParams.pcols*local_vec_sz]u32,&spmv_mod.y_vals_north_buf));return;
+ }
+
+ if(cg_state==90){
+  if(!cg_quiet()){cg_resource_error();return;}
+  spmv_mod.configure_queues();cg_state=91;cg_progress[0]+=1;
+  spmv_mod.spmv(&x_tx_buf,&y_local_buf);return;
+ }
+ if(cg_state==91){
+  if(!cg_quiet()){cg_resource_error();return;}
+  cg_collect.configure_queues();cg_state=cg_spmv_next;
+ }
+ if(cg_state==100){
+  if(!cg_finite(cg_collect.result[0])){
+   cg_norm_value=cg_collect.result[0];cg_state=cg_norm_next;
+  }else{
+   cg_blas.approx(cg_collect.result[0],&cg_norm_scale,&cg_norm_inverse);
+   const d=@set_dsd_base_addr(cg_rd,cg_norm_buffer);var total:f32=0.0;
+   @map(cg_blas.reduce_scale_square,d,cg_norm_inverse,&total,&total);
+   cg_reduce(total,false,101);return;
+  }
+ }
+ if(cg_state==101){
+  cg_norm_value=cg_math.sqrt(cg_collect.result[0])*cg_norm_scale;cg_state=cg_norm_next;
+ }
+ if(solver_kind==0){
+ if(cg_state==1){
+  cg_threshold=cg_tolerances[0]*cg_norm_value;
+  if(cg_threshold<cg_tolerances[1]){cg_threshold=cg_tolerances[1];}
+  cg_apply(&cg_solution,2);
+ }else if(cg_state==2){
+  @fsubs(cg_rd,cg_bd,cg_yd);@fmovs(cg_pd,cg_rd);
+  cg_reduce(cg_blas.dot(@as(i16,local_vec_sz),&cg_r,&cg_r),false,3);
+ }else if(cg_state==3){
+  cg_rho=cg_collect.result[0];cg_history[0]=cg_rho;
+  if(!cg_finite(cg_rho) or !cg_finite(cg_threshold)){cg_finalize(3);return;}
+  cg_norm(&cg_r,4);
+ }else if(cg_state==4){
+  if(cg_norm_value<=cg_threshold){cg_finalize(0);return;}
+  if(cg_rho<=0.0){cg_finalize(3);return;}
+  if(cg_limit[0]==0){cg_finalize(1);return;}
+  solver_begin();
+ }else if(cg_state==8){
+  @fsubs(cg_rd,cg_bd,cg_yd);cg_norm(&cg_r,9);
+ }else if(cg_state==9){
+  cg_true_norm[0]=cg_norm_value;
+  if(!cg_finite(cg_norm_value)){cg_reason[0]=3;}
+  else if(cg_reason[0]==0 and cg_norm_value>cg_threshold){cg_reason[0]=4;}
+  cg_finish();
+ }else{solver_advance();}
+ }else{solver_advance();}
+}
+var cg_rhs_ptr:[*]f32=&cg_rhs;var cg_solution_ptr:[*]f32=&cg_solution;
+var cg_limit_ptr:[*]u32=&cg_limit;var cg_tol_ptr:[*]f32=&cg_tolerances;
+var cg_reason_ptr:[*]u32=&cg_reason;var cg_iterations_ptr:[*]u32=&cg_iterations;
+var cg_history_ptr:[*]f32=&cg_history;var cg_true_ptr:[*]f32=&cg_true_norm;
+var cg_scalars_ptr:[*]f32=&cg_scalars;var cg_progress_ptr:[*]u16=&cg_progress;
+var cg_queue_ptr:[*]u16=&cg_queue_last;var cg_timing_ptr:[*]u16=&cg_timing;
+comptime {
+ @initialize_queue(@get_input_queue(2),.{.color=spmvParams.north_train});
+ @initialize_queue(@get_input_queue(4),.{.color=spmvParams.south_train});
+ @initialize_queue(@get_output_queue(2),.{.color=spmvParams.north_train});
+ @initialize_queue(@get_output_queue(4),.{.color=spmvParams.tx_west_train});
+ @export_symbol(f_cg);
+ if(solver_kind==0){@export_symbol(cg_rhs_ptr,"cg_rhs");@export_symbol(cg_tol_ptr,"cg_tolerances");@export_symbol(cg_true_ptr,"cg_true_norm");@export_symbol(cg_scalars_ptr,"cg_scalars");}
+ @export_symbol(cg_solution_ptr,"cg_solution");
+ @export_symbol(cg_limit_ptr,"cg_limit");
+ @export_symbol(cg_reason_ptr,"cg_reason");@export_symbol(cg_iterations_ptr,"cg_iterations");
+ @export_symbol(cg_history_ptr,"cg_history");
+ @export_symbol(cg_progress_ptr,"cg_progress");
+ @export_symbol(cg_queue_ptr,"cg_queue_last");@export_symbol(cg_timing_ptr,"cg_timing");
+}

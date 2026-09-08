@@ -1,0 +1,12 @@
+{
+  "reason": "One completed fully instrumented host call took approximately 12 to 13 minutes. The original 3600-second budget was insufficient for eight calls. The two owned controllers were deliberately interrupted after obtaining a complete first call, and fresh full-eight bundles were started with a 21600-second budget after their workers exited.",
+  "stopped_runs": [
+    "evidence/hls-composed-run-20260908T022639808942Z",
+    "evidence/hls-composed-source-20260908T022937908586Z"
+  ],
+  "replacement_runs": [
+    "projects/waferllm/projected_cache_ffn_3x256x512x512_16x16/run-20260908T030001167477Z",
+    "evidence/hls-composed-source-full8-20260908T030522786644Z"
+  ],
+  "scope": "Operational explanation only. The stopped runs retain unsuccessful execution records and one complete observed call. This note does not change their results or qualify the replacements. Run-name timestamps are identifiers, not independently verified wall-clock measurements."
+}

@@ -1,0 +1,103 @@
+{
+  "passed": true,
+  "epochs": 6,
+  "checks": [
+    {
+      "epoch": 0,
+      "hls_max_pe_cycles": 1878,
+      "source_max_pe_cycles": 2081,
+      "ratio": 0.9024507448342143,
+      "exact_ports": [
+        "x",
+        "cosine",
+        "sine",
+        "result",
+        "history",
+        "progress"
+      ]
+    },
+    {
+      "epoch": 1,
+      "hls_max_pe_cycles": 1878,
+      "source_max_pe_cycles": 2081,
+      "ratio": 0.9024507448342143,
+      "exact_ports": [
+        "x",
+        "cosine",
+        "sine",
+        "result",
+        "history",
+        "progress"
+      ]
+    },
+    {
+      "epoch": 2,
+      "hls_max_pe_cycles": 1878,
+      "source_max_pe_cycles": 2081,
+      "ratio": 0.9024507448342143,
+      "exact_ports": [
+        "x",
+        "cosine",
+        "sine",
+        "result",
+        "history",
+        "progress"
+      ]
+    },
+    {
+      "epoch": 3,
+      "hls_max_pe_cycles": 1878,
+      "source_max_pe_cycles": 2081,
+      "ratio": 0.9024507448342143,
+      "exact_ports": [
+        "x",
+        "cosine",
+        "sine",
+        "result",
+        "history",
+        "progress"
+      ]
+    },
+    {
+      "epoch": 4,
+      "hls_max_pe_cycles": 1878,
+      "source_max_pe_cycles": 2081,
+      "ratio": 0.9024507448342143,
+      "exact_ports": [
+        "x",
+        "cosine",
+        "sine",
+        "result",
+        "history",
+        "progress"
+      ]
+    },
+    {
+      "epoch": 5,
+      "hls_max_pe_cycles": 1878,
+      "source_max_pe_cycles": 2081,
+      "ratio": 0.9024507448342143,
+      "exact_ports": [
+        "x",
+        "cosine",
+        "sine",
+        "result",
+        "history",
+        "progress"
+      ]
+    }
+  ],
+  "files": {
+    "projects/waferllm/batched_pair_rotation_5x1024_8x8_x/run-20260907T230157971748Z/manifest.json": "a42daaba2b1451f579fcf645b646c88c48379b086f6f8e1599709e84a4a5e268",
+    "projects/waferllm/batched_pair_rotation_5x1024_8x8_x/run-20260907T230157971748Z/results.json": "17160988eecccd144eb5869262ac07823dc5d9409583f2b73d16bc9a4a4c531b",
+    "projects/waferllm/batched_pair_rotation_5x1024_8x8_x/run-20260907T230157971748Z/qualification.json": "c90c03d0ddf9f1de50db66bc87142fa9437e0f3c3c3fad908aeb2c7593029c10",
+    "evidence/batched-pair-source-offset-repaired-20260907T231236213768Z/provenance.json": "f309a2edc1369a7824e289f843ce9b484ce0ce11ae67a5ba69e4bf4f7aa12954",
+    "evidence/batched-pair-source-offset-repaired-20260907T231236213768Z/results.json": "7c9d84236695af911a1dad67a40edc526310a20b808ebd7468fe26745f95591c",
+    "evidence/batched-pair-source-offset-repaired-20260907T231236213768Z/execution.json": "142141e6fb3796c2452242fba3377f45216917996dd3da69e2ae1d9ad96c5a58",
+    "evidence/batched-pair-source-offset-repaired-20260907T231236213768Z/original-kernel.csl": "80476e5d98473ebc236b0a00fde345eb19e2b6abeb47ccaa7eda3a84ed0e84dd",
+    "evidence/batched-pair-source-offset-repaired-20260907T231236213768Z/source-body-observation.diff": "44535c9cd796aedeee437fc5e84872a2ff62cbc1cf119aaa0379702da149b5fe",
+    "experiments/compare_batched_pair_source.py": "6cbe67757ebb477ed654595b79ab2712fb10bf4be928d9e22a8c2c54bc6c389a",
+    "experiments/batched_pair_source_control.py": "573794db9935efd8f507f65fd7dc187d059aa42fbaf0fccf7a0750328a066cc8"
+  },
+  "scope": "Decode xq_rope with one explicit odd-offset repair after base reset and product observations. Source wrapper input preservation copy is inside timing; HLS writes separate output directly. Local simulator cycles only; not complete RoPE or inference."
+}

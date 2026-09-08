@@ -1,0 +1,91 @@
+{
+  "passed": true,
+  "meaning": "Failure reproduced, not source numerical qualification",
+  "checks": [
+    {
+      "epoch": 0,
+      "mismatched_words": {
+        "x": 0,
+        "cosine": 0,
+        "sine": 0,
+        "result": 40960,
+        "history": 30592,
+        "progress": 0
+      },
+      "source_independent_math_passed": false
+    },
+    {
+      "epoch": 1,
+      "mismatched_words": {
+        "x": 0,
+        "cosine": 0,
+        "sine": 0,
+        "result": 20480,
+        "history": 30592,
+        "progress": 0
+      },
+      "source_independent_math_passed": false
+    },
+    {
+      "epoch": 2,
+      "mismatched_words": {
+        "x": 0,
+        "cosine": 0,
+        "sine": 0,
+        "result": 40960,
+        "history": 40944,
+        "progress": 0
+      },
+      "source_independent_math_passed": false
+    },
+    {
+      "epoch": 3,
+      "mismatched_words": {
+        "x": 0,
+        "cosine": 0,
+        "sine": 0,
+        "result": 15840,
+        "history": 0,
+        "progress": 0
+      },
+      "source_independent_math_passed": true
+    },
+    {
+      "epoch": 4,
+      "mismatched_words": {
+        "x": 0,
+        "cosine": 0,
+        "sine": 0,
+        "result": 20480,
+        "history": 0,
+        "progress": 0
+      },
+      "source_independent_math_passed": false
+    },
+    {
+      "epoch": 5,
+      "mismatched_words": {
+        "x": 0,
+        "cosine": 0,
+        "sine": 0,
+        "result": 40952,
+        "history": 40960,
+        "progress": 0
+      },
+      "source_independent_math_passed": false
+    }
+  ],
+  "cause": "Base reset discards initial odd offset1, verified by separate SDK probe. Source repair must explicitly add1 after reset; source arithmetic convention remains explicit odd_even.",
+  "files": {
+    "projects/waferllm/batched_pair_rotation_5x1024_8x8_x/run-20260907T230157971748Z/manifest.json": "a42daaba2b1451f579fcf645b646c88c48379b086f6f8e1599709e84a4a5e268",
+    "projects/waferllm/batched_pair_rotation_5x1024_8x8_x/run-20260907T230157971748Z/results.json": "17160988eecccd144eb5869262ac07823dc5d9409583f2b73d16bc9a4a4c531b",
+    "evidence/batched-pair-source-20260907T230412005447Z/provenance.json": "9810d95a903038f4143d922cbb5df2eb07b796348e7a77f019e5c1d859c5cb5d",
+    "evidence/batched-pair-source-20260907T230412005447Z/execution.json": "73826cef4b5fdec2bb4968742f820b982237b24b4bf7bd121961f8c8799bb838",
+    "evidence/batched-pair-source-20260907T230412005447Z/results.json": "1c9060d7dc841eb0e2e2b062b9e22933d0ea789cd8e03fbd08d2afd85a8372e5",
+    "evidence/dsd-base-offset-20260907T231325901420Z/provenance.json": "0a9e569ba53ac07f258d754a527e90916aa02e7d0cf7bc76a7a5e2584eb06fbe",
+    "evidence/dsd-base-offset-20260907T231325901420Z/execution.json": "bd5984503216f13d8759fe6f0547fe8a1bbf6370aaee6139be705aef1739b214",
+    "evidence/dsd-base-offset-20260907T231325901420Z/results.json": "61418f7bb62757d24c388fda186ab50b6d1cd0880d7120b0bba059a4572bd4ce",
+    "evidence/dsd-base-offset-20260907T231325901420Z/offset-review.json": "0f30017dcf583f697ec94a2700b919c615a7bc3b939c375743a48c94fa2b2f2a",
+    "experiments/review_decode_pair_offset_failure.py": "eaba061a01e6339784661739bbb318569b35e0077208307c32019f5bc9032a82"
+  }
+}

@@ -1,0 +1,1339 @@
+{
+  "kind": "qualification_index_of_existing_sdk_runs",
+  "sdk": true,
+  "success": true,
+  "new_sdk_execution": false,
+  "cases": [
+    {
+      "key": "waferllm/batched_up_gate_5x256x512_8x8_g2",
+      "artifact": "projects/waferllm/batched_up_gate_5x256x512_8x8_g2/run-20260907T180940232501Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_batched_fanout.v1",
+        "epochs": 8,
+        "expected_epochs": 8,
+        "completed_calls": 8,
+        "full_run_passed": true,
+        "cases": [
+          {
+            "epoch": 0,
+            "branches": [
+              {
+                "output": "branch0",
+                "relative_l2": 0.0009263165606077844,
+                "peak_scaled_error": 0.001252050991033106
+              },
+              {
+                "output": "branch1",
+                "relative_l2": 0.0009660534850950673,
+                "peak_scaled_error": 0.0012525717959385643
+              }
+            ],
+            "all_pe_witnesses_exact": true,
+            "max_local_cycles": 9245,
+            "cycles_per_pe": [
+              [
+                9245,
+                9245,
+                9245,
+                9245,
+                9245,
+                9245,
+                9245,
+                9245
+              ],
+              [
+                9240,
+                9240,
+                9240,
+                9240,
+                9240,
+                9240,
+                9240,
+                9240
+              ],
+              [
+                9235,
+                9235,
+                9235,
+                9235,
+                9235,
+                9235,
+                9235,
+                9235
+              ],
+              [
+                9230,
+                9230,
+                9230,
+                9230,
+                9230,
+                9230,
+                9230,
+                9230
+              ],
+              [
+                9225,
+                9225,
+                9225,
+                9225,
+                9225,
+                9225,
+                9225,
+                9225
+              ],
+              [
+                9220,
+                9220,
+                9220,
+                9220,
+                9220,
+                9220,
+                9220,
+                9220
+              ],
+              [
+                9207,
+                9207,
+                9207,
+                9207,
+                9207,
+                9207,
+                9207,
+                9207
+              ],
+              [
+                9214,
+                9214,
+                9214,
+                9214,
+                9214,
+                9214,
+                9214,
+                9214
+              ]
+            ]
+          },
+          {
+            "epoch": 1,
+            "branches": [
+              {
+                "output": "branch0",
+                "relative_l2": 0.006291459088645496,
+                "peak_scaled_error": 0.007559181894234086
+              },
+              {
+                "output": "branch1",
+                "relative_l2": 0.006291459088645496,
+                "peak_scaled_error": 0.007559181894234086
+              }
+            ],
+            "all_pe_witnesses_exact": true,
+            "max_local_cycles": 9249,
+            "cycles_per_pe": [
+              [
+                9249,
+                9249,
+                9249,
+                9249,
+                9249,
+                9249,
+                9249,
+                9249
+              ],
+              [
+                9244,
+                9244,
+                9244,
+                9244,
+                9244,
+                9244,
+                9244,
+                9244
+              ],
+              [
+                9239,
+                9239,
+                9239,
+                9239,
+                9239,
+                9239,
+                9239,
+                9239
+              ],
+              [
+                9234,
+                9234,
+                9234,
+                9234,
+                9234,
+                9234,
+                9234,
+                9234
+              ],
+              [
+                9229,
+                9229,
+                9229,
+                9229,
+                9229,
+                9229,
+                9229,
+                9229
+              ],
+              [
+                9224,
+                9224,
+                9224,
+                9224,
+                9224,
+                9224,
+                9224,
+                9224
+              ],
+              [
+                9211,
+                9211,
+                9211,
+                9211,
+                9211,
+                9211,
+                9211,
+                9211
+              ],
+              [
+                9218,
+                9218,
+                9218,
+                9218,
+                9218,
+                9218,
+                9218,
+                9218
+              ]
+            ]
+          },
+          {
+            "epoch": 2,
+            "branches": [
+              {
+                "output": "branch0",
+                "relative_l2": 0.0009509807888191054,
+                "peak_scaled_error": 0.0011294953051168865
+              },
+              {
+                "output": "branch1",
+                "relative_l2": 0.0009719731177610299,
+                "peak_scaled_error": 0.001061167776320613
+              }
+            ],
+            "all_pe_witnesses_exact": true,
+            "max_local_cycles": 9245,
+            "cycles_per_pe": [
+              [
+                9245,
+                9245,
+                9245,
+                9245,
+                9245,
+                9245,
+                9245,
+                9245
+              ],
+              [
+                9240,
+                9240,
+                9240,
+                9240,
+                9240,
+                9240,
+                9240,
+                9240
+              ],
+              [
+                9235,
+                9235,
+                9235,
+                9235,
+                9235,
+                9235,
+                9235,
+                9235
+              ],
+              [
+                9230,
+                9230,
+                9230,
+                9230,
+                9230,
+                9230,
+                9230,
+                9230
+              ],
+              [
+                9225,
+                9225,
+                9225,
+                9225,
+                9225,
+                9225,
+                9225,
+                9225
+              ],
+              [
+                9220,
+                9220,
+                9220,
+                9220,
+                9220,
+                9220,
+                9220,
+                9220
+              ],
+              [
+                9207,
+                9207,
+                9207,
+                9207,
+                9207,
+                9207,
+                9207,
+                9207
+              ],
+              [
+                9214,
+                9214,
+                9214,
+                9214,
+                9214,
+                9214,
+                9214,
+                9214
+              ]
+            ]
+          },
+          {
+            "epoch": 3,
+            "branches": [
+              {
+                "output": "branch0",
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0
+              },
+              {
+                "output": "branch1",
+                "relative_l2": 0.0,
+                "peak_scaled_error": 0.0
+              }
+            ],
+            "all_pe_witnesses_exact": true,
+            "max_local_cycles": 9245,
+            "cycles_per_pe": [
+              [
+                9245,
+                9245,
+                9245,
+                9245,
+                9245,
+                9245,
+                9245,
+                9245
+              ],
+              [
+                9240,
+                9240,
+                9240,
+                9240,
+                9240,
+                9240,
+                9240,
+                9240
+              ],
+              [
+                9235,
+                9235,
+                9235,
+                9235,
+                9235,
+                9235,
+                9235,
+                9235
+              ],
+              [
+                9230,
+                9230,
+                9230,
+                9230,
+                9230,
+                9230,
+                9230,
+                9230
+              ],
+              [
+                9225,
+                9225,
+                9225,
+                9225,
+                9225,
+                9225,
+                9225,
+                9225
+              ],
+              [
+                9220,
+                9220,
+                9220,
+                9220,
+                9220,
+                9220,
+                9220,
+                9220
+              ],
+              [
+                9207,
+                9207,
+                9207,
+                9207,
+                9207,
+                9207,
+                9207,
+                9207
+              ],
+              [
+                9214,
+                9214,
+                9214,
+                9214,
+                9214,
+                9214,
+                9214,
+                9214
+              ]
+            ]
+          },
+          {
+            "epoch": 4,
+            "branches": [
+              {
+                "output": "branch0",
+                "relative_l2": 0.006190616967202083,
+                "peak_scaled_error": 0.006684791701228278
+              },
+              {
+                "output": "branch1",
+                "relative_l2": 0.006168511978993974,
+                "peak_scaled_error": 0.005461674919717711
+              }
+            ],
+            "all_pe_witnesses_exact": true,
+            "max_local_cycles": 9245,
+            "cycles_per_pe": [
+              [
+                9245,
+                9245,
+                9245,
+                9245,
+                9245,
+                9245,
+                9245,
+                9245
+              ],
+              [
+                9240,
+                9240,
+                9240,
+                9240,
+                9240,
+                9240,
+                9240,
+                9240
+              ],
+              [
+                9235,
+                9235,
+                9235,
+                9235,
+                9235,
+                9235,
+                9235,
+                9235
+              ],
+              [
+                9230,
+                9230,
+                9230,
+                9230,
+                9230,
+                9230,
+                9230,
+                9230
+              ],
+              [
+                9225,
+                9225,
+                9225,
+                9225,
+                9225,
+                9225,
+                9225,
+                9225
+              ],
+              [
+                9220,
+                9220,
+                9220,
+                9220,
+                9220,
+                9220,
+                9220,
+                9220
+              ],
+              [
+                9207,
+                9207,
+                9207,
+                9207,
+                9207,
+                9207,
+                9207,
+                9207
+              ],
+              [
+                9214,
+                9214,
+                9214,
+                9214,
+                9214,
+                9214,
+                9214,
+                9214
+              ]
+            ]
+          },
+          {
+            "epoch": 5,
+            "branches": [
+              {
+                "output": "branch0",
+                "relative_l2": 0.0011012403610483582,
+                "peak_scaled_error": 0.0014201612952822545
+              },
+              {
+                "output": "branch1",
+                "relative_l2": 0.0011513978977602936,
+                "peak_scaled_error": 0.0014194243698328153
+              }
+            ],
+            "all_pe_witnesses_exact": true,
+            "max_local_cycles": 9245,
+            "cycles_per_pe": [
+              [
+                9245,
+                9245,
+                9245,
+                9245,
+                9245,
+                9245,
+                9245,
+                9245
+              ],
+              [
+                9240,
+                9240,
+                9240,
+                9240,
+                9240,
+                9240,
+                9240,
+                9240
+              ],
+              [
+                9235,
+                9235,
+                9235,
+                9235,
+                9235,
+                9235,
+                9235,
+                9235
+              ],
+              [
+                9230,
+                9230,
+                9230,
+                9230,
+                9230,
+                9230,
+                9230,
+                9230
+              ],
+              [
+                9225,
+                9225,
+                9225,
+                9225,
+                9225,
+                9225,
+                9225,
+                9225
+              ],
+              [
+                9220,
+                9220,
+                9220,
+                9220,
+                9220,
+                9220,
+                9220,
+                9220
+              ],
+              [
+                9207,
+                9207,
+                9207,
+                9207,
+                9207,
+                9207,
+                9207,
+                9207
+              ],
+              [
+                9214,
+                9214,
+                9214,
+                9214,
+                9214,
+                9214,
+                9214,
+                9214
+              ]
+            ]
+          },
+          {
+            "epoch": 6,
+            "branches": [
+              {
+                "output": "branch0",
+                "relative_l2": 0.00012799180904838605,
+                "peak_scaled_error": 0.00012799180904840253
+              },
+              {
+                "output": "branch1",
+                "relative_l2": 0.00012799180904838605,
+                "peak_scaled_error": 0.00012799180904840253
+              }
+            ],
+            "all_pe_witnesses_exact": true,
+            "max_local_cycles": 9245,
+            "cycles_per_pe": [
+              [
+                9245,
+                9245,
+                9245,
+                9245,
+                9245,
+                9245,
+                9245,
+                9245
+              ],
+              [
+                9240,
+                9240,
+                9240,
+                9240,
+                9240,
+                9240,
+                9240,
+                9240
+              ],
+              [
+                9235,
+                9235,
+                9235,
+                9235,
+                9235,
+                9235,
+                9235,
+                9235
+              ],
+              [
+                9230,
+                9230,
+                9230,
+                9230,
+                9230,
+                9230,
+                9230,
+                9230
+              ],
+              [
+                9225,
+                9225,
+                9225,
+                9225,
+                9225,
+                9225,
+                9225,
+                9225
+              ],
+              [
+                9220,
+                9220,
+                9220,
+                9220,
+                9220,
+                9220,
+                9220,
+                9220
+              ],
+              [
+                9207,
+                9207,
+                9207,
+                9207,
+                9207,
+                9207,
+                9207,
+                9207
+              ],
+              [
+                9214,
+                9214,
+                9214,
+                9214,
+                9214,
+                9214,
+                9214,
+                9214
+              ]
+            ]
+          },
+          {
+            "epoch": 7,
+            "branches": [
+              {
+                "output": "branch0",
+                "relative_l2": 0.000866900412079623,
+                "peak_scaled_error": 0.0019896013983324488
+              },
+              {
+                "output": "branch1",
+                "relative_l2": 0.000866900412079623,
+                "peak_scaled_error": 0.0019896013983324488
+              }
+            ],
+            "all_pe_witnesses_exact": true,
+            "max_local_cycles": 9248,
+            "cycles_per_pe": [
+              [
+                9248,
+                9248,
+                9248,
+                9248,
+                9248,
+                9248,
+                9248,
+                9248
+              ],
+              [
+                9243,
+                9243,
+                9243,
+                9243,
+                9243,
+                9243,
+                9243,
+                9243
+              ],
+              [
+                9238,
+                9238,
+                9238,
+                9238,
+                9238,
+                9238,
+                9238,
+                9238
+              ],
+              [
+                9233,
+                9233,
+                9233,
+                9233,
+                9233,
+                9233,
+                9233,
+                9233
+              ],
+              [
+                9228,
+                9228,
+                9228,
+                9228,
+                9228,
+                9228,
+                9228,
+                9228
+              ],
+              [
+                9223,
+                9223,
+                9223,
+                9223,
+                9223,
+                9223,
+                9223,
+                9223
+              ],
+              [
+                9210,
+                9210,
+                9210,
+                9210,
+                9210,
+                9210,
+                9210,
+                9210
+              ],
+              [
+                9217,
+                9217,
+                9217,
+                9217,
+                9217,
+                9217,
+                9217,
+                9217
+              ]
+            ]
+          }
+        ],
+        "scope": "All packed branches, unchanged Y routes, same-instance dynamic extents, fixed independent original-input math. Simulator cycles, not hardware throughput."
+      },
+      "native_application_checks": [
+        {
+          "contract": "batched-normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "branch": 0,
+              "relative_l2": 0.0023200156702562515,
+              "peak_scaled_error": 0.004212268140746324
+            },
+            {
+              "branch": 1,
+              "relative_l2": 0.0022433063498419692,
+              "peak_scaled_error": 0.004164555544464363
+            }
+          ],
+          "relative_l2": 0.0023200156702562515,
+          "peak_scaled_error": 0.004212268140746324,
+          "limits": {
+            "relative_l2": 0.02,
+            "peak_scaled_error": 0.03
+          }
+        },
+        {
+          "contract": "batched-normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "branch": 0,
+              "relative_l2": 0.01190688722465634,
+              "peak_scaled_error": 0.026411710761855504
+            },
+            {
+              "branch": 1,
+              "relative_l2": 0.01190688722465634,
+              "peak_scaled_error": 0.026411710761855504
+            }
+          ],
+          "relative_l2": 0.01190688722465634,
+          "peak_scaled_error": 0.026411710761855504,
+          "limits": {
+            "relative_l2": 0.02,
+            "peak_scaled_error": 0.03
+          }
+        },
+        {
+          "contract": "batched-normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "branch": 0,
+              "relative_l2": 0.002350668981617874,
+              "peak_scaled_error": 0.0037145132586169573
+            },
+            {
+              "branch": 1,
+              "relative_l2": 0.0023940838118613715,
+              "peak_scaled_error": 0.00460324355494793
+            }
+          ],
+          "relative_l2": 0.0023940838118613715,
+          "peak_scaled_error": 0.00460324355494793,
+          "limits": {
+            "relative_l2": 0.02,
+            "peak_scaled_error": 0.03
+          }
+        },
+        {
+          "contract": "batched-normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "branch": 0,
+              "relative_l2": 0.0,
+              "peak_scaled_error": 0.0
+            },
+            {
+              "branch": 1,
+              "relative_l2": 0.0,
+              "peak_scaled_error": 0.0
+            }
+          ],
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "limits": {
+            "relative_l2": 0.02,
+            "peak_scaled_error": 0.03
+          }
+        },
+        {
+          "contract": "batched-normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "branch": 0,
+              "relative_l2": 0.0020873387699151414,
+              "peak_scaled_error": 0.0033203007954144344
+            },
+            {
+              "branch": 1,
+              "relative_l2": 0.0022609440840398814,
+              "peak_scaled_error": 0.002927791926059601
+            }
+          ],
+          "relative_l2": 0.0022609440840398814,
+          "peak_scaled_error": 0.0033203007954144344,
+          "limits": {
+            "relative_l2": 0.02,
+            "peak_scaled_error": 0.03
+          }
+        },
+        {
+          "contract": "batched-normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "branch": 0,
+              "relative_l2": 0.0022875010939083233,
+              "peak_scaled_error": 0.003978911277589955
+            },
+            {
+              "branch": 1,
+              "relative_l2": 0.002251111659352151,
+              "peak_scaled_error": 0.004559212536040902
+            }
+          ],
+          "relative_l2": 0.0022875010939083233,
+          "peak_scaled_error": 0.004559212536040902,
+          "limits": {
+            "relative_l2": 0.02,
+            "peak_scaled_error": 0.03
+          }
+        },
+        {
+          "contract": "batched-normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "branch": 0,
+              "relative_l2": 0.00012799180904838605,
+              "peak_scaled_error": 0.00012799180904840253
+            },
+            {
+              "branch": 1,
+              "relative_l2": 0.00012799180904838605,
+              "peak_scaled_error": 0.00012799180904840253
+            }
+          ],
+          "relative_l2": 0.00012799180904838605,
+          "peak_scaled_error": 0.00012799180904840253,
+          "limits": {
+            "relative_l2": 0.02,
+            "peak_scaled_error": 0.03
+          }
+        },
+        {
+          "contract": "batched-normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "branch": 0,
+              "relative_l2": 0.007152758052967071,
+              "peak_scaled_error": 0.015433883030585337
+            },
+            {
+              "branch": 1,
+              "relative_l2": 0.007152758052967071,
+              "peak_scaled_error": 0.015433883030585337
+            }
+          ],
+          "relative_l2": 0.007152758052967071,
+          "peak_scaled_error": 0.015433883030585337,
+          "limits": {
+            "relative_l2": 0.02,
+            "peak_scaled_error": 0.03
+          }
+        }
+      ],
+      "device_application_checks": [
+        {
+          "contract": "batched-normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "branch": 0,
+              "relative_l2": 0.0009263165606077844,
+              "peak_scaled_error": 0.001252050991033106
+            },
+            {
+              "branch": 1,
+              "relative_l2": 0.0009660534850950673,
+              "peak_scaled_error": 0.0012525717959385643
+            }
+          ],
+          "relative_l2": 0.0009660534850950673,
+          "peak_scaled_error": 0.0012525717959385643,
+          "limits": {
+            "relative_l2": 0.02,
+            "peak_scaled_error": 0.03
+          }
+        },
+        {
+          "contract": "batched-normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "branch": 0,
+              "relative_l2": 0.006291459088645496,
+              "peak_scaled_error": 0.007559181894234086
+            },
+            {
+              "branch": 1,
+              "relative_l2": 0.006291459088645496,
+              "peak_scaled_error": 0.007559181894234086
+            }
+          ],
+          "relative_l2": 0.006291459088645496,
+          "peak_scaled_error": 0.007559181894234086,
+          "limits": {
+            "relative_l2": 0.02,
+            "peak_scaled_error": 0.03
+          }
+        },
+        {
+          "contract": "batched-normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "branch": 0,
+              "relative_l2": 0.0009509807888191054,
+              "peak_scaled_error": 0.0011294953051168865
+            },
+            {
+              "branch": 1,
+              "relative_l2": 0.0009719731177610299,
+              "peak_scaled_error": 0.001061167776320613
+            }
+          ],
+          "relative_l2": 0.0009719731177610299,
+          "peak_scaled_error": 0.0011294953051168865,
+          "limits": {
+            "relative_l2": 0.02,
+            "peak_scaled_error": 0.03
+          }
+        },
+        {
+          "contract": "batched-normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "branch": 0,
+              "relative_l2": 0.0,
+              "peak_scaled_error": 0.0
+            },
+            {
+              "branch": 1,
+              "relative_l2": 0.0,
+              "peak_scaled_error": 0.0
+            }
+          ],
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "limits": {
+            "relative_l2": 0.02,
+            "peak_scaled_error": 0.03
+          }
+        },
+        {
+          "contract": "batched-normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "branch": 0,
+              "relative_l2": 0.006190616967202083,
+              "peak_scaled_error": 0.006684791701228278
+            },
+            {
+              "branch": 1,
+              "relative_l2": 0.006168511978993974,
+              "peak_scaled_error": 0.005461674919717711
+            }
+          ],
+          "relative_l2": 0.006190616967202083,
+          "peak_scaled_error": 0.006684791701228278,
+          "limits": {
+            "relative_l2": 0.02,
+            "peak_scaled_error": 0.03
+          }
+        },
+        {
+          "contract": "batched-normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "branch": 0,
+              "relative_l2": 0.0011012403610483582,
+              "peak_scaled_error": 0.0014201612952822545
+            },
+            {
+              "branch": 1,
+              "relative_l2": 0.0011513978977602936,
+              "peak_scaled_error": 0.0014194243698328153
+            }
+          ],
+          "relative_l2": 0.0011513978977602936,
+          "peak_scaled_error": 0.0014201612952822545,
+          "limits": {
+            "relative_l2": 0.02,
+            "peak_scaled_error": 0.03
+          }
+        },
+        {
+          "contract": "batched-normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "branch": 0,
+              "relative_l2": 0.00012799180904838605,
+              "peak_scaled_error": 0.00012799180904840253
+            },
+            {
+              "branch": 1,
+              "relative_l2": 0.00012799180904838605,
+              "peak_scaled_error": 0.00012799180904840253
+            }
+          ],
+          "relative_l2": 0.00012799180904838605,
+          "peak_scaled_error": 0.00012799180904840253,
+          "limits": {
+            "relative_l2": 0.02,
+            "peak_scaled_error": 0.03
+          }
+        },
+        {
+          "contract": "batched-normalized-fanout-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "branches": [
+            {
+              "branch": 0,
+              "relative_l2": 0.000866900412079623,
+              "peak_scaled_error": 0.0019896013983324488
+            },
+            {
+              "branch": 1,
+              "relative_l2": 0.000866900412079623,
+              "peak_scaled_error": 0.0019896013983324488
+            }
+          ],
+          "relative_l2": 0.000866900412079623,
+          "peak_scaled_error": 0.0019896013983324488,
+          "limits": {
+            "relative_l2": 0.02,
+            "peak_scaled_error": 0.03
+          }
+        }
+      ],
+      "linked_static_memory": {
+        "scope": "linked static SRAM sections by ELF class; not runtime stack usage",
+        "elf_classes": 3,
+        "max_static_high_water_bytes": 20672,
+        "min_unallocated_static_bytes": 28480,
+        "classes": [
+          {
+            "elf": "out_0_0.elf",
+            "sha256": "33481974f2bb332d47fba6bff0f8c8148be2140a26a1b5440c737610f508cbda",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 104
+              },
+              {
+                "name": ".text",
+                "start": 104,
+                "size": 7272
+              },
+              {
+                "name": ".data",
+                "start": 7376,
+                "size": 112
+              },
+              {
+                "name": ".bss",
+                "start": 7488,
+                "size": 12146
+              },
+              {
+                "name": ".task_table",
+                "start": 19648,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 20672,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 20672,
+            "unallocated_static_bytes": 28480
+          },
+          {
+            "elf": "out_1_0.elf",
+            "sha256": "99ee9632839e56d5bdeae20219358b70e6f0df54ec8d53d3ecc128adf19ebd12",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 104
+              },
+              {
+                "name": ".text",
+                "start": 104,
+                "size": 7272
+              },
+              {
+                "name": ".data",
+                "start": 7376,
+                "size": 112
+              },
+              {
+                "name": ".bss",
+                "start": 7488,
+                "size": 12146
+              },
+              {
+                "name": ".task_table",
+                "start": 19648,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 20672,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 20672,
+            "unallocated_static_bytes": 28480
+          },
+          {
+            "elf": "out_2_0.elf",
+            "sha256": "d65237a23aa1bb34f46581f0f7dc101911a2f80ee1eae6af3985e1a543ad2d1f",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 104
+              },
+              {
+                "name": ".text",
+                "start": 104,
+                "size": 7272
+              },
+              {
+                "name": ".data",
+                "start": 7376,
+                "size": 112
+              },
+              {
+                "name": ".bss",
+                "start": 7488,
+                "size": 12146
+              },
+              {
+                "name": ".task_table",
+                "start": 19648,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 20672,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 20672,
+            "unallocated_static_bytes": 28480
+          }
+        ]
+      },
+      "linked_static_memory_sha256": "567bb3b699b466360bd03bd804f0c86b670b5d8bcdf2955de996f39183dce2f5",
+      "qualification_sha256": "55ef9801a9a7a7e17829e8427b77c69d4c16aca3d53644375bf40f2ee5e8ff9b",
+      "results_sha256": "60d9be9dc8519dda661e7a0c4bdfb3b758fad4f1991201179e5f8efa937bcdcd",
+      "source_comparison": "evidence/batched-upgate-full8-source-comparison.json",
+      "performance": {
+        "min_ratio": 1.0077358901721507,
+        "max_ratio": 1.0077392631349467,
+        "scope": "Precision/order-matched repaired pinned Decode normalized projections and original fused grouped collective, all eight original fixtures and replicas. Simulator max-PE cycles including observer work, excluding host I/O; no hardware/full Decode throughput."
+      },
+      "numerical_validation": {
+        "contract": "batched-normalized-fanout-half-normwise-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_fixed_accuracy_passed": null,
+        "fixed_accuracy_passed": true,
+        "rtol": 3e-05,
+        "atol": 3e-06
+      }
+    }
+  ],
+  "source_controls": [
+    {
+      "path": "evidence/batched-upgate-full8-source-comparison.json",
+      "sha256": "c8413d0280afe2dd70ab3c1f2a034ae9deb6957ea905fe4ef86c3e2259e31469"
+    },
+    {
+      "path": "evidence/batched-upgate-static-memory-final1826.json",
+      "sha256": "567bb3b699b466360bd03bd804f0c86b670b5d8bcdf2955de996f39183dce2f5"
+    },
+    {
+      "path": "evidence/batched-fanout-audit-mutations-20260907T185552334101Z.json",
+      "sha256": "bc3ac1989c86d651ede26c07a878a54c5df0f8c18eb785785cfc8a16d18f5324"
+    },
+    {
+      "path": "evidence/batched-upgate-native-host-1814/review.json",
+      "sha256": "1f933065a5eba68570de703238c8aea3eb2fcbb55ee9e5803294a20a50b42e0a"
+    },
+    {
+      "path": "evidence/batched-upgate-native-host-1814/provenance.json",
+      "sha256": "3431253e99aa89175fc2606b52bfb51834c5a0b98492eb7f79de179611695ce7"
+    },
+    {
+      "path": "experiments/register_batched_fanout.py",
+      "sha256": "60676c3c979b44397f8aa35ae5896034ac46f744f904e7bbea432bbaaea80f7c"
+    }
+  ]
+}

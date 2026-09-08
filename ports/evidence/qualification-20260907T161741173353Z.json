@@ -1,0 +1,1042 @@
+{
+  "kind": "qualification_index_of_existing_sdk_runs",
+  "sdk": true,
+  "success": true,
+  "new_sdk_execution": false,
+  "cases": [
+    {
+      "key": "waferllm/batched_rms_3x512_8x8_g2",
+      "artifact": "projects/waferllm/batched_rms_3x512_8x8_g2/run-20260907T160529124015Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_batched_rms.v1",
+        "epochs": 8,
+        "cases": [
+          {
+            "epoch": 0,
+            "exact_replicas": true,
+            "padding_exact_zero": true,
+            "relative_l2": 0.0003000884374360647,
+            "peak_scaled_error": 0.000558787701686201,
+            "max_local_cycles": 1414,
+            "cycles_per_pe": [
+              [
+                1414,
+                1414,
+                1414,
+                1414,
+                1414,
+                1414,
+                1414,
+                1414
+              ],
+              [
+                1409,
+                1409,
+                1409,
+                1409,
+                1409,
+                1409,
+                1409,
+                1409
+              ],
+              [
+                1404,
+                1404,
+                1404,
+                1404,
+                1404,
+                1404,
+                1404,
+                1404
+              ],
+              [
+                1399,
+                1399,
+                1399,
+                1399,
+                1399,
+                1399,
+                1399,
+                1399
+              ],
+              [
+                1394,
+                1394,
+                1394,
+                1394,
+                1394,
+                1394,
+                1394,
+                1394
+              ],
+              [
+                1389,
+                1389,
+                1389,
+                1389,
+                1389,
+                1389,
+                1389,
+                1389
+              ],
+              [
+                1376,
+                1376,
+                1376,
+                1376,
+                1376,
+                1376,
+                1376,
+                1376
+              ],
+              [
+                1383,
+                1383,
+                1383,
+                1383,
+                1383,
+                1383,
+                1383,
+                1383
+              ]
+            ]
+          },
+          {
+            "epoch": 1,
+            "exact_replicas": true,
+            "padding_exact_zero": true,
+            "relative_l2": 0.000345515090513858,
+            "peak_scaled_error": 0.0006106257806643571,
+            "max_local_cycles": 1416,
+            "cycles_per_pe": [
+              [
+                1416,
+                1416,
+                1416,
+                1416,
+                1416,
+                1416,
+                1416,
+                1416
+              ],
+              [
+                1411,
+                1411,
+                1411,
+                1411,
+                1411,
+                1411,
+                1411,
+                1411
+              ],
+              [
+                1406,
+                1406,
+                1406,
+                1406,
+                1406,
+                1406,
+                1406,
+                1406
+              ],
+              [
+                1401,
+                1401,
+                1401,
+                1401,
+                1401,
+                1401,
+                1401,
+                1401
+              ],
+              [
+                1396,
+                1396,
+                1396,
+                1396,
+                1396,
+                1396,
+                1396,
+                1396
+              ],
+              [
+                1391,
+                1391,
+                1391,
+                1391,
+                1391,
+                1391,
+                1391,
+                1391
+              ],
+              [
+                1378,
+                1378,
+                1378,
+                1378,
+                1378,
+                1378,
+                1378,
+                1378
+              ],
+              [
+                1385,
+                1385,
+                1385,
+                1385,
+                1385,
+                1385,
+                1385,
+                1385
+              ]
+            ]
+          },
+          {
+            "epoch": 2,
+            "exact_replicas": true,
+            "padding_exact_zero": true,
+            "relative_l2": 0.00024027735082596849,
+            "peak_scaled_error": 0.0004711919167229926,
+            "max_local_cycles": 1414,
+            "cycles_per_pe": [
+              [
+                1414,
+                1414,
+                1414,
+                1414,
+                1414,
+                1414,
+                1414,
+                1414
+              ],
+              [
+                1409,
+                1409,
+                1409,
+                1409,
+                1409,
+                1409,
+                1409,
+                1409
+              ],
+              [
+                1404,
+                1404,
+                1404,
+                1404,
+                1404,
+                1404,
+                1404,
+                1404
+              ],
+              [
+                1399,
+                1399,
+                1399,
+                1399,
+                1399,
+                1399,
+                1399,
+                1399
+              ],
+              [
+                1394,
+                1394,
+                1394,
+                1394,
+                1394,
+                1394,
+                1394,
+                1394
+              ],
+              [
+                1389,
+                1389,
+                1389,
+                1389,
+                1389,
+                1389,
+                1389,
+                1389
+              ],
+              [
+                1376,
+                1376,
+                1376,
+                1376,
+                1376,
+                1376,
+                1376,
+                1376
+              ],
+              [
+                1383,
+                1383,
+                1383,
+                1383,
+                1383,
+                1383,
+                1383,
+                1383
+              ]
+            ]
+          },
+          {
+            "epoch": 3,
+            "exact_replicas": true,
+            "padding_exact_zero": true,
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "max_local_cycles": 1414,
+            "cycles_per_pe": [
+              [
+                1414,
+                1414,
+                1414,
+                1414,
+                1414,
+                1414,
+                1414,
+                1414
+              ],
+              [
+                1409,
+                1409,
+                1409,
+                1409,
+                1409,
+                1409,
+                1409,
+                1409
+              ],
+              [
+                1404,
+                1404,
+                1404,
+                1404,
+                1404,
+                1404,
+                1404,
+                1404
+              ],
+              [
+                1399,
+                1399,
+                1399,
+                1399,
+                1399,
+                1399,
+                1399,
+                1399
+              ],
+              [
+                1394,
+                1394,
+                1394,
+                1394,
+                1394,
+                1394,
+                1394,
+                1394
+              ],
+              [
+                1389,
+                1389,
+                1389,
+                1389,
+                1389,
+                1389,
+                1389,
+                1389
+              ],
+              [
+                1376,
+                1376,
+                1376,
+                1376,
+                1376,
+                1376,
+                1376,
+                1376
+              ],
+              [
+                1383,
+                1383,
+                1383,
+                1383,
+                1383,
+                1383,
+                1383,
+                1383
+              ]
+            ]
+          },
+          {
+            "epoch": 4,
+            "exact_replicas": true,
+            "padding_exact_zero": true,
+            "relative_l2": 0.006115458958588004,
+            "peak_scaled_error": 0.006142304595706988,
+            "max_local_cycles": 1414,
+            "cycles_per_pe": [
+              [
+                1414,
+                1414,
+                1414,
+                1414,
+                1414,
+                1414,
+                1414,
+                1414
+              ],
+              [
+                1409,
+                1409,
+                1409,
+                1409,
+                1409,
+                1409,
+                1409,
+                1409
+              ],
+              [
+                1404,
+                1404,
+                1404,
+                1404,
+                1404,
+                1404,
+                1404,
+                1404
+              ],
+              [
+                1399,
+                1399,
+                1399,
+                1399,
+                1399,
+                1399,
+                1399,
+                1399
+              ],
+              [
+                1394,
+                1394,
+                1394,
+                1394,
+                1394,
+                1394,
+                1394,
+                1394
+              ],
+              [
+                1389,
+                1389,
+                1389,
+                1389,
+                1389,
+                1389,
+                1389,
+                1389
+              ],
+              [
+                1376,
+                1376,
+                1376,
+                1376,
+                1376,
+                1376,
+                1376,
+                1376
+              ],
+              [
+                1383,
+                1383,
+                1383,
+                1383,
+                1383,
+                1383,
+                1383,
+                1383
+              ]
+            ]
+          },
+          {
+            "epoch": 5,
+            "exact_replicas": true,
+            "padding_exact_zero": true,
+            "relative_l2": 0.0004138484667196891,
+            "peak_scaled_error": 0.0008168382539830351,
+            "max_local_cycles": 1414,
+            "cycles_per_pe": [
+              [
+                1414,
+                1414,
+                1414,
+                1414,
+                1414,
+                1414,
+                1414,
+                1414
+              ],
+              [
+                1409,
+                1409,
+                1409,
+                1409,
+                1409,
+                1409,
+                1409,
+                1409
+              ],
+              [
+                1404,
+                1404,
+                1404,
+                1404,
+                1404,
+                1404,
+                1404,
+                1404
+              ],
+              [
+                1399,
+                1399,
+                1399,
+                1399,
+                1399,
+                1399,
+                1399,
+                1399
+              ],
+              [
+                1394,
+                1394,
+                1394,
+                1394,
+                1394,
+                1394,
+                1394,
+                1394
+              ],
+              [
+                1389,
+                1389,
+                1389,
+                1389,
+                1389,
+                1389,
+                1389,
+                1389
+              ],
+              [
+                1376,
+                1376,
+                1376,
+                1376,
+                1376,
+                1376,
+                1376,
+                1376
+              ],
+              [
+                1383,
+                1383,
+                1383,
+                1383,
+                1383,
+                1383,
+                1383,
+                1383
+              ]
+            ]
+          },
+          {
+            "epoch": 6,
+            "exact_replicas": true,
+            "padding_exact_zero": true,
+            "relative_l2": 0.00021231702429379252,
+            "peak_scaled_error": 0.00020640759289196364,
+            "max_local_cycles": 1417,
+            "cycles_per_pe": [
+              [
+                1417,
+                1417,
+                1417,
+                1417,
+                1417,
+                1417,
+                1417,
+                1417
+              ],
+              [
+                1412,
+                1412,
+                1412,
+                1412,
+                1412,
+                1412,
+                1412,
+                1412
+              ],
+              [
+                1407,
+                1407,
+                1407,
+                1407,
+                1407,
+                1407,
+                1407,
+                1407
+              ],
+              [
+                1402,
+                1402,
+                1402,
+                1402,
+                1402,
+                1402,
+                1402,
+                1402
+              ],
+              [
+                1397,
+                1397,
+                1397,
+                1397,
+                1397,
+                1397,
+                1397,
+                1397
+              ],
+              [
+                1392,
+                1392,
+                1392,
+                1392,
+                1392,
+                1392,
+                1392,
+                1392
+              ],
+              [
+                1379,
+                1379,
+                1379,
+                1379,
+                1379,
+                1379,
+                1379,
+                1379
+              ],
+              [
+                1386,
+                1386,
+                1386,
+                1386,
+                1386,
+                1386,
+                1386,
+                1386
+              ]
+            ]
+          },
+          {
+            "epoch": 7,
+            "exact_replicas": true,
+            "padding_exact_zero": true,
+            "relative_l2": 0.0004967812717782403,
+            "peak_scaled_error": 0.0006123974167869002,
+            "max_local_cycles": 1416,
+            "cycles_per_pe": [
+              [
+                1416,
+                1416,
+                1416,
+                1416,
+                1416,
+                1416,
+                1416,
+                1416
+              ],
+              [
+                1411,
+                1411,
+                1411,
+                1411,
+                1411,
+                1411,
+                1411,
+                1411
+              ],
+              [
+                1406,
+                1406,
+                1406,
+                1406,
+                1406,
+                1406,
+                1406,
+                1406
+              ],
+              [
+                1401,
+                1401,
+                1401,
+                1401,
+                1401,
+                1401,
+                1401,
+                1401
+              ],
+              [
+                1396,
+                1396,
+                1396,
+                1396,
+                1396,
+                1396,
+                1396,
+                1396
+              ],
+              [
+                1391,
+                1391,
+                1391,
+                1391,
+                1391,
+                1391,
+                1391,
+                1391
+              ],
+              [
+                1378,
+                1378,
+                1378,
+                1378,
+                1378,
+                1378,
+                1378,
+                1378
+              ],
+              [
+                1385,
+                1385,
+                1385,
+                1385,
+                1385,
+                1385,
+                1385,
+                1385
+              ]
+            ]
+          }
+        ],
+        "scope": "Actual half protocol and target-order bits, fixed RMS accuracy, all PE replicas. No in-call axis switch or hardware throughput qualification."
+      },
+      "native_application_checks": [
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00020774951347206109,
+          "max_abs_error": 0.00048454357908966905,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00018051941996445424,
+          "max_abs_error": 0.0004228554277387886,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00019736225928704133,
+          "max_abs_error": 0.0004880023996407523,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00011906717236560004,
+          "max_abs_error": 4.074806279316667e-05,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00021207435299000499,
+          "max_abs_error": 0.00048669394290268286,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00017885803502526706,
+          "max_abs_error": 0.0033733973649994198,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 4.72163856185779e-05,
+          "max_abs_error": 8.94866811667061e-05,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        }
+      ],
+      "device_application_checks": [
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0003000884374360647,
+          "max_abs_error": 0.0009768870236823712,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0003455150905138578,
+          "max_abs_error": 0.0007723170111555433,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00024027735082596846,
+          "max_abs_error": 0.0008237498207668281,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0,
+          "max_abs_error": 0.0,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.006115458958588004,
+          "max_abs_error": 0.0014567984629690889,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00041384846671968924,
+          "max_abs_error": 0.0013767713770298506,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.00021231702429379252,
+          "max_abs_error": 0.0046692754943507,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        },
+        {
+          "contract": "rms-half-normwise-v1",
+          "fixed_accuracy_passed": true,
+          "relative_l2_error": 0.0004967812717782398,
+          "max_abs_error": 0.0010627796155044944,
+          "reference": "independent math.fsum square norm and standard math.sqrt; epsilon1e-6",
+          "per_component_accuracy_not_implied": true
+        }
+      ],
+      "linked_static_memory": {
+        "scope": "linked static SRAM sections by ELF class; not runtime stack usage",
+        "elf_classes": 3,
+        "max_static_high_water_bytes": 8832,
+        "min_unallocated_static_bytes": 40320,
+        "classes": [
+          {
+            "elf": "out_0_0.elf",
+            "sha256": "f29ff58aad2225bd840b5852546a7b31bb3df0cc717118d391217e9c188e3771",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 168
+              },
+              {
+                "name": ".text",
+                "start": 168,
+                "size": 5932
+              },
+              {
+                "name": ".data",
+                "start": 6100,
+                "size": 62
+              },
+              {
+                "name": ".bss",
+                "start": 6164,
+                "size": 1634
+              },
+              {
+                "name": ".task_table",
+                "start": 7808,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 8832,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 8832,
+            "unallocated_static_bytes": 40320
+          },
+          {
+            "elf": "out_1_0.elf",
+            "sha256": "e9a69d332b49969a248fe3ae21a3fa267c0860046c22003e317ba62fa3f72aae",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 168
+              },
+              {
+                "name": ".text",
+                "start": 168,
+                "size": 5932
+              },
+              {
+                "name": ".data",
+                "start": 6100,
+                "size": 62
+              },
+              {
+                "name": ".bss",
+                "start": 6164,
+                "size": 1634
+              },
+              {
+                "name": ".task_table",
+                "start": 7808,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 8832,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 8832,
+            "unallocated_static_bytes": 40320
+          },
+          {
+            "elf": "out_2_0.elf",
+            "sha256": "0fa4c0dd2a842db61374b732ea36da50a4a29cce64650eced6b3f290217712d3",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 168
+              },
+              {
+                "name": ".text",
+                "start": 168,
+                "size": 5932
+              },
+              {
+                "name": ".data",
+                "start": 6100,
+                "size": 62
+              },
+              {
+                "name": ".bss",
+                "start": 6164,
+                "size": 1634
+              },
+              {
+                "name": ".task_table",
+                "start": 7808,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 8832,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 8832,
+            "unallocated_static_bytes": 40320
+          }
+        ]
+      },
+      "linked_static_memory_sha256": "9a5633ed987c86ca42aad3e71e7cf029627ca2ac5daae2e34d48fa011fbd1fdf",
+      "qualification_sha256": "f0b29b28e7388c926c33744608b65e1e55b3420ea7ab05ba6c030a1b7adf6a07",
+      "results_sha256": "5238572a2ed3c25f9c921522fecd837dc74f024987342642bf117b122d981995",
+      "source_comparison": "evidence/batched-rms-source-comparison.json",
+      "performance": {
+        "min_ratio": 1.013590844062947,
+        "max_ratio": 1.0136200716845878,
+        "scope": "Precision/order-matched repaired pinned Decode RMS and source grouped collective, all eight original fixtures and replicas. Simulator max-PE cycles including observer work, excluding host I/O; no hardware/full Decode throughput."
+      },
+      "numerical_validation": {
+        "contract": "rms-half-normwise-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "relative_l2_limit": 0.01,
+        "max_error_over_reference_peak_limit": 0.015,
+        "zero_reference_requires_exact_zero": true,
+        "per_component_accuracy_not_implied": true
+      }
+    }
+  ],
+  "source_controls": [
+    {
+      "path": "evidence/batched-rms-source-comparison.json",
+      "sha256": "2b442aabd67d1ac927b44809cd21fed999b3ff5d6ea2e68be4a778fff82daa75"
+    },
+    {
+      "path": "evidence/batched-rms-static-memory.json",
+      "sha256": "9a5633ed987c86ca42aad3e71e7cf029627ca2ac5daae2e34d48fa011fbd1fdf"
+    },
+    {
+      "path": "evidence/batched-rms-audit-mutations-20260907T161111377144Z.json",
+      "sha256": "ad9d8ccaa41539aa1ea0fd8a5035ed344dd936c7784a5399b11f29d9424688fb"
+    },
+    {
+      "path": "evidence/batched-rms-native-host-1613/review.json",
+      "sha256": "c6ca3b84eb928d530f8fc6eab8643af30c87e16b2bf2b5e48ef0a8d651508ff6"
+    },
+    {
+      "path": "evidence/batched-rms-native-host-1613/provenance.json",
+      "sha256": "2394c7c37dd395717a8f5d62888e30224ea8ea107bfd4289f64d6e8c711bf1e7"
+    },
+    {
+      "path": "experiments/register_batched_rms.py",
+      "sha256": "05a7c313d8e0ab7d5b261f3bf6572c908f21b769854932ea0e0a170fc558049d"
+    }
+  ]
+}

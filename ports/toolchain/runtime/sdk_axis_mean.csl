@@ -1,0 +1,34 @@
+// Dyadically scaled half statistics over caller-owned SDK SUM/broadcast planes.
+// Widen and divide by a power of two BEFORE reduction/final half narrowing.
+// No new SDK imports/colors/queues: caller serializes this helper with SUM/MAX.
+// Source and destination remain borrowed until f_callback; exact alias is valid.
+param capacity:u16;
+param f_reduce:fn(u16,[*]f32,[*]f32,u16,local_task_id)void;
+param f_broadcast:fn(u16,[*]u32,u16,local_task_id)void;
+param f_callback:fn()void;
+param callback_task_id:local_task_id=@get_local_task_id(12);
+comptime {@comptime_assert(capacity>0);}
+var send=@zeros([capacity]f32);
+var reduced=@zeros([capacity]f32);
+var destination:[*]f16;
+var count:u16=0;var axis:u16=0;var phase:u16=0;
+var busy:bool=false;
+fn start(selected_axis:u16,source:[*]f16,output:[*]f16,length:u16,divisor:u16) void {
+ @assert(!busy and selected_axis<=1 and length>0 and length<=capacity);
+ @assert(divisor>0 and (divisor & (divisor-1))==0);
+ busy=true;axis=selected_axis;count=length;destination=output;phase=0;
+ const factor:f32=1.0/@as(f32,divisor);
+ for(@range(u16,count)) |i| {send[i]=@as(f32,source[i])*factor;}
+ f_reduce(axis,&send,&reduced,count,callback_task_id);
+}
+task advance() void {
+ @assert(busy);
+ if(phase==0){
+  phase=1;f_broadcast(axis,@ptrcast([*]u32,&reduced),count,callback_task_id);
+ }else{
+  @assert(phase==1);
+  for(@range(u16,count)) |i| {destination[i]=@as(f16,reduced[i]);}
+  busy=false;f_callback();
+ }
+}
+comptime {@bind_local_task(advance,callback_task_id);}

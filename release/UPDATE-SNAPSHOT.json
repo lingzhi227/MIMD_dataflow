@@ -1,0 +1,23 @@
+{
+  "captured_utc": "2026-09-08T04:09:46.291117+00:00",
+  "qualified_profiles": 141,
+  "scope": "Active development copy; tested separately below. Current 35-node parent remains unqualified.",
+  "historical_fixture_directories": [
+    "evidence/attention-value-source-20260907T022427483584Z",
+    "evidence/input-attention-codegen-20260907T130338205990Z",
+    "evidence/input-attention-codegen-20260907T133613178311Z",
+    "evidence/input-attention-codegen-20260907T142401616614Z",
+    "evidence/input-attention-mixed-frontend-20260907T134515612938Z",
+    "evidence/input-attention-mixed-precision-20260907T131046512625Z",
+    "evidence/input-attention-source-20260907T122338297913Z",
+    "projects/waferllm/attention_64x128_8x8/run-20260907T032800549283Z",
+    "projects/waferllm/attention_tail_64x64x256_8x8_counters/run-20260907T114402035658Z",
+    "projects/waferllm/batched_pair_rotation_5x1024_8x8_x/run-20260907T230157971748Z",
+    "projects/waferllm/feed_forward_64x64x256_8x8_all_blocked_counters/run-20260907T090013451671Z",
+    "projects/waferllm/input_attention_mixed_64x64x256_8x8_counters/run-20260907T144456167691Z",
+    "projects/waferllm/mlp_128x128x512_8x8_blocked/run-20260907T064549573557Z",
+    "projects/waferllm/mlp_64x64x256_8x8/run-20260907T044301583844Z",
+    "projects/waferllm/mlp_64x64x256_8x8/run-20260907T044447648813Z",
+    "projects/waferllm/prefill_tail_64x64x256_8x8_counters/run-20260907T102005944852Z"
+  ]
+}

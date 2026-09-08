@@ -10,8 +10,20 @@ import re
 DATAFLOW_SCHEMAS = tuple(
     dict(token.split("=", 1) for token in spec.split())
     for spec in (
+        "rows=uint cols=uint partition=sequence axis=y layout=batch_major reduce=max_sum provider=sdk_axis accumulation=f16 collective=f32 math=sdk_half compute=dsr fp=relaxed",
+        "rows=uint cols=uint partition=features axis=y layout=batch_major reduce=sdk_axis result=replicated_columns accumulation=f16 collective=f32 math=sdk_half compute=dsr fp=relaxed",
+        "rows=uint cols=uint partition=features axis=y layout=batch_major reduce=sdk_axis result=replicated_columns accumulation=f16 collective=f32 statistic=mean math=sdk_half compute=dsr fp=relaxed",
+        "rows=uint cols=uint broadcast=resident_rows|resident_columns axis=x|y reduce=sdk_axis result=feature_rows|feature_columns|sequence_rows replicas=rows|columns fusion=collective|none accumulation=f16 collective=f32 compute=dsr fp=relaxed",
+        "rows=uint cols=uint layout=batch_major axis=x|y compute=dsr fp=relaxed",
+        "rows=uint cols=uint layout=batch_major axis=x compute=map math=sdk_stable_half fp=relaxed",
+        "rows=uint cols=uint broadcast=resident_rows reduce=grouped_two_tree groups=uint result=feature_columns replicas=rows fusion=collective compute=dsr fp=relaxed",
+        "rows=uint cols=uint partition=features axis=y layout=batch_major reduce=grouped_two_tree groups=uint result=replicated_columns accumulation=f16 math=sdk_half compute=dsr fp=relaxed",
+        "rows=uint cols=uint exchange=two_hop initial_align=forward|both_axes reduce=local overlap=double_buffer fp=relaxed compute=dsr accumulation=f32",
+        "rows=uint cols=uint partition=tiles reduce=max_sum accumulation=f32 math=sdk_float compute=dsr fp=relaxed elementwise=map|scalar",
+        "rows=uint cols=uint partition=tiles reduce=bidirectional_chain weights=feature_columns accumulation=f32 math=sdk_float compute=dsr fp=relaxed",
         "rows=uint cols=uint partition=tiles compute=dsr fp=relaxed",
         "rows=uint cols=uint exchange=vertical_two_hop reduce=rotating_root order=east_first overlap=double_buffer compute=dsr fp=relaxed",
+        "rows=uint cols=uint partition=features axis=x|y layout=batch_major coefficients=feature_pairs compute=dsr fp=relaxed",
         "rows=uint cols=uint partition=tiles coefficients=feature_pairs|per_token compute=dsd fp=relaxed",
         "rows=uint cols=uint partition=tiles math=sdk_half compute=dsr elementwise=map fp=relaxed",
         "rows=uint cols=uint partition=tiles reduce=max_sum accumulation=f16 math=sdk_half compute=dsr fp=relaxed elementwise=map|scalar",

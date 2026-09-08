@@ -1,0 +1,1261 @@
+{
+  "run": "run-20260907T152832355648Z",
+  "sdk": false,
+  "instrumentation": null,
+  "selection": {
+    "substring": null,
+    "exact": "waferllm/input_attention_mixed_64x64x256_8x8_counters"
+  },
+  "sdk_runtime_options": null,
+  "sdk_timeout_seconds": 240,
+  "success": true,
+  "cases": [
+    {
+      "key": "waferllm/input_attention_mixed_64x64x256_8x8_counters",
+      "passed": true,
+      "artifact": "projects/waferllm/input_attention_mixed_64x64x256_8x8_counters/run-20260907T152832355648Z",
+      "ir_application_checks": [
+        {
+          "relative_l2": 0.00018394333810227415,
+          "peak_scaled_error": 0.00028831740618633664,
+          "fixed_accuracy_passed": true,
+          "contract": "shared-input-attention-final-only-v1",
+          "scope": "Final output only; full qualification requires separately executed branch observations."
+        },
+        {
+          "relative_l2": 0.0001838129824117656,
+          "peak_scaled_error": 0.0003840657948907667,
+          "fixed_accuracy_passed": true,
+          "contract": "shared-input-attention-final-only-v1",
+          "scope": "Final output only; full qualification requires separately executed branch observations."
+        },
+        {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true,
+          "contract": "shared-input-attention-final-only-v1",
+          "scope": "Final output only; full qualification requires separately executed branch observations."
+        },
+        {
+          "relative_l2": 0.006407488297518505,
+          "peak_scaled_error": 0.0074021939986996955,
+          "fixed_accuracy_passed": true,
+          "contract": "shared-input-attention-final-only-v1",
+          "scope": "Final output only; full qualification requires separately executed branch observations."
+        },
+        {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true,
+          "contract": "shared-input-attention-final-only-v1",
+          "scope": "Final output only; full qualification requires separately executed branch observations."
+        },
+        {
+          "relative_l2": 0.0013740819835103438,
+          "peak_scaled_error": 0.00137408198351034,
+          "fixed_accuracy_passed": true,
+          "contract": "shared-input-attention-final-only-v1",
+          "scope": "Final output only; full qualification requires separately executed branch observations."
+        },
+        {
+          "relative_l2": 0.00031125368055384857,
+          "peak_scaled_error": 0.00031125368055384835,
+          "fixed_accuracy_passed": true,
+          "contract": "shared-input-attention-final-only-v1",
+          "scope": "Final output only; full qualification requires separately executed branch observations."
+        },
+        {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true,
+          "contract": "shared-input-attention-final-only-v1",
+          "scope": "Final output only; full qualification requires separately executed branch observations."
+        }
+      ],
+      "native_application_checks": [
+        {
+          "relative_l2": 0.00018394333810227415,
+          "peak_scaled_error": 0.00028831740618633664,
+          "fixed_accuracy_passed": true,
+          "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.00024126052045451803,
+            "peak_scaled_error": 0.00027223004554132254,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.000256914754658319,
+            "peak_scaled_error": 0.0002081356996304081,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.00532297994985497,
+            "peak_scaled_error": 0.0054870669801551815,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.0020074662399877648,
+            "peak_scaled_error": 0.0018162479425693683,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 7.266909951471327e-07,
+            "peak_scaled_error": 2.925225535390844e-06,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 2.859160304069519e-07
+          },
+          "input_normalized": {
+            "relative_l2": 0.00020415135852487097,
+            "peak_scaled_error": 0.00036044132101330814,
+            "fixed_accuracy_passed": true
+          },
+          "q_raw": {
+            "relative_l2": 0.0011545968341962383,
+            "peak_scaled_error": 0.0014811900960357846,
+            "fixed_accuracy_passed": true
+          },
+          "k_raw": {
+            "relative_l2": 0.0011604552150046052,
+            "peak_scaled_error": 0.0018751399740644789,
+            "fixed_accuracy_passed": true
+          },
+          "v_raw": {
+            "relative_l2": 0.00020572067819795412,
+            "peak_scaled_error": 0.0001970340498195144,
+            "fixed_accuracy_passed": true
+          },
+          "q": {
+            "relative_l2": 0.0011545968341962383,
+            "peak_scaled_error": 0.0014811900960357846,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "k": {
+            "relative_l2": 0.0011604552150046052,
+            "peak_scaled_error": 0.0018751399740644789,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "v": {
+            "relative_l2": 0.00020572067819795412,
+            "peak_scaled_error": 0.0001970340498195144,
+            "fixed_accuracy_passed": true
+          }
+        },
+        {
+          "relative_l2": 0.0001838129824117656,
+          "peak_scaled_error": 0.0003840657948907667,
+          "fixed_accuracy_passed": true,
+          "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.0001852976440157272,
+            "peak_scaled_error": 0.0001631709991734124,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.00016875788105553803,
+            "peak_scaled_error": 0.00016544651554979865,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0047445498800152775,
+            "peak_scaled_error": 0.004665117735920903,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.0020805405524428376,
+            "peak_scaled_error": 0.002600785910443376,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 8.294820945974919e-07,
+            "peak_scaled_error": 3.8824358991779195e-06,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 2.868473529815674e-07
+          },
+          "input_normalized": {
+            "relative_l2": 0.00020426264099763098,
+            "peak_scaled_error": 0.00036373990776055186,
+            "fixed_accuracy_passed": true
+          },
+          "q_raw": {
+            "relative_l2": 0.0011999146433234055,
+            "peak_scaled_error": 0.002294996399898287,
+            "fixed_accuracy_passed": true
+          },
+          "k_raw": {
+            "relative_l2": 0.0012255921041601592,
+            "peak_scaled_error": 0.002261549807663584,
+            "fixed_accuracy_passed": true
+          },
+          "v_raw": {
+            "relative_l2": 0.00020059162142284647,
+            "peak_scaled_error": 0.00020720777656701666,
+            "fixed_accuracy_passed": true
+          },
+          "q": {
+            "relative_l2": 0.0012216424297272184,
+            "peak_scaled_error": 0.0021139743601137078,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "k": {
+            "relative_l2": 0.0012328472454437027,
+            "peak_scaled_error": 0.0021181730116151556,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "v": {
+            "relative_l2": 0.00020059162142284647,
+            "peak_scaled_error": 0.00020720777656701666,
+            "fixed_accuracy_passed": true
+          }
+        },
+        {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true,
+          "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 0.0
+          },
+          "input_normalized": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "q_raw": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "k_raw": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "v_raw": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "q": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "k": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "v": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          }
+        },
+        {
+          "relative_l2": 0.006407488297518505,
+          "peak_scaled_error": 0.0074021939986996955,
+          "fixed_accuracy_passed": true,
+          "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 3.199948801637772e-05,
+            "peak_scaled_error": 3.1999488016377854e-05,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 3.199948801637772e-05,
+            "peak_scaled_error": 3.1999488016377854e-05,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.00907274573800716,
+            "peak_scaled_error": 0.010245841193440701,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.003617712544325711,
+            "peak_scaled_error": 0.0036177125443257133,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 0.0
+          },
+          "input_normalized": {
+            "relative_l2": 3.199948801643653e-05,
+            "peak_scaled_error": 3.1999488016472485e-05,
+            "fixed_accuracy_passed": true
+          },
+          "q_raw": {
+            "relative_l2": 0.00034748473334031735,
+            "peak_scaled_error": 0.0003474847333403169,
+            "fixed_accuracy_passed": true
+          },
+          "k_raw": {
+            "relative_l2": 0.00034748473334031735,
+            "peak_scaled_error": 0.0003474847333403169,
+            "fixed_accuracy_passed": true
+          },
+          "v_raw": {
+            "relative_l2": 3.199948801637772e-05,
+            "peak_scaled_error": 3.1999488016377854e-05,
+            "fixed_accuracy_passed": true
+          },
+          "q": {
+            "relative_l2": 0.00034748473334031735,
+            "peak_scaled_error": 0.0003474847333403169,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "k": {
+            "relative_l2": 0.00034748473334031735,
+            "peak_scaled_error": 0.0003474847333403169,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "v": {
+            "relative_l2": 3.199948801637772e-05,
+            "peak_scaled_error": 3.1999488016377854e-05,
+            "fixed_accuracy_passed": true
+          }
+        },
+        {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true,
+          "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.0002640634087771005,
+            "peak_scaled_error": 0.0003185817614058539,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.0020507280292406172,
+            "peak_scaled_error": 0.0032758153564409875,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 7.730256606516855e-07,
+            "peak_scaled_error": 4.472555653334704e-06,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 2.598389983177185e-07
+          },
+          "input_normalized": {
+            "relative_l2": 0.0002105109643429325,
+            "peak_scaled_error": 0.00036194625486128684,
+            "fixed_accuracy_passed": true
+          },
+          "q_raw": {
+            "relative_l2": 0.001196972067783061,
+            "peak_scaled_error": 0.001827182263617817,
+            "fixed_accuracy_passed": true
+          },
+          "k_raw": {
+            "relative_l2": 0.0011835998020770482,
+            "peak_scaled_error": 0.001976718568797036,
+            "fixed_accuracy_passed": true
+          },
+          "v_raw": {
+            "relative_l2": 0.0002088483565122464,
+            "peak_scaled_error": 0.00021207011039811263,
+            "fixed_accuracy_passed": true
+          },
+          "q": {
+            "relative_l2": 0.0012201036714031457,
+            "peak_scaled_error": 0.001553639243655713,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "k": {
+            "relative_l2": 0.0011954414606656042,
+            "peak_scaled_error": 0.0018628041604269996,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "v": {
+            "relative_l2": 0.0002088483565122464,
+            "peak_scaled_error": 0.00021207011039811263,
+            "fixed_accuracy_passed": true
+          }
+        },
+        {
+          "relative_l2": 0.0013740819835103438,
+          "peak_scaled_error": 0.00137408198351034,
+          "fixed_accuracy_passed": true,
+          "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 3.207737621307623e-05,
+            "peak_scaled_error": 3.210256705360403e-05,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 3.164719613889041e-05,
+            "peak_scaled_error": 3.16471961388903e-05,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.00145633795102578,
+            "peak_scaled_error": 0.0014563379510257727,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.0028853210514819608,
+            "peak_scaled_error": 0.002885321051481977,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 0.0
+          },
+          "input_normalized": {
+            "relative_l2": 3.1999488016440514e-05,
+            "peak_scaled_error": 3.1999488016440535e-05,
+            "fixed_accuracy_passed": true
+          },
+          "q_raw": {
+            "relative_l2": 0.0015056160541662834,
+            "peak_scaled_error": 0.0018791087964670561,
+            "fixed_accuracy_passed": true
+          },
+          "k_raw": {
+            "relative_l2": 0.0010841145181832328,
+            "peak_scaled_error": 0.0015446677409091196,
+            "fixed_accuracy_passed": true
+          },
+          "v_raw": {
+            "relative_l2": 3.199948801645022e-05,
+            "peak_scaled_error": 3.199948801641719e-05,
+            "fixed_accuracy_passed": true
+          },
+          "q": {
+            "relative_l2": 0.0015056160541662834,
+            "peak_scaled_error": 0.0018791087964670561,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "k": {
+            "relative_l2": 0.0010841145181832328,
+            "peak_scaled_error": 0.0015446677409091196,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "v": {
+            "relative_l2": 3.199948801645022e-05,
+            "peak_scaled_error": 3.199948801641719e-05,
+            "fixed_accuracy_passed": true
+          }
+        },
+        {
+          "relative_l2": 0.00031125368055384857,
+          "peak_scaled_error": 0.00031125368055384835,
+          "fixed_accuracy_passed": true,
+          "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0029945537785244516,
+            "peak_scaled_error": 0.002994553778524466,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 0.0
+          },
+          "input_normalized": {
+            "relative_l2": 3.199948801644459e-05,
+            "peak_scaled_error": 3.199948801645745e-05,
+            "fixed_accuracy_passed": true
+          },
+          "q_raw": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "k_raw": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "v_raw": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "q": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "k": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "v": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          }
+        },
+        {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true,
+          "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.0019901690536051797,
+            "peak_scaled_error": 0.002589224929501293,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 7.666634964647598e-07,
+            "peak_scaled_error": 4.022993915784502e-06,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 2.3283064365386963e-07
+          },
+          "input_normalized": {
+            "relative_l2": 0.00021107032619425327,
+            "peak_scaled_error": 0.00034388121611926185,
+            "fixed_accuracy_passed": true
+          },
+          "q_raw": {
+            "relative_l2": 0.0011877402989866244,
+            "peak_scaled_error": 0.0019513286015875452,
+            "fixed_accuracy_passed": true
+          },
+          "k_raw": {
+            "relative_l2": 0.0012048276349464126,
+            "peak_scaled_error": 0.001922597607057657,
+            "fixed_accuracy_passed": true
+          },
+          "v_raw": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "q": {
+            "relative_l2": 0.0012020154252999236,
+            "peak_scaled_error": 0.0017425957528734335,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "k": {
+            "relative_l2": 0.0012239116183630787,
+            "peak_scaled_error": 0.0018164013230763656,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "v": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          }
+        }
+      ],
+      "target_replay_application_checks": [
+        {
+          "relative_l2": 0.00018393648217469383,
+          "peak_scaled_error": 0.00028831740618633664,
+          "fixed_accuracy_passed": true,
+          "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.0005224783404976707,
+            "peak_scaled_error": 0.00044835892775793145,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.0004741279496541597,
+            "peak_scaled_error": 0.0004894760258045913,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.005338488891679567,
+            "peak_scaled_error": 0.0054870669801551815,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.0019246237363989306,
+            "peak_scaled_error": 0.0017135741983992933,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 6.917968993885386e-07,
+            "peak_scaled_error": 2.849261746049328e-06,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 1.1641532182693481e-07
+          },
+          "input_normalized": {
+            "relative_l2": 0.000468290564273139,
+            "peak_scaled_error": 0.0014050121015713294,
+            "fixed_accuracy_passed": true
+          },
+          "q_raw": {
+            "relative_l2": 0.0012825363496906158,
+            "peak_scaled_error": 0.001984416080255278,
+            "fixed_accuracy_passed": true
+          },
+          "k_raw": {
+            "relative_l2": 0.001275041971910748,
+            "peak_scaled_error": 0.001790154614677354,
+            "fixed_accuracy_passed": true
+          },
+          "v_raw": {
+            "relative_l2": 0.000472644352662832,
+            "peak_scaled_error": 0.0007611841211172057,
+            "fixed_accuracy_passed": true
+          },
+          "q": {
+            "relative_l2": 0.0012825363496906158,
+            "peak_scaled_error": 0.001984416080255278,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "k": {
+            "relative_l2": 0.001275041971910748,
+            "peak_scaled_error": 0.001790154614677354,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "v": {
+            "relative_l2": 0.000472644352662832,
+            "peak_scaled_error": 0.0007611841211172057,
+            "fixed_accuracy_passed": true
+          }
+        },
+        {
+          "relative_l2": 0.0001838157615846221,
+          "peak_scaled_error": 0.0003840657948907667,
+          "fixed_accuracy_passed": true,
+          "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.0004927351635997248,
+            "peak_scaled_error": 0.0005826798468283676,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.0005692667118737023,
+            "peak_scaled_error": 0.0005511099812845335,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.004711881504403188,
+            "peak_scaled_error": 0.004521954066471207,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.0019883838320162634,
+            "peak_scaled_error": 0.002224597390409521,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 7.849308002339168e-07,
+            "peak_scaled_error": 3.3520052420703656e-06,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 1.0337680578231812e-07
+          },
+          "input_normalized": {
+            "relative_l2": 0.0004978316189980936,
+            "peak_scaled_error": 0.0011756527180233395,
+            "fixed_accuracy_passed": true
+          },
+          "q_raw": {
+            "relative_l2": 0.0012939585202334108,
+            "peak_scaled_error": 0.0022726026024403197,
+            "fixed_accuracy_passed": true
+          },
+          "k_raw": {
+            "relative_l2": 0.0012993339514169276,
+            "peak_scaled_error": 0.002261549807663584,
+            "fixed_accuracy_passed": true
+          },
+          "v_raw": {
+            "relative_l2": 0.0004891600518432321,
+            "peak_scaled_error": 0.0007310505257891024,
+            "fixed_accuracy_passed": true
+          },
+          "q": {
+            "relative_l2": 0.0013330862685911023,
+            "peak_scaled_error": 0.0026980385802560826,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "k": {
+            "relative_l2": 0.0013387497322653978,
+            "peak_scaled_error": 0.0021181730116151556,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "v": {
+            "relative_l2": 0.0004891600518432321,
+            "peak_scaled_error": 0.0007310505257891024,
+            "fixed_accuracy_passed": true
+          }
+        },
+        {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true,
+          "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 0.0
+          },
+          "input_normalized": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "q_raw": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "k_raw": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "v_raw": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "q": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "k": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "v": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          }
+        },
+        {
+          "relative_l2": 0.00674624149598021,
+          "peak_scaled_error": 0.00825089003408192,
+          "fixed_accuracy_passed": true,
+          "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 3.2332479041587554e-05,
+            "peak_scaled_error": 3.271102093142166e-05,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 3.2108971571124644e-05,
+            "peak_scaled_error": 3.223666565472579e-05,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.009775545012325908,
+            "peak_scaled_error": 0.011124315837956736,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.00044325296315346675,
+            "peak_scaled_error": 0.0007184430366952353,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 0.00019895942622591913,
+            "peak_scaled_error": 0.00042748451232910156,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 1.341104507446289e-07
+          },
+          "input_normalized": {
+            "relative_l2": 3.199948801643653e-05,
+            "peak_scaled_error": 3.1999488016472485e-05,
+            "fixed_accuracy_passed": true
+          },
+          "q_raw": {
+            "relative_l2": 0.0005972342894124884,
+            "peak_scaled_error": 0.0013189643400134557,
+            "fixed_accuracy_passed": true
+          },
+          "k_raw": {
+            "relative_l2": 0.0005972342894124884,
+            "peak_scaled_error": 0.0013189643400134557,
+            "fixed_accuracy_passed": true
+          },
+          "v_raw": {
+            "relative_l2": 3.199948801637772e-05,
+            "peak_scaled_error": 3.1999488016377854e-05,
+            "fixed_accuracy_passed": true
+          },
+          "q": {
+            "relative_l2": 0.0005972342894124884,
+            "peak_scaled_error": 0.0013189643400134557,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "k": {
+            "relative_l2": 0.0005972342894124884,
+            "peak_scaled_error": 0.0013189643400134557,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "v": {
+            "relative_l2": 3.199948801637772e-05,
+            "peak_scaled_error": 3.1999488016377854e-05,
+            "fixed_accuracy_passed": true
+          }
+        },
+        {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true,
+          "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.0005528298520809795,
+            "peak_scaled_error": 0.0008172493734110061,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.0019692732491647874,
+            "peak_scaled_error": 0.0020680514696575056,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 7.37438264812519e-07,
+            "peak_scaled_error": 2.8448367989870057e-06,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 1.0617077350616455e-07
+          },
+          "input_normalized": {
+            "relative_l2": 0.00047668074469460036,
+            "peak_scaled_error": 0.0010986693174810862,
+            "fixed_accuracy_passed": true
+          },
+          "q_raw": {
+            "relative_l2": 0.001289392407778988,
+            "peak_scaled_error": 0.001741918048753525,
+            "fixed_accuracy_passed": true
+          },
+          "k_raw": {
+            "relative_l2": 0.001272834390495931,
+            "peak_scaled_error": 0.0020686724169901183,
+            "fixed_accuracy_passed": true
+          },
+          "v_raw": {
+            "relative_l2": 0.0004721865487264632,
+            "peak_scaled_error": 0.0006850054579398055,
+            "fixed_accuracy_passed": true
+          },
+          "q": {
+            "relative_l2": 0.0013254573443582673,
+            "peak_scaled_error": 0.0015471649521240657,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "k": {
+            "relative_l2": 0.0013170246143563889,
+            "peak_scaled_error": 0.002101471825928056,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "v": {
+            "relative_l2": 0.0004721865487264632,
+            "peak_scaled_error": 0.0006850054579398055,
+            "fixed_accuracy_passed": true
+          }
+        },
+        {
+          "relative_l2": 0.0013740819835103438,
+          "peak_scaled_error": 0.00137408198351034,
+          "fixed_accuracy_passed": true,
+          "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 3.204147713231146e-05,
+            "peak_scaled_error": 3.25148832023514e-05,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 3.195613240857745e-05,
+            "peak_scaled_error": 3.242223826949243e-05,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.00145633795102578,
+            "peak_scaled_error": 0.0014563379510257727,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.001555600007941941,
+            "peak_scaled_error": 0.003942102211704824,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 1.0080060079865314e-06,
+            "peak_scaled_error": 1.9073486328125e-06,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 5.960464477539063e-08
+          },
+          "input_normalized": {
+            "relative_l2": 3.1999488016440514e-05,
+            "peak_scaled_error": 3.1999488016440535e-05,
+            "fixed_accuracy_passed": true
+          },
+          "q_raw": {
+            "relative_l2": 0.001047590608456577,
+            "peak_scaled_error": 0.0010156307527311689,
+            "fixed_accuracy_passed": true
+          },
+          "k_raw": {
+            "relative_l2": 0.0012068343906615367,
+            "peak_scaled_error": 0.0024089398154128363,
+            "fixed_accuracy_passed": true
+          },
+          "v_raw": {
+            "relative_l2": 3.199948801645022e-05,
+            "peak_scaled_error": 3.199948801641719e-05,
+            "fixed_accuracy_passed": true
+          },
+          "q": {
+            "relative_l2": 0.001047590608456577,
+            "peak_scaled_error": 0.0010156307527311689,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "k": {
+            "relative_l2": 0.0012068343906615367,
+            "peak_scaled_error": 0.0024089398154128363,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "v": {
+            "relative_l2": 3.199948801645022e-05,
+            "peak_scaled_error": 3.199948801641719e-05,
+            "fixed_accuracy_passed": true
+          }
+        },
+        {
+          "relative_l2": 0.00031125368055384857,
+          "peak_scaled_error": 0.00031125368055384835,
+          "fixed_accuracy_passed": true,
+          "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0029945537785244516,
+            "peak_scaled_error": 0.002994553778524466,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 0.0
+          },
+          "input_normalized": {
+            "relative_l2": 3.199948801644459e-05,
+            "peak_scaled_error": 3.199948801645745e-05,
+            "fixed_accuracy_passed": true
+          },
+          "q_raw": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "k_raw": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "v_raw": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "q": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "k": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "v": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          }
+        },
+        {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true,
+          "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.001902449952194496,
+            "peak_scaled_error": 0.0020008692157567364,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 7.262730373000671e-07,
+            "peak_scaled_error": 3.0070691472244955e-06,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 1.1082738637924194e-07
+          },
+          "input_normalized": {
+            "relative_l2": 0.000485078403333731,
+            "peak_scaled_error": 0.0010369085847056136,
+            "fixed_accuracy_passed": true
+          },
+          "q_raw": {
+            "relative_l2": 0.0012647406897692026,
+            "peak_scaled_error": 0.002097733479983972,
+            "fixed_accuracy_passed": true
+          },
+          "k_raw": {
+            "relative_l2": 0.0012547900878803835,
+            "peak_scaled_error": 0.002602788339812565,
+            "fixed_accuracy_passed": true
+          },
+          "v_raw": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "q": {
+            "relative_l2": 0.0013124171560214663,
+            "peak_scaled_error": 0.0021349731830024674,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "k": {
+            "relative_l2": 0.0012943264180829393,
+            "peak_scaled_error": 0.002438740301738487,
+            "fixed_accuracy_passed": true,
+            "local_pair_rounding_passed": true
+          },
+          "v": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          }
+        }
+      ],
+      "native_application_source": "native-output.txt: actual C++ executable stdout",
+      "numerical_validation": {
+        "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": null,
+        "device_audit_passed": null,
+        "fixed_accuracy_passed": true,
+        "relative_l2_limit": 0.02,
+        "max_error_over_reference_peak_limit": 0.03,
+        "zero_reference_requires_exact_zero": true,
+        "per_component_accuracy_not_implied": true
+      },
+      "level": "native_cpu"
+    }
+  ],
+  "oracle": {
+    "python": "3.14.3",
+    "numpy": "2.4.1",
+    "rtol": 3e-05,
+    "atol": 3e-06,
+    "input_seed_base": 911,
+    "additional_contract_by_fixture_prefix": {
+      "mesh_gemm:": "componentwise-f32-dot-v1; fixed accuracy reported separately",
+      "distributed_fft:": "fft-f32-normwise-v1; not per-component accuracy",
+      "pair_rotation:": "pair-rotation-half-v1; cancellation-aware product-magnitude criterion",
+      "gated_silu:": "gated-activation-half-v1; componentwise relative plus input-dependent subnormal allowance",
+      "normalized_fanout:": "normalized-fanout-half-normwise-v1; every projection independently checked",
+      "score:": "score-half-normwise-v1; original-input math.fsum QK transpose",
+      "input_attention_mixed:": "shared-gamma-input-attention-tail-half-normwise-v1; thirteen actual native observers and actual device branch gates",
+      "attention_tail:": "supplied-qkv-attention-tail-half-normwise-v1; five actual observed branch gates",
+      "prefill_tail:": "supplied-attention-tail-half-normwise-v1; separate actual native/device projection and delta gates",
+      "feed_forward:": "normalized-feed-forward-half-normwise-v1; separate actual native/device delta gates plus original-input final math",
+      "projection_residual_rms:": "projection-residual-rms-half-normwise-v1; original-input fsum projection/add/RMS",
+      "mlp_blocked:": "rectangular-mlp-half-normwise-v1; explicit half block/f32 merge; original-input fsum/exp",
+      "mlp:": "rectangular-mlp-half-normwise-v1; original-input fsum/exp three-projection gated path",
+      "attention:": "attention-half-normwise-v1; original-input fsum/exp/fsum full supplied-QKV path",
+      "score_softmax:": "score-softmax-half-normwise-v1; original-input dots and normalization, row mass and nonnegativity",
+      "device_matmul:": "device-matmul-half-normwise-v1; original-input math.fsum contraction",
+      "normalized_matmul:": "normalized-matmul-half-normwise-v1; standard composite numerical accuracy",
+      "distributed_softmax:": "softmax-half-normwise-v1; row mass and nonnegativity, not per-component accuracy",
+      "distributed_rms:": "rms-half-normwise-v1; not f32 or per-component accuracy"
+    },
+    "sources": {
+      "fixtures.py": "dd82a7a491c40de85b576fd062ca0f29f79b2da7d6980e0ecb6b5b5614890dce",
+      "solver_fixtures.py": "dcb8eb701ae4ab720c8855ac92a78eac8c72a09e4c0171faa9d4a1a4b78b7868",
+      "pcg_fixtures.py": "df97606a178a1116f356da4fb622160c089c8e4bebf76e5c2ff249e47e80b14a",
+      "bicgstab_fixtures.py": "68aae0d8b3e93e546e1ff4ad942d9c393c99a3226cf75afca3bd8aef869d2b22",
+      "power_fixtures.py": "9163864f03872048d1f36b126a2e62bc5dd92a56163ce7868fd2650942bc0982",
+      "half_fixtures.py": "2c1849aeffa606ec664bb4a68315cace66e888962112fdb893a8d66f9d51ed29",
+      "grouped_half_fixtures.py": "da4a0821c1262b712d6015db7048574b19d1035ac7e1f2d9a0c5b608d49ec9c9",
+      "fft_fixtures.py": "f12c5a3ce2dc8f41864946b2ae1fc723010e7fbb2c1f13df2e5591f746d8ca37",
+      "rms_fixtures.py": "d7e44a6c2de86c44133c53e7e4775c403127deb4bae9455af54924b4505f6bef",
+      "softmax_fixtures.py": "faceaf718a86d2b4ba85df59fed12a2ab7c37cb7a04280c42abfce2f3c59e6be",
+      "normalized_matmul_fixtures.py": "13dd604065345b710f1d4a00c1b85c828971933ee69cfd2434a497a38ace0177",
+      "normalized_fanout_fixtures.py": "ecef4d89c02f8b21da1160482834c1a92ae4d42b126eca04cc9a6d7e81243338",
+      "score_fixtures.py": "7e0eb6f625cfb0e356d8a94ea133e6b0a901c581373b0788fefdbd461c8226e0",
+      "device_matmul_fixtures.py": "3fb2adff3f38f33aefc9f15faa686745c7f1ac8736b845e27e267d254ecaa1c3",
+      "score_softmax_fixtures.py": "081f32db4923ba71801ad365117d3a4168f51b6f4923269cef228b85daad7651",
+      "attention_fixtures.py": "b23027c277bbcc8b145f25c10a22985758f6d3e1c5b90b9c070da960a7ffd288",
+      "mlp_fixtures.py": "051c6cb12c728cb801e6c11feb0713bc2a6b5071738ffefdffa1d64a2f58dd71",
+      "projection_residual_rms_fixtures.py": "6c347bc8f5481cbfdcf7e2f447d4583a777fb7ebb71e5c129a20e6e983819831",
+      "feed_forward_fixtures.py": "b720df834d5cf8af59a0bda0ae527da355ccde01c1d6c19d0f86ba2bb904a57d",
+      "input_attention_fixtures.py": "537556550c0dda6c2a9fbaad5c7d9050b7798afedc90baa00016a015898ae73d",
+      "experiments/input_attention_mixed_gate.py": "db0a91f53e49c3c314d4b0045b90b5d1b504b7cc4957473d5831d090e418e67c",
+      "attention_tail_fixtures.py": "5975f7aab68d6e9bd7a3075adc995ed4df4c6816b4ee99a547eff0409a2a5f8b",
+      "experiments/attention_tail_gate.py": "ab485923b31937c15e338ce080151fbf318c6d988343a5b9515e607425cf5d0c",
+      "prefill_tail_fixtures.py": "9700a502d70926d6ec1846b0f8e06a37b11e4233dac7e188a2b28e52be4ebece",
+      "experiments/prefill_tail_gate.py": "eaebbc8351fe3a6da9bf6bbe60df1f2b1b75eb23ccb164ff55cd21ae55cda5bc",
+      "experiments/feed_forward_gate.py": "c2928ee4a0696e6c09a84bd2bf6e3f8da65126a2c17029af199724a1ce8173ba",
+      "swiglu_fixtures.py": "0e98b8c67e82ec0a16d46d7eb7417da3f376e3b1c1190be9970f927cbadaf358",
+      "pair_rotation_fixtures.py": "cc4b46297346e949d6143418a01b1abd988f0644edae0548025386b28810af17",
+      "toolchain/binary16.py": "a5de435c8609116a494bf13a387d5d598f239eb250a2504e5c949b4ee15ee431",
+      "toolchain/roundoff.py": "4bc4e693d456bdf39dee4ac6774a545f812c085aacc7ec4d2244e583fcb935b5",
+      "import_stencil.py": "9a4dfd60f39c9ee90f056f1f07391ba8e361030067c380a85b99241ae09e5bc3",
+      "catalog.json": "28cc67d92d68ff3f090253ea0c009b3ec5bf9752a2b155756e31a67b32d5f295",
+      "run_ports.py": "d66c46862c5c3536268f7a36b947b1dd89638950f52c531db68287085c9f4a05"
+    }
+  }
+}

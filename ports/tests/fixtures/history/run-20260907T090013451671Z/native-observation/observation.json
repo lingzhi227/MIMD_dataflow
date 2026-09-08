@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "new_sdk_execution": false,
+  "node": "delta",
+  "host": "__native_observed",
+  "epochs": 8,
+  "source_insertion_byte": 1534,
+  "scope": "Actual native C++ tensor output; only a read-only output-copy statement added at the preserved Clang declaration end. Original outputs exactly preserved; frozen headers/runtime and original inputs used. Not a synthesized CSL observer.",
+  "bundle_manifest_sha256": "7364f9cfdf0f43a16a7328deed825e5558c72208fe87485d5210abfbb9fefcb0",
+  "source_sha256": "1bdd0b0d78bffd393a9c7a80e33ec75fb4f3941a6245f594004019c035b78d80",
+  "driver_sha256": "77ae83802e1864a87ee6499b77602e9aa3eca75c322543f0457eeec2b344878e",
+  "files": {
+    "stdout.txt": "502646ecbecde0cdca4f14d76fcd788b83cb89d528cee66c3e0539f0a5e6d7cb",
+    "source.cpp": "b4f18a252a3b03c81980baca287adaee9c9989b18087fdc975b69d48cec20bf4",
+    "input-manifest.json": "7364f9cfdf0f43a16a7328deed825e5558c72208fe87485d5210abfbb9fefcb0",
+    "native": "a5e6aa2da0e6fd954d0cd7c4202f204b4bf50b1a2fdfe891fcff6c514bfa3622",
+    "compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "command.json": "b071caf025e2f2db79b5d50f56af1e6e547f90c04fc193d43582dd86131acd6a",
+    "driver.py": "77ae83802e1864a87ee6499b77602e9aa3eca75c322543f0457eeec2b344878e"
+  }
+}

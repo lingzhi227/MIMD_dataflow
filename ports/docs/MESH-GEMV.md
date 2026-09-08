@@ -110,4 +110,4 @@ remain future work. Next in the linear-algebra queue is distributed GEMM/SUMMA,
 followed by SpMV, reductions and solver composition; stencil expansion stays
 behind the numerical-kernel queue.
 
-> Packaging note: archive references identify original experimental artifacts or research references not bundled in this curated checkout. They are not local download links. See the root release selection policy.
+> Archive references name original artifacts outside this curated checkout; see the release selection policy.

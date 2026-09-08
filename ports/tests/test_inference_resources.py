@@ -43,7 +43,7 @@ class Resources(unittest.TestCase):
     def test_metadata_correction_keeps_executed_csl(self):
         from mesh_mlp import plan, generate
 
-        root = ROOT / "tests/fixtures/mlp-dsr-regression"
+        root = ROOT / "tests/fixtures/history/run-20260907T044447648813Z"
         m = json.loads((root / "semantic.json").read_text())
         old = json.loads((root / "schedule.json").read_text())
         new = plan(m)

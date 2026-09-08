@@ -16,4 +16,4 @@ The already downloaded AMD reference manifest (archive reference: `../../referen
 
 The optional controller adapter changes only observer callbacks and early completion; FFT arithmetic and both required transposes remain SDK modules. The original SDK resets routes and teardown bookkeeping at each transpose_start; next_vertical_mode is assigned but unread in this pinned implementation. Warm re-entry must be tested rather than inferred. See `evidence/fft-driver-source-diff.txt`. The32³/8x8 transposed-output bundle195708248348 now passes six warm SDK calls, all five sampled stages, and exact logical device-bit comparison with restored output. Matched sampled max-local cycles are202532versus224046; no hardware or host-gather speedup is claimed.
 
-> Packaging note: archive references identify original experimental artifacts or research references not bundled in this curated checkout. They are not local download links. See the root release selection policy.
+> Archive references name original artifacts outside this curated checkout; see the release selection policy.

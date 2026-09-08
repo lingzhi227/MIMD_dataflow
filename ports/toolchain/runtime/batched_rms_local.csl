@@ -1,0 +1,65 @@
+// SPDX-License-Identifier: Apache-2.0
+// Derived from WaferLLM Decode fd1c2daae37cd68706c03fc8009887ecee9900f8.
+// Batch-major feature vectors. Repaired against actual SDK source probes:
+// accumulate through stationary memory DSRs; normalize original X, not X^2.
+// Synchronous local stages only: caller joins prior work and performs the
+// grouped feature reduction between square_sum and normalize. No fabric,
+// queues, tasks or microthreads are allocated by this module.
+// Explicit leases during calls: dest/src0/src1 DSR 1; dest/src0 DSR 2.
+param batches: i16;
+param features: i16;
+param global_features: i16;
+param epsilon: f16;
+// True requires an already reduced mean statistic; default retains sum/N.
+param statistic_is_mean: bool = false;
+comptime {
+    @comptime_assert(batches > 0 and features > 0);
+    @comptime_assert(global_features >= features and global_features <= 2048);
+    @comptime_assert(@as(i32, batches) * @as(i32, features) <= 32767);
+    @comptime_assert(epsilon > 0.0 and epsilon <= 1.0);
+}
+const length: i16 = batches * features;
+const math = @import_module("<math>");
+const d1 = @get_dsr(dsr_dest, 1);
+const a1 = @get_dsr(dsr_src0, 1);
+const b1 = @get_dsr(dsr_src1, 1);
+const d2 = @get_dsr(dsr_dest, 2);
+const a2 = @get_dsr(dsr_src0, 2);
+var accumulator = @zeros([1]f16);
+
+fn square_sum(input: [*]f16, scratch: [*]f16, sums: [*]f16) void {
+    const x = @get_dsd(mem1d_dsd, .{ .base_address=input, .extent=@as(u16,length) });
+    const sq = @get_dsd(mem1d_dsd, .{ .base_address=scratch, .extent=@as(u16,length) });
+    @load_to_dsr(d1, sq); @load_to_dsr(a1, x); @load_to_dsr(b1, x);
+    @fmulh(d1, a1, b1);
+    const acc = @get_dsd(mem1d_dsd, .{ .base_address=&accumulator, .extent=1 });
+    const element = @get_dsd(mem1d_dsd, .{ .base_address=scratch, .extent=1 });
+    @load_to_dsr(d2, acc, .{ .save_address=false });
+    @load_to_dsr(a2, acc, .{ .save_address=false });
+    @load_to_dsr(b1, element, .{ .save_address=true });
+    for (@range(i16, batches)) |i| {
+        @fmovh(d2, 0.0);
+        for (@range(i16, features)) |j| { @faddh(d2, a2, b1); }
+        sums[i] = accumulator[0];
+    }
+}
+
+fn scale_row(sum: f16) void {
+    const mean: f16 = if(statistic_is_mean) sum else sum / @as(f16, global_features);
+    const inverse: f16 = 1.0 / math.sqrt_f16(mean + epsilon);
+    @fmulh(d1, a1, inverse);
+}
+
+fn normalize(input: [*]f16, gamma: [*]f16, output: [*]f16, sums: [*]f16) void {
+    const x = @get_dsd(mem1d_dsd, .{ .base_address=input, .extent=@as(u16,features) });
+    const w = @get_dsd(mem1d_dsd, .{ .base_address=gamma, .extent=@as(u16,features) });
+    const y = @get_dsd(mem1d_dsd, .{ .base_address=output, .extent=@as(u16,features) });
+    const rows = @get_dsd(mem1d_dsd, .{ .base_address=sums, .extent=@as(u16,batches) });
+    @load_to_dsr(d1, y, .{ .save_address=true });
+    @load_to_dsr(a1, x, .{ .save_address=true });
+    @load_to_dsr(b1, w, .{ .save_address=false });
+    for (@range(i16, batches)) |i| { @fmulh(d1, a1, b1); }
+    @load_to_dsr(d1, y, .{ .save_address=true });
+    @load_to_dsr(a1, y, .{ .save_address=true });
+    @map(scale_row, rows);
+}

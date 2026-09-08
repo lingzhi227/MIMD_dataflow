@@ -1,0 +1,888 @@
+{
+  "kind": "qualification_index_of_existing_sdk_runs",
+  "sdk": true,
+  "success": true,
+  "new_sdk_execution": false,
+  "cases": [
+    {
+      "key": "waferllm/batched_pair_rotation_5x1024_8x8_x",
+      "artifact": "projects/waferllm/batched_pair_rotation_5x1024_8x8_x/run-20260907T230157971748Z",
+      "passed": true,
+      "level": "sdk_simulator",
+      "audit": {
+        "passed": true,
+        "profile": "mesh_pair_rotation.v1",
+        "epochs": 6,
+        "actors": 64,
+        "instrumentation": "sampled",
+        "internal_half_observations": 491520,
+        "cases": [
+          {
+            "target_half_bits_exact": true,
+            "numerical": {
+              "contract": "pair-rotation-half-v1",
+              "fixed_accuracy_passed": true,
+              "max_abs_error": 0.0,
+              "max_error_over_allowance": 0.0,
+              "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware, not uniform relative error"
+            },
+            "max_local_cycles": 1878,
+            "cycles_per_pe": [
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ]
+            ]
+          },
+          {
+            "target_half_bits_exact": true,
+            "numerical": {
+              "contract": "pair-rotation-half-v1",
+              "fixed_accuracy_passed": true,
+              "max_abs_error": 0.0,
+              "max_error_over_allowance": 0.0,
+              "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware, not uniform relative error"
+            },
+            "max_local_cycles": 1878,
+            "cycles_per_pe": [
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ]
+            ]
+          },
+          {
+            "target_half_bits_exact": true,
+            "numerical": {
+              "contract": "pair-rotation-half-v1",
+              "fixed_accuracy_passed": true,
+              "max_abs_error": 0.0016994476318359375,
+              "max_error_over_allowance": 0.5237624293527631,
+              "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware, not uniform relative error"
+            },
+            "max_local_cycles": 1878,
+            "cycles_per_pe": [
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ]
+            ]
+          },
+          {
+            "target_half_bits_exact": true,
+            "numerical": {
+              "contract": "pair-rotation-half-v1",
+              "fixed_accuracy_passed": true,
+              "max_abs_error": 0.0,
+              "max_error_over_allowance": 0.0,
+              "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware, not uniform relative error"
+            },
+            "max_local_cycles": 1878,
+            "cycles_per_pe": [
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ]
+            ]
+          },
+          {
+            "target_half_bits_exact": true,
+            "numerical": {
+              "contract": "pair-rotation-half-v1",
+              "fixed_accuracy_passed": true,
+              "max_abs_error": 0.0,
+              "max_error_over_allowance": 0.0,
+              "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware, not uniform relative error"
+            },
+            "max_local_cycles": 1878,
+            "cycles_per_pe": [
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ]
+            ]
+          },
+          {
+            "target_half_bits_exact": true,
+            "numerical": {
+              "contract": "pair-rotation-half-v1",
+              "fixed_accuracy_passed": true,
+              "max_abs_error": 0.00743865966796875,
+              "max_error_over_allowance": 0.5773723860337364,
+              "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware, not uniform relative error"
+            },
+            "max_local_cycles": 1878,
+            "cycles_per_pe": [
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ],
+              [
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878,
+                1878
+              ]
+            ]
+          }
+        ],
+        "performance_scope": "Local WSE3 simulator interval, no global latency/hardware throughput claim"
+      },
+      "native_application_source": "Actual C++ stdout on two hosts; independent original-input math.fsum component checks",
+      "native_application_checks": [
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0,
+          "max_error_over_allowance": 0.0,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        },
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0,
+          "max_error_over_allowance": 0.0,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        },
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0009713172912597656,
+          "max_error_over_allowance": 0.3178447622405428,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        },
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0,
+          "max_error_over_allowance": 0.0,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        },
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0,
+          "max_error_over_allowance": 0.0,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        },
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.003902435302734375,
+          "max_error_over_allowance": 0.32067013954938195,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        }
+      ],
+      "sdk_host_native_application_checks": [
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0,
+          "max_error_over_allowance": 0.0,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        },
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0,
+          "max_error_over_allowance": 0.0,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        },
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0009713172912597656,
+          "max_error_over_allowance": 0.3178447622405428,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        },
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0,
+          "max_error_over_allowance": 0.0,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        },
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0,
+          "max_error_over_allowance": 0.0,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        },
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.003902435302734375,
+          "max_error_over_allowance": 0.32067013954938195,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        }
+      ],
+      "device_application_checks": [
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0,
+          "max_error_over_allowance": 0.0,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        },
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0,
+          "max_error_over_allowance": 0.0,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        },
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0016994476318359375,
+          "max_error_over_allowance": 0.5237624293527631,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        },
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0,
+          "max_error_over_allowance": 0.0,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        },
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.0,
+          "max_error_over_allowance": 0.0,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        },
+        {
+          "contract": "pair-rotation-half-v1",
+          "fixed_accuracy_passed": true,
+          "max_abs_error": 0.00743865966796875,
+          "max_error_over_allowance": 0.5773723860337364,
+          "criterion": ".0015*(abs(product0)+abs(product1))+2^-23 per output; cancellation-aware"
+        }
+      ],
+      "linked_static_memory": {
+        "scope": "linked static SRAM sections by ELF class; not runtime stack usage",
+        "elf_classes": 3,
+        "max_static_high_water_bytes": 11200,
+        "min_unallocated_static_bytes": 37952,
+        "classes": [
+          {
+            "elf": "out_0_0.elf",
+            "sha256": "e67ae956e2a0cd6575d8fbb5857f27cdbbfe928cb1ed655272c5a2378097b362",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 56
+              },
+              {
+                "name": ".text",
+                "start": 56,
+                "size": 3864
+              },
+              {
+                "name": ".data",
+                "start": 3920,
+                "size": 54
+              },
+              {
+                "name": ".bss",
+                "start": 3976,
+                "size": 6188
+              },
+              {
+                "name": ".task_table",
+                "start": 10176,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 11200,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 11200,
+            "unallocated_static_bytes": 37952
+          },
+          {
+            "elf": "out_1_0.elf",
+            "sha256": "b36f17839d1ca489bc20deee83d72f9c7fba8d28b986436c22dd9375b40466fa",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 56
+              },
+              {
+                "name": ".text",
+                "start": 56,
+                "size": 3864
+              },
+              {
+                "name": ".data",
+                "start": 3920,
+                "size": 54
+              },
+              {
+                "name": ".bss",
+                "start": 3976,
+                "size": 6188
+              },
+              {
+                "name": ".task_table",
+                "start": 10176,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 11200,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 11200,
+            "unallocated_static_bytes": 37952
+          },
+          {
+            "elf": "out_2_0.elf",
+            "sha256": "683ca4dbf3d58a50d80266971210864889f79a3c4cfe026d06da734f9fa5342d",
+            "sections": [
+              {
+                "name": ".data.lo",
+                "start": 0,
+                "size": 56
+              },
+              {
+                "name": ".text",
+                "start": 56,
+                "size": 3864
+              },
+              {
+                "name": ".data",
+                "start": 3920,
+                "size": 54
+              },
+              {
+                "name": ".bss",
+                "start": 3976,
+                "size": 6188
+              },
+              {
+                "name": ".task_table",
+                "start": 10176,
+                "size": 1024
+              },
+              {
+                "name": ".data.hi",
+                "start": 11200,
+                "size": 0
+              }
+            ],
+            "static_high_water_bytes": 11200,
+            "unallocated_static_bytes": 37952
+          }
+        ]
+      },
+      "qualification_sha256": "c90c03d0ddf9f1de50db66bc87142fa9437e0f3c3c3fad908aeb2c7593029c10",
+      "results_sha256": "17160988eecccd144eb5869262ac07823dc5d9409583f2b73d16bc9a4a4c531b",
+      "numerical_validation": {
+        "contract": "pair-rotation-half-v1",
+        "native_fixed_accuracy_passed": true,
+        "device_fixed_accuracy_passed": true,
+        "device_audit_passed": true,
+        "fixed_accuracy_passed": true,
+        "componentwise_product_magnitude_term": 0.0015,
+        "absolute_rounding_term": 1.1920928955078125e-07,
+        "scope": "Per output: .0015*(abs(product0)+abs(product1))+2^-23; cancellation-aware, not output-relative or f32 tolerance"
+      }
+    }
+  ],
+  "source_controls": [
+    {
+      "path": "evidence/decode-pair-original-offset-failure.json",
+      "sha256": "d010c6ee43351424fc341f8263a865fd068a58036cd2cc1b1747ac134d6d3ab1"
+    },
+    {
+      "path": "evidence/dsd-base-offset-20260907T231325901420Z/offset-review.json",
+      "sha256": "0f30017dcf583f697ec94a2700b919c615a7bc3b939c375743a48c94fa2b2f2a"
+    },
+    {
+      "path": "evidence/batched-pair-full6-repaired-source-comparison.json",
+      "sha256": "ce11f8162cef562da3e97535de3bcc6c2d7728faa3f7cd97da77dc32c148aed5"
+    },
+    {
+      "path": "evidence/batched-pair-static-memory-2301.json",
+      "sha256": "803364927bd349782aaec0ecd6f73f107c20906b206c73306258fc45bd97fe01"
+    },
+    {
+      "path": "evidence/batched-pair-full6-mutations.json",
+      "sha256": "85e2ef7fe7a31149fb6531085c035e58178852476ae2b9263c8abb02edb3363a"
+    },
+    {
+      "path": "evidence/batched-pair-native-host-2306/review.json",
+      "sha256": "d1098747c88ac99fc1703791970a37aec269e065e701f1d6be8c7926f1767b86"
+    },
+    {
+      "path": "evidence/batched-pair-native-host-2306/provenance.json",
+      "sha256": "aaf665b191d0cdeb634a2fb7df428175d3be762a0002be94db466ecd2828e2e5"
+    },
+    {
+      "path": "pair_rotation_fixtures.py",
+      "sha256": "cc4b46297346e949d6143418a01b1abd988f0644edae0548025386b28810af17"
+    },
+    {
+      "path": "experiments/register_batched_pair.py",
+      "sha256": "ce43a7b8fa4332c6f5efc227b5ca2055b42b0d908476e29b1e65696a5952326e"
+    }
+  ]
+}

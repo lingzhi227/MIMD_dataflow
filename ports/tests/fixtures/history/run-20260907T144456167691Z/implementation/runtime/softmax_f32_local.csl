@@ -1,0 +1,32 @@
+// Reusable synchronous f32 softmax local stages; collective ownership stays with caller.
+// Storage, exponent evaluation, reduction and normalization all remain f32.
+// Source-inspired by MeshInfra/WaferLLM fd1c2daae37cd68706c03fc8009887ecee9900f8, Apache-2.0.
+param rows:i16;param cols:i16;
+const math=@import_module("<math>");const dummy=@zeros([1]f32);
+const full=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{rows*cols}->dummy[i]});
+const column=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{rows}->dummy[i]});
+const dest=@get_dsr(dsr_dest,1);const src0=@get_dsr(dsr_src0,1);const src1=@get_dsr(dsr_src1,1);
+fn scale_max(values:[*]f32,peaks:[*]f32,scale:f32) void {
+ const v=@set_dsd_base_addr(full,values);const vc=@set_dsd_base_addr(column,values);const p=@set_dsd_base_addr(column,peaks);
+ @fmuls(v,v,scale);@fmovs(p,@bitcast(f32,@as(u32,0xff7fffff)));
+ @load_to_dsr(dest,p,.{.save_address=false});@load_to_dsr(src0,p,.{.save_address=false});@load_to_dsr(src1,vc,.{.save_address=true});
+ for(@range(i16,cols)) |i| {@fmaxs(dest,src0,src1);}
+}
+fn exp_value(v:f32) f32 {return math.exp_f32(v);}
+fn shift_exp(values:[*]f32,peaks:[*]f32,exponents:[*]f32) void {
+ const v=@set_dsd_base_addr(full,values);const vc=@set_dsd_base_addr(column,values);const p=@set_dsd_base_addr(column,peaks);const e=@set_dsd_base_addr(full,exponents);
+ @load_to_dsr(dest,vc,.{.save_address=true});@load_to_dsr(src0,vc,.{.save_address=true});@load_to_dsr(src1,p,.{.save_address=false});
+ for(@range(i16,cols)) |i| {@fsubs(dest,src0,src1);}
+ @map(exp_value,v,e);
+}
+fn local_sum(exponents:[*]f32,sums:[*]f32) void {
+ const e=@set_dsd_base_addr(column,exponents);const s=@set_dsd_base_addr(column,sums);@fmovs(s,0.0);
+ @load_to_dsr(dest,s,.{.save_address=false});@load_to_dsr(src0,s,.{.save_address=false});@load_to_dsr(src1,e,.{.save_address=true});
+ for(@range(i16,cols)) |i| {@fadds(dest,src0,src1);}
+}
+fn normalize(values:[*]f32,exponents:[*]f32,sums:[*]f32) void {
+ for(@range(i16,rows)) |i| {sums[i]=1.0/sums[i];}
+ const v=@set_dsd_base_addr(column,values);const e=@set_dsd_base_addr(column,exponents);const s=@set_dsd_base_addr(column,sums);
+ @load_to_dsr(dest,v,.{.save_address=true});@load_to_dsr(src0,e,.{.save_address=true});@load_to_dsr(src1,s,.{.save_address=false});
+ for(@range(i16,cols)) |i| {@fmuls(dest,src0,src1);}
+}

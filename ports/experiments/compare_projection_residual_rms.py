@@ -59,7 +59,10 @@ def compare(hls, source):
         rows.append(
             dict(
                 output_and_inverse_half_bits_exact=True,
-                sampled_final_projection_and_norm_stages_exact=sampled,
+                sampled_final_projection_and_norm_stages_exact=(
+                    True if sampled else None
+                ),
+                sampled_final_projection_and_norm_stages_observed=sampled,
                 hls_max_local_cycles=ch,
                 source_max_local_cycles=cc,
                 hls_to_source_ratio=ch / cc,

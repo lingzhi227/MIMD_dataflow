@@ -9,6 +9,34 @@ ROOT = Path(__file__).resolve().parent
 
 
 def batches(kind, count=4):
+    if kind.startswith("composed_ffn:"):
+        from composed_ffn_fixtures import batches as make_batches
+
+        return make_batches(*map(int, kind.split(":")[1:]))
+    if kind.startswith("projected_cache:"):
+        from projected_cache_fixtures import batches as make_batches
+
+        return make_batches(*map(int, kind.split(":")[1:]))
+    if kind.startswith("cache_attention:"):
+        from cache_attention_fixtures import batches as make_batches
+
+        return make_batches(*map(int, kind.split(":")[1:]))
+    if kind.startswith("batched_ffn:"):
+        from batched_ffn_fixtures import batches as make_batches
+
+        return make_batches(*map(int, kind.split(":")[1:]))
+    if kind.startswith("batched_fanout:"):
+        from batched_fanout_fixtures import batches as make_batches
+
+        return make_batches(*map(int, kind.split(":")[1:]))
+    if kind.startswith("batched_rms:"):
+        from batched_rms_fixtures import batches as make_batches
+
+        return make_batches(*map(int, kind.split(":")[1:]))[:count]
+    if kind.startswith("input_attention_mixed:"):
+        from input_attention_fixtures import batches as input_batches
+
+        return input_batches(*map(int, kind.split(":")[1:]))[:count]
     if kind.startswith("pair_rotation:"):
         from pair_rotation_fixtures import batches as pair_batches
 
@@ -18,6 +46,18 @@ def batches(kind, count=4):
         from swiglu_fixtures import batches as gating_batches
 
         return gating_batches(*map(int, kind.split(":")[1:]))[:count]
+    if kind.startswith("attention_tail:"):
+        from attention_tail_fixtures import batches as attention_batches
+
+        return attention_batches(*map(int, kind.split(":")[1:]))[:count]
+    if kind.startswith("prefill_tail:"):
+        from prefill_tail_fixtures import batches as tail_batches
+
+        return tail_batches(*map(int, kind.split(":")[1:]))[:count]
+    if kind.startswith("feed_forward:"):
+        from feed_forward_fixtures import batches as ff_batches
+
+        return ff_batches(*map(int, kind.split(":")[1:]))[:count]
     if kind.startswith("projection_residual_rms:"):
         from projection_residual_rms_fixtures import batches as composed_batches
 
@@ -286,6 +326,60 @@ def batches(kind, count=4):
 
 
 def check_application(kind, batch, output):
+    if kind.startswith("composed_ffn:"):
+        from composed_ffn_fixtures import check
+
+        return check(*map(int, kind.split(":")[1:]), batch, output)
+    if kind.startswith("projected_cache:"):
+        from projected_cache_fixtures import original, metric
+
+        expected = original(*map(int, kind.split(":")[1:]), batch)
+        assert set(output) == {"result", "new_key", "new_value"}
+        return dict(
+            contract="projected-cache-half-normwise-v1",
+            fixed_accuracy_passed=True,
+            all_stage_gates=False,
+            metrics={
+                name: metric(output[port], expected[name])
+                for port, name in (
+                    ("result", "result"),
+                    ("new_key", "rotated_key"),
+                    ("new_value", "value_projection"),
+                )
+            },
+            scope="Only public outputs; mandatory native/device stage observations follow before qualification",
+        )
+    if kind.startswith("cache_attention:"):
+        from cache_attention_fixtures import check as cache_check
+
+        return cache_check(*map(int, kind.split(":")[1:]), batch, output)
+    if kind.startswith("batched_ffn:"):
+        from batched_ffn_fixtures import check as ffn_check
+
+        return ffn_check(*map(int, kind.split(":")[1:]), batch, output)
+    if kind.startswith("batched_fanout:"):
+        from batched_fanout_fixtures import check as fanout_check
+
+        return fanout_check(*map(int, kind.split(":")[1:]), batch, output)
+    if kind.startswith("batched_rms:"):
+        from batched_rms_fixtures import check as rms_check
+
+        return rms_check(*map(int, kind.split(":")[1:]), batch, output)
+    if kind.startswith("input_attention_mixed:"):
+        import math
+        from input_attention_fixtures import child_inputs
+        from attention_tail_fixtures import check as tail_check
+
+        _, m, n, f, p = kind.split(":")
+        _, child = child_inputs(int(m), int(n), 1e-6, batch)
+        result = tail_check(
+            int(m), int(n), int(f), 1e-6, 1 / math.sqrt(int(n)), child, output
+        )
+        result["contract"] = "shared-input-attention-final-only-v1"
+        result["scope"] = (
+            "Final output only; full qualification requires separately executed branch observations."
+        )
+        return result
     if kind.startswith("pair_rotation:"):
         from pair_rotation_fixtures import check as pair_check
 
@@ -295,6 +389,24 @@ def check_application(kind, batch, output):
         from swiglu_fixtures import check as gating_check
 
         return gating_check(*map(int, kind.split(":")[1:]), batch, output)
+    if kind.startswith("attention_tail:"):
+        import math
+        from attention_tail_fixtures import check as attention_check
+
+        _, m, n, f, p = kind.split(":")
+        return attention_check(
+            int(m), int(n), int(f), 1e-6, 1 / math.sqrt(int(n)), batch, output
+        )
+    if kind.startswith("prefill_tail:"):
+        from prefill_tail_fixtures import check as tail_check
+
+        _, m, n, f, p = kind.split(":")
+        return tail_check(int(m), int(n), int(f), 1e-6, batch, output)
+    if kind.startswith("feed_forward:"):
+        from feed_forward_fixtures import check as ff_check
+
+        _, m, n, f, p = kind.split(":")
+        return ff_check(int(m), int(n), int(f), 1e-6, batch, output)
     if kind.startswith("projection_residual_rms:"):
         from projection_residual_rms_fixtures import check as composed_check
 

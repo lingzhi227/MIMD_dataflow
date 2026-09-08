@@ -1,0 +1,870 @@
+{
+  "profile": "mesh_mlp.v1",
+  "M": 64,
+  "N": 64,
+  "F": 256,
+  "P": 8,
+  "rows": 8,
+  "cols": 8,
+  "Mt": 8,
+  "Nt": 8,
+  "Ft": 32,
+  "length": 64,
+  "hidden_length": 256,
+  "weight_length": 256,
+  "epochs": 6,
+  "instrumentation": "sampled",
+  "projection_stages": [
+    {
+      "M": 64,
+      "K": 64,
+      "N": 256,
+      "P": 8,
+      "Mt": 8,
+      "Kt": 8,
+      "Nt": 32,
+      "left_length": 64,
+      "right_length": 256,
+      "output_length": 256,
+      "rounds": 8,
+      "weights": "static logical weights host-packed in row-major tiles with two-hop block-row alignment",
+      "activation": "logical column-major tiles aligned forward on device",
+      "result": "logical column-major tiles",
+      "right_descriptor": "contiguous feature vector; contraction increment Nt",
+      "k_block_rule": "cycle[(position(y)+position(x)-round)%P]",
+      "completion": "both-axis transfer and local DSR compute joined before buffer swap"
+    },
+    {
+      "M": 64,
+      "K": 64,
+      "N": 256,
+      "P": 8,
+      "Mt": 8,
+      "Kt": 8,
+      "Nt": 32,
+      "left_length": 64,
+      "right_length": 256,
+      "output_length": 256,
+      "rounds": 8,
+      "weights": "static logical weights host-packed in row-major tiles with two-hop block-row alignment",
+      "activation": "logical column-major tiles aligned forward on device",
+      "result": "logical column-major tiles",
+      "right_descriptor": "contiguous feature vector; contraction increment Nt",
+      "k_block_rule": "cycle[(position(y)+position(x)-round)%P]",
+      "completion": "both-axis transfer and local DSR compute joined before buffer swap"
+    },
+    {
+      "M": 64,
+      "K": 256,
+      "N": 64,
+      "P": 8,
+      "Mt": 8,
+      "Kt": 32,
+      "Nt": 8,
+      "left_length": 256,
+      "right_length": 256,
+      "output_length": 64,
+      "rounds": 8,
+      "weights": "static logical weights host-packed in row-major tiles with two-hop block-row alignment",
+      "activation": "logical column-major tiles aligned forward on device",
+      "result": "logical column-major tiles",
+      "right_descriptor": "contiguous feature vector; contraction increment Nt",
+      "k_block_rule": "cycle[(position(y)+position(x)-round)%P]",
+      "completion": "both-axis transfer and local DSR compute joined before buffer swap"
+    }
+  ],
+  "memory_per_pe": {
+    "resident_arrays": 4480,
+    "observations": 13056,
+    "descriptors_control_reserve": 2048,
+    "sdk_code_tasks_stack_reserve": 16384
+  },
+  "numerical_bounds": {
+    "inputs": [
+      0.125,
+      0.125,
+      0.125,
+      0.125
+    ],
+    "up": 1.0,
+    "gate": 1.0,
+    "hidden": 1.0,
+    "output": 32.0,
+    "reason": "monotone half-FMA bounds; validated SDK half SiLU magnitude <= gate magnitude"
+  },
+  "stages": [
+    "copy immutable X/U and forward-align X",
+    "up contraction with joined double buffers",
+    "copy G and carry completed left ownership",
+    "gate contraction with joined double buffers",
+    "resident SDK map SiLU and DSR in-place multiply",
+    "copy D and forward-align hidden",
+    "down contraction into dead X work storage",
+    "drain queues and return"
+  ],
+  "descriptor_entry_states": {
+    "right": "contiguous stride1 reset on every projection entry; increment Nt",
+    "compute": "DSR1 loaded for each contraction; gating only after both-axis join"
+  },
+  "ownership": {
+    "intermediate_host_transfer": false,
+    "inputs": "immutable X/U/G/D",
+    "up": "becomes hidden after last up read",
+    "x_work": "becomes output after gate completes",
+    "weights": "one private work/receive pair reused after each joined projection",
+    "gate": "becomes activated gate in place"
+  },
+  "resources": {
+    "colors": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "input_queues": [
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "output_queues": [
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "local_tasks": [
+      19,
+      20,
+      25,
+      26
+    ],
+    "microthreads": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "compute_dsr": 1,
+    "communication_dsrs": [
+      3,
+      4
+    ],
+    "completion": "two-axis completion joins before next step; phase-exclusive reuse"
+  },
+  "nodes": [
+    {
+      "id": "p0_0",
+      "tile": [
+        0,
+        0
+      ],
+      "place": [
+        4,
+        1
+      ]
+    },
+    {
+      "id": "p1_0",
+      "tile": [
+        1,
+        0
+      ],
+      "place": [
+        5,
+        1
+      ]
+    },
+    {
+      "id": "p2_0",
+      "tile": [
+        2,
+        0
+      ],
+      "place": [
+        6,
+        1
+      ]
+    },
+    {
+      "id": "p3_0",
+      "tile": [
+        3,
+        0
+      ],
+      "place": [
+        7,
+        1
+      ]
+    },
+    {
+      "id": "p4_0",
+      "tile": [
+        4,
+        0
+      ],
+      "place": [
+        8,
+        1
+      ]
+    },
+    {
+      "id": "p5_0",
+      "tile": [
+        5,
+        0
+      ],
+      "place": [
+        9,
+        1
+      ]
+    },
+    {
+      "id": "p6_0",
+      "tile": [
+        6,
+        0
+      ],
+      "place": [
+        10,
+        1
+      ]
+    },
+    {
+      "id": "p7_0",
+      "tile": [
+        7,
+        0
+      ],
+      "place": [
+        11,
+        1
+      ]
+    },
+    {
+      "id": "p0_1",
+      "tile": [
+        0,
+        1
+      ],
+      "place": [
+        4,
+        2
+      ]
+    },
+    {
+      "id": "p1_1",
+      "tile": [
+        1,
+        1
+      ],
+      "place": [
+        5,
+        2
+      ]
+    },
+    {
+      "id": "p2_1",
+      "tile": [
+        2,
+        1
+      ],
+      "place": [
+        6,
+        2
+      ]
+    },
+    {
+      "id": "p3_1",
+      "tile": [
+        3,
+        1
+      ],
+      "place": [
+        7,
+        2
+      ]
+    },
+    {
+      "id": "p4_1",
+      "tile": [
+        4,
+        1
+      ],
+      "place": [
+        8,
+        2
+      ]
+    },
+    {
+      "id": "p5_1",
+      "tile": [
+        5,
+        1
+      ],
+      "place": [
+        9,
+        2
+      ]
+    },
+    {
+      "id": "p6_1",
+      "tile": [
+        6,
+        1
+      ],
+      "place": [
+        10,
+        2
+      ]
+    },
+    {
+      "id": "p7_1",
+      "tile": [
+        7,
+        1
+      ],
+      "place": [
+        11,
+        2
+      ]
+    },
+    {
+      "id": "p0_2",
+      "tile": [
+        0,
+        2
+      ],
+      "place": [
+        4,
+        3
+      ]
+    },
+    {
+      "id": "p1_2",
+      "tile": [
+        1,
+        2
+      ],
+      "place": [
+        5,
+        3
+      ]
+    },
+    {
+      "id": "p2_2",
+      "tile": [
+        2,
+        2
+      ],
+      "place": [
+        6,
+        3
+      ]
+    },
+    {
+      "id": "p3_2",
+      "tile": [
+        3,
+        2
+      ],
+      "place": [
+        7,
+        3
+      ]
+    },
+    {
+      "id": "p4_2",
+      "tile": [
+        4,
+        2
+      ],
+      "place": [
+        8,
+        3
+      ]
+    },
+    {
+      "id": "p5_2",
+      "tile": [
+        5,
+        2
+      ],
+      "place": [
+        9,
+        3
+      ]
+    },
+    {
+      "id": "p6_2",
+      "tile": [
+        6,
+        2
+      ],
+      "place": [
+        10,
+        3
+      ]
+    },
+    {
+      "id": "p7_2",
+      "tile": [
+        7,
+        2
+      ],
+      "place": [
+        11,
+        3
+      ]
+    },
+    {
+      "id": "p0_3",
+      "tile": [
+        0,
+        3
+      ],
+      "place": [
+        4,
+        4
+      ]
+    },
+    {
+      "id": "p1_3",
+      "tile": [
+        1,
+        3
+      ],
+      "place": [
+        5,
+        4
+      ]
+    },
+    {
+      "id": "p2_3",
+      "tile": [
+        2,
+        3
+      ],
+      "place": [
+        6,
+        4
+      ]
+    },
+    {
+      "id": "p3_3",
+      "tile": [
+        3,
+        3
+      ],
+      "place": [
+        7,
+        4
+      ]
+    },
+    {
+      "id": "p4_3",
+      "tile": [
+        4,
+        3
+      ],
+      "place": [
+        8,
+        4
+      ]
+    },
+    {
+      "id": "p5_3",
+      "tile": [
+        5,
+        3
+      ],
+      "place": [
+        9,
+        4
+      ]
+    },
+    {
+      "id": "p6_3",
+      "tile": [
+        6,
+        3
+      ],
+      "place": [
+        10,
+        4
+      ]
+    },
+    {
+      "id": "p7_3",
+      "tile": [
+        7,
+        3
+      ],
+      "place": [
+        11,
+        4
+      ]
+    },
+    {
+      "id": "p0_4",
+      "tile": [
+        0,
+        4
+      ],
+      "place": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "p1_4",
+      "tile": [
+        1,
+        4
+      ],
+      "place": [
+        5,
+        5
+      ]
+    },
+    {
+      "id": "p2_4",
+      "tile": [
+        2,
+        4
+      ],
+      "place": [
+        6,
+        5
+      ]
+    },
+    {
+      "id": "p3_4",
+      "tile": [
+        3,
+        4
+      ],
+      "place": [
+        7,
+        5
+      ]
+    },
+    {
+      "id": "p4_4",
+      "tile": [
+        4,
+        4
+      ],
+      "place": [
+        8,
+        5
+      ]
+    },
+    {
+      "id": "p5_4",
+      "tile": [
+        5,
+        4
+      ],
+      "place": [
+        9,
+        5
+      ]
+    },
+    {
+      "id": "p6_4",
+      "tile": [
+        6,
+        4
+      ],
+      "place": [
+        10,
+        5
+      ]
+    },
+    {
+      "id": "p7_4",
+      "tile": [
+        7,
+        4
+      ],
+      "place": [
+        11,
+        5
+      ]
+    },
+    {
+      "id": "p0_5",
+      "tile": [
+        0,
+        5
+      ],
+      "place": [
+        4,
+        6
+      ]
+    },
+    {
+      "id": "p1_5",
+      "tile": [
+        1,
+        5
+      ],
+      "place": [
+        5,
+        6
+      ]
+    },
+    {
+      "id": "p2_5",
+      "tile": [
+        2,
+        5
+      ],
+      "place": [
+        6,
+        6
+      ]
+    },
+    {
+      "id": "p3_5",
+      "tile": [
+        3,
+        5
+      ],
+      "place": [
+        7,
+        6
+      ]
+    },
+    {
+      "id": "p4_5",
+      "tile": [
+        4,
+        5
+      ],
+      "place": [
+        8,
+        6
+      ]
+    },
+    {
+      "id": "p5_5",
+      "tile": [
+        5,
+        5
+      ],
+      "place": [
+        9,
+        6
+      ]
+    },
+    {
+      "id": "p6_5",
+      "tile": [
+        6,
+        5
+      ],
+      "place": [
+        10,
+        6
+      ]
+    },
+    {
+      "id": "p7_5",
+      "tile": [
+        7,
+        5
+      ],
+      "place": [
+        11,
+        6
+      ]
+    },
+    {
+      "id": "p0_6",
+      "tile": [
+        0,
+        6
+      ],
+      "place": [
+        4,
+        7
+      ]
+    },
+    {
+      "id": "p1_6",
+      "tile": [
+        1,
+        6
+      ],
+      "place": [
+        5,
+        7
+      ]
+    },
+    {
+      "id": "p2_6",
+      "tile": [
+        2,
+        6
+      ],
+      "place": [
+        6,
+        7
+      ]
+    },
+    {
+      "id": "p3_6",
+      "tile": [
+        3,
+        6
+      ],
+      "place": [
+        7,
+        7
+      ]
+    },
+    {
+      "id": "p4_6",
+      "tile": [
+        4,
+        6
+      ],
+      "place": [
+        8,
+        7
+      ]
+    },
+    {
+      "id": "p5_6",
+      "tile": [
+        5,
+        6
+      ],
+      "place": [
+        9,
+        7
+      ]
+    },
+    {
+      "id": "p6_6",
+      "tile": [
+        6,
+        6
+      ],
+      "place": [
+        10,
+        7
+      ]
+    },
+    {
+      "id": "p7_6",
+      "tile": [
+        7,
+        6
+      ],
+      "place": [
+        11,
+        7
+      ]
+    },
+    {
+      "id": "p0_7",
+      "tile": [
+        0,
+        7
+      ],
+      "place": [
+        4,
+        8
+      ]
+    },
+    {
+      "id": "p1_7",
+      "tile": [
+        1,
+        7
+      ],
+      "place": [
+        5,
+        8
+      ]
+    },
+    {
+      "id": "p2_7",
+      "tile": [
+        2,
+        7
+      ],
+      "place": [
+        6,
+        8
+      ]
+    },
+    {
+      "id": "p3_7",
+      "tile": [
+        3,
+        7
+      ],
+      "place": [
+        7,
+        8
+      ]
+    },
+    {
+      "id": "p4_7",
+      "tile": [
+        4,
+        7
+      ],
+      "place": [
+        8,
+        8
+      ]
+    },
+    {
+      "id": "p5_7",
+      "tile": [
+        5,
+        7
+      ],
+      "place": [
+        9,
+        8
+      ]
+    },
+    {
+      "id": "p6_7",
+      "tile": [
+        6,
+        7
+      ],
+      "place": [
+        10,
+        8
+      ]
+    },
+    {
+      "id": "p7_7",
+      "tile": [
+        7,
+        7
+      ],
+      "place": [
+        11,
+        8
+      ]
+    }
+  ]
+}

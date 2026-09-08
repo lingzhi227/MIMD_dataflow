@@ -12,6 +12,8 @@ from frontend import parse
 from ir import verify
 
 
+from host_compiler import executable as host_compiler
+
 class SparseFrontend(unittest.TestCase):
     def test_sparse_ir_types_and_capacity(self):
         raw = parse(ROOT / "projects/sdk_examples/mesh_spmv_512x512_4x4/hls.cpp")
@@ -60,7 +62,7 @@ void design(){
 """)
             subprocess.run(
                 [
-                    "clang++",
+                    host_compiler(),
                     "-std=c++17",
                     "-DMW_EPOCHS=1",
                     "-DMW_BOUND=64",

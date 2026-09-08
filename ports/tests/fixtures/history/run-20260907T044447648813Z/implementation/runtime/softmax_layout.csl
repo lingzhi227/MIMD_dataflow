@@ -1,0 +1,29 @@
+// Bidirectional chain schedule derived from pinned WaferLLM Prefill layout.
+param rows:i16;param cols:i16;param Mt:i16;param Nt:i16;
+param scale_bits:u16;param sampled:i16;
+const scale=@bitcast(f16,scale_bits);
+const memcpy=@import_module("<memcpy/get_params>",.{.width=cols,.height=rows});
+const right=[2]color{@get_color(4),@get_color(5)};
+const left=[2]color{@get_color(6),@get_color(7)};
+const bd=@get_color(8);
+layout {
+ @set_rectangle(cols,rows);
+ for(@range(i16,rows)) |y| {for(@range(i16,cols)) |x| {
+  const rs=right[x%2];const rr=right[1-x%2];
+  const ls=left[x%2];const lr=left[1-x%2];
+  @set_tile_code(x,y,"pe.csl",.{.memcpy_params=memcpy.get_params(x),.x=x,.cols=cols,.Mt=Mt,.Nt=Nt,.scale=scale,.sampled=sampled,.rs=rs,.rr=rr,.ls=ls,.lr=lr,.bd=bd});
+  @set_color_config(x,y,rs,.{.routes=.{.rx=.{RAMP},.tx=.{EAST}}});
+  @set_color_config(x,y,rr,.{.routes=.{.rx=.{WEST},.tx=.{RAMP}}});
+  @set_color_config(x,y,ls,.{.routes=.{.rx=.{RAMP},.tx=.{WEST}}});
+  @set_color_config(x,y,lr,.{.routes=.{.rx=.{EAST},.tx=.{RAMP}}});
+  if(x==cols/2){@set_color_config(x,y,bd,.{.routes=.{.rx=.{RAMP},.tx=.{WEST,EAST}}});}
+  else if(x==0){@set_color_config(x,y,bd,.{.routes=.{.rx=.{EAST},.tx=.{RAMP}}});}
+  else if(x==cols-1){@set_color_config(x,y,bd,.{.routes=.{.rx=.{WEST},.tx=.{RAMP}}});}
+  else if(x<cols/2){@set_color_config(x,y,bd,.{.routes=.{.rx=.{EAST},.tx=.{RAMP,WEST}}});}
+  else{@set_color_config(x,y,bd,.{.routes=.{.rx=.{WEST},.tx=.{RAMP,EAST}}});}
+ }}
+ @export_name("X",[*]f16,true);@export_name("result",[*]f16,true);@export_name("exponents",[*]f16,true);
+ @export_name("history",[*]f16,true);@export_name("progress",[*]u16,true);
+ @export_name("timing",[*]u16,true);@export_name("queues",[*]u16,true);
+ @export_name("hls_main",fn()void);
+}

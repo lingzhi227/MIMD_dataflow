@@ -1,0 +1,11 @@
+param memcpy_params;param Mt:i16;param Nt:i16;param broadcast:i16;param swapped:i16;param sampled:i16;
+const sys=@import_module("<memcpy/memcpy>",memcpy_params);const time=@import_module("<time>");
+const rotate=@import_module("batched_pair_rotation_local.csl",.{.batches=Mt,.features=Nt,.sampled=sampled,.swapped=swapped});
+var x=@zeros([Mt*Nt]f16);var result=@zeros([Mt*Nt]f16);var cosine=@zeros([Nt/2]f16);var sine=@zeros([Nt/2]f16);
+var scratch=@zeros([2*Nt]f16);var history=@zeros([if(sampled!=0) 2*Mt*Nt else 1]f16);
+var progress=@zeros([3]u16);var timing=@zeros([6]u16);var start=@zeros([3]u16);var end=@zeros([3]u16);
+fn hls_main() void {time.enable_tsc();time.get_timestamp(&start);progress[0]=0;progress[1]=0;
+ rotate.apply(&x,&result,&cosine,&sine,&scratch,&history);progress[0]=Mt;progress[1]=1;progress[2]+=1;
+ time.get_timestamp(&end);time.disable_tsc();for(@range(i16,3)) |i| {timing[i]=start[i];timing[i+3]=end[i];}sys.unblock_cmd_stream();}
+var xp:[*]f16=&x;var cp:[*]f16=&cosine;var sp:[*]f16=&sine;var rp:[*]f16=&result;var hp:[*]f16=&history;var pp:[*]u16=&progress;var tp:[*]u16=&timing;
+comptime {@export_symbol(xp,"x");@export_symbol(cp,"cosine");@export_symbol(sp,"sine");@export_symbol(rp,"result");@export_symbol(hp,"history");@export_symbol(pp,"progress");@export_symbol(tp,"timing");@export_symbol(hls_main);}

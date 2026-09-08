@@ -1,0 +1,70 @@
+// CG and Jacobi-PCG recurrence over solver_common.csl continuations.
+param cg_jacobi:bool=false;
+var cg_diagonal=@zeros([local_vec_sz]f32);
+var cg_z=@zeros([local_vec_sz]f32);
+var cg_weights=@zeros([cg_max_iterations]f32);
+const cg_zd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{local_vec_sz}->cg_z[i]});
+const cg_dd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{local_vec_sz}->cg_diagonal[i]});
+
+fn solver_initialize() void {
+ if(cg_jacobi){
+  for(@range(u16,local_vec_sz)) |i| {cg_diagonal[i]=1.0/cg_diagonal[i];}
+  for(@range(u16,cg_max_iterations)) |i| {cg_weights[i]=0.0;}
+ }
+}
+fn solver_begin() void {cg_step();}
+fn solver_advance() void {
+ if(cg_state==5){
+  cg_reduce(cg_blas.dot(@as(i16,local_vec_sz),&cg_p,&y_local_buf),false,6);
+ }else if(cg_state==6){
+  const curvature=cg_collect.result[0];
+  if(!cg_finite(curvature)){cg_finalize(3);return;}
+  if(curvature<=0.0){cg_finalize(2);return;}
+  const alpha=cg_rho/curvature;
+  if(!cg_finite(alpha)){cg_finalize(3);return;}
+  cg_scalars[3*cg_k]=alpha;cg_scalars[3*cg_k+1]=curvature;
+  @fmacs(cg_xd,cg_xd,cg_pd,alpha);@fmacs(cg_rd,cg_rd,cg_yd,-alpha);
+  cg_rho_old=cg_rho;cg_k+=1;
+  cg_reduce(cg_blas.dot(@as(i16,local_vec_sz),&cg_r,&cg_r),false,7);
+ }else if(cg_state==7){
+  cg_xi=cg_collect.result[0];cg_history[cg_k]=cg_xi;
+  if(!cg_jacobi){cg_rho=cg_xi;}
+  if(!cg_finite(cg_xi)){cg_finalize(3);return;}
+  if(cg_xi==0.0){cg_norm(&cg_r,10);return;}
+  if(cg_math.sqrt(cg_xi)<=cg_threshold){cg_finalize(0);return;}
+  cg_continue();
+ }else if(cg_state==11 and cg_jacobi){
+  @fmuls(cg_zd,cg_dd,cg_rd);
+  cg_reduce(cg_blas.dot(@as(i16,local_vec_sz),&cg_r,&cg_z),false,12);
+ }else if(cg_state==12 and cg_jacobi){
+  const weighted=cg_collect.result[0];
+  if(!cg_finite(weighted) or weighted<=0.0){cg_finalize(3);return;}
+  cg_weights[cg_k]=weighted;
+  if(cg_k==0){@fmovs(cg_pd,cg_zd);}
+  else {
+   const beta=weighted/cg_rho_old;
+   if(!cg_finite(beta)){cg_finalize(3);return;}
+   cg_scalars[3*(cg_k-1)+2]=beta;@fmacs(cg_pd,cg_zd,cg_pd,beta);
+  }
+  cg_rho=weighted;cg_apply(&cg_p,5);
+ }else if(cg_state==10){
+  if(cg_norm_value<=cg_threshold){cg_finalize(0);}else{cg_finalize(3);}
+
+ }
+}
+fn cg_step() void {
+ if(cg_jacobi){cg_state=11;cg_resume();}else{cg_apply(&cg_p,5);}
+}
+fn cg_continue() void {
+ if(@as(u32,cg_k)>=cg_limit[0]){cg_finalize(1);return;}
+ if(cg_jacobi){cg_step();return;}
+ const beta=cg_rho/cg_rho_old;
+ if(!cg_finite(beta)){cg_finalize(3);return;}
+ cg_scalars[3*(cg_k-1)+2]=beta;@fmacs(cg_pd,cg_rd,cg_pd,beta);
+ cg_apply(&cg_p,5);
+}
+
+var cg_diag_ptr:[*]f32=&cg_diagonal;var cg_weights_ptr:[*]f32=&cg_weights;
+comptime {if(cg_jacobi){@export_symbol(cg_diag_ptr,"cg_diagonal");@export_symbol(cg_weights_ptr,"cg_weights");}}
+
+fn solver_start() void {cg_norm(&cg_rhs,1);}

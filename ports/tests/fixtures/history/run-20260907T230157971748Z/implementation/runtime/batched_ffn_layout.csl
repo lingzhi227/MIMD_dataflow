@@ -1,0 +1,32 @@
+param P:i16;param B:i16;param Nt:i16;param Ft:i16;param epsilon_bits:u16;param sampled:i16;
+const memcpy=@import_module("<memcpy/get_params>",.{.width=P,.height=P});
+const c2d=@import_module("<collectives_2d/params>");
+layout {
+ @set_rectangle(P,P);
+ for(@range(i16,P)) |y| {for(@range(i16,P)) |x| {
+  @set_tile_code(x,y,"pe.csl",.{.memcpy_params=memcpy.get_params(x),
+   .P=P,.B=B,.Nt=Nt,.Ft=Ft,.epsilon_bits=epsilon_bits,.sampled=sampled,
+   .c2d_params=c2d.get_params(@as(u16,x),@as(u16,y),.{
+    .x_colors=.{@get_color(0),@get_color(1)},.x_entrypoints=.{@get_local_task_id(14),@get_local_task_id(15)},
+    .y_colors=.{@get_color(4),@get_color(5)},.y_entrypoints=.{@get_local_task_id(16),@get_local_task_id(17)}
+   })});
+ }}
+ @export_name("X",[*]f16,true);
+ @export_name("gamma",[*]f16,true);
+ @export_name("weights",[*]f16,true);
+ @export_name("normalized",[*]f16,true);
+ @export_name("scratch",[*]f16,true);
+ @export_name("sums",[*]f16,true);
+ @export_name("projections",[*]f16,true);
+ @export_name("activation",[*]f16,true);
+ @export_name("hidden",[*]f16,true);
+ @export_name("delta",[*]f16,true);
+ @export_name("result",[*]f16,true);
+ @export_name("history",[*]f16,true);
+ @export_name("partial",[*]f16,true);
+ @export_name("down_partial",[*]f16,true);
+ @export_name("progress",[*]u16,true);
+ @export_name("timing",[*]u16,true);
+ @export_name("queues",[*]u16,true);
+ @export_name("init_task",fn()void); @export_name("hls_main",fn()void);
+}

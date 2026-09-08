@@ -1,0 +1,244 @@
+{
+  "passed": true,
+  "scope": "Three matched-source generated CSL diagnostic calls only. Eight-case native gate has a preserved cancellation failure; no31-node numerical qualification or hardware performance claim.",
+  "cases": [
+    {
+      "epoch": 0,
+      "numerical": {
+        "relative_l2": 0.00026469625792456043,
+        "peak_scaled_error": 0.0007301383935022556,
+        "fixed_accuracy_passed": true,
+        "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+        "attention": {
+          "relative_l2": 0.002059489374937343,
+          "peak_scaled_error": 0.002432469643821449,
+          "fixed_accuracy_passed": true
+        },
+        "projection": {
+          "relative_l2": 0.002801845717927002,
+          "peak_scaled_error": 0.003839204864244836,
+          "fixed_accuracy_passed": true
+        },
+        "mlp_delta": {
+          "relative_l2": 0.005470294445500688,
+          "peak_scaled_error": 0.005654761280239706,
+          "fixed_accuracy_passed": true
+        },
+        "score": {
+          "relative_l2": 0.0019246237363989306,
+          "peak_scaled_error": 0.0017135741983992933,
+          "fixed_accuracy_passed": true
+        },
+        "probability": {
+          "relative_l2": 0.0004387736295713916,
+          "peak_scaled_error": 0.0011621236977620913,
+          "fixed_accuracy_passed": true,
+          "max_row_mass_error": 0.0009307861328125
+        },
+        "input_normalized": {
+          "relative_l2": 0.000468290564273139,
+          "peak_scaled_error": 0.0014050121015713294,
+          "fixed_accuracy_passed": true
+        },
+        "q_raw": {
+          "relative_l2": 0.0012825363496906158,
+          "peak_scaled_error": 0.001984416080255278,
+          "fixed_accuracy_passed": true
+        },
+        "k_raw": {
+          "relative_l2": 0.001275041971910748,
+          "peak_scaled_error": 0.001790154614677354,
+          "fixed_accuracy_passed": true
+        },
+        "v_raw": {
+          "relative_l2": 0.0012201066201990994,
+          "peak_scaled_error": 0.0017978507408857535,
+          "fixed_accuracy_passed": true
+        },
+        "q": {
+          "relative_l2": 0.0012825363496906158,
+          "peak_scaled_error": 0.001984416080255278,
+          "fixed_accuracy_passed": true,
+          "local_pair_rounding_passed": true
+        },
+        "k": {
+          "relative_l2": 0.001275041971910748,
+          "peak_scaled_error": 0.001790154614677354,
+          "fixed_accuracy_passed": true,
+          "local_pair_rounding_passed": true
+        },
+        "v": {
+          "relative_l2": 0.0012201066201990994,
+          "peak_scaled_error": 0.0017978507408857535,
+          "fixed_accuracy_passed": true
+        }
+      },
+      "exact_source_port_groups": 17,
+      "prefix_progress_passed": true,
+      "hls_cycles": 141604,
+      "source_cycles": 141396,
+      "ratio": 1.0014710458570257
+    },
+    {
+      "epoch": 1,
+      "numerical": {
+        "relative_l2": 0.0002561051362893254,
+        "peak_scaled_error": 0.00047370373541213957,
+        "fixed_accuracy_passed": true,
+        "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+        "attention": {
+          "relative_l2": 0.0017110016856851375,
+          "peak_scaled_error": 0.0038872495339031454,
+          "fixed_accuracy_passed": true
+        },
+        "projection": {
+          "relative_l2": 0.002292233865527301,
+          "peak_scaled_error": 0.0036591525477966016,
+          "fixed_accuracy_passed": true
+        },
+        "mlp_delta": {
+          "relative_l2": 0.004860496192495282,
+          "peak_scaled_error": 0.004840870767662027,
+          "fixed_accuracy_passed": true
+        },
+        "score": {
+          "relative_l2": 0.0019883838320162634,
+          "peak_scaled_error": 0.002224597390409521,
+          "fixed_accuracy_passed": true
+        },
+        "probability": {
+          "relative_l2": 0.000406946739507975,
+          "peak_scaled_error": 0.0011381578649430372,
+          "fixed_accuracy_passed": true,
+          "max_row_mass_error": 0.0009002685546875
+        },
+        "input_normalized": {
+          "relative_l2": 0.0004978316189980936,
+          "peak_scaled_error": 0.0011756527180233395,
+          "fixed_accuracy_passed": true
+        },
+        "q_raw": {
+          "relative_l2": 0.0012939585202334108,
+          "peak_scaled_error": 0.0022726026024403197,
+          "fixed_accuracy_passed": true
+        },
+        "k_raw": {
+          "relative_l2": 0.0012993339514169276,
+          "peak_scaled_error": 0.002261549807663584,
+          "fixed_accuracy_passed": true
+        },
+        "v_raw": {
+          "relative_l2": 0.0012621641202438414,
+          "peak_scaled_error": 0.0020206344387966456,
+          "fixed_accuracy_passed": true
+        },
+        "q": {
+          "relative_l2": 0.0013330862685911023,
+          "peak_scaled_error": 0.0026980385802560826,
+          "fixed_accuracy_passed": true,
+          "local_pair_rounding_passed": true
+        },
+        "k": {
+          "relative_l2": 0.0013387497322653978,
+          "peak_scaled_error": 0.0021181730116151556,
+          "fixed_accuracy_passed": true,
+          "local_pair_rounding_passed": true
+        },
+        "v": {
+          "relative_l2": 0.0012621641202438414,
+          "peak_scaled_error": 0.0020206344387966456,
+          "fixed_accuracy_passed": true
+        }
+      },
+      "exact_source_port_groups": 17,
+      "prefix_progress_passed": true,
+      "hls_cycles": 141607,
+      "source_cycles": 141397,
+      "ratio": 1.001485180025036
+    },
+    {
+      "epoch": 2,
+      "numerical": {
+        "relative_l2": 0.0,
+        "peak_scaled_error": 0.0,
+        "fixed_accuracy_passed": true,
+        "contract": "shared-gamma-input-attention-tail-half-normwise-v1",
+        "attention": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "projection": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "mlp_delta": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "score": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "probability": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true,
+          "max_row_mass_error": 0.0
+        },
+        "input_normalized": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "q_raw": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "k_raw": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "v_raw": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        },
+        "q": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true,
+          "local_pair_rounding_passed": true
+        },
+        "k": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true,
+          "local_pair_rounding_passed": true
+        },
+        "v": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true
+        }
+      },
+      "exact_source_port_groups": 17,
+      "prefix_progress_passed": true,
+      "hls_cycles": 132639,
+      "source_cycles": 132435,
+      "ratio": 1.0015403782987882
+    }
+  ],
+  "files": {
+    "evidence/input-attention-codegen-20260907T130338205990Z/provenance.json": "4f4d620b8b6af1f4af1c3dbacf282a2bc29b5a163f5964d6df0a4316a59a7ba0",
+    "evidence/input-attention-codegen-20260907T130338205990Z/results.json": "84ba2904a94f49b7722bd1b61b70fabdf46569f396342b6c797bacb2a617bac2",
+    "evidence/input-attention-source-20260907T122338297913Z/provenance.json": "5784383d92a1e0e37761e87a30a97b677f5e992747c4670e87512e49862f4917",
+    "evidence/input-attention-source-20260907T122338297913Z/results.json": "49aec97ba03cb2550c2c959b9011c22cd444307148c5af6668da5f393193b029"
+  },
+  "reviewer_sha256": "80747bc76cb021611ba1527b6a12756f8586576f2ad9b9fe47d955dc62109d90"
+}

@@ -33,6 +33,62 @@ def verify(module, epochs, bound):
     from input_contracts import verify_declarations
 
     verify_declarations(module)
+    # Explicit precision is a semantic contract, not a graph-shape hint. Route it
+    # before implicit-half profiles with overlapping contraction/rotation counts.
+    if any("precision" in n for n in module["nodes"]):
+        from mesh_input_attention_mixed import verify as mixed_verify
+
+        return mixed_verify(module, epochs, bound)
+    if (
+        sum(n["op"] == "matmul" for n in module["nodes"]) == 9
+        and sum(n["op"] == "rotate_pairs" for n in module["nodes"]) == 2
+    ):
+        from mesh_projected_cache_ffn import verify as composed_verify
+
+        return composed_verify(module, epochs, bound)
+
+    if (
+        sum(n["op"] == "matmul" for n in module["nodes"]) == 6
+        and sum(n["op"] == "rotate_pairs" for n in module["nodes"]) == 2
+        and any(n["op"] == "softmax" for n in module["nodes"])
+    ):
+        from mesh_projected_cache import verify as projected_verify
+
+        return projected_verify(module, epochs, bound)
+    if sum(n["op"] == "matmul" for n in module["nodes"]) == 3 and all(
+        any(n["op"] == op for n in module["nodes"])
+        for op in ("softmax", "add", "transpose")
+    ):
+        from mesh_cache_attention import verify as cache_verify
+
+        return cache_verify(module, epochs, bound)
+    if sum(n["op"] == "matmul" for n in module["nodes"]) == 6 and all(
+        any(n["op"] == op for n in module["nodes"])
+        for op in ("rmsnorm", "softmax", "silu", "add")
+    ):
+        from mesh_attention_tail import verify as attention_tail_verify
+
+        return attention_tail_verify(module, epochs, bound)
+    if sum(n["op"] == "matmul" for n in module["nodes"]) == 4 and all(
+        any(n["op"] == op for n in module["nodes"]) for op in ("rmsnorm", "silu", "add")
+    ):
+        from mesh_prefill_tail import verify as tail_verify
+
+        return tail_verify(module, epochs, bound)
+    if sum(n["op"] == "matmul" for n in module["nodes"]) == 3 and all(
+        any(n["op"] == op for n in module["nodes"]) for op in ("rmsnorm", "silu", "add")
+    ):
+        if any(
+            n.get("dataflow", {}).get("layout") == "batch_major"
+            for n in module["nodes"]
+            if n["op"] == "rmsnorm"
+        ):
+            from mesh_batched_feed_forward import verify as batch_ffn_verify
+
+            return batch_ffn_verify(module, epochs, bound)
+        from mesh_feed_forward import verify as feed_forward_verify
+
+        return feed_forward_verify(module, epochs, bound)
     if all(
         any(n["op"] == op for n in module["nodes"])
         for op in ("matmul", "add", "rmsnorm")
@@ -84,7 +140,13 @@ def verify(module, epochs, bound):
         any(n["op"] == "rmsnorm" for n in module["nodes"])
         and sum(n["op"] == "matmul" for n in module["nodes"]) > 1
     ):
-        from mesh_normalized_fanout import verify as fanout_verify
+        if any(
+            n.get("dataflow", {}).get("partition") == "features"
+            for n in module["nodes"]
+        ):
+            from mesh_batched_fanout import verify as fanout_verify
+        else:
+            from mesh_normalized_fanout import verify as fanout_verify
 
         return fanout_verify(module, epochs, bound)
     if any(n["op"] == "rmsnorm" for n in module["nodes"]) and any(
@@ -97,6 +159,13 @@ def verify(module, epochs, bound):
         from mesh_softmax import verify as softmax_verify
 
         return softmax_verify(module, epochs, bound)
+    if any(
+        n["op"] == "rmsnorm" and n.get("dataflow", {}).get("partition") == "features"
+        for n in module["nodes"]
+    ):
+        from mesh_batched_rms import verify as batched_verify
+
+        return batched_verify(module, epochs, bound)
     if any(n["op"] == "rmsnorm" for n in module["nodes"]):
         from mesh_rms import verify as rms_verify
 
@@ -241,6 +310,40 @@ def eval_expr(e, x):
 
 
 def evaluate(m, batches):
+    if m.get("profile") == "mesh_projected_cache_ffn.v1":
+        from mesh_projected_cache_ffn import evaluate as composed_evaluate
+
+        return composed_evaluate(m, batches)
+
+    if m.get("profile") == "mesh_projected_cache.v1":
+        from mesh_projected_cache import evaluate as projected_evaluate
+
+        return projected_evaluate(m, batches)
+    if m.get("profile") == "mesh_input_attention_mixed.v1":
+        from mesh_input_attention_mixed import evaluate as mixed_evaluate
+
+        return mixed_evaluate(m, batches)
+
+    if m.get("profile") == "mesh_attention_tail.v1":
+        from mesh_attention_tail import evaluate as attention_tail_evaluate
+
+        return attention_tail_evaluate(m, batches)
+    if m.get("profile") == "mesh_prefill_tail.v1":
+        from mesh_prefill_tail import evaluate as tail_evaluate
+
+        return tail_evaluate(m, batches)
+    if m.get("profile") == "mesh_cache_attention.v1":
+        from mesh_cache_attention import evaluate as cache_evaluate
+
+        return cache_evaluate(m, batches)
+    if m.get("profile") == "mesh_batched_feed_forward.v1":
+        from mesh_batched_feed_forward import evaluate as batch_ffn_evaluate
+
+        return batch_ffn_evaluate(m, batches)
+    if m.get("profile") == "mesh_feed_forward.v1":
+        from mesh_feed_forward import evaluate as feed_forward_evaluate
+
+        return feed_forward_evaluate(m, batches)
     if m.get("profile") == "mesh_projection_residual_rms.v1":
         from mesh_projection_residual_rms import evaluate as composition_evaluate
 
@@ -285,6 +388,14 @@ def evaluate(m, batches):
         from mesh_softmax import evaluate as softmax_evaluate
 
         return softmax_evaluate(m, batches)
+    if m.get("profile") == "mesh_batched_fanout.v1":
+        from mesh_batched_fanout import evaluate as fanout_evaluate
+
+        return fanout_evaluate(m, batches)
+    if m.get("profile") == "mesh_batched_rms.v1":
+        from mesh_batched_rms import evaluate as batched_evaluate
+
+        return batched_evaluate(m, batches)
     if m.get("profile") == "mesh_rms.v1":
         from mesh_rms import evaluate as rms_evaluate
 

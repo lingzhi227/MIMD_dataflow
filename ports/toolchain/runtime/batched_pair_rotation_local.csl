@@ -1,0 +1,27 @@
+// Decode-shaped adjacent pair transform. No colors, queues, tasks or async work.
+// Caller joins prior SDK operations before borrowing DSR banks 1..5.
+// Batch-major input/output; broadcast coefficients; four feature-pair scratch vectors.
+// In-place safe: four rounded products are complete before either output store.
+param batches:i16;param features:i16;param sampled:i16;param swapped:i16;
+comptime {@comptime_assert(batches>0 and features>0 and features%2==0);@comptime_assert(@as(i32,batches)*@as(i32,features)*2<=32767);@comptime_assert(swapped==0 or swapped==1);}
+const d1=@get_dsr(dsr_dest,1);const d2=@get_dsr(dsr_dest,2);const d3=@get_dsr(dsr_dest,3);const d4=@get_dsr(dsr_dest,4);const d5=@get_dsr(dsr_dest,5);
+const a1=@get_dsr(dsr_src0,1);const a2=@get_dsr(dsr_src0,2);const a3=@get_dsr(dsr_src0,3);const a4=@get_dsr(dsr_src0,4);const a5=@get_dsr(dsr_src0,5);
+const b1=@get_dsr(dsr_src1,1);const b2=@get_dsr(dsr_src1,2);const b3=@get_dsr(dsr_src1,3);const b4=@get_dsr(dsr_src1,4);const b5=@get_dsr(dsr_src1,5);
+fn apply(input:[*]f16,output:[*]f16,cosine:[*]f16,sine:[*]f16,scratch:[*]f16,history:[*]f16) void {
+ const pair=@get_dsd(mem1d_dsd,.{.base_address=input,.extent=@as(u16,features/2),.stride=2});
+ const out=@get_dsd(mem1d_dsd,.{.base_address=output,.extent=@as(u16,features/2),.stride=2});
+ const tmp=@get_dsd(mem1d_dsd,.{.base_address=scratch,.extent=@as(u16,features/2)});
+ const t1=tmp;const t2=@increment_dsd_offset(tmp,features/2,f16);const t3=@increment_dsd_offset(tmp,features,f16);const t4=@increment_dsd_offset(tmp,3*(features/2),f16);
+ const cd=@get_dsd(mem1d_dsd,.{.base_address=cosine,.extent=@as(u16,features/2)});const sd=@get_dsd(mem1d_dsd,.{.base_address=sine,.extent=@as(u16,features/2)});
+ const hd=@get_dsd(mem1d_dsd,.{.base_address=history,.extent=@as(u16,features/2)});
+ @load_to_dsr(d1,t1);@load_to_dsr(d2,t2);@load_to_dsr(d3,t3);@load_to_dsr(d4,t4);
+ @load_to_dsr(b1,cd);@load_to_dsr(b2,sd);@load_to_dsr(b3,cd);@load_to_dsr(b4,sd);
+ for(@range(i16,batches)) |row| {
+  const a=@increment_dsd_offset(pair,row*features+swapped,f16);const b=@increment_dsd_offset(pair,row*features+1-swapped,f16);
+  @load_to_dsr(a1,a);@load_to_dsr(a2,b);@load_to_dsr(a3,b);@load_to_dsr(a4,a);
+  @fmulh(d1,a1,b1);@fmulh(d2,a2,b2);@fmulh(d3,a3,b3);@fmulh(d4,a4,b4);
+  if(sampled!=0){@fmovh(@increment_dsd_offset(hd,row*2*features,f16),t1);@fmovh(@increment_dsd_offset(hd,row*2*features+features/2,f16),t2);@fmovh(@increment_dsd_offset(hd,row*2*features+features,f16),t3);@fmovh(@increment_dsd_offset(hd,row*2*features+3*(features/2),f16),t4);}
+  @load_to_dsr(d5,@increment_dsd_offset(out,row*features,f16));@load_to_dsr(a5,t1);@load_to_dsr(b5,t2);@fsubh(d5,a5,b5);
+  @load_to_dsr(d5,@increment_dsd_offset(out,row*features+1,f16));@load_to_dsr(a5,t3);@load_to_dsr(b5,t4);@faddh(d5,a5,b5);
+ }
+}

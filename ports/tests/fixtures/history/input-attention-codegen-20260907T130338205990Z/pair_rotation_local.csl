@@ -1,0 +1,35 @@
+// Source-shaped pair rotation, derived from WaferLLM fd1c2daa (Apache-2.0).
+// Synchronous, column-major, broadcast feature coefficients. Caller owns four
+// row scratch vectors and joins prior fabric operations before entering.
+// In-place input/output is supported: all four products precede either store.
+// Scratch and sampled history must not overlap input/output or coefficients.
+// No routing colors, queues, tasks or asynchronous microthreads are allocated.
+param rows:i16;param features:i16;param sampled:i16;param swapped:i16;
+comptime {
+ @comptime_assert(rows>0 and features>0 and features%2==0);
+ @comptime_assert(@as(i32,rows)*@as(i32,features)*2<=32767);
+ @comptime_assert(swapped==0 or swapped==1);
+}
+fn apply(input:[*]f16,output:[*]f16,cosine:[*]f16,sine:[*]f16,scratch:[*]f16,history:[*]f16) void {
+ const xd=@get_dsd(mem1d_dsd,.{.base_address=input,.extent=@as(u16,rows)});
+ const yd=@get_dsd(mem1d_dsd,.{.base_address=output,.extent=@as(u16,rows)});
+ const d0=@get_dsd(mem1d_dsd,.{.base_address=scratch,.extent=@as(u16,rows)});
+ const d1=@increment_dsd_offset(d0,rows,f16);
+ const d2=@increment_dsd_offset(d0,2*rows,f16);
+ const d3=@increment_dsd_offset(d0,3*rows,f16);
+ const hd=@get_dsd(mem1d_dsd,.{.base_address=history,.extent=@as(u16,rows)});
+ for(@range(i16,features/2)) |j| {
+  const a=@increment_dsd_offset(xd,(2*j+swapped)*rows,f16);
+  const b=@increment_dsd_offset(xd,(2*j+1-swapped)*rows,f16);
+  @fmulh(d0,a,cosine[j]);@fmulh(d1,b,sine[j]);
+  @fmulh(d2,b,cosine[j]);@fmulh(d3,a,sine[j]);
+  if(sampled!=0){
+   @fmovh(@increment_dsd_offset(hd,4*j*rows,f16),d0);
+   @fmovh(@increment_dsd_offset(hd,(4*j+1)*rows,f16),d1);
+   @fmovh(@increment_dsd_offset(hd,(4*j+2)*rows,f16),d2);
+   @fmovh(@increment_dsd_offset(hd,(4*j+3)*rows,f16),d3);
+  }
+  @fsubh(@increment_dsd_offset(yd,2*j*rows,f16),d0,d1);
+  @faddh(@increment_dsd_offset(yd,(2*j+1)*rows,f16),d2,d3);
+ }
+}

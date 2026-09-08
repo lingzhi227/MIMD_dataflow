@@ -1,0 +1,148 @@
+{
+  "passed": true,
+  "new_sdk_execution": false,
+  "blocked_upper_accumulation": true,
+  "source_math_review": {
+    "passed": true,
+    "preflight_only": false,
+    "new_sdk_execution": false,
+    "cases": [
+      {
+        "epoch": 0,
+        "target_bits_observed": true,
+        "original_input_math": {
+          "relative_l2": 0.0002742095361048123,
+          "peak_scaled_error": 0.0008359782775668818,
+          "fixed_accuracy_passed": true,
+          "contract": "supplied-attention-tail-half-normwise-v1",
+          "projection": {
+            "relative_l2": 0.0011736929824074556,
+            "peak_scaled_error": 0.001897609215115758,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.005279765079964479,
+            "peak_scaled_error": 0.005342167646480657,
+            "fixed_accuracy_passed": true
+          }
+        }
+      },
+      {
+        "epoch": 1,
+        "target_bits_observed": true,
+        "original_input_math": {
+          "relative_l2": 0.000273657197922179,
+          "peak_scaled_error": 0.0007946964710664862,
+          "fixed_accuracy_passed": true,
+          "contract": "supplied-attention-tail-half-normwise-v1",
+          "projection": {
+            "relative_l2": 0.001200529111806289,
+            "peak_scaled_error": 0.001921719178170997,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.004861553060286673,
+            "peak_scaled_error": 0.005891691949297826,
+            "fixed_accuracy_passed": true
+          }
+        }
+      },
+      {
+        "epoch": 2,
+        "target_bits_observed": true,
+        "original_input_math": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true,
+          "contract": "supplied-attention-tail-half-normwise-v1",
+          "projection": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          }
+        }
+      }
+    ],
+    "scope": "Supplied attention output, output weight, original residual, gamma and three MLP weights. Original h1_matmul/z_add, repaired RMS library and gate ownership, explicit block-f32 up/gate/down, original final add_result retaining postprojection Z. Projection and MLP delta checked separately against original-input fsum/sqrt/exp, besides final result. Three source calls; not HLS, full Prefill/Decode or hardware qualification.",
+    "hashes": {
+      "evidence/prefill-tail-source-20260907T102741323756Z/provenance.json": "19de86cce271cc9869801a3b9ec95598ae8f7bad4466aa1aa24e2aa3edf218c1",
+      "experiments/analyze_prefill_tail_source.py": "70c88846782c6bdbd75c1778e0e326bd4b49553f7a87b7b0f9643ce720560207",
+      "prefill_tail_fixtures.py": "9700a502d70926d6ec1846b0f8e06a37b11e4233dac7e188a2b28e52be4ebece",
+      "feed_forward_fixtures.py": "b720df834d5cf8af59a0bda0ae527da355ccde01c1d6c19d0f86ba2bb904a57d",
+      "experiments/analyze_mlp_source.py": "4b165c38cb1f9604b9b6e47ea179cbcb159f62d53f601527d777a0119cdc7acb",
+      "toolchain/mesh_rms.py": "2d6d5d82ae75809a94f3e642d5e8f8983c245684780e85baf25c423f19a47a83",
+      "toolchain/sdk_math_reference.py": "147102208ff4b9040fcf2ae141319e94d1eb195fe7f4ff15be200504141e30bc",
+      "toolchain/projection_reference.py": "2776552a9c5aab91421e57403b10a6a4f474801391833a43874e082850f587ab",
+      "evidence/prefill-tail-source-20260907T102741323756Z/results.json": "0d03748a4813c6a4b99e470546d76781162e69a3a053760ac2465c2c463d0524"
+    }
+  },
+  "cases": [
+    {
+      "matched_observed_ports": [
+        "projection",
+        "post_projection_residual",
+        "result",
+        "normalized",
+        "output",
+        "wide_accumulator",
+        "up_accumulator",
+        "gate_accumulator"
+      ],
+      "target_bits_exact": true,
+      "sampled_up_half_observed": false,
+      "sampled_up_half_exact": null,
+      "hls_max_local_cycles": 145310,
+      "source_max_local_cycles": 144410,
+      "hls_to_source_ratio": 1.0062322553839762
+    },
+    {
+      "matched_observed_ports": [
+        "projection",
+        "post_projection_residual",
+        "result",
+        "normalized",
+        "output",
+        "wide_accumulator",
+        "up_accumulator",
+        "gate_accumulator"
+      ],
+      "target_bits_exact": true,
+      "sampled_up_half_observed": false,
+      "sampled_up_half_exact": null,
+      "hls_max_local_cycles": 145310,
+      "source_max_local_cycles": 144412,
+      "hls_to_source_ratio": 1.0062183198072183
+    },
+    {
+      "matched_observed_ports": [
+        "projection",
+        "post_projection_residual",
+        "result",
+        "normalized",
+        "output",
+        "wide_accumulator",
+        "up_accumulator",
+        "gate_accumulator"
+      ],
+      "target_bits_exact": true,
+      "sampled_up_half_observed": false,
+      "sampled_up_half_exact": null,
+      "hls_max_local_cycles": 127390,
+      "source_max_local_cycles": 126492,
+      "hls_to_source_ratio": 1.0070992631945104
+    }
+  ],
+  "scope": "Supplied attention-output projection, residual, normalized gated FFN with final postprojection Z residual. Same inputs, precision, fabric and SDK options; shared RMS and block accumulator libraries. HLS retains immutable public inputs; source inputs are destructive. Snapshot/copy differences remain in measured local WSE3 simulator intervals, especially sampled prefixes. Three matched source calls; HLS eight-call validation separate. Not full Prefill/Decode or hardware throughput.",
+  "hashes": {
+    "projects/waferllm/prefill_tail_128x64x256_8x8_counters/run-20260907T102725432573Z/manifest.json": "51c364c0ac0436c010ede430ea0a5ad0168556cae330b2b81db6ef39e2fd8c58",
+    "projects/waferllm/prefill_tail_128x64x256_8x8_counters/run-20260907T102725432573Z/results.json": "16cfbd8b19d60a7d7dea8f5b8891191281b1b8691cb7af157b59c63185def7b6",
+    "evidence/prefill-tail-source-20260907T102741323756Z/provenance.json": "19de86cce271cc9869801a3b9ec95598ae8f7bad4466aa1aa24e2aa3edf218c1",
+    "evidence/prefill-tail-source-20260907T102741323756Z/results.json": "0d03748a4813c6a4b99e470546d76781162e69a3a053760ac2465c2c463d0524",
+    "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/experiments/compare_prefill_tail.py": "a93a4f423050bb0879a17a7cbb5873fe843e1d510394be02483a5e5e33c22567"
+  }
+}

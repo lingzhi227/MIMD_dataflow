@@ -1,0 +1,15 @@
+{
+  "project": "waferllm",
+  "kernel": "cache_attention_5x256x512_8x8",
+  "status": "source_ready",
+  "partitions": 1,
+  "instrumentation": "sampled",
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "origins": [
+    "Decode/src/decode.csl score_matvec_mult, softmax_score, output_matvec_mult, o_matvec_mult, attn_residual_add"
+  ],
+  "contract": "Supplied shared-cache attention with half DSR blocks, f32 local merge and SDK f32 independent-plane collectives, stable SDK softmax and output residual. No append, mask, query generation or head/GQA selection. Eight-call simulator qualification and original vecmat local-compute control; not full Decode or hardware.",
+  "fixture": "cache_attention:5:256:512",
+  "source_comparison": "evidence/cache-attention-full8-source-compute-comparison.json",
+  "qualification": "Eight actual SDK calls; all five original-input native/device stage gates, four actual native observers on two hosts, all-PE cache/intermediate witnesses, linked ELF and >=40 frozen mutation rejections. Local-compute control performance only."
+}

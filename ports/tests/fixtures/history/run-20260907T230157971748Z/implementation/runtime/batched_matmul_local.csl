@@ -1,0 +1,18 @@
+// SPDX-License-Identifier: Apache-2.0
+// WaferLLM Decode fd1c2daae37cd68706c03fc8009887ecee9900f8 vecmat_computation.
+// Row-major batches/weights/output. Synchronous DSR1 only, no fabric resources.
+param batches:i16;param inner:i16;param columns:i16;
+comptime {@comptime_assert(batches>0 and inner>0 and columns>0 and columns%2==0);}
+const d=@get_dsr(dsr_dest,1);const a=@get_dsr(dsr_src0,1);const b=@get_dsr(dsr_src1,1);
+fn step(value:f16) void {@fmach(d,a,b,value);}
+fn compute(input:[*]f16,weight:[*]f16,output:[*]f16) void {
+ var xd=@get_dsd(mem1d_dsd,.{.base_address=input,.extent=@as(u16,inner)});
+ const wd=@get_dsd(mem1d_dsd,.{.base_address=weight,.extent=@as(u16,columns)});
+ var yd=@get_dsd(mem1d_dsd,.{.base_address=output,.extent=@as(u16,columns)});
+ for(@range(i16,batches)) |i| {
+  @load_to_dsr(d,yd,.{.save_address=false});@load_to_dsr(a,yd,.{.save_address=false});
+  @fmovh(d,0.0);@load_to_dsr(b,wd,.{.save_address=true});
+  @map(step,xd);
+  xd=@increment_dsd_offset(xd,inner,f16);yd=@increment_dsd_offset(yd,columns,f16);
+ }
+}

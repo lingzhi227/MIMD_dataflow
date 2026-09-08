@@ -1,0 +1,12 @@
+{
+  "epochs": 8,
+  "input_bound": 2,
+  "partitions": 1,
+  "identity": false,
+  "instrumentation": "counters",
+  "sdk_options": {
+    "suppress_trace": true,
+    "num_threads": 8,
+    "dump_core": true
+  }
+}

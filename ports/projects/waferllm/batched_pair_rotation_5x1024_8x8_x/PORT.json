@@ -1,0 +1,12 @@
+{
+  "project": "waferllm",
+  "kernel": "batched_pair_rotation_5x1024_8x8_x",
+  "origins": [
+    "Decode/src/decode.csl xq_rope/xk_rope"
+  ],
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "status": "source_ready",
+  "partitions": 1,
+  "fixture": "pair_rotation:5:1024:1:odd_even",
+  "contract": "Decode-layout adjacent pair transform B5/N1024 on8x8, feature X partition/Y replicas, source odd_even order and supplied shared coefficients. Six matched SDK/source calls; all PE input/result/products exact, component mathematics on two native hosts and device, fault rejection and ELF checks. Source control explicitly repairs the odd DSD offset after base reset and includes immutable input copy. Unrepaired-source failure and actual DSD probe retained. No full model, position generation, cache update or hardware throughput claim."
+}

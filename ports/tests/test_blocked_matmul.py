@@ -14,6 +14,8 @@ from mesh_mlp import plan
 from build_mlp_profiles import source
 
 
+from host_compiler import executable as host_compiler
+
 class BlockedMatmul(unittest.TestCase):
     def test_two_level_semantics_and_short_last_block(self):
         a = np.asarray([[2048, 1, -2048, 1, 2, -2, 2**-10]], float)
@@ -29,7 +31,7 @@ int main(){spatial::tensor<1,7,spatial::f16>a;spatial::tensor<7,1,spatial::f16>b
             exe = Path(td) / "native"
             subprocess.run(
                 [
-                    "clang++",
+                    host_compiler(),
                     "-std=c++17",
                     "-I",
                     str(ROOT / "toolchain/include"),

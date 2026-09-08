@@ -1,0 +1,10 @@
+// Stable-sign formulation using the existing SDK half exponential.
+// Finite half input/output; approximation/underflow remain explicit policy.
+const math=@import_module("<math>");
+fn value(x:f16) f16 {
+    const magnitude:f16=if(x<0.0) -x else x;
+    const e:f16=math.exp_f16(-magnitude);
+    const denominator:f16=@as(f16,1.0)+e;
+    const numerator:f16=if(x>=0.0) x else x*e;
+    return numerator/denominator;
+}

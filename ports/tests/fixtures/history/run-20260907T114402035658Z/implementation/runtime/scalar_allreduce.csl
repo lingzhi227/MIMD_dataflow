@@ -1,0 +1,126 @@
+// Scalar collectives over SDK row/column operations. Each callback joins its
+// preceding operation; one local task dispatches the sequential protocol phases.
+// Resources are parameters so callers can provide disjoint collective queues.
+// This alone does not prove safe DSR/microthread reuse with another library.
+param c2d_params;
+param vector_length: u16 = 1;
+param transpose_chunk_length: u16 = vector_length;
+param f_callback: fn()void;
+param callback_task_id: local_task_id = @get_local_task_id(10);
+param x_queues: [2]u16 = [2]u16{2, 4};
+param y_queues: [2]u16 = [2]u16{3, 5};
+const mpi_x = @import_module("<collectives_2d/pe>", .{
+  .dim_params = c2d_params.x, .queues = x_queues
+});
+const mpi_y = @import_module("<collectives_2d/pe>", .{
+  .dim_params = c2d_params.y, .queues = y_queues
+});
+const W = @get_rectangle().width;
+const H = @get_rectangle().height;
+var send = [1]f32{0.0};
+var row = [1]f32{0.0};
+var result = [1]f32{0.0};
+var row_values = @zeros([W]f32);
+var col_values = @zeros([H]f32);
+var use_max: bool = false;
+// 0 row reduction, 1 column reduction, 2 column broadcast, 3 row broadcast.
+var phase: u16 = 0;
+var transpose_destination: *[vector_length]u32;
+var transpose_workspace: *[W * transpose_chunk_length]u32;
+var transpose_source: *[vector_length]u32;
+var transpose_offset: u16 = 0;
+// The caller owns all buffers until f_callback; square-mesh PE transpose.
+fn transpose(source: *[vector_length]u32, destination: *[vector_length]u32,
+             workspace: *[W * transpose_chunk_length]u32) void {
+  @comptime_assert(W == H);
+  @comptime_assert(transpose_chunk_length > 0 and vector_length % transpose_chunk_length == 0);
+  transpose_source = source;
+  transpose_offset = 0;
+  transpose_destination = destination;
+  transpose_workspace = workspace;
+  gather_chunk();
+}
+fn gather_chunk() void {
+  phase = 4;
+  const src = @ptrcast([*]u32, transpose_source);
+  mpi_x.gather(mpi_y.pe_id, @ptrcast([*]u32, &src[transpose_offset]),
+               @ptrcast([*]u32, transpose_workspace), transpose_chunk_length, callback_task_id);
+}
+fn init() void { mpi_x.init(); mpi_y.init(); }
+fn start(value: f32, maximum: bool) void {
+  send[0] = value;
+  use_max = maximum;
+  phase = 0;
+  if (use_max) {
+    mpi_x.gather(0, @ptrcast([*]u32, &send),
+                 @ptrcast([*]u32, &row_values), 1, callback_task_id);
+  } else {
+    mpi_x.reduce_fadds(0, &send, &row, 1, callback_task_id);
+  }
+}
+fn broadcast_row() void {
+  phase = 3;
+  mpi_x.broadcast(0, @ptrcast([*]u32, &result), 1, callback_task_id);
+}
+// Single-flight owner may resume its continuation on this existing task.
+fn resume() void {phase=6; @activate(callback_task_id);}
+task advance() void {
+  var complete: bool = false;
+  if (phase == 0) {
+    if (mpi_x.pe_id != 0) {
+      // Non-column-root PEs can wait for the final row broadcast immediately.
+      broadcast_row();
+      return;
+    }
+    phase = 1;
+    if (use_max) {
+      row[0] = row_values[0];
+      for (@range(u16, W)) |i| {
+        if (row_values[i] > row[0]) { row[0] = row_values[i]; }
+      }
+      mpi_y.gather(0, @ptrcast([*]u32, &row),
+                   @ptrcast([*]u32, &col_values), 1, callback_task_id);
+    } else {
+      mpi_y.reduce_fadds(0, &row, &result, 1, callback_task_id);
+    }
+  } else if (phase == 1) {
+    if (use_max and mpi_y.pe_id == 0) {
+      result[0] = col_values[0];
+      for (@range(u16, H)) |i| {
+        if (col_values[i] > result[0]) { result[0] = col_values[i]; }
+      }
+    }
+    phase = 2;
+    mpi_y.broadcast(0, @ptrcast([*]u32, &result), 1, callback_task_id);
+  } else if (phase == 2) {
+    broadcast_row();
+  } else if (phase == 4) {
+    phase = 5;
+    const dst = @ptrcast([*]u32, transpose_destination);
+    mpi_y.scatter(mpi_x.pe_id, @ptrcast([*]u32, transpose_workspace),
+                  @ptrcast([*]u32, &dst[transpose_offset]), transpose_chunk_length, callback_task_id);
+  } else if (phase == 5) {
+    transpose_offset += transpose_chunk_length;
+    if (transpose_offset < vector_length) {gather_chunk();}
+    else {complete=true;}
+  } else {
+    complete=true;
+  }
+  if(complete){f_callback();}
+}
+comptime { @bind_local_task(advance, callback_task_id); }
+
+// Requires completed preceding callbacks and empty shared queues. COLOR_0 has
+// the SDK scatter filter installed; COLOR_1 has none. Their filter/color pairing
+// is established by the unmodified SDK collective import at compile time.
+const queue_cfg = @import_module("<tile_config>");
+fn configure_queues() void {
+  queue_cfg.input_queue_config.encode_input_queue(x_queues[0], @as(i16,@get_int(c2d_params.x.ids.DATA_COLOR_0)), true);
+  queue_cfg.input_queue_config.encode_input_queue(x_queues[1], @as(i16,@get_int(c2d_params.x.ids.DATA_COLOR_1)), false);
+  queue_cfg.input_queue_config.encode_input_queue(y_queues[0], @as(i16,@get_int(c2d_params.y.ids.DATA_COLOR_0)), true);
+  queue_cfg.input_queue_config.encode_input_queue(y_queues[1], @as(i16,@get_int(c2d_params.y.ids.DATA_COLOR_1)), false);
+  queue_cfg.output_queue_config.encode_output_queue(x_queues[0], @as(i16,@get_int(c2d_params.x.ids.DATA_COLOR_0)));
+  queue_cfg.output_queue_config.encode_output_queue(x_queues[1], @as(i16,@get_int(c2d_params.x.ids.DATA_COLOR_1)));
+  queue_cfg.output_queue_config.encode_output_queue(y_queues[0], @as(i16,@get_int(c2d_params.y.ids.DATA_COLOR_0)));
+  queue_cfg.output_queue_config.encode_output_queue(y_queues[1], @as(i16,@get_int(c2d_params.y.ids.DATA_COLOR_1)));
+}

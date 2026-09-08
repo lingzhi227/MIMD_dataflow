@@ -6,6 +6,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
+from host_compiler import executable as host_compiler
+
 class BiCGStabReference(unittest.TestCase):
     def test_nonsymmetric_early_exit_and_zero_operator(self):
         code = r"""
@@ -40,7 +42,7 @@ int main(){
             (p / "test.cpp").write_text(code)
             subprocess.run(
                 [
-                    "clang++",
+                    host_compiler(),
                     "-std=c++17",
                     "-ffp-contract=off",
                     "-fsanitize=undefined",

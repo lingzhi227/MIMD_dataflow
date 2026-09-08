@@ -46,13 +46,18 @@ def run(root, parameters, extents, pack_batch, decode, word_bits=None):
             dict(operation=operation, epoch=epoch, port=port),
         )
 
+    parameter_argument = parameters(s)
+    check(
+        parameter_argument is None or isinstance(parameter_argument, str),
+        "CSL parameter argument",
+    )
     cmd = [
         "cslc",
         "layout.csl",
         "--arch=wse3",
         f"--fabric-dims={cols+7},{rows+2}",
         "--fabric-offsets=4,1",
-        parameters(s),
+        *([] if parameter_argument is None else [parameter_argument]),
         "-o=out",
         "--memcpy",
         "--channels=1",

@@ -63,6 +63,16 @@ def main():
         "mesh_attention.v1",
         "mesh_mlp.v1",
         "mesh_projection_residual_rms.v1",
+        "mesh_feed_forward.v1",
+        "mesh_prefill_tail.v1",
+        "mesh_attention_tail.v1",
+        "mesh_batched_rms.v1",
+        "mesh_batched_fanout.v1",
+        "mesh_batched_feed_forward.v1",
+        "mesh_cache_attention.v1",
+        "mesh_projected_cache.v1",
+        "mesh_projected_cache_ffn.v1",
+        "mesh_input_attention_mixed.v1",
     ):
         raise ValueError(
             "completed-call validation currently supports normalized fan-out, attention, MLP and projection/residual/RMS"
@@ -70,37 +80,66 @@ def main():
     if s is None:
         print(json.dumps(output, indent=2))
         return
-    if s.get("profile") in ("mesh_mlp.v1", "mesh_projection_residual_rms.v1"):
-        if s["profile"] == "mesh_mlp.v1":
+    if a.check_completed and read("results.json") is None:
+        output["completed_call_diagnostic"] = dict(
+            available=False,
+            completed_calls=0,
+            passed=False,
+            reason="No completed SDK call has been saved yet",
+        )
+        output["diagnostic_is_full_qualification"] = False
+        print(json.dumps(output, indent=2))
+        return
+    if s.get("profile") in (
+        "mesh_mlp.v1",
+        "mesh_projection_residual_rms.v1",
+        "mesh_feed_forward.v1",
+        "mesh_prefill_tail.v1",
+        "mesh_attention_tail.v1",
+        "mesh_batched_rms.v1",
+        "mesh_batched_fanout.v1",
+        "mesh_batched_feed_forward.v1",
+        "mesh_cache_attention.v1",
+        "mesh_projected_cache.v1",
+        "mesh_projected_cache_ffn.v1",
+        "mesh_input_attention_mixed.v1",
+    ):
+        if s["profile"] == "mesh_projected_cache_ffn.v1":
+            from projected_cache_ffn_debug import inspect
+        elif s["profile"] == "mesh_projected_cache.v1":
+            from projected_cache_debug import inspect
+        elif s["profile"] == "mesh_cache_attention.v1":
+            from cache_attention_debug import inspect
+        elif s["profile"] == "mesh_batched_feed_forward.v1":
+            from batched_ffn_debug import inspect
+        elif s["profile"] == "mesh_batched_fanout.v1":
+            from batched_fanout_debug import inspect
+        elif s["profile"] == "mesh_batched_rms.v1":
+            from batched_rms_debug import inspect
+        elif s["profile"] == "mesh_mlp.v1":
             from mlp_debug import inspect
-            from mesh_mlp import plan
-            from mesh_mlp_sdk import audit_cases
+        elif s["profile"] == "mesh_input_attention_mixed.v1":
+            from input_attention_mixed_debug import inspect
+        elif s["profile"] == "mesh_attention_tail.v1":
+            from attention_tail_debug import inspect
+        elif s["profile"] == "mesh_prefill_tail.v1":
+            from prefill_tail_debug import inspect
+        elif s["profile"] == "mesh_feed_forward.v1":
+            from feed_forward_debug import inspect
         else:
             from projection_residual_rms_debug import inspect
-            from mesh_projection_residual_rms import plan
-            from mesh_projection_residual_rms_sdk import audit_cases
 
         if a.check_completed:
             import hashlib
-            import subprocess, sys
+            from frozen_inspection import completed
 
-            code = 'import sys;from pathlib import Path;p=Path(sys.argv[1]);sys.path.insert(0,str(p/"implementation"));from integrity import verify_bundle;verify_bundle(p)'
-            subprocess.run(
-                [sys.executable, "-c", code, str(root.resolve())],
-                check=True,
-                capture_output=True,
-                text=True,
-            )
+            output["completed_call_diagnostic"] = completed(root, read("results.json"))
             output["frozen_bundle_verified"] = True
-            semantic = read("semantic.json")
-            if s != plan(semantic):
-                raise ValueError("completed-call schedule regeneration mismatch")
-            output["completed_call_diagnostic"] = audit_cases(
-                s,
-                semantic,
-                read("batches.json"),
-                read("results.json"),
-                require_complete=False,
+            output["diagnostic_arithmetic_implementation"] = (
+                "bundle/implementation (frozen)"
+            )
+            output["selected_view_implementation"] = (
+                "current inspector, separately hashed below"
             )
             output["diagnostic_is_full_qualification"] = False
             output["diagnostic_results_sha256"] = hashlib.sha256(

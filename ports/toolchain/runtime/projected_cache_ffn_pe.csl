@@ -1,0 +1,80 @@
+// Resident attention -> mean RMS -> blocked SwiGLU FFN -> Z residual.
+param memcpy_params;param c2d_params;
+param P:i16;param B:i16;param Nt:i16;param St:i16;param Ft:i16;
+param score_block:i16;param value_block:i16;param output_block:i16;
+param scale_bits:u16;param sampled:i16;param epsilon_bits:u16;
+param q_block:i16;param k_block:i16;param v_block:i16;
+param ffn_epsilon_bits:u16;param up_block:i16;param gate_block:i16;param down_block:i16;param capacity:i16;
+const padded:i16=((B+1)/2)*2;
+const sys=@import_module("<memcpy/memcpy>",memcpy_params);
+const time=@import_module("<time>");const config=@import_module("<tile_config>");
+const attention=@import_module("projected_cache_region.csl",.{.memcpy_params=memcpy_params,.c2d_params=c2d_params,
+ .P=P,.B=B,.Nt=Nt,.St=St,.score_block=score_block,.value_block=value_block,.output_block=output_block,
+ .scale_bits=scale_bits,.sampled=sampled,.epsilon_bits=epsilon_bits,.q_block=q_block,.k_block=k_block,.v_block=v_block,
+ .capacity_override=capacity,.f_complete=after_attention,.f_external_callback=after_ffn});
+const rms=@import_module("batched_rms_local.csl",.{.batches=B,.features=Nt,.global_features=P*Nt,.epsilon=@bitcast(f16,ffn_epsilon_bits),.statistic_is_mean=true});
+const mean=@import_module("sdk_axis_mean.csl",.{.capacity=@as(u16,padded),.f_reduce=reduce,.f_broadcast=broadcast,.f_callback=after_ffn});
+const up=@import_module("batched_matmul_blocked.csl",.{.batches=B,.inner=Nt,.columns=Ft,.block_size=up_block});
+const gate=@import_module("batched_matmul_blocked.csl",.{.batches=B,.inner=Nt,.columns=Ft,.block_size=gate_block});
+const down=@import_module("batched_matmul_blocked.csl",.{.batches=B,.inner=Ft,.columns=Nt,.block_size=down_block});
+const activation_math=@import_module("sdk_stable_silu.csl");
+fn reduce(axis:u16,input:[*]f32,output:[*]f32,count:u16,callback:local_task_id) void {
+ @assert(!attention.collective.busy and !attention.max_op.busy and !attention.delegated);
+ if(axis==0){attention.collective.mx.reduce_fadds(0,input,output,count,callback);}else{attention.collective.my.reduce_fadds(0,input,output,count,callback);}
+}
+fn broadcast(axis:u16,data:[*]u32,count:u16,callback:local_task_id) void {
+ @assert(!attention.collective.busy and !attention.max_op.busy and !attention.delegated);
+ if(axis==0){attention.collective.mx.broadcast(0,data,count,callback);}else{attention.collective.my.broadcast(0,data,count,callback);}
+}
+var ffn_weights=@zeros([3*Nt*Ft]f16);
+var ffn_normalized=@zeros([B*Nt]f16);var ffn_square_scratch=@zeros([B*Nt]f16);
+var ffn_sums=@zeros([padded]f16);var ffn_rms_history=@zeros([2*padded]f16);
+var ffn_projections=@zeros([2*B*Ft]f16);var ffn_projection_partial=@zeros([2*B*Ft]f16);
+var ffn_activation=@zeros([B*Ft]f16);var ffn_hidden=@zeros([B*Ft]f16);
+var ffn_delta=@zeros([B*Nt]f16);var ffn_down_partial=@zeros([B*Nt]f16);var ffn_result=@zeros([B*Nt]f16);
+var progress=@zeros([1]u16);var stages=@zeros([8]u16);var timing=@zeros([6]u16);var queues=@zeros([2]u16);
+var started=@zeros([3]u16);var finished=@zeros([3]u16);var phase:u16=0;var active:bool=false;
+fn init_task() void {attention.init();sys.unblock_cmd_stream();}
+fn hls_main() void {
+ @assert(!active and !mean.busy);active=true;phase=0;
+ for(@range(u16,8))|i|{stages[i]=0;}
+ time.enable_tsc();time.get_timestamp(&started);attention.start_region();
+}
+fn after_attention() void {
+ @assert(active and phase==0 and !attention.active);stages[0]=1;
+ for(@range(i16,padded))|i|{ffn_sums[i]=0.0;}
+ rms.square_sum(&attention.result,&ffn_square_scratch,&ffn_sums);
+ attention.copy(&ffn_sums,&ffn_rms_history,@as(u16,padded));stages[1]=1;
+ phase=1;mean.start(1,&ffn_sums,&ffn_sums,@as(u16,padded),@as(u16,P*Nt));
+}
+fn after_ffn() void {
+ @assert(active and !mean.busy and !attention.delegated and !attention.collective.busy);
+ if(phase==1){
+  attention.copy(&ffn_sums,@ptrcast([*]f16,&ffn_rms_history[padded]),@as(u16,padded));stages[2]=1;
+  rms.normalize(&attention.result,&attention.gamma,&ffn_normalized,&ffn_sums);
+  up.compute(&ffn_normalized,&ffn_weights,&ffn_projections);
+  gate.compute(&ffn_normalized,@ptrcast([*]f16,&ffn_weights[Nt*Ft]),@ptrcast([*]f16,&ffn_projections[B*Ft]));
+  attention.copy(&ffn_projections,&ffn_projection_partial,@as(u16,2*B*Ft));stages[3]=1;
+  phase=2;attention.external_sum(1,&ffn_projections,&ffn_projections,@as(u16,2*B*Ft));
+ }else if(phase==2){
+  stages[4]=1;
+  const gd=@get_dsd(mem1d_dsd,.{.base_address=&ffn_projections[B*Ft],.extent=@as(u16,B*Ft)});
+  const ad=@get_dsd(mem1d_dsd,.{.base_address=&ffn_activation,.extent=@as(u16,B*Ft)});
+  const ud=@get_dsd(mem1d_dsd,.{.base_address=&ffn_projections,.extent=@as(u16,B*Ft)});
+  const hd=@get_dsd(mem1d_dsd,.{.base_address=&ffn_hidden,.extent=@as(u16,B*Ft)});
+  @map(activation_math.value,gd,ad);@fmulh(hd,ud,ad);
+  down.compute(&ffn_hidden,@ptrcast([*]f16,&ffn_weights[2*Nt*Ft]),&ffn_delta);
+  attention.copy(&ffn_delta,&ffn_down_partial,@as(u16,B*Nt));stages[5]=1;
+  phase=3;attention.external_sum(0,&ffn_delta,&ffn_delta,@as(u16,B*Nt));
+ }else{
+  @assert(phase==3);stages[6]=1;
+  const zd=@get_dsd(mem1d_dsd,.{.base_address=&attention.result,.extent=@as(u16,B*Nt)});
+  const dd=@get_dsd(mem1d_dsd,.{.base_address=&ffn_delta,.extent=@as(u16,B*Nt)});
+  const rd=@get_dsd(mem1d_dsd,.{.base_address=&ffn_result,.extent=@as(u16,B*Nt)});
+  @faddh(rd,zd,dd);stages[7]=1;progress[0]+=1;
+  time.get_timestamp(&finished);time.disable_tsc();for(@range(u16,3))|i|{timing[i]=started[i];timing[i+3]=finished[i];}
+  const qi=config.input_queue_status.get();const qo=config.output_queue_status.get();queues[0]=@as(u16,qi.empty);queues[1]=@as(u16,qo.empty);
+  active=false;sys.unblock_cmd_stream();
+ }
+}
+// Typed physical exports are appended by the emitter from the storage plan.

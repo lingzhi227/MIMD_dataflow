@@ -1,0 +1,26 @@
+{
+  "project": "waferllm",
+  "kernel": "projected_cache_attention_3x256x512_8x8",
+  "status": "source_ready",
+  "partitions": 1,
+  "origins": [
+    "Decode/src/decode.csl:rmsnorm_x",
+    "Decode/src/decode.csl:xq_matvec_mult",
+    "Decode/src/decode.csl:xk_matvec_mult",
+    "Decode/src/decode.csl:xv_matvec_mult",
+    "Decode/src/decode.csl:xq_rope",
+    "Decode/src/decode.csl:xk_rope",
+    "Decode/src/decode.csl:score_matvec_mult",
+    "Decode/src/decode.csl:softmax_score",
+    "Decode/src/decode.csl:output_matvec_mult",
+    "Decode/src/decode.csl:o_matvec_mult",
+    "Decode/src/decode.csl:attn_residual_add"
+  ],
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "contract": "Resident normalized QKV, explicit odd_even pair transforms and supplied shared-cache attention/output/residual. Q4/K32/V32 half DSR blocks, f32 local merge, SDK f32 independent-plane collectives and SDK half math. Three outputs preserve new rotated K and projected V; old cache remains read-only. No append, head/GQA, mask or automatic position semantics. Eight-call simulator qualification and original vecmat local-compute control; not full Decode or hardware.",
+  "fixture": "projected_cache:3:256:512",
+  "instrumentation": "sampled",
+  "source_map": "SOURCE-MAP.json",
+  "source_comparison": "evidence/projected-cache-full8-source-compute-comparison.json",
+  "qualification": "Eight actual SDK calls; eleven original-input native/device stage gates, eight actual native observers on two hosts, all-PE input/intermediate/auxiliary-output witnesses, linked ELF and >=100 frozen mutation rejections. Local-compute control performance only."
+}

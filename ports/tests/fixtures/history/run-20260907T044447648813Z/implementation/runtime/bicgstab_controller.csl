@@ -1,0 +1,100 @@
+// Real unpreconditioned BiCGStab over the common resident solver services.
+var bi_shadow=@zeros([local_vec_sz]f32);
+var bi_v=@zeros([local_vec_sz]f32);
+var bi_s=@zeros([local_vec_sz]f32);
+var bi_alpha:f32=1.0;var bi_omega:f32=1.0;
+// [shadow dot v, t dot s, t dot t] per attempted update.
+var bi_products=@zeros([3*cg_max_iterations]f32);
+var bi_rhos=@zeros([cg_max_iterations]f32);
+var bi_ss=@zeros([cg_max_iterations]f32);
+// Ap, As, denominator, ss, ts, tt, rr, shadow-dot, extra stable norms.
+var bi_progress=@zeros([9]u16);
+var bi_failure=[1]u16{0};
+var bi_early=[1]u16{0};
+const bi_hd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{local_vec_sz}->bi_shadow[i]});
+const bi_vd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{local_vec_sz}->bi_v[i]});
+const bi_sd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{local_vec_sz}->bi_s[i]});
+fn solver_initialize() void {
+ bi_alpha=1.0;bi_omega=1.0;bi_failure[0]=0;bi_early[0]=0;
+ for(@range(u16,9)) |i| {bi_progress[i]=0;}
+ for(@range(u16,cg_max_iterations)) |i| {bi_rhos[i]=0.0;bi_ss[i]=0.0;}
+ for(@range(u16,3*cg_max_iterations)) |i| {bi_products[i]=0.0;}
+}
+fn bi_fail() void {bi_failure[0]=cg_state;cg_finalize(3);}
+fn bi_apply_p() void {
+ bi_rhos[cg_k]=cg_rho;bi_progress[0]+=1;cg_apply(&cg_p,20);
+}
+fn bi_apply_s() void {bi_progress[1]+=1;cg_apply(&bi_s,24);}
+fn solver_begin() void {@fmovs(bi_hd,cg_rd);bi_apply_p();}
+fn bi_early_finish() void {
+ @fmacs(cg_xd,cg_xd,cg_pd,bi_alpha);@fmovs(cg_rd,bi_sd);
+ cg_k+=1;cg_history[cg_k]=bi_ss[cg_k-1];bi_early[0]=1;cg_finalize(0);
+}
+fn bi_next() void {
+ if(@as(u32,cg_k)>=cg_limit[0]){cg_finalize(1);return;}
+ bi_progress[7]+=1;
+ cg_reduce(cg_blas.dot(@as(i16,local_vec_sz),&bi_shadow,&cg_r),false,28);
+}
+fn solver_advance() void {
+ if(cg_state==20){
+  @fmovs(bi_vd,cg_yd);bi_progress[2]+=1;
+  cg_reduce(cg_blas.dot(@as(i16,local_vec_sz),&bi_shadow,&bi_v),false,21);
+ }else if(cg_state==21){
+  const denominator=cg_collect.result[0];bi_products[3*cg_k]=denominator;
+  if(!cg_finite(denominator) or denominator==0.0){bi_fail();return;}
+  bi_alpha=cg_rho/denominator;
+  if(!cg_finite(bi_alpha)){bi_fail();return;}
+  cg_scalars[3*cg_k]=bi_alpha;@fmacs(bi_sd,cg_rd,bi_vd,-bi_alpha);
+  bi_progress[3]+=1;
+  cg_reduce(cg_blas.dot(@as(i16,local_vec_sz),&bi_s,&bi_s),false,22);
+ }else if(cg_state==22){
+  const ss=cg_collect.result[0];bi_ss[cg_k]=ss;
+  if(!cg_finite(ss)){bi_fail();return;}
+  if(ss==0.0){bi_progress[8]+=1;cg_norm(&bi_s,23);return;}
+  if(cg_math.sqrt(ss)<=cg_threshold){bi_early_finish();return;}
+  bi_apply_s();
+ }else if(cg_state==23){
+  if(cg_norm_value<=cg_threshold){bi_early_finish();}else{bi_fail();}
+ }else if(cg_state==24){
+  bi_progress[4]+=1;
+  cg_reduce(cg_blas.dot(@as(i16,local_vec_sz),&y_local_buf,&bi_s),false,29);
+ }else if(cg_state==29){
+  bi_products[3*cg_k+1]=cg_collect.result[0];bi_progress[5]+=1;
+  cg_reduce(cg_blas.dot(@as(i16,local_vec_sz),&y_local_buf,&y_local_buf),false,25);
+ }else if(cg_state==25){
+  const ts=bi_products[3*cg_k+1];const tt=cg_collect.result[0];bi_products[3*cg_k+2]=tt;
+  if(!cg_finite(ts) or !cg_finite(tt) or tt<=0.0){bi_fail();return;}
+  bi_omega=ts/tt;
+  if(!cg_finite(bi_omega) or bi_omega==0.0){bi_fail();return;}
+  cg_scalars[3*cg_k+1]=bi_omega;
+  @fmacs(cg_xd,cg_xd,cg_pd,bi_alpha);@fmacs(cg_xd,cg_xd,bi_sd,bi_omega);
+  @fmacs(cg_rd,bi_sd,cg_yd,-bi_omega);cg_k+=1;bi_progress[6]+=1;
+  cg_reduce(cg_blas.dot(@as(i16,local_vec_sz),&cg_r,&cg_r),false,26);
+ }else if(cg_state==26){
+  const rr=cg_collect.result[0];cg_history[cg_k]=rr;
+  if(!cg_finite(rr)){bi_fail();return;}
+  if(rr==0.0){bi_progress[8]+=1;cg_norm(&cg_r,27);return;}
+  if(cg_math.sqrt(rr)<=cg_threshold){cg_finalize(0);return;}
+  bi_next();
+ }else if(cg_state==27){
+  if(cg_norm_value<=cg_threshold){cg_finalize(0);}else{bi_fail();}
+ }else if(cg_state==28){
+  const next=cg_collect.result[0];
+  if(!cg_finite(next) or next==0.0){bi_fail();return;}
+  const beta=(next/cg_rho)*(bi_alpha/bi_omega);
+  if(!cg_finite(beta)){bi_fail();return;}
+  cg_scalars[3*(cg_k-1)+2]=beta;
+  @fmacs(cg_pd,cg_pd,bi_vd,-bi_omega);@fmacs(cg_pd,cg_rd,cg_pd,beta);
+  cg_rho=next;bi_apply_p();
+ }
+}
+var bi_products_ptr:[*]f32=&bi_products;var bi_rhos_ptr:[*]f32=&bi_rhos;
+var bi_ss_ptr:[*]f32=&bi_ss;var bi_progress_ptr:[*]u16=&bi_progress;
+var bi_failure_ptr:[*]u16=&bi_failure;var bi_early_ptr:[*]u16=&bi_early;
+comptime {
+ @export_symbol(bi_products_ptr,"bi_products");@export_symbol(bi_rhos_ptr,"bi_rhos");
+ @export_symbol(bi_ss_ptr,"bi_ss");@export_symbol(bi_progress_ptr,"bi_progress");
+ @export_symbol(bi_failure_ptr,"bi_failure");@export_symbol(bi_early_ptr,"bi_early");
+}
+
+fn solver_start() void {cg_norm(&cg_rhs,1);}

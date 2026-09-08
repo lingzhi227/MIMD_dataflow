@@ -10,6 +10,8 @@ from frontend import parse
 from ir import verify
 
 
+from host_compiler import executable as host_compiler
+
 class Binary16(unittest.TestCase):
     def test_bit_mismatch_points_to_lane_and_values(self):
         from binary16 import assert_bits_equal
@@ -42,7 +44,7 @@ int main(){
             (p / "test.cpp").write_text(source)
             subprocess.run(
                 [
-                    "clang++",
+                    host_compiler(),
                     "-std=c++17",
                     "-ffp-contract=off",
                     "-fsanitize=undefined",

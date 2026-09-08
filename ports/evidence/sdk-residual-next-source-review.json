@@ -1,0 +1,36 @@
+{
+  "kind": "source_review_only",
+  "files": {
+    "projects/sdk_examples/upstream/benchmarks/residual/residual.csl": "8e13bd2360eaa9364e3eb98bd08d9fbb2bf8bd4a0fdb5d93f6075fa324f45c95",
+    "projects/sdk_examples/upstream/benchmarks/residual/layout.csl": "739ce615b0a711dcb717f78c5f8149c19dbc36b9002926b65e60d204ee05d303",
+    "projects/sdk_examples/upstream/benchmarks/residual/nrminf.csl": "7ba1fd2ca655fa3caa7ed6676bf7d91032432285cb4bad684648645c375b83ef",
+    "projects/sdk_examples/upstream/benchmarks/residual/README.rst": "fe78acfa14b2b2791281c1e22275e51bbdae77344c2036a095f226f55e3bff18",
+    "projects/sdk_examples/upstream/benchmarks/residual/gemv.csl": "41e33662a5d2000633b4b1e14edd8ab9b80eaa48e52be608e25ba91abab5717e",
+    "projects/sdk_examples/upstream/benchmarks/residual/axpy.csl": "469897af255e10215d8540e999a5885e38235e2e0b35ad561afa2df81cf1e665"
+  },
+  "source_commit": "4866cf330333446cb5e529e10f36be4600d1df29",
+  "algorithm": "Infinity norm of b-Ax, not only the residual vector",
+  "source_geometry": "Explicitly asserts width=height=2; broader geometries require separately declared lowering/control changes.",
+  "storage": {
+    "A": "column-major local matrix tile, lda=LOCAL_OUT_SZ",
+    "x": "host writes top PE row, device broadcasts south",
+    "b": "host writes first PE column",
+    "residual": "subtract each local Ax west-to-east; last column owns final vector",
+    "norm": "last column computes local abs max, southern value reduced to PE(1,0)"
+  },
+  "library_calls": [
+    "gemv.sgemv_outer",
+    "axpy.saxpy",
+    "nrminf.snrminf"
+  ],
+  "lifecycle": "Every PE calls f_exit/unblock; repeated calls require original fixed host handles and correct fresh input placement.",
+  "existing_gap": "Existing sdk_examples/residual HLS is a 4x4 local equation and does not produce infinity norm or implement the source distribution.",
+  "queued_after": "Finish current composed attention/FFN full-eight SDK qualification before implementation of this next linear algebra workflow.",
+  "acceptance": [
+    "Fresh original-input cases including exact/near-zero residuals; conditioning-aware f32 error check, not residual-relative alone.",
+    "Observe local Ax, each west-to-east residual stage, final residual and local/global infinity norm.",
+    "Reload changed A/x/b on warm calls; validate all exit/protocol states and immutable input handles.",
+    "Matched original 2x2 SDK control first; larger geometry is a separately measured extension."
+  ],
+  "scope": "Planning only. No new HLS, codegen or SDK pass claimed."
+}

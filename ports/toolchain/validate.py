@@ -15,6 +15,30 @@ def audit(root):
     manifest = verify_bundle(root)
     m = json.loads((root / "semantic.json").read_text())
     s = json.loads((root / "schedule.json").read_text())
+    if s.get("profile") == "mesh_projected_cache_ffn.v1":
+        from mesh_projected_cache_ffn_sdk import audit as composed
+
+        return composed(root)
+    if s.get("profile") == "mesh_projected_cache.v1":
+        from mesh_projected_cache_sdk import audit as projected
+
+        return projected(root)
+    if s.get("profile") == "mesh_input_attention_mixed.v1":
+        from mesh_input_attention_mixed_sdk import audit as mixed_audit
+
+        return mixed_audit(root)
+    if s.get("profile") == "mesh_attention_tail.v1":
+        from mesh_attention_tail_sdk import audit as attention_tail_audit
+
+        return attention_tail_audit(root)
+    if s.get("profile") == "mesh_prefill_tail.v1":
+        from mesh_prefill_tail_sdk import audit as tail_audit
+
+        return tail_audit(root)
+    if s.get("profile") == "mesh_feed_forward.v1":
+        from mesh_feed_forward_sdk import audit as feed_forward_audit
+
+        return feed_forward_audit(root)
     if s.get("profile") == "mesh_projection_residual_rms.v1":
         from mesh_projection_residual_rms_sdk import audit as composition_audit
 
@@ -59,6 +83,22 @@ def audit(root):
         from mesh_softmax_sdk import audit as softmax_audit
 
         return softmax_audit(root)
+    if s.get("profile") == "mesh_cache_attention.v1":
+        from mesh_cache_attention_sdk import audit as cache_audit
+
+        return cache_audit(root)
+    if s.get("profile") == "mesh_batched_feed_forward.v1":
+        from mesh_batched_feed_forward_sdk import audit as batch_ffn
+
+        return batch_ffn(root)
+    if s.get("profile") == "mesh_batched_fanout.v1":
+        from mesh_batched_fanout_sdk import audit as batched_fanout
+
+        return batched_fanout(root)
+    if s.get("profile") == "mesh_batched_rms.v1":
+        from mesh_batched_rms_sdk import audit as batched_audit
+
+        return batched_audit(root)
     if s.get("profile") == "mesh_rms.v1":
         from mesh_rms_sdk import audit as rms_audit
 

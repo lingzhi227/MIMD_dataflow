@@ -1,0 +1,28 @@
+// Two-level local contraction: packed half DSR FMA blocks, f32 block merge.
+// Fast path delegates unchanged when the block covers the resident inner shard.
+// SDK 2.10.1 currently rejects mapped merge/narrow inside this loop with
+// an LLVM PHI validation error (preserved compiler isolation). Scalar f32
+// merge/conversion keeps the packed half DSR contraction; profile its cost.
+// SDK collective is owned by caller and begins only after this synchronous return.
+param batches:i16;param inner:i16;param columns:i16;param block_size:i16=inner;
+comptime {@comptime_assert(block_size>0 and inner%block_size==0);}
+const direct=@import_module("batched_matmul_local.csl",.{.batches=batches,.inner=inner,.columns=columns});
+const block=@import_module("batched_matmul_local.csl",.{.batches=1,.inner=block_size,.columns=columns});
+const work:i16=if(block_size<inner) columns else 1;
+var partial=@zeros([work]f16);var total=@zeros([work]f32);
+fn compute(input:[*]f16,weight:[*]f16,output:[*]f16) void {
+ if(comptime block_size==inner){direct.compute(input,weight,output);}
+ else {
+  const pd=@get_dsd(mem1d_dsd,.{.base_address=&partial,.extent=@as(u16,columns)});
+  const td=@get_dsd(mem1d_dsd,.{.base_address=&total,.extent=@as(u16,columns)});
+  for(@range(i16,batches)) |row| {
+   @fmovs(td,0.0);
+   for(@range(i16,inner/block_size)) |part| {
+    block.compute(@ptrcast([*]f16,&input[row*inner+part*block_size]),@ptrcast([*]f16,&weight[part*block_size*columns]),&partial);
+    for(@range(i16,columns)) |j| {total[j]=total[j]+@as(f32,partial[j]);}
+   }
+   const od=@get_dsd(mem1d_dsd,.{.base_address=&output[row*columns],.extent=@as(u16,columns)});
+   for(@range(i16,columns)) |j| {output[row*columns+j]=@as(f16,total[j]);}
+  }
+ }
+}

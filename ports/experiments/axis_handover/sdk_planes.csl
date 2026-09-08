@@ -1,0 +1,101 @@
+// Isolated SDK-native alternative: independent X/Y resource sets, no axis
+// rewrite of the other plane. Local buffers are reused only after callbacks.
+param memcpy_params;
+param c2d_params;
+const sys = @import_module("<memcpy/memcpy>", memcpy_params);
+const pos = @import_module("<layout>");
+const config = @import_module("<tile_config>");
+const time = @import_module("<time>");
+const mx = @import_module("<collectives_2d/pe>", .{ .dim_params=c2d_params.x });
+const my = @import_module("<collectives_2d/pe>", .{ .dim_params=c2d_params.y });
+const CALLBACK = @get_local_task_id(10);
+var A = @zeros([2]f16);
+var B = @zeros([8]f16);
+var C = @zeros([2]f16);
+var send = @zeros([8]f32);
+var reduced = @zeros([8]f32);
+var phase: u16 = 0;
+var progress = @zeros([1]u16);
+var callbacks = @zeros([1]u16);
+var queues = @zeros([2]u16);
+var delays = @zeros([4]u16);
+var timing = @zeros([6]u16);
+var start = @zeros([3]u16);
+var finish = @zeros([3]u16);
+var delay_value = @zeros([1]f16);
+const delay_dsd = @get_dsd(mem1d_dsd, .{ .base_address=&delay_value, .extent=1 });
+var px: i16 = 0;
+var py: i16 = 0;
+
+fn skew(stage: i16) void {
+    const epoch = @as(i16, progress[0]);
+    var count: i16 = (px*11 + py*7 + epoch*13 + stage*17) % 31;
+    if (px == (epoch+stage)%8 and py == (epoch*3+stage)%8) { count += 127; }
+    delays[stage] = @as(u16, count);
+    @fmovh(delay_dsd, 0.0);
+    for (@range(i16, count)) |_| { @faddh(delay_dsd, delay_dsd, 1.0); }
+}
+fn widen(source: [*]f16, length: u16) void {
+    for (@range(u16, length)) |i| { send[i]=@as(f32, source[i]); }
+}
+fn narrow(destination: [*]f16, length: u16) void {
+    for (@range(u16, length)) |i| { destination[i]=@as(f16, reduced[i]); }
+}
+fn init_task() void {
+    px=@as(i16,pos.get_x_coord()); py=@as(i16,pos.get_y_coord());
+    mx.init(); my.init();
+    sys.unblock_cmd_stream();
+}
+fn hls_main() void {
+    phase=0;
+    time.enable_tsc(); time.get_timestamp(&start);
+    skew(0);
+    widen(&A,2);
+    my.reduce_fadds(0,&send,&reduced,2,CALLBACK);
+}
+task advance() void {
+    callbacks[0]+=1;
+    if (phase==0) {
+        phase=1;
+        my.broadcast(0,@ptrcast([*]u32,&reduced),2,CALLBACK);
+    } else if (phase==1) {
+        narrow(&A,2);
+        skew(1); skew(2);
+        widen(&B,8);
+        phase=2;
+        mx.reduce_fadds(0,&send,&reduced,8,CALLBACK);
+    } else if (phase==2) {
+        phase=3;
+        mx.broadcast(0,@ptrcast([*]u32,&reduced),8,CALLBACK);
+    } else if (phase==3) {
+        narrow(&B,8);
+        skew(3);
+        widen(&C,2);
+        phase=4;
+        my.reduce_fadds(0,&send,&reduced,2,CALLBACK);
+    } else if (phase==4) {
+        phase=5;
+        my.broadcast(0,@ptrcast([*]u32,&reduced),2,CALLBACK);
+    } else {
+        @assert(phase==5);
+        narrow(&C,2);
+        phase=6;
+        time.get_timestamp(&finish); time.disable_tsc();
+        for (@range(u16,3)) |i| { timing[i]=start[i]; timing[i+3]=finish[i]; }
+        const qi=config.input_queue_status.get(); const qo=config.output_queue_status.get();
+        queues[0]=@as(u16,qi.empty); queues[1]=@as(u16,qo.empty);
+        progress[0]+=1;
+        sys.unblock_cmd_stream();
+    }
+}
+var ap:[*]f16=&A; var bp:[*]f16=&B; var cp:[*]f16=&C;
+var pp:[*]u16=&progress; var qp:[*]u16=&queues; var sp:[*]u16=&callbacks;
+var dp:[*]u16=&delays; var tp:[*]u16=&timing; var vp:[*]f16=&delay_value;
+comptime {
+    @bind_local_task(advance,CALLBACK);
+    @export_symbol(ap,"A"); @export_symbol(bp,"B"); @export_symbol(cp,"C");
+    @export_symbol(pp,"progress"); @export_symbol(qp,"queues");
+    @export_symbol(sp,"callbacks"); @export_symbol(dp,"delays");
+    @export_symbol(tp,"timing"); @export_symbol(vp,"delay_value");
+    @export_symbol(init_task); @export_symbol(hls_main);
+}

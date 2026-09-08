@@ -1,0 +1,14 @@
+{
+  "project": "waferllm",
+  "kernel": "prefill_tail_64x64x256_8x8_counters",
+  "status": "source_ready",
+  "partitions": 1,
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "origins": [
+    "Prefill/src/prefill.csl h1_matmul/z_add/rmsnorm_z/z1_matmul/z2_matmul/z3_comp/h2_matmul/add_result"
+  ],
+  "contract": "Resident supplied attention-output tail 64x64 via 256 hidden features on 8x8 PEs. Typed half output projection, residual, RMSNorm, block-f32 up/gate/down, SiLU/multiply and final postprojection Z add. Shared forward two-hop DSR engine, CSL RMS/accumulator libraries and joined completion. Immutable public inputs; no intermediate host transfer. Eight SDK calls; independent actual native/device projection, delta and final accuracy; exact staged half/f32 observations, mutation checks, ELF memory and three matched adapted-source calls. Not full Prefill/Decode or hardware performance.",
+  "fixture": "prefill_tail:64:64:256:8",
+  "instrumentation": "counters",
+  "source_comparison": "evidence/prefill-tail64-counter-source-comparison.json"
+}

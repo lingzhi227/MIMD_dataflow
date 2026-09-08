@@ -1,0 +1,202 @@
+{
+  "rpc_symbols": [
+    {
+      "id": 21,
+      "immutable": 0,
+      "kind": "Var",
+      "name": "gate_accumulator",
+      "sym_name": "gate_words_ptr",
+      "type": "[*]u32"
+    },
+    {
+      "id": 5,
+      "immutable": 0,
+      "kind": "Var",
+      "name": "result",
+      "sym_name": "result_ptr",
+      "type": "[*]f16"
+    },
+    {
+      "id": 22,
+      "immutable": 0,
+      "kind": "Var",
+      "name": "gamma",
+      "sym_name": "gamma_ptr",
+      "type": "[*]f16"
+    },
+    {
+      "id": 20,
+      "immutable": 0,
+      "kind": "Var",
+      "name": "up_accumulator",
+      "sym_name": "up_words_ptr",
+      "type": "[*]u32"
+    },
+    {
+      "id": 25,
+      "immutable": 0,
+      "kind": "Var",
+      "name": "rms_progress",
+      "sym_name": "rms_progress_ptr",
+      "type": "[*]u16"
+    },
+    {
+      "id": 3,
+      "immutable": 0,
+      "kind": "Var",
+      "name": "gate_weight",
+      "sym_name": "gate_weight_ptr",
+      "type": "[*]f16"
+    },
+    {
+      "id": 8,
+      "immutable": 0,
+      "kind": "Var",
+      "name": "down_history",
+      "sym_name": "down_history_ptr",
+      "type": "[*]f16"
+    },
+    {
+      "id": 19,
+      "immutable": 0,
+      "kind": "Var",
+      "name": "wide_accumulator",
+      "sym_name": "wide_ptr",
+      "type": "[*]u32"
+    },
+    {
+      "id": 2,
+      "immutable": 0,
+      "kind": "Var",
+      "name": "up_weight",
+      "sym_name": "up_weight_ptr",
+      "type": "[*]f16"
+    },
+    {
+      "id": 12,
+      "immutable": 0,
+      "kind": "Var",
+      "name": "left_first",
+      "sym_name": "left_first_ptr",
+      "type": "[*]f16"
+    },
+    {
+      "id": 23,
+      "immutable": 0,
+      "kind": "Var",
+      "name": "normalized",
+      "sym_name": "normalized_ptr",
+      "type": "[*]f16"
+    },
+    {
+      "id": 10,
+      "immutable": 0,
+      "kind": "Var",
+      "name": "hidden_snapshot",
+      "sym_name": "hidden_snapshot_ptr",
+      "type": "[*]f16"
+    },
+    {
+      "id": 13,
+      "immutable": 0,
+      "kind": "Var",
+      "name": "right_first",
+      "sym_name": "right_first_ptr",
+      "type": "[*]f16"
+    },
+    {
+      "id": 17,
+      "kind": "Func",
+      "name": "init_task",
+      "sym_name": "init_task",
+      "type": "void"
+    },
+    {
+      "id": 24,
+      "immutable": 0,
+      "kind": "Var",
+      "name": "down_snapshot",
+      "sym_name": "down_snapshot_ptr",
+      "type": "[*]f16"
+    },
+    {
+      "id": 15,
+      "immutable": 0,
+      "kind": "Var",
+      "name": "timing",
+      "sym_name": "timing_ptr",
+      "type": "[*]u16"
+    },
+    {
+      "id": 18,
+      "kind": "Func",
+      "name": "hls_main",
+      "sym_name": "hls_main",
+      "type": "void"
+    },
+    {
+      "id": 9,
+      "immutable": 0,
+      "kind": "Var",
+      "name": "gate_snapshot",
+      "sym_name": "gate_snapshot_ptr",
+      "type": "[*]f16"
+    },
+    {
+      "id": 7,
+      "immutable": 0,
+      "kind": "Var",
+      "name": "gate_history",
+      "sym_name": "gate_history_ptr",
+      "type": "[*]f16"
+    },
+    {
+      "id": 14,
+      "immutable": 0,
+      "kind": "Var",
+      "name": "progress",
+      "sym_name": "progress_ptr",
+      "type": "[*]u16"
+    },
+    {
+      "id": 11,
+      "immutable": 0,
+      "kind": "Var",
+      "name": "activated_gate",
+      "sym_name": "activated_gate_ptr",
+      "type": "[*]f16"
+    },
+    {
+      "id": 6,
+      "immutable": 0,
+      "kind": "Var",
+      "name": "up_history",
+      "sym_name": "up_history_ptr",
+      "type": "[*]f16"
+    },
+    {
+      "id": 1,
+      "immutable": 0,
+      "kind": "Var",
+      "name": "x",
+      "sym_name": "x_ptr",
+      "type": "[*]f16"
+    },
+    {
+      "id": 16,
+      "immutable": 0,
+      "kind": "Var",
+      "name": "queues",
+      "sym_name": "queues_ptr",
+      "type": "[*]u16"
+    },
+    {
+      "id": 4,
+      "immutable": 0,
+      "kind": "Var",
+      "name": "down_weight",
+      "sym_name": "down_weight_ptr",
+      "type": "[*]f16"
+    }
+  ]
+}

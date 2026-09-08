@@ -6,6 +6,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
+from host_compiler import executable as host_compiler
+
 class PowerReference(unittest.TestCase):
     def test_budget_sign_zero_and_tiny(self):
         source = r"""
@@ -33,7 +35,7 @@ int main(){
             (p / "test.cpp").write_text(source)
             subprocess.run(
                 [
-                    "clang++",
+                    host_compiler(),
                     "-std=c++17",
                     "-ffp-contract=off",
                     "-fsanitize=undefined",

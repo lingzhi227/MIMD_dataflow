@@ -1,0 +1,109 @@
+// Resident FFN: synchronous local DSR arithmetic and asynchronous SDK planes.
+param memcpy_params; param c2d_params;
+param P:i16; param B:i16; param Nt:i16; param Ft:i16; param epsilon_bits:u16; param sampled:i16;
+const padded:i16=((B+1)/2)*2;
+const fused_len:i16=2*B*Ft;
+const capacity:i16=if(fused_len>B*Nt) (if(fused_len>padded) fused_len else padded) else (if(B*Nt>padded) B*Nt else padded);
+const sys=@import_module("<memcpy/memcpy>",memcpy_params);
+const time=@import_module("<time>"); const config=@import_module("<tile_config>");
+const rms=@import_module("batched_rms_local.csl",.{.batches=B,.features=Nt,.global_features=P*Nt,.epsilon=@bitcast(f16,epsilon_bits)});
+const project=@import_module("batched_matmul_local.csl",.{.batches=B,.inner=Nt,.columns=Ft});
+const down=@import_module("batched_matmul_local.csl",.{.batches=B,.inner=Ft,.columns=Nt});
+const activation_math=@import_module("sdk_stable_silu.csl");
+const collective=@import_module("sdk_axis_reduce.csl",.{.c2d_params=c2d_params,.capacity=@as(u16,capacity),.f_callback=after_reduce});
+var X=@zeros([B*Nt]f16); var gamma=@zeros([Nt]f16);
+var weights=@zeros([3*Nt*Ft]f16);
+var normalized=@zeros([B*Nt]f16); var scratch=@zeros([B*Nt]f16);
+var sums=@zeros([padded]f16); var projections=@zeros([fused_len]f16);
+var activation=@zeros([B*Ft]f16); var hidden=@zeros([B*Ft]f16);
+var delta=@zeros([B*Nt]f16); var result=@zeros([B*Nt]f16);
+const histlen:i16=if(sampled!=0) 2*padded else 1;
+const partiallen:i16=if(sampled!=0) fused_len else 1;
+const downlen:i16=if(sampled!=0) B*Nt else 1;
+var history=@zeros([histlen]f16); var partial=@zeros([partiallen]f16); var down_partial=@zeros([downlen]f16);
+var progress=@zeros([8]u16); var timing=@zeros([6]u16); var queues=@zeros([2]u16);
+var start=@zeros([3]u16); var finish=@zeros([3]u16);
+var phase:u16=0; var ready:bool=false; var active:bool=false;
+const sd=@get_dsd(mem1d_dsd,.{.base_address=&sums,.extent=@as(u16,padded)});
+const pd=@get_dsd(mem1d_dsd,.{.base_address=&projections,.extent=@as(u16,fused_len)});
+const dd=@get_dsd(mem1d_dsd,.{.base_address=&delta,.extent=@as(u16,B*Nt)});
+fn init_task() void { @assert(!active); collective.init(); ready=true; progress[0]=1; sys.unblock_cmd_stream(); }
+fn hls_main() void {
+ @assert(ready and !active); active=true; phase=0;
+ time.enable_tsc(); time.get_timestamp(&start);
+ for(@range(u16,6)) |i| {progress[i+1]=0;}
+ @fmovh(sd,0.0); rms.square_sum(&X,&scratch,&sums); progress[1]=1;
+ if(sampled!=0){const h=@get_dsd(mem1d_dsd,.{.base_address=&history,.extent=@as(u16,padded)});@mov16(h,sd);}
+ collective.start(1,&sums,&sums,@as(u16,padded));
+}
+fn after_reduce() void {
+ @assert(active and !collective.busy);
+ if(phase==0){
+  progress[2]=1;
+  if(sampled!=0){const h=@get_dsd(mem1d_dsd,.{.base_address=&history[padded],.extent=@as(u16,padded)});@mov16(h,sd);}
+  rms.normalize(&X,&gamma,&normalized,&sums);
+  project.compute(&normalized,&weights,&projections);
+  project.compute(&normalized,@ptrcast([*]f16,&weights[Nt*Ft]),@ptrcast([*]f16,&projections[B*Ft]));
+  progress[3]=1;
+  if(sampled!=0){const h=@get_dsd(mem1d_dsd,.{.base_address=&partial,.extent=@as(u16,fused_len)});@mov16(h,pd);}
+  phase=1; collective.start(1,&projections,&projections,@as(u16,fused_len));
+ } else if(phase==1){
+  progress[4]=1;
+  const gate=@get_dsd(mem1d_dsd,.{.base_address=&projections[B*Ft],.extent=@as(u16,B*Ft)});
+  const act=@get_dsd(mem1d_dsd,.{.base_address=&activation,.extent=@as(u16,B*Ft)});
+  const up=@get_dsd(mem1d_dsd,.{.base_address=&projections,.extent=@as(u16,B*Ft)});
+  const hid=@get_dsd(mem1d_dsd,.{.base_address=&hidden,.extent=@as(u16,B*Ft)});
+  @map(activation_math.value,gate,act); @fmulh(hid,up,act);
+  down.compute(&hidden,@ptrcast([*]f16,&weights[2*Nt*Ft]),&delta);
+  progress[5]=1;
+  if(sampled!=0){const h=@get_dsd(mem1d_dsd,.{.base_address=&down_partial,.extent=@as(u16,B*Nt)});@mov16(h,dd);}
+  phase=2; collective.start(0,&delta,&delta,@as(u16,B*Nt));
+ } else {
+  @assert(phase==2);
+  const xd=@get_dsd(mem1d_dsd,.{.base_address=&X,.extent=@as(u16,B*Nt)});
+  const rd=@get_dsd(mem1d_dsd,.{.base_address=&result,.extent=@as(u16,B*Nt)});
+  @faddh(rd,xd,dd); progress[6]=1; progress[7]+=1;
+  time.get_timestamp(&finish); time.disable_tsc();
+  for(@range(u16,3)) |i| {timing[i]=start[i];timing[i+3]=finish[i];}
+  const qi=config.input_queue_status.get();const qo=config.output_queue_status.get();
+  queues[0]=@as(u16,qi.empty);queues[1]=@as(u16,qo.empty);
+  active=false; sys.unblock_cmd_stream();
+ }
+}
+var export_X:[*]f16=&X;
+var export_gamma:[*]f16=&gamma;
+var export_weights:[*]f16=&weights;
+var export_normalized:[*]f16=&normalized;
+var export_scratch:[*]f16=&scratch;
+var export_sums:[*]f16=&sums;
+var export_projections:[*]f16=&projections;
+var export_activation:[*]f16=&activation;
+var export_hidden:[*]f16=&hidden;
+var export_delta:[*]f16=&delta;
+var export_result:[*]f16=&result;
+var export_history:[*]f16=&history;
+var export_partial:[*]f16=&partial;
+var export_down_partial:[*]f16=&down_partial;
+var export_progress:[*]u16=&progress;
+var export_timing:[*]u16=&timing;
+var export_queues:[*]u16=&queues;
+comptime {
+ @export_symbol(export_X,"X");
+ @export_symbol(export_gamma,"gamma");
+ @export_symbol(export_weights,"weights");
+ @export_symbol(export_normalized,"normalized");
+ @export_symbol(export_scratch,"scratch");
+ @export_symbol(export_sums,"sums");
+ @export_symbol(export_projections,"projections");
+ @export_symbol(export_activation,"activation");
+ @export_symbol(export_hidden,"hidden");
+ @export_symbol(export_delta,"delta");
+ @export_symbol(export_result,"result");
+ @export_symbol(export_history,"history");
+ @export_symbol(export_partial,"partial");
+ @export_symbol(export_down_partial,"down_partial");
+ @export_symbol(export_progress,"progress");
+ @export_symbol(export_timing,"timing");
+ @export_symbol(export_queues,"queues");
+ @export_symbol(init_task); @export_symbol(hls_main);
+}

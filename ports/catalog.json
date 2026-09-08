@@ -1487,5 +1487,292 @@
     "fixture": "projection_residual_rms:64:64",
     "instrumentation": "sampled",
     "source_comparison": "evidence/projection-residual-rms64-sampled-source-comparison.json"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "projection_residual_rms_64x64_8x8_counters",
+    "status": "source_ready",
+    "partitions": 1,
+    "origins": [
+      "Prefill/src/prefill.csl h1_matmul/z_add/rmsnorm_z"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "contract": "Resident supplied activation/weight/residual/gamma: 64x64 projection, residual add and row RMSNorm on 8x8 PEs. Ordinary typed matmul/add/rmsnorm graph, source forward two-hop DSR engine, joined resources, original CSL row collective and reusable local RMS library. Immutable inputs and last-use private buffer reuse; no intermediate host transfer. Eight SDK calls, exact output/inverse bits, fixed original-input native/device accuracy, mutation rejection and static ELF memory. Sampled mode additionally validates every projection prefix and normalization stages. Matched repaired-source comparison covers first three calls with observation/copy differences stated. No full Prefill or hardware performance claim.",
+    "fixture": "projection_residual_rms:64:64",
+    "instrumentation": "counters",
+    "source_comparison": "evidence/projection-residual-rms64-counter-source-comparison-v2.json"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "projection_residual_rms_128x256_8x8",
+    "status": "source_ready",
+    "partitions": 1,
+    "origins": [
+      "Prefill/src/prefill.csl h1_matmul/z_add/rmsnorm_z"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "contract": "Resident supplied activation/weight/residual/gamma: 128x256 projection, residual add and row RMSNorm on 8x8 PEs. Ordinary typed matmul/add/rmsnorm graph, source forward two-hop DSR engine, joined resources, original CSL row collective and reusable local RMS library. Immutable inputs and last-use private buffer reuse; no intermediate host transfer. Eight SDK calls, exact output/inverse bits, fixed original-input native/device accuracy, mutation rejection and static ELF memory. Sampled mode additionally validates every projection prefix and normalization stages. Matched repaired-source comparison covers first three calls with observation/copy differences stated. No full Prefill or hardware performance claim.",
+    "fixture": "projection_residual_rms:128:256",
+    "instrumentation": "sampled",
+    "source_comparison": "evidence/projection-residual-rms128x256-sampled-source-comparison.json"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "feed_forward_64x64x256_8x8_all_blocked_counters",
+    "status": "source_ready",
+    "partitions": 1,
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "origins": [
+      "Prefill/src/prefill.csl rmsnorm_z/z1_matmul/z2_matmul/z3_comp/h2_matmul/add_result"
+    ],
+    "contract": "Resident supplied Z/gamma/up/gate/down weights: 64x64 normalized gated FFN via 256 hidden features on 8x8 PEs. Typed RMSNorm/matmul/SiLU/multiply/add graph with explicit block-f32 all projections, source forward two-hop DSR engine, original row collective and reusable CSL RMS/accumulator libraries. Immutable inputs and no intermediate host transfer. Eight SDK calls, exact normalized/delta/output and three f32 accumulator observations; independent actual native/device delta and final accuracy, mutations and ELF memory. Matched repaired-source comparison first three calls with observer/copy differences stated. Not full Prefill/Decode or hardware performance.",
+    "fixture": "feed_forward:64:64:256:8",
+    "instrumentation": "counters",
+    "source_comparison": "evidence/feed-forward64-all-block-counter-source-comparison.json"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "feed_forward_128x64x256_8x8_all_blocked_counters",
+    "status": "source_ready",
+    "partitions": 1,
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "origins": [
+      "Prefill/src/prefill.csl rmsnorm_z/z1_matmul/z2_matmul/z3_comp/h2_matmul/add_result"
+    ],
+    "contract": "Resident supplied Z/gamma/up/gate/down weights: 128x64 normalized gated FFN via 256 hidden features on 8x8 PEs. Typed RMSNorm/matmul/SiLU/multiply/add graph with explicit block-f32 all projections, source forward two-hop DSR engine, original row collective and reusable CSL RMS/accumulator libraries. Immutable inputs and no intermediate host transfer. Eight SDK calls, exact normalized/delta/output and three f32 accumulator observations; independent actual native/device delta and final accuracy, mutations and ELF memory. Matched repaired-source comparison first three calls with observer/copy differences stated. Not full Prefill/Decode or hardware performance.",
+    "fixture": "feed_forward:128:64:256:8",
+    "instrumentation": "counters",
+    "source_comparison": "evidence/feed-forward128x64-all-block-counter-source-comparison.json"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "feed_forward_64x64x256_8x8_all_blocked",
+    "status": "source_ready",
+    "partitions": 1,
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "origins": [
+      "Prefill/src/prefill.csl rmsnorm_z/z1_matmul/z2_matmul/z3_comp/h2_matmul/add_result"
+    ],
+    "contract": "Resident supplied Z/gamma/up/gate/down weights: 64x64 normalized gated FFN via 256 hidden features on 8x8 PEs. Typed RMSNorm/matmul/SiLU/multiply/add graph with explicit block-f32 all projections, source forward two-hop DSR engine, original row collective and reusable CSL RMS/accumulator libraries. Immutable inputs and no intermediate host transfer. Eight SDK calls, exact normalized/delta/output and three f32 accumulator observations; independent actual native/device delta and final accuracy, mutations and ELF memory. Matched repaired-source comparison first three calls with observer/copy differences stated. Not full Prefill/Decode or hardware performance.",
+    "fixture": "feed_forward:64:64:256:8",
+    "instrumentation": "sampled",
+    "source_comparison": "evidence/feed-forward64-all-block-sampled-source-comparison.json"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "prefill_tail_64x64x256_8x8_counters",
+    "status": "source_ready",
+    "partitions": 1,
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "origins": [
+      "Prefill/src/prefill.csl h1_matmul/z_add/rmsnorm_z/z1_matmul/z2_matmul/z3_comp/h2_matmul/add_result"
+    ],
+    "contract": "Resident supplied attention-output tail 64x64 via 256 hidden features on 8x8 PEs. Typed half output projection, residual, RMSNorm, block-f32 up/gate/down, SiLU/multiply and final postprojection Z add. Shared forward two-hop DSR engine, CSL RMS/accumulator libraries and joined completion. Immutable public inputs; no intermediate host transfer. Eight SDK calls; independent actual native/device projection, delta and final accuracy; exact staged half/f32 observations, mutation checks, ELF memory and three matched adapted-source calls. Not full Prefill/Decode or hardware performance.",
+    "fixture": "prefill_tail:64:64:256:8",
+    "instrumentation": "counters",
+    "source_comparison": "evidence/prefill-tail64-counter-source-comparison.json"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "prefill_tail_128x64x256_8x8_counters",
+    "status": "source_ready",
+    "partitions": 1,
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "origins": [
+      "Prefill/src/prefill.csl h1_matmul/z_add/rmsnorm_z/z1_matmul/z2_matmul/z3_comp/h2_matmul/add_result"
+    ],
+    "contract": "Resident supplied attention-output tail 128x64 via 256 hidden features on 8x8 PEs. Typed half output projection, residual, RMSNorm, block-f32 up/gate/down, SiLU/multiply and final postprojection Z add. Shared forward two-hop DSR engine, CSL RMS/accumulator libraries and joined completion. Immutable public inputs; no intermediate host transfer. Eight SDK calls; independent actual native/device projection, delta and final accuracy; exact staged half/f32 observations, mutation checks, ELF memory and three matched adapted-source calls. Not full Prefill/Decode or hardware performance.",
+    "fixture": "prefill_tail:128:64:256:8",
+    "instrumentation": "counters",
+    "source_comparison": "evidence/prefill-tail128x64-counter-source-comparison.json"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "prefill_tail_64x64x256_8x8_sampled",
+    "status": "source_ready",
+    "partitions": 1,
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "origins": [
+      "Prefill/src/prefill.csl h1_matmul/z_add/rmsnorm_z/z1_matmul/z2_matmul/z3_comp/h2_matmul/add_result"
+    ],
+    "contract": "Resident supplied attention-output tail 64x64 via 256 hidden features on 8x8 PEs. Typed half output projection, residual, RMSNorm, block-f32 up/gate/down, SiLU/multiply and final postprojection Z add. Shared forward two-hop DSR engine, CSL RMS/accumulator libraries and joined completion. Immutable public inputs; no intermediate host transfer. Eight SDK calls; independent actual native/device projection, delta and final accuracy; exact staged half/f32 observations, mutation checks, ELF memory and three matched adapted-source calls. Not full Prefill/Decode or hardware performance.",
+    "fixture": "prefill_tail:64:64:256:8",
+    "instrumentation": "sampled",
+    "source_comparison": "evidence/prefill-tail64-sampled-source-comparison.json"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "attention_tail_64x64x256_8x8_counters",
+    "status": "source_ready",
+    "partitions": 1,
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "origins": [
+      "Prefill/src/prefill.csl scores_matmul/softmax/output_matmul/h1_matmul/z_add/rmsnorm_z/z1_matmul/z2_matmul/z3_comp/h2_matmul/add_result"
+    ],
+    "contract": "Resident supplied-Q/K/V single-head unmasked attention and output tail 64x64 via 256 hidden features on 8x8 PEs. Typed rotating-root QK, stable SDK-half softmax, aligned column-major PV, half output projection, residual, RMSNorm, block-f32 up/gate/down, SiLU/multiply and final postprojection Z add. Shared forward two-hop DSR engine, CSL RMS/accumulator libraries and joined completion. Immutable public inputs; no intermediate host transfer. Eight SDK calls; independent actual native/device score, probability/mass, attention, projection, delta and final accuracy; exact staged half/f32 observations, mutation checks, ELF memory and three matched adapted-source calls. Not full Prefill/Decode or hardware performance.",
+    "fixture": "attention_tail:64:64:256:8",
+    "instrumentation": "counters",
+    "source_comparison": "evidence/attention-tail64-counter-source-comparison.json"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "attention_tail_128x64x256_8x8_counters",
+    "status": "source_ready",
+    "partitions": 1,
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "origins": [
+      "Prefill/src/prefill.csl scores_matmul/softmax/output_matmul/h1_matmul/z_add/rmsnorm_z/z1_matmul/z2_matmul/z3_comp/h2_matmul/add_result"
+    ],
+    "contract": "Resident supplied-Q/K/V single-head unmasked attention and output tail 128x64 via 256 hidden features on 8x8 PEs. Typed rotating-root QK, stable SDK-half softmax, aligned column-major PV, half output projection, residual, RMSNorm, block-f32 up/gate/down, SiLU/multiply and final postprojection Z add. Shared forward two-hop DSR engine, CSL RMS/accumulator libraries and joined completion. Immutable public inputs; no intermediate host transfer. Eight SDK calls; independent actual native/device score, probability/mass, attention, projection, delta and final accuracy; exact staged half/f32 observations, mutation checks, ELF memory and three matched adapted-source calls. Not full Prefill/Decode or hardware performance.",
+    "fixture": "attention_tail:128:64:256:8",
+    "instrumentation": "counters",
+    "source_comparison": "evidence/attention-tail128-counter-source-comparison.json"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "attention_tail_64x64x128_8x8_sampled",
+    "status": "source_ready",
+    "partitions": 1,
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "origins": [
+      "Prefill/src/prefill.csl scores_matmul/softmax/output_matmul/h1_matmul/z_add/rmsnorm_z/z1_matmul/z2_matmul/z3_comp/h2_matmul/add_result"
+    ],
+    "contract": "Resident supplied-Q/K/V single-head unmasked attention and output tail 64x64 via 128 hidden features on 8x8 PEs. Typed rotating-root QK, stable SDK-half softmax, aligned column-major PV, half output projection, residual, RMSNorm, block-f32 up/gate/down, SiLU/multiply and final postprojection Z add. Shared forward two-hop DSR engine, CSL RMS/accumulator libraries and joined completion. Immutable public inputs; no intermediate host transfer. Eight SDK calls; independent actual native/device score, probability/mass, attention, projection, delta and final accuracy; exact staged half/f32 observations, mutation checks, ELF memory and three matched adapted-source calls. Not full Prefill/Decode or hardware performance.",
+    "fixture": "attention_tail:64:64:128:8",
+    "instrumentation": "sampled",
+    "source_comparison": "evidence/attention-tail64f128-sampled-source-comparison.json"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "input_attention_mixed_64x64x256_8x8_counters",
+    "status": "source_ready",
+    "partitions": 1,
+    "instrumentation": "counters",
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "origins": [
+      "Prefill/src/prefill.csl RMS/QKV/odd_even pair/score/attention/output projection/residual/MLP chain"
+    ],
+    "contract": "Eleven original half inputs; explicit f32 V, probabilities, PV, O, Z and RMS arithmetic, narrowing to half before blocked MLP and at final output. Shared gamma, original X residual, 64x64 activations and 64x256/256x64 MLP on 8x8 mesh. Single-head unmasked; not full Prefill/Decode.",
+    "development_bundle": "evidence/input-attention-codegen-20260907T142401616614Z",
+    "qualification": "Eight standard-driver SDK calls; original-eleven-input branch and final accuracy, actual native observers on two hosts, exact matched-source data, frozen audit mutations, linked ELF memory and simulator cycle comparison. Scoped single-head unmasked chain, not full Prefill/Decode or hardware performance.",
+    "fixture": "input_attention_mixed:64:64:256:8",
+    "target_replay": "evidence/input-attention-codegen-20260907T142401616614Z",
+    "source_comparison": "evidence/input-attention-mixed-source-comparison-validated-execution.json"
+  },
+  {
+    "project": "waferllm",
+    "kernel": "batched_rms_3x512_8x8_g2",
+    "status": "source_ready",
+    "fixture": "batched_rms:3:512",
+    "partitions": 1,
+    "instrumentation": "sampled",
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "origins": [
+      "Decode/src/decode.csl rmsnorm_x",
+      "Decode/src/comm_lib/comm_pe.csl grouped Y-axis all_reduce_bsz"
+    ],
+    "contract": "Three batch rows and512features on8x8PEs; feature-y sharding, batch-major local vectors, x replicas, two grouped trees, explicit zero SIMD padding. Corrected source RMS arithmetic in reusable CSL module. No in-call axis reconfiguration, whole Decode or hardware performance claim.",
+    "source_comparison": "evidence/batched-rms-source-comparison.json",
+    "qualification": "Eight standard SDK calls, same-host C++ on two hosts, independent RMS accuracy, exact source local/reduced/results and replicas, odd batch padding, 28 mutation rejections, linked ELF and scoped simulator cycle comparison."
+  },
+  {
+    "project": "waferllm",
+    "kernel": "batched_qkv_3x512x512_8x8_g2",
+    "status": "source_ready",
+    "fixture": "batched_fanout:3:512:512:3",
+    "partitions": 1,
+    "instrumentation": "sampled",
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "origins": [
+      "Decode/src/decode.csl vecmat_computation",
+      "Decode/src/decode.csl QKV fusion"
+    ],
+    "contract": "Normalized projection subgraph; resident batches, feature-Y shards, weights tiled Y/X, one packed grouped reduction for all branches using same five-color instance as RMS. No full Decode/cache/hardware claim. Eight-call SDK qualification completed; see the bound source comparison.",
+    "source_comparison": "evidence/batched-qkv-full8-source-comparison.json",
+    "qualification": "Eight standard SDK calls, same-host C++ on two hosts, independent per-branch original-input accuracy, exact source local/reduced/results and replicas, odd batch padding, at least40 mutation rejections, linked ELF and scoped simulator cycle comparison."
+  },
+  {
+    "project": "waferllm",
+    "kernel": "batched_up_gate_5x256x512_8x8_g2",
+    "status": "source_ready",
+    "fixture": "batched_fanout:5:256:512:2",
+    "partitions": 1,
+    "instrumentation": "sampled",
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "origins": [
+      "Decode/src/decode.csl vecmat_computation",
+      "Decode/src/decode.csl UP/GATE ZZ fusion"
+    ],
+    "contract": "Normalized projection subgraph; resident batches, feature-Y shards, weights tiled Y/X, one packed grouped reduction for all branches using same five-color instance as RMS. No full Decode/cache/hardware claim. Eight-call SDK qualification completed; see the bound source comparison.",
+    "source_comparison": "evidence/batched-upgate-full8-source-comparison.json",
+    "qualification": "Eight standard SDK calls, same-host C++ on two hosts, independent per-branch original-input accuracy, exact source local/reduced/results and replicas, odd batch padding, at least40 mutation rejections, linked ELF and scoped simulator cycle comparison."
+  },
+  {
+    "project": "waferllm",
+    "kernel": "batched_feed_forward_5x256x512_8x8",
+    "status": "source_ready",
+    "partitions": 1,
+    "instrumentation": "sampled",
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "origins": [
+      "Decode/src/decode.csl RMS and UP/GATE, activation/product, DOWN and residual"
+    ],
+    "contract": "Resident full FFN with half local DSR arithmetic and explicit SDK f32 reduce/broadcast on independent X/Y planes. Stable SDK half SiLU repairs the source approximation. Eight-call SDK qualification; original vecmat compute-control comparison only, not full Decode/cache/hardware coverage.",
+    "fixture": "batched_ffn:5:256:512",
+    "source_comparison": "evidence/batched-ffn-full8-source-compute-comparison.json",
+    "qualification": "Eight actual SDK calls; all seven native/device original-input stage gates, six actual native observers on two hosts, all-PE raw witnesses, linked ELF, >=40 frozen mutation rejections; original vecmat compute-control performance scope only. No unmodified Decode or hardware throughput claim."
+  },
+  {
+    "project": "waferllm",
+    "kernel": "cache_attention_5x256x512_8x8",
+    "status": "source_ready",
+    "partitions": 1,
+    "instrumentation": "sampled",
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "origins": [
+      "Decode/src/decode.csl score_matvec_mult, softmax_score, output_matvec_mult, o_matvec_mult, attn_residual_add"
+    ],
+    "contract": "Supplied shared-cache attention with half DSR blocks, f32 local merge and SDK f32 independent-plane collectives, stable SDK softmax and output residual. No append, mask, query generation or head/GQA selection. Eight-call simulator qualification and original vecmat local-compute control; not full Decode or hardware.",
+    "fixture": "cache_attention:5:256:512",
+    "source_comparison": "evidence/cache-attention-full8-source-compute-comparison.json",
+    "qualification": "Eight actual SDK calls; all five original-input native/device stage gates, four actual native observers on two hosts, all-PE cache/intermediate witnesses, linked ELF and >=40 frozen mutation rejections. Local-compute control performance only."
+  },
+  {
+    "project": "waferllm",
+    "kernel": "batched_pair_rotation_5x1024_8x8_x",
+    "origins": [
+      "Decode/src/decode.csl xq_rope/xk_rope"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "status": "source_ready",
+    "partitions": 1,
+    "fixture": "pair_rotation:5:1024:1:odd_even",
+    "contract": "Decode-layout adjacent pair transform B5/N1024 on8x8, feature X partition/Y replicas, source odd_even order and supplied shared coefficients. Six matched SDK/source calls; all PE input/result/products exact, component mathematics on two native hosts and device, fault rejection and ELF checks. Source control explicitly repairs the odd DSD offset after base reset and includes immutable input copy. Unrepaired-source failure and actual DSD probe retained. No full model, position generation, cache update or hardware throughput claim."
+  },
+  {
+    "project": "waferllm",
+    "kernel": "projected_cache_attention_3x256x512_8x8",
+    "status": "source_ready",
+    "partitions": 1,
+    "origins": [
+      "Decode/src/decode.csl:rmsnorm_x",
+      "Decode/src/decode.csl:xq_matvec_mult",
+      "Decode/src/decode.csl:xk_matvec_mult",
+      "Decode/src/decode.csl:xv_matvec_mult",
+      "Decode/src/decode.csl:xq_rope",
+      "Decode/src/decode.csl:xk_rope",
+      "Decode/src/decode.csl:score_matvec_mult",
+      "Decode/src/decode.csl:softmax_score",
+      "Decode/src/decode.csl:output_matvec_mult",
+      "Decode/src/decode.csl:o_matvec_mult",
+      "Decode/src/decode.csl:attn_residual_add"
+    ],
+    "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+    "contract": "Resident normalized QKV, explicit odd_even pair transforms and supplied shared-cache attention/output/residual. Q4/K32/V32 half DSR blocks, f32 local merge, SDK f32 independent-plane collectives and SDK half math. Three outputs preserve new rotated K and projected V; old cache remains read-only. No append, head/GQA, mask or automatic position semantics. Eight-call simulator qualification and original vecmat local-compute control; not full Decode or hardware.",
+    "fixture": "projected_cache:3:256:512",
+    "instrumentation": "sampled",
+    "source_map": "SOURCE-MAP.json",
+    "source_comparison": "evidence/projected-cache-full8-source-compute-comparison.json",
+    "qualification": "Eight actual SDK calls; eleven original-input native/device stage gates, eight actual native observers on two hosts, all-PE input/intermediate/auxiliary-output witnesses, linked ELF and >=100 frozen mutation rejections. Local-compute control performance only."
   }
 ]

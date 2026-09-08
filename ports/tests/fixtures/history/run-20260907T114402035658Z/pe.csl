@@ -1,0 +1,346 @@
+// Rectangular Prefill projection schedule, MeshInfra/WaferLLM fd1c2daa, Apache-2.0.
+// Joined phase transitions preserve live left ownership and immutable host inputs.
+param memcpy_params;param comm_params;param P:i16;param dim_p_pe:i16;param seq_len_p_pe:i16;param ffn_dim_p_pe:i16;param sampled:i16;
+const L:i16=seq_len_p_pe*dim_p_pe;const H:i16=seq_len_p_pe*ffn_dim_p_pe;const W:i16=dim_p_pe*ffn_dim_p_pe;
+const left_matrix_finish_id=@get_local_task_id(19);const right_matrix_finish_id=@get_local_task_id(20);const two_hop_comm_finish_id=@get_local_task_id(25);const next_step_id=@get_local_task_id(26);
+const sys=@import_module("<memcpy/memcpy>",memcpy_params);const layout_mod=@import_module("<layout>");const time=@import_module("<time>");const config=@import_module("<tile_config>");
+const comm_mod=@import_module("inference_comm.csl",.{.comm_params=comm_params,.P=P,.dim_p_pe=dim_p_pe,.seq_len_p_pe=seq_len_p_pe,.ffn_dim_p_pe=ffn_dim_p_pe,.left_matrix_finish_id=left_matrix_finish_id,.right_matrix_finish_id=right_matrix_finish_id});
+const gating=@import_module("gated_local.csl",.{.length=H});
+var x=@zeros([L]f16);var xwork=@zeros([L]f16);var xrecv=@zeros([L]f16);
+var u=@zeros([W]f16);var g=@zeros([W]f16);var d=@zeros([W]f16);var ww=@zeros([W]f16);var wr=@zeros([W]f16);
+var up=@zeros([H]f16);var gate=@zeros([H]f16);var hr=@zeros([H]f16);
+const lv=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{L}->x[i]});const wv=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{W}->u[i]});const hv=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{H}->up[i]});
+var up_history=@zeros([if(sampled!=0) P*H else 1]f16);var gate_history=@zeros([if(sampled!=0) P*H else 1]f16);var down_history=@zeros([if(sampled!=0) P*L else 1]f16);
+var gate_snapshot=@zeros([if(sampled!=0) H else 1]f16);var hidden_snapshot=@zeros([if(sampled!=0) H else 1]f16);var activated_gate=@zeros([if(sampled!=0) H else 1]f16);
+var left_first=@zeros([if(sampled!=0) 2*L+H else 1]f16);var right_first=@zeros([if(sampled!=0) 3*W else 1]f16);
+var progress=@zeros([8]u16);var timing=@zeros([6]u16);var queues=@zeros([2]u16);var start=@zeros([3]u16);var end=@zeros([3]u16);
+const dummy=@zeros([1]f16);
+var left_matrix_dsd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{1}->dummy[i]});var right_matrix_dsd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{1}->dummy[i]});var out_matrix_dsd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{1}->dummy[i]});
+const comp_dest_dsr_1=@get_dsr(dsr_dest,1);const comp_src0_dsr_1=@get_dsr(dsr_src0,1);const comp_src1_dsr_1=@get_dsr(dsr_src1,1);
+var ptr_left_matrix_send:[*]f16;var ptr_left_matrix_recv:[*]f16;var ptr_right_matrix_send:[*]f16;var ptr_right_matrix_recv:[*]f16;var ptr_out_matrix:[*]f16;var swap_ptr:[*]f16;
+var Mt:i16=0;var Kt:i16=0;var Nt:i16=0;var step:i16=0;var phase:i16=0;var py:i16=0;var offset_step:i16=0;var in_preshift:bool=false;var pre_remaining:i16=0;var shift_round:i16=0;var left_dim_length:i16=0;
+fn init_task() void {const px=@as(i16,layout_mod.get_x_coord());py=@as(i16,layout_mod.get_y_coord());offset_step=if(py==0) 0 else if(py%2==0) P-py/2 else (py+1)/2;comm_mod.init_(px,py);sys.unblock_cmd_stream();}
+task left_matrix_finish() void {@block(left_matrix_finish_id);if(in_preshift){left_matrix_shift_callback();}else{@unblock(two_hop_comm_finish_id);}}
+task right_matrix_finish() void {@block(right_matrix_finish_id);if(attention_align){attention_value_align();return;}@activate(two_hop_comm_finish_id);}
+task two_hop_comm_finish() void {@block(two_hop_comm_finish_id);@unblock(next_step_id);}
+task next_step() void {@block(next_step_id);if(phase==5){attention_score_compute();return;}matmul_compute();}
+fn matmul_map_func(curR:f16) void {@fmach(comp_dest_dsr_1,comp_src0_dsr_1,comp_src1_dsr_1,curR);}
+fn left_matrix_shift_callback() void {
+ if(pre_remaining>0){pre_remaining-=1;swap_ptr=ptr_left_matrix_send;ptr_left_matrix_send=ptr_left_matrix_recv;ptr_left_matrix_recv=swap_ptr;comm_mod.left_matrix_shift(ptr_left_matrix_send,ptr_left_matrix_recv,left_dim_length,shift_round);shift_round+=1;}
+ else {in_preshift=false;if(phase==4){attention_progress[1]=@as(u16,shift_round);}else{if(phase==3){prelude_progress[0]=@as(u16,shift_round);}else{if(phase==0){progress[0]=@as(u16,shift_round);}else{progress[1]=@as(u16,shift_round);}}}step=0;matmul_compute();}
+}
+fn observe() void {
+ if(phase==4){
+  if(sampled!=0){
+   @fmovh(@increment_dsd_offset(attention_value_history_view,step*L,f16),z_view);
+   @fmovh(@increment_dsd_offset(attention_value_left_view,step*S,f16),@set_dsd_base_addr(attention_score_view,ptr_left_matrix_send));
+   @fmovh(@increment_dsd_offset(attention_value_right_view,step*L,f16),@set_dsd_base_addr(lv,ptr_right_matrix_send));
+  }
+  return;
+ }
+
+ if(phase==3){
+  if(sampled!=0){
+   @fmovh(@increment_dsd_offset(projection_history_view,step*L,f16),z_view);
+   if(step==0){
+    @fmovh(projection_left_view,@set_dsd_base_addr(lv,ptr_left_matrix_send));
+    @fmovh(projection_right_view,@set_dsd_length(@set_dsd_base_addr(wv,ptr_right_matrix_send),@as(u16,OW)));
+   }
+  }
+  return;
+ }
+
+ if(sampled!=0){
+  const olen:i16=Mt*Nt;const llen:i16=Mt*Kt;
+  var hptr:[*]f16=&down_history;if(phase==0){hptr=&up_history;}else if(phase==1){hptr=&gate_history;}
+  const od=@set_dsd_length(@set_dsd_base_addr(hv,ptr_out_matrix),@as(u16,olen));
+  const dst=@set_dsd_length(@set_dsd_base_addr(hv,hptr),@as(u16,olen));
+  @fmovh(@increment_dsd_offset(dst,step*olen,f16),od);
+  if(step==0){
+   const ldst=@set_dsd_length(@set_dsd_base_addr(hv,@ptrcast([*]f16,&left_first)),@as(u16,llen));
+   const lsrc=@set_dsd_length(@set_dsd_base_addr(hv,ptr_left_matrix_send),@as(u16,llen));
+   @fmovh(@increment_dsd_offset(ldst,phase*L,f16),lsrc);
+   @fmovh(@increment_dsd_offset(@set_dsd_base_addr(wv,@ptrcast([*]f16,&right_first)),phase*W,f16),@set_dsd_base_addr(wv,ptr_right_matrix_send));
+  }
+ }
+}
+fn matmul_compute() void {
+ swap_ptr=ptr_left_matrix_send;ptr_left_matrix_send=ptr_left_matrix_recv;ptr_left_matrix_recv=swap_ptr;
+ swap_ptr=ptr_right_matrix_send;ptr_right_matrix_send=ptr_right_matrix_recv;ptr_right_matrix_recv=swap_ptr;
+ if(step<P){if(phase==0 or phase==1){@fmovh(@set_dsd_length(@set_dsd_base_addr(hv,ptr_out_matrix),@as(u16,Mt*Nt)),0.0);}
+  if(phase==2){@fmovh(@set_dsd_base_addr(lv,ptr_out_matrix),0.0);}
+  comm_mod.mm_two_hop_comm(ptr_left_matrix_send,ptr_right_matrix_send,ptr_left_matrix_recv,ptr_right_matrix_recv,step,Mt,Kt,Nt);
+  left_matrix_dsd=@set_dsd_base_addr(left_matrix_dsd,ptr_left_matrix_send);right_matrix_dsd=@set_dsd_base_addr(right_matrix_dsd,ptr_right_matrix_send);
+  for(@range(i16,Kt)) |k| {
+   out_matrix_dsd=@set_dsd_base_addr(out_matrix_dsd,ptr_out_matrix);
+   @load_to_dsr(comp_dest_dsr_1,out_matrix_dsd,.{.save_address=true});@load_to_dsr(comp_src0_dsr_1,out_matrix_dsd,.{.save_address=true});@load_to_dsr(comp_src1_dsr_1,left_matrix_dsd,.{.save_address=false});@map(matmul_map_func,right_matrix_dsd);
+   left_matrix_dsd=@increment_dsd_offset(left_matrix_dsd,Mt,f16);if(phase==4){right_matrix_dsd=@increment_dsd_offset(right_matrix_dsd,1,f16);}else{right_matrix_dsd=@increment_dsd_offset(right_matrix_dsd,Nt,f16);}
+  }
+  if(phase==2){block_accum.merge(ptr_out_matrix);}
+  if(phase==0 or phase==1){hidden_accum.merge(ptr_out_matrix);}observe();if(phase==4){attention_progress[2]+=1;}else{if(phase==3){prelude_progress[1]+=1;}else{progress[2+phase]+=1;}}step+=1;@activate(next_step_id);
+ }else{step=0;phase_finish();}
+}
+fn setup_projection() void {if(phase==5){attention_score_setup();return;}if(phase==4){attention_value_setup();return;}
+ if(phase==3){
+  Mt=seq_len_p_pe;Kt=dim_p_pe;Nt=dim_p_pe;
+  ptr_out_matrix=&post_projection_z;@fmovh(z_view,0.0);
+  @fmovh(@set_dsd_length(@set_dsd_base_addr(wv,@ptrcast([*]f16,&ww)),@as(u16,OW)),o_view);
+  ptr_right_matrix_send=&wr;ptr_right_matrix_recv=&ww;
+  ptr_left_matrix_send=&xrecv;ptr_left_matrix_recv=&xwork;
+  left_matrix_dsd=@set_dsd_length(left_matrix_dsd,@as(u16,Mt));
+  out_matrix_dsd=@set_dsd_length(out_matrix_dsd,@as(u16,Mt));
+  right_matrix_dsd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{1}->dummy[i]});
+  right_matrix_dsd=@set_dsd_length(right_matrix_dsd,@as(u16,Nt));
+  left_dim_length=L;in_preshift=true;pre_remaining=offset_step;shift_round=0;
+  left_matrix_shift_callback();return;
+ }
+if(phase==0 or phase==1){hidden_accum.reset();}
+ if(phase==2){block_accum.reset();}
+ Mt=seq_len_p_pe;Kt=if(phase==2) ffn_dim_p_pe else dim_p_pe;Nt=if(phase==2) dim_p_pe else ffn_dim_p_pe;
+ ptr_out_matrix=&xwork;if(phase==0){ptr_out_matrix=&up;}else if(phase==1){ptr_out_matrix=&gate;}
+ @fmovh(@set_dsd_length(@set_dsd_base_addr(hv,ptr_out_matrix),@as(u16,Mt*Nt)),0.0);
+ var wp:[*]f16=&d;if(phase==0){wp=&u;}else if(phase==1){wp=&g;}@fmovh(@set_dsd_base_addr(wv,@ptrcast([*]f16,&ww)),@set_dsd_base_addr(wv,wp));
+ ptr_right_matrix_send=&wr;ptr_right_matrix_recv=&ww;
+ left_matrix_dsd=@set_dsd_length(left_matrix_dsd,@as(u16,Mt));out_matrix_dsd=@set_dsd_length(out_matrix_dsd,@as(u16,Mt));
+ // Reset stride/offset as well as extent at every stage entry.
+ right_matrix_dsd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{1}->dummy[i]});right_matrix_dsd=@set_dsd_length(right_matrix_dsd,@as(u16,Nt));
+ if(phase==1){swap_ptr=ptr_left_matrix_send;ptr_left_matrix_send=ptr_left_matrix_recv;ptr_left_matrix_recv=swap_ptr;matmul_compute();}
+ else {if(phase==0){ptr_left_matrix_send=&xrecv;ptr_left_matrix_recv=&xwork;}else{ptr_left_matrix_send=&hr;ptr_left_matrix_recv=&up;}left_dim_length=Mt*Kt;in_preshift=true;pre_remaining=offset_step;shift_round=0;left_matrix_shift_callback();}
+}
+fn phase_finish() void {
+ if(phase==5){
+  score_progress[2]+=1;@fmovh(attention_logits_view,attention_score_view);
+  attention_softmax();@fmovh(attention_probability_view,attention_score_view);
+  if(sampled!=0){@fmovh(attention_exponents_view,attention_partial_view);}
+  phase=4;step=0;setup_projection();return;
+ }
+ if(phase==4){
+  @fmovh(attention_snapshot_view,z_view);attention_progress[3]+=1;
+  @fmovh(@set_dsd_base_addr(lv,@ptrcast([*]f16,&xwork)),z_view);
+  phase=3;step=0;setup_projection();return;
+ }
+
+ if(phase==3){
+  @fmovh(projection_snapshot_view,z_view);
+  @load_to_dsr(comp_dest_dsr_1,z_view);@load_to_dsr(comp_src0_dsr_1,z_view);@load_to_dsr(comp_src1_dsr_1,residual_view);
+  @faddh(comp_dest_dsr_1,comp_src0_dsr_1,comp_src1_dsr_1);
+  prelude_progress[2]=1;prelude_progress[3]+=1;
+  @fmovh(@set_dsd_base_addr(lv,@ptrcast([*]f16,&xwork)),z_view);
+rms_progress[0]=0;
+ rms_local.square_sum(&xwork,&xrecv,&rms_rows);
+ comm_mod.mv_allreduce_add_x(&rms_rows);
+ rms_local.inverse(&rms_rows);
+ rms_local.normalize(&xwork,&gamma,&xwork,&rms_rows);
+ @fmovh(@set_dsd_base_addr(lv,@ptrcast([*]f16,&normalized_snapshot)),@set_dsd_base_addr(lv,@ptrcast([*]f16,&xwork)));
+ rms_progress[0]=1;
+ 
+  phase=0;step=0;setup_projection();return;
+ }
+
+ progress[7]+=1;
+ if(phase==0){hidden_accum.snapshot();@mov32(up_words_dsd,hidden_words_dsd);phase=1;setup_projection();return;}
+ if(phase==1){hidden_accum.snapshot();@mov32(gate_words_dsd,hidden_words_dsd);
+  if(sampled!=0){@fmovh(@set_dsd_base_addr(hv,@ptrcast([*]f16,&gate_snapshot)),@set_dsd_base_addr(hv,@ptrcast([*]f16,&gate)));}
+  gating.apply(&up,&gate);progress[5]=1;
+  if(sampled!=0){@fmovh(@set_dsd_base_addr(hv,@ptrcast([*]f16,&hidden_snapshot)),hv);@fmovh(@set_dsd_base_addr(hv,@ptrcast([*]f16,&activated_gate)),@set_dsd_base_addr(hv,@ptrcast([*]f16,&gate)));}
+  phase=2;setup_projection();return;
+ }
+ block_accum.snapshot();@fmovh(@set_dsd_base_addr(lv,@ptrcast([*]f16,&down_snapshot)),@set_dsd_base_addr(lv,@ptrcast([*]f16,&xwork)));
+ @load_to_dsr(comp_dest_dsr_1,@set_dsd_base_addr(lv,@ptrcast([*]f16,&xwork)));
+ @load_to_dsr(comp_src0_dsr_1,@set_dsd_base_addr(lv,@ptrcast([*]f16,&xwork)));
+ @load_to_dsr(comp_src1_dsr_1,@set_dsd_base_addr(lv,@ptrcast([*]f16,&post_projection_z)));@faddh(comp_dest_dsr_1,comp_src0_dsr_1,comp_src1_dsr_1);
+ rms_progress[1]+=1;
+ progress[6]+=1;time.get_timestamp(&end);time.disable_tsc();for(@range(i16,3)) |i| {timing[i]=start[i];timing[i+3]=end[i];}
+ const qi=config.input_queue_status.get();const qo=config.output_queue_status.get();queues[0]=@as(u16,qi.empty);queues[1]=@as(u16,qo.empty);sys.unblock_cmd_stream();
+}
+fn hls_main() void {time.enable_tsc();time.get_timestamp(&start);for(@range(i16,8)) |i| {if(i!=6){progress[i]=0;}}phase=0;step=0;@fmovh(@set_dsd_base_addr(lv,@ptrcast([*]f16,&xwork)),lv);phase=3;for(@range(i16,3)) |i| {prelude_progress[i]=0;}phase=5;score_progress[0]=0;score_progress[1]=0;for(@range(i16,3)) |i| {attention_progress[i]=0;}attention_align=false;setup_projection();}
+var x_ptr:[*]f16=&x;
+var up_weight_ptr:[*]f16=&u;
+var gate_weight_ptr:[*]f16=&g;
+var down_weight_ptr:[*]f16=&d;
+var result_ptr:[*]f16=&xwork;
+var up_history_ptr:[*]f16=&up_history;
+var gate_history_ptr:[*]f16=&gate_history;
+var down_history_ptr:[*]f16=&down_history;
+var gate_snapshot_ptr:[*]f16=&gate_snapshot;
+var hidden_snapshot_ptr:[*]f16=&hidden_snapshot;
+var activated_gate_ptr:[*]f16=&activated_gate;
+var left_first_ptr:[*]f16=&left_first;
+var right_first_ptr:[*]f16=&right_first;
+var progress_ptr:[*]u16=&progress;
+var timing_ptr:[*]u16=&timing;
+var queues_ptr:[*]u16=&queues;
+comptime {
+@export_symbol(x_ptr,"x");
+@export_symbol(up_weight_ptr,"up_weight");
+@export_symbol(gate_weight_ptr,"gate_weight");
+@export_symbol(down_weight_ptr,"down_weight");
+@export_symbol(result_ptr,"result");
+@export_symbol(up_history_ptr,"up_history");
+@export_symbol(gate_history_ptr,"gate_history");
+@export_symbol(down_history_ptr,"down_history");
+@export_symbol(gate_snapshot_ptr,"gate_snapshot");
+@export_symbol(hidden_snapshot_ptr,"hidden_snapshot");
+@export_symbol(activated_gate_ptr,"activated_gate");
+@export_symbol(left_first_ptr,"left_first");
+@export_symbol(right_first_ptr,"right_first");
+@export_symbol(progress_ptr,"progress");
+@export_symbol(timing_ptr,"timing");
+@export_symbol(queues_ptr,"queues");
+@bind_local_task(left_matrix_finish,left_matrix_finish_id);@block(left_matrix_finish_id);
+@bind_local_task(right_matrix_finish,right_matrix_finish_id);@block(right_matrix_finish_id);
+@bind_local_task(two_hop_comm_finish,two_hop_comm_finish_id);@block(two_hop_comm_finish_id);
+@bind_local_task(next_step,next_step_id);@block(next_step_id);
+@export_symbol(init_task);@export_symbol(hls_main);}
+
+const block_accum=@import_module("block_accumulate.csl",.{.length=L});
+var wide_ptr:[*]u32=block_accum.words;
+comptime {@export_symbol(wide_ptr,"wide_accumulator");}
+
+const hidden_accum=@import_module("block_accumulate.csl",.{.length=H});
+const hidden_words_dsd=@get_dsd(mem1d_dsd,.{.base_address=hidden_accum.words,.extent=@as(u16,H)});
+
+var up_words=@zeros([H]u32);
+const up_words_dsd=@get_dsd(mem1d_dsd,.{.tensor_access=|j|{H}->up_words[j]});
+var up_words_ptr:[*]u32=&up_words;
+comptime {@export_symbol(up_words_ptr,"up_accumulator");}
+
+var gate_words=@zeros([H]u32);
+const gate_words_dsd=@get_dsd(mem1d_dsd,.{.tensor_access=|j|{H}->gate_words[j]});
+var gate_words_ptr:[*]u32=&gate_words;
+comptime {@export_symbol(gate_words_ptr,"gate_accumulator");}
+
+const rms_local=@import_module("rms_local.csl",.{.rows=seq_len_p_pe,.features=dim_p_pe,.global_features=dim_p_pe*P,.epsilon=@bitcast(f16,@as(u16,17))});
+var gamma=@zeros([dim_p_pe]f16);var rms_rows=@zeros([seq_len_p_pe]f16);
+var normalized_snapshot=@zeros([L]f16);var down_snapshot=@zeros([L]f16);var rms_progress=@zeros([2]u16);
+var gamma_ptr:[*]f16=&gamma;var normalized_ptr:[*]f16=&normalized_snapshot;var down_snapshot_ptr:[*]f16=&down_snapshot;var rms_progress_ptr:[*]u16=&rms_progress;
+comptime {@export_symbol(gamma_ptr,"gamma");@export_symbol(normalized_ptr,"normalized");@export_symbol(down_snapshot_ptr,"down_snapshot");@export_symbol(rms_progress_ptr,"rms_progress");}
+
+const OW:i16=dim_p_pe*dim_p_pe;
+var output_weight=@zeros([OW]f16);var residual=@zeros([L]f16);var post_projection_z=@zeros([L]f16);
+var projection_snapshot=@zeros([L]f16);
+var projection_history=@zeros([if(sampled!=0) P*L else 1]f16);
+var projection_left_first=@zeros([if(sampled!=0) L else 1]f16);
+var projection_right_first=@zeros([if(sampled!=0) OW else 1]f16);
+var prelude_progress=@zeros([4]u16);
+const o_view=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{OW}->output_weight[i]});
+const residual_view=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{L}->residual[i]});
+const z_view=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{L}->post_projection_z[i]});
+const projection_snapshot_view=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{L}->projection_snapshot[i]});
+const projection_history_view=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{L}->projection_history[i]});
+const projection_left_view=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{L}->projection_left_first[i]});
+const projection_right_view=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{OW}->projection_right_first[i]});
+var output_weight_ptr:[*]f16=&output_weight;var residual_ptr:[*]f16=&residual;var post_projection_z_ptr:[*]f16=&post_projection_z;var projection_snapshot_ptr:[*]f16=&projection_snapshot;
+var projection_history_ptr:[*]f16=&projection_history;var projection_left_first_ptr:[*]f16=&projection_left_first;var projection_right_first_ptr:[*]f16=&projection_right_first;var prelude_progress_ptr:[*]u16=&prelude_progress;
+comptime {@export_symbol(output_weight_ptr,"output_weight");@export_symbol(residual_ptr,"residual");@export_symbol(post_projection_z_ptr,"post_projection_z");@export_symbol(projection_snapshot_ptr,"projection_snapshot");@export_symbol(projection_history_ptr,"projection_history");@export_symbol(projection_left_first_ptr,"projection_left_first");@export_symbol(projection_right_first_ptr,"projection_right_first");@export_symbol(prelude_progress_ptr,"prelude_progress");}
+
+const attention_scale:f16=@bitcast(f16,@as(u16,12288));
+
+const S:i16=seq_len_p_pe*seq_len_p_pe;
+const attention_math=@import_module("<math>");
+const attention_softmax_local=@import_module("softmax_local.csl",.{.rows=seq_len_p_pe,.cols=seq_len_p_pe});
+var attention_k=@zeros([L]f16);var attention_v=@zeros([L]f16);var attention_snapshot=@zeros([L]f16);
+var attention_logits=@zeros([S]f16);var attention_probability=@zeros([S]f16);
+var attention_peaks=@zeros([seq_len_p_pe]f16);var attention_sums=@zeros([seq_len_p_pe]f16);
+var score_history=@zeros([if(sampled!=0) P*S else 1]f16);var score_owners=@zeros([if(sampled!=0) P*L else 1]f16);
+var score_roots=@zeros([P]u16);var score_progress=@zeros([3]u16);var attention_progress=@zeros([4]u16);var attention_softmax_progress=@zeros([6]u16);
+var attention_value_history=@zeros([if(sampled!=0) P*L else 1]f16);var attention_value_left=@zeros([if(sampled!=0) P*S else 1]f16);var attention_value_right=@zeros([if(sampled!=0) P*L else 1]f16);
+var attention_softmax_history=@zeros([if(sampled!=0) 5*seq_len_p_pe else 1]f16);var attention_exponents=@zeros([if(sampled!=0) S else 1]f16);
+const attention_key_view=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{L}->attention_k[i]});const attention_value_view=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{L}->attention_v[i]});
+const attention_score_view=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{S}->up[i]});const attention_partial_view=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{S}->gate[i]});
+const attention_snapshot_view=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{L}->attention_snapshot[i]});const attention_logits_view=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{S}->attention_logits[i]});const attention_probability_view=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{S}->attention_probability[i]});
+const attention_exponents_view=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{S}->attention_exponents[i]});
+const score_history_view=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{S}->score_history[i]});const score_owners_view=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{L}->score_owners[i]});
+const attention_value_history_view=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{L}->attention_value_history[i]});const attention_value_left_view=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{S}->attention_value_left[i]});const attention_value_right_view=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{L}->attention_value_right[i]});
+const attention_softmax_history_view=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{seq_len_p_pe}->attention_softmax_history[i]});
+var attention_align:bool=false;var attention_remaining:i16=0;var attention_align_step:i16=0;
+fn attention_score_reduce() void {
+ var offset=@as(i16,attention_math.floor_f16(@as(f16,offset_step+step-1)/@as(f16,P)));
+ offset=offset_step+step-1-offset*P;
+ const root:i16=if(offset==0) 0 else if(offset<=P/2) 2*offset-1 else 2*(P-offset);
+ comm_mod.matmul_T_reduce_add_x(root,&gate,&up);
+ score_roots[step-1]=@as(u16,root);
+ if(@as(i16,layout_mod.get_x_coord())==root){score_progress[1]+=1;}
+ @fmovh(attention_partial_view,0.0);
+}
+fn attention_score_compute() void {
+ swap_ptr=ptr_right_matrix_send;ptr_right_matrix_send=ptr_right_matrix_recv;ptr_right_matrix_recv=swap_ptr;
+ if(step<P){
+  @unblock(two_hop_comm_finish_id);comm_mod.mm_two_hop_comm_T(ptr_right_matrix_send,ptr_right_matrix_recv,step);
+  left_matrix_dsd=@set_dsd_base_addr(left_matrix_dsd,ptr_left_matrix_send);right_matrix_dsd=@set_dsd_base_addr(right_matrix_dsd,ptr_right_matrix_send);
+  for(@range(i16,Kt)) |k| {
+   out_matrix_dsd=@set_dsd_base_addr(out_matrix_dsd,ptr_out_matrix);
+   @load_to_dsr(comp_dest_dsr_1,out_matrix_dsd,.{.save_address=true});@load_to_dsr(comp_src0_dsr_1,out_matrix_dsd,.{.save_address=true});@load_to_dsr(comp_src1_dsr_1,left_matrix_dsd,.{.save_address=false});@map(matmul_map_func,right_matrix_dsd);
+   left_matrix_dsd=@increment_dsd_offset(left_matrix_dsd,Mt,f16);right_matrix_dsd=@increment_dsd_offset(right_matrix_dsd,Nt,f16);
+  }
+  if(sampled!=0){@fmovh(@increment_dsd_offset(score_history_view,step*S,f16),attention_partial_view);@fmovh(@increment_dsd_offset(score_owners_view,step*L,f16),@set_dsd_base_addr(lv,ptr_right_matrix_send));}
+  score_progress[0]+=1;step+=1;attention_score_reduce();@activate(next_step_id);
+ }else{step=0;phase_finish();}
+}
+fn attention_score_setup() void {
+ @fmovh(@set_dsd_base_addr(lv,@ptrcast([*]f16,&xwork)),attention_key_view);@fmovh(attention_partial_view,0.0);
+ ptr_left_matrix_send=&x;ptr_right_matrix_send=&xrecv;ptr_right_matrix_recv=&xwork;ptr_out_matrix=&gate;
+ Mt=seq_len_p_pe;Kt=dim_p_pe;Nt=seq_len_p_pe;
+ left_matrix_dsd=@set_dsd_length(left_matrix_dsd,@as(u16,Mt));out_matrix_dsd=@set_dsd_length(out_matrix_dsd,@as(u16,Mt));
+ right_matrix_dsd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{1}->dummy[i]});right_matrix_dsd=@set_dsd_length(right_matrix_dsd,@as(u16,Nt));
+ in_preshift=false;step=0;attention_score_compute();
+}
+fn attention_softmax_observe(index:i16,values:[*]f16) void {
+ if(sampled!=0){@fmovh(@increment_dsd_offset(attention_softmax_history_view,index*seq_len_p_pe,f16),@set_dsd_base_addr(attention_softmax_history_view,values));}
+ attention_softmax_progress[index]=1;
+}
+fn attention_softmax() void {
+ for(@range(i16,6)) |i| {attention_softmax_progress[i]=0;}
+ attention_softmax_local.scale_max(&up,&attention_peaks,attention_scale);attention_softmax_observe(0,&attention_peaks);
+ comm_mod.mv_allreduce_max_x(&attention_peaks);attention_softmax_observe(1,&attention_peaks);
+ attention_softmax_local.shift_exp(&up,&attention_peaks,&gate);
+ attention_softmax_local.local_sum(&gate,&attention_sums);attention_softmax_observe(2,&attention_sums);
+ comm_mod.mv_allreduce_add_x(&attention_sums);attention_softmax_observe(3,&attention_sums);
+ attention_softmax_local.normalize(&up,&gate,&attention_sums);attention_softmax_observe(4,&attention_sums);attention_softmax_progress[5]=1;
+}
+fn attention_value_setup() void {
+ @fmovh(@set_dsd_base_addr(lv,@ptrcast([*]f16,&xwork)),attention_value_view);@fmovh(z_view,0.0);
+ ptr_left_matrix_send=&gate;ptr_left_matrix_recv=&up;ptr_right_matrix_send=&xrecv;ptr_right_matrix_recv=&xwork;ptr_out_matrix=&post_projection_z;
+ Mt=seq_len_p_pe;Kt=seq_len_p_pe;Nt=dim_p_pe;left_dim_length=S;
+ left_matrix_dsd=@set_dsd_length(left_matrix_dsd,@as(u16,Mt));out_matrix_dsd=@set_dsd_length(out_matrix_dsd,@as(u16,Mt));
+ right_matrix_dsd=@get_dsd(mem1d_dsd,.{.tensor_access=|i|{dim_p_pe}->dummy[i*seq_len_p_pe]});
+ const px=@as(i16,layout_mod.get_x_coord());attention_remaining=if(px==0) 0 else if(px%2==0) P-px/2 else (px+1)/2;
+ attention_align_step=0;attention_align=true;attention_value_align();
+}
+fn attention_value_align() void {
+ if(attention_remaining>0){attention_remaining-=1;swap_ptr=ptr_right_matrix_send;ptr_right_matrix_send=ptr_right_matrix_recv;ptr_right_matrix_recv=swap_ptr;comm_mod.mm_two_hop_comm_T(ptr_right_matrix_send,ptr_right_matrix_recv,attention_align_step);attention_align_step+=1;}
+ else{attention_align=false;attention_progress[0]=@as(u16,attention_align_step);in_preshift=true;pre_remaining=offset_step;shift_round=0;left_matrix_shift_callback();}
+}
+
+var attention_k_ptr:[*]f16=&attention_k;
+comptime {@export_symbol(attention_k_ptr,"attention_k");}
+var attention_v_ptr:[*]f16=&attention_v;
+comptime {@export_symbol(attention_v_ptr,"attention_v");}
+var attention_snapshot_ptr:[*]f16=&attention_snapshot;
+comptime {@export_symbol(attention_snapshot_ptr,"attention_snapshot");}
+var attention_logits_ptr:[*]f16=&attention_logits;
+comptime {@export_symbol(attention_logits_ptr,"attention_logits");}
+var attention_probability_ptr:[*]f16=&attention_probability;
+comptime {@export_symbol(attention_probability_ptr,"attention_probability");}
+var score_history_ptr:[*]f16=&score_history;
+comptime {@export_symbol(score_history_ptr,"score_history");}
+var score_owners_ptr:[*]f16=&score_owners;
+comptime {@export_symbol(score_owners_ptr,"score_owners");}
+var attention_value_history_ptr:[*]f16=&attention_value_history;
+comptime {@export_symbol(attention_value_history_ptr,"attention_value_history");}
+var attention_value_left_ptr:[*]f16=&attention_value_left;
+comptime {@export_symbol(attention_value_left_ptr,"attention_value_left");}
+var attention_value_right_ptr:[*]f16=&attention_value_right;
+comptime {@export_symbol(attention_value_right_ptr,"attention_value_right");}
+var attention_softmax_history_ptr:[*]f16=&attention_softmax_history;
+comptime {@export_symbol(attention_softmax_history_ptr,"attention_softmax_history");}
+var attention_exponents_ptr:[*]f16=&attention_exponents;
+comptime {@export_symbol(attention_exponents_ptr,"attention_exponents");}
+var score_roots_ptr:[*]u16=&score_roots;
+comptime {@export_symbol(score_roots_ptr,"score_roots");}
+var score_progress_ptr:[*]u16=&score_progress;
+comptime {@export_symbol(score_progress_ptr,"score_progress");}
+var attention_progress_ptr:[*]u16=&attention_progress;
+comptime {@export_symbol(attention_progress_ptr,"attention_progress");}
+var attention_softmax_progress_ptr:[*]u16=&attention_softmax_progress;
+comptime {@export_symbol(attention_softmax_progress_ptr,"attention_softmax_progress");}

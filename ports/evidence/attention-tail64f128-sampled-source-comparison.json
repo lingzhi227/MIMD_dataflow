@@ -1,0 +1,209 @@
+{
+  "passed": true,
+  "new_sdk_execution": false,
+  "blocked_upper_accumulation": true,
+  "source_math_review": {
+    "passed": true,
+    "preflight_only": false,
+    "new_sdk_execution": false,
+    "cases": [
+      {
+        "epoch": 0,
+        "target_bits_observed": true,
+        "original_input_math": {
+          "relative_l2": 0.00026131397776835055,
+          "peak_scaled_error": 0.0008580115758991751,
+          "fixed_accuracy_passed": true,
+          "contract": "supplied-qkv-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.0014390259764581255,
+            "peak_scaled_error": 0.004666910744131913,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.0019474366710624362,
+            "peak_scaled_error": 0.004367968318788595,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.005233833804247448,
+            "peak_scaled_error": 0.004916953461583138,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.0006266167405708159,
+            "peak_scaled_error": 0.0009610176490958324,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 0.00042750030216610137,
+            "peak_scaled_error": 0.0012855394900188985,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 0.0008087158203125
+          }
+        }
+      },
+      {
+        "epoch": 1,
+        "target_bits_observed": true,
+        "original_input_math": {
+          "relative_l2": 0.0002643052358211027,
+          "peak_scaled_error": 0.0006738140609648394,
+          "fixed_accuracy_passed": true,
+          "contract": "supplied-qkv-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.001217573121747949,
+            "peak_scaled_error": 0.0027538759470907732,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.0016177491838106216,
+            "peak_scaled_error": 0.004725281630524704,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.004695662562637636,
+            "peak_scaled_error": 0.004677889504983193,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.000613814334408591,
+            "peak_scaled_error": 0.0010051680359784796,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 0.0004329040559770684,
+            "peak_scaled_error": 0.0014019862968491982,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 0.000732421875
+          }
+        }
+      },
+      {
+        "epoch": 2,
+        "target_bits_observed": true,
+        "original_input_math": {
+          "relative_l2": 0.0,
+          "peak_scaled_error": 0.0,
+          "fixed_accuracy_passed": true,
+          "contract": "supplied-qkv-attention-tail-half-normwise-v1",
+          "attention": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "projection": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "mlp_delta": {
+            "relative_l2": 0.0,
+            "peak_scaled_error": 0.0,
+            "fixed_accuracy_passed": true
+          },
+          "score": {
+            "relative_l2": 0.0006107781082703264,
+            "peak_scaled_error": 0.0006055440057549299,
+            "fixed_accuracy_passed": true
+          },
+          "probability": {
+            "relative_l2": 0.00046533556144639327,
+            "peak_scaled_error": 0.0013067009964055556,
+            "fixed_accuracy_passed": true,
+            "max_row_mass_error": 0.0008544921875
+          }
+        }
+      }
+    ],
+    "scope": "Supplied Q/K/V, output weight, original residual, gamma and MLP weights. Original score/softmax/value/O/residual/RMS/MLP/final-Z chain with documented maximum, V layout, descriptor, RMS and gate-ownership repairs; explicit block-f32 up/gate/down. Original-nine-input fsum/sqrt/exp separately checks logits, probabilities and mass, attention output, projection, MLP delta and final output. Three source calls, single-head/unmasked; not HLS/full Prefill/Decode/QKV projections/RoPE/masks/cache/hardware qualification.",
+    "hashes": {
+      "evidence/attention-tail-source-20260907T115329737842Z/provenance.json": "9f7edfb4ef7c656425c4e3f098ac8186dd90cb28ed285287893e2b649fb73b24",
+      "experiments/analyze_attention_tail_source.py": "f96ce0190a82af4a12448e809dcfbafa3b6ff225b0c0dc56d7bf9f9dd0df47c2",
+      "attention_tail_fixtures.py": "5975f7aab68d6e9bd7a3075adc995ed4df4c6816b4ee99a547eff0409a2a5f8b",
+      "prefill_tail_fixtures.py": "9700a502d70926d6ec1846b0f8e06a37b11e4233dac7e188a2b28e52be4ebece",
+      "toolchain/mesh_score.py": "9c52b57f3e9385cf242cf2b8c568440e7fa3a8ffd17333750236c1c4a8eba44d",
+      "toolchain/mesh_softmax.py": "16305c1eba908d004bf0fa1a96df2ca121a43439fa2a7f09ce3fa657ddcd56b9",
+      "toolchain/mesh_device_matmul.py": "99f3377b9d781556044d8ed67f95e5ea9fba84722cbf3274db0088cf299055a2",
+      "feed_forward_fixtures.py": "b720df834d5cf8af59a0bda0ae527da355ccde01c1d6c19d0f86ba2bb904a57d",
+      "experiments/analyze_mlp_source.py": "4b165c38cb1f9604b9b6e47ea179cbcb159f62d53f601527d777a0119cdc7acb",
+      "toolchain/mesh_rms.py": "2d6d5d82ae75809a94f3e642d5e8f8983c245684780e85baf25c423f19a47a83",
+      "toolchain/sdk_math_reference.py": "147102208ff4b9040fcf2ae141319e94d1eb195fe7f4ff15be200504141e30bc",
+      "toolchain/projection_reference.py": "2776552a9c5aab91421e57403b10a6a4f474801391833a43874e082850f587ab",
+      "evidence/attention-tail-source-20260907T115329737842Z/results.json": "5ab9c6a89b59ba7f1456ca16afcb9123bbdc119089d53d8177f82227c31dc047"
+    }
+  },
+  "cases": [
+    {
+      "matched_observed_ports": [
+        "logits",
+        "probability",
+        "attention",
+        "projection",
+        "post_projection_residual",
+        "result",
+        "normalized",
+        "output",
+        "wide_accumulator",
+        "up_accumulator",
+        "gate_accumulator"
+      ],
+      "target_bits_exact": true,
+      "sampled_up_half_observed": true,
+      "sampled_up_half_exact": true,
+      "hls_max_local_cycles": 84329,
+      "source_max_local_cycles": 81157,
+      "hls_to_source_ratio": 1.039084736991264
+    },
+    {
+      "matched_observed_ports": [
+        "logits",
+        "probability",
+        "attention",
+        "projection",
+        "post_projection_residual",
+        "result",
+        "normalized",
+        "output",
+        "wide_accumulator",
+        "up_accumulator",
+        "gate_accumulator"
+      ],
+      "target_bits_exact": true,
+      "sampled_up_half_observed": true,
+      "sampled_up_half_exact": true,
+      "hls_max_local_cycles": 84322,
+      "source_max_local_cycles": 81158,
+      "hls_to_source_ratio": 1.0389856822494394
+    },
+    {
+      "matched_observed_ports": [
+        "logits",
+        "probability",
+        "attention",
+        "projection",
+        "post_projection_residual",
+        "result",
+        "normalized",
+        "output",
+        "wide_accumulator",
+        "up_accumulator",
+        "gate_accumulator"
+      ],
+      "target_bits_exact": true,
+      "sampled_up_half_observed": true,
+      "sampled_up_half_exact": true,
+      "hls_max_local_cycles": 79842,
+      "source_max_local_cycles": 76676,
+      "hls_to_source_ratio": 1.0412906254890708
+    }
+  ],
+  "scope": "Supplied Q/K/V score, stable softmax, value contraction, output projection, residual, normalized gated FFN with final postprojection Z residual. Same inputs, precision, fabric and SDK options; shared RMS and block accumulator libraries. HLS retains immutable public inputs; source inputs are destructive. Snapshot/copy differences remain in measured local WSE3 simulator intervals, especially sampled prefixes. Three matched source calls; HLS eight-call validation separate. Not full Prefill/Decode or hardware throughput.",
+  "hashes": {
+    "projects/waferllm/attention_tail_64x64x128_8x8_sampled/run-20260907T115235234637Z/manifest.json": "2424e9324d3ee578b87cce934698f2cf8e3ed946a7018baf99395a97300a65c5",
+    "projects/waferllm/attention_tail_64x64x128_8x8_sampled/run-20260907T115235234637Z/results.json": "01c28270611e9a9eebd273fc7976baf7d7028d9037d7d8f1a9a0265a72f1c1bc",
+    "evidence/attention-tail-source-20260907T115329737842Z/provenance.json": "9f7edfb4ef7c656425c4e3f098ac8186dd90cb28ed285287893e2b649fb73b24",
+    "evidence/attention-tail-source-20260907T115329737842Z/results.json": "5ab9c6a89b59ba7f1456ca16afcb9123bbdc119089d53d8177f82227c31dc047",
+    "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/csl-hls/ports/experiments/compare_attention_tail.py": "ddbc0516a8a63f8174fa3bdc3bb1f07a4d156a9af29e27d610d95df1ba774682"
+  }
+}

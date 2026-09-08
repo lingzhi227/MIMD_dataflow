@@ -1,28 +1,42 @@
-# Release status
+# Release status — 2026-09-08
 
-This source selection was prepared on 2026-09-07. The captured machine-readable index contains **122 bounded profiles**, each with a recorded `sdk_simulator` qualification. The latest included addition is the 64×64 projection/residual/RMS composition, registered in `qualification-20260907T074658560657Z.json`. Development continued while packaging; this is a fixed release selection, not a live dashboard.
+The captured index contains **141 bounded SDK-qualified profiles**, up from 122 in the initial curated release. This is a fixed source snapshot, not a live dashboard. Newer implementation code and unqualified candidates are included with their status explicitly stated.
 
-## Completed within explicit contracts
+## New qualified work since the initial release
 
-- Distributed dense operations: GEMV, SUMMA, Cannon, Cholesky, no-pivot LU and QR.
-- Sparse and reduction operations: hypersparse SpMV, dot, stable norm, resident CG, Jacobi-PCG, BiCGStab and fixed-step power method.
-- SDK-backed distributed FFT and selected resident stencil configurations.
-- Half two-hop matrix multiplication, grouped GEMV, RMSNorm, stable softmax, SiLU/gating, adjacent-pair rotation, normalized projection/fanout, scores and supplied-Q/K/V attention.
-- Small ordinary-half gated MLP; two blocked mixed-precision MLP profiles with eight completed SDK calls each.
-- 64×64 projection → residual add → RMSNorm, eight SDK calls, independent mathematical checks and adapted-source comparison.
+| Boundary | Added qualified profiles | Validation scope |
+| --- | ---: | --- |
+| Projection/residual/RMS extensions | 2 | Counter and larger rectangular variants |
+| Normalized resident FFN | 3 | Eight-call SDK runs, separate delta/final mathematical checks |
+| Output projection plus FFN tail | 3 | Resident 17-node chain, source controls and resource checks |
+| Supplied-Q/K/V attention plus tail | 3 | 23-node chain, single-head and unmasked |
+| Mixed input-attention chain | 1 | 31-node bounded graph; explicit mixed precision |
+| Batched RMS, normalized QKV, UP/GATE | 3 | Decode-layout numerical subgraphs |
+| Batched complete FFN | 1 | Eight SDK/control calls, seven-stage accuracy and 52 fault rejections |
+| Supplied-cache attention/output/residual | 1 | Eight SDK/control calls; read-only shared cache; 67 fault rejections |
+| Batch-major adjacent-pair transform | 1 | Six SDK/repaired-source calls; original odd-offset failure preserved |
+| Normalized QKV/pairs/cache-attention composition | 1 | 25-node graph; eight SDK/control calls, 11 numerical stages and 107 fault rejections |
 
-All dimensions, input restrictions, observation modes and provenance are available in [the profile index](../ports/STATUS.md) and each `PORT.json`. Local/equation profiles must not be conflated with distributed counterparts.
+The 25-node graph is `projected_cache_attention_3x256x512_8x8`. Its newly computed K/V are outputs; it does not append them to the old cache. All entries and original report links are in [the profile index](../ports/STATUS.md).
 
-## Failures and limitations retained
+## Current implementation, not yet qualified
 
-The ordinary-half 128×128→512→128 MLP failed the fixed mathematical accuracy contract, with about 5.44% error in the uniform case. It was not qualified. The explicit blocked-accumulation variants passed their original 2% L2 / 3% peak-scaled limits; this is not a blanket guarantee for model weights or arbitrary dimensions.
+`projected_cache_ffn_3x256x512x512_16x16` connects the qualified attention boundary to normalized FFN in a 35-node resident graph. It adds an explicit mean-statistic RMS boundary, caller-owned CSL region composition, shared SDK planes, a 23-phase storage plan and a typed 50-port host/debug ABI.
 
-Initial blocked SDK attempts timed out after partially completed calls. Fresh bounded retries completed; the failed attempts remain documented. Source normalization experiments isolated stale descriptors and row-scale indexing defects; qualified comparisons identify the explicit repairs. Larger projection/residual/RMS configurations remain outside this release's qualified set.
+Eight native inputs and 18 observed numerical stages passed on two hosts. The standard generated CSL and source-compute control compiled, with maximum linked static allocations of 42,064 and 43,984 bytes per PE; these do not measure dynamic stack highwater. Full eight-call SDK/control executions were still running at the captured development checkpoint. The retained early one-call audit and mutation results are partial evidence, not qualification of this full graph. The admitted count remains 141.
 
-No complete LLM, full WaferLLM prefill/decode reproduction, production inference service, or physical-wafer performance result is delivered here.
+## Problems found and retained
 
-## Next model milestone
+- Long half accumulation failed mathematical checks in larger MLP/attention cases. Explicit block sizes and f32 merge policies are recorded; unchanged fixtures remain independently gated.
+- A source DSD base reset discarded an odd-element offset. The failure was reproduced with an SDK probe; the source control uses an explicit repair.
+- Legal attention output can overflow the subsequent half RMS sum. Actual SDK experiments show a prescaled-mean boundary remaining finite; this adds an explicit policy rather than silently changing old normalization semantics.
+- Naive attention-plus-FFN storage exceeded the smaller mesh's per-PE budget. The new candidate uses a 16×16 layout, lifetime planning and actual ELF checks.
+- Earlier one-call runs were deliberately stopped after measured diagnostic calls showed the old budget insufficient. Fresh full-eight runs use explicit six-hour budgets. A budget is not a completion guarantee.
 
-For Qwen2.5-0.5B-Instruct: freeze official weights/tokenizer/reference; prove real-shape memory placement; establish accumulation precision; implement Qwen half-split RoPE, GQA and causal attention; add persistent KV cache; validate a complete decoder layer; connect embedding, all 24 layers, final normalization, full-vocabulary LM head and device argmax; then validate a single physical wafer with batch 1 and a 2048-token total sequence budget.
+## Remaining scope and user-directed stop
 
-Aggregate SRAM capacity is only a preliminary check. Per-PE data/code/stack, padding, replication, communication and scratch lifetimes require compilation and execution evidence.
+Full cache append/update, head/GQA selection, masks and automatic position semantics are not established by the current supplied-cache graphs. Nor are full-model weights, a production decoder or physical-wafer throughput delivered.
+
+Finish and audit the accepted category-8 scope, report evidence and unsupported features, then stop. Categories 9–12, unrelated numerical backfill and Qwen require further user instruction. The legacy numbered queue preserves historical context; this stop condition supersedes automatic continuation.
+
+Release CPU checks are recorded separately in [CHECKS.md](../release/CHECKS.md). Historical SDK success is not a claim that every profile was rerun with this release's current compiler.

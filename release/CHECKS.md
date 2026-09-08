@@ -1,20 +1,20 @@
-# Release validation
+# Release validation — 2026-09-08
 
-Validated on 2026-09-07 in the isolated publication checkout.
+The update was prepared and checked in the isolated publication checkout, without changing active SDK runs or the developer's canonical toolchain.
 
-| Check | Result |
-| --- | --- |
-| Unit/semantic regression suite | 203 tests passed; 35.593 seconds |
-| Native GEMM smoke | `sdk_examples/gemm` passed native execution, generation and application checks; see `native-smoke.json` |
-| Captured profile consistency | All 122 HLS source hashes match the captured status; all 122 selected SDK report cases record `passed: true` |
-| English entry documentation | Main README, guides and active Markdown contain no untranslated Chinese passages; original chronology is explicitly archived |
-| Reader navigation | Root README, main guides and example-tour local links resolve |
-| Credential-pattern scan | No GitHub tokens, AWS access-key patterns or private-key headers detected in the selected payload |
-| Large-file check | No payload file exceeds 50 MiB; SDK images/binaries and bulk traces excluded |
-| Missing SDK configuration | Runner exits with an explicit configuration error before starting SDK work |
+- Captured profile consistency: all **141** HLS source hashes match the captured status; each corresponding SDK report case records a pass.
+- First complete regression after fixture repairs: **332 tests passed** in 85.746 seconds. Final post-selection regression: **332 tests passed** in 85.725 seconds.
+- Native `sdk_examples/gemm` smoke passed; see `native-smoke-20260908.json`.
+- Root README, principal English guides, example tour and profile-index local links resolve.
+- No credential-pattern matches were found for GitHub tokens, AWS access keys or private-key headers in the selected payload.
+- No selected file exceeds 45 MiB. Roughly 331.5 MiB of unused historical data was removed after tracing fixture reads. Necessary regression witnesses remain separately identified under `tests/fixtures/history/`.
 
-Packaging initially exposed four tests depending on omitted historical files. Exact original witnesses and their notices were moved into small, hashed test fixtures; the complete 203-test suite then passed. Numerical tolerances and kernel algorithms were not changed.
+Two initial packaging failures were missing historical fixture dependencies, not numerical failures. The missing source-generation witness and complete manifest-bound frozen-auditor witness were restored without relaxing assertions or modifying original evidence bytes.
 
-No new SDK simulator or real-hardware execution was performed during release packaging. Included SDK reports describe previously completed frozen development runs. The portable runner changes were covered by CPU smoke and configuration-error checks, not a fresh SDK run.
+Validation environment: Python 3.14.3, NumPy 2.4.1 and the local Clang installation. This is an additional host check, not a claim that the pinned NumPy 2.2.6 environment was rerun during packaging. The reproduction guide recommends Python 3.10–3.13 for that pinned dependency.
 
-The tested environment used Python 3.14.3 and the local Clang installation. NumPy dependency requirements are pinned in `ports/requirements.txt`. Full-catalog native and SDK reruns are not claimed by these release checks.
+No fresh SDK simulator or physical-wafer execution was performed for this GitHub update. Historical reports refer to original frozen runs. The current 35-node parent remains unqualified at the captured checkpoint. Full-catalog native reruns are not claimed by the release smoke.
+
+The human-readable status table separates recorded SDK success from captured toolchain-version matching. The status regeneration script now refuses to reconstruct history from this intentionally incomplete archive.
+
+Previous release checks are retained in `CHECKS-20260907.md`.

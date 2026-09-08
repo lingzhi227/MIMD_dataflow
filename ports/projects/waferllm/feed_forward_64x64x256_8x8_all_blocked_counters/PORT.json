@@ -1,0 +1,14 @@
+{
+  "project": "waferllm",
+  "kernel": "feed_forward_64x64x256_8x8_all_blocked_counters",
+  "status": "source_ready",
+  "partitions": 1,
+  "source_commit": "fd1c2daae37cd68706c03fc8009887ecee9900f8",
+  "origins": [
+    "Prefill/src/prefill.csl rmsnorm_z/z1_matmul/z2_matmul/z3_comp/h2_matmul/add_result"
+  ],
+  "contract": "Resident supplied Z/gamma/up/gate/down weights: 64x64 normalized gated FFN via 256 hidden features on 8x8 PEs. Typed RMSNorm/matmul/SiLU/multiply/add graph with explicit block-f32 all projections, source forward two-hop DSR engine, original row collective and reusable CSL RMS/accumulator libraries. Immutable inputs and no intermediate host transfer. Eight SDK calls, exact normalized/delta/output and three f32 accumulator observations; independent actual native/device delta and final accuracy, mutations and ELF memory. Matched repaired-source comparison first three calls with observer/copy differences stated. Not full Prefill/Decode or hardware performance.",
+  "fixture": "feed_forward:64:64:256:8",
+  "instrumentation": "counters",
+  "source_comparison": "evidence/feed-forward64-all-block-counter-source-comparison.json"
+}

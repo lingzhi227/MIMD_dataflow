@@ -1,0 +1,98 @@
+{
+  "passed": true,
+  "files": [
+    {
+      "file": "source.cpp",
+      "old_sha256": "86c98a3a3dfebb54fddaf4cdc468483669ce550102d850cd409fa62bbfc3b97a",
+      "new_sha256": "86c98a3a3dfebb54fddaf4cdc468483669ce550102d850cd409fa62bbfc3b97a",
+      "comparison": "bytes"
+    },
+    {
+      "file": "batches.json",
+      "old_sha256": "de550a3ba8e3f8870315746b31bb1eb17c1baa7b8447f2140ed187e262ab0284",
+      "new_sha256": "917e69568c0302f1b54cc5318bf7f37fffa4b9fd63fdf9488937d6ccb8fd1c50",
+      "comparison": "JSON values"
+    },
+    {
+      "file": "native-output.txt",
+      "old_sha256": "7f1af6da4b2ee9def7bb104ba859222247748514b97a16d90139066322a6d2e1",
+      "new_sha256": "7f1af6da4b2ee9def7bb104ba859222247748514b97a16d90139066322a6d2e1",
+      "comparison": "bytes"
+    },
+    {
+      "file": "projected_cache_region.csl",
+      "old_sha256": "ba577edc51bbfcdee211016806eb19f2e7e834cddbea262c628cdbf0c0248bf6",
+      "new_sha256": "ba577edc51bbfcdee211016806eb19f2e7e834cddbea262c628cdbf0c0248bf6",
+      "comparison": "bytes"
+    },
+    {
+      "file": "layout.csl",
+      "old_sha256": "9ad8a3f3847561ccd8c95e7bed49fe443e1dc6290c787701f4460ac8bc0bd800",
+      "new_sha256": "9ad8a3f3847561ccd8c95e7bed49fe443e1dc6290c787701f4460ac8bc0bd800",
+      "comparison": "bytes"
+    },
+    {
+      "file": "pe.csl",
+      "old_sha256": "d006c391c46e7d4876673719b0bcfd5512201795bbdc1de87beff51bcc7233ab",
+      "new_sha256": "d006c391c46e7d4876673719b0bcfd5512201795bbdc1de87beff51bcc7233ab",
+      "comparison": "bytes"
+    },
+    {
+      "file": "batched_pair_rotation_local.csl",
+      "old_sha256": "d985be54b1901d356f267fd074af536b341d88eaf19c0371055bda8155d94761",
+      "new_sha256": "d985be54b1901d356f267fd074af536b341d88eaf19c0371055bda8155d94761",
+      "comparison": "bytes"
+    },
+    {
+      "file": "sdk_stable_silu.csl",
+      "old_sha256": "f41a693516fca3cf40b5e6f236ae8a9fe1ebd9c2970a7dc94865703401cc0591",
+      "new_sha256": "f41a693516fca3cf40b5e6f236ae8a9fe1ebd9c2970a7dc94865703401cc0591",
+      "comparison": "bytes"
+    },
+    {
+      "file": "batched_matmul_local.csl",
+      "old_sha256": "3b031c664fd8e5bccf6cb3596ee081d6cc559b2df9cfc231213e30d1f980cb79",
+      "new_sha256": "3b031c664fd8e5bccf6cb3596ee081d6cc559b2df9cfc231213e30d1f980cb79",
+      "comparison": "bytes"
+    },
+    {
+      "file": "batched_matmul_blocked.csl",
+      "old_sha256": "36017f2fe8b8be374342a2092df9c2b1b2456077cf1db83f090ec99ad9839c45",
+      "new_sha256": "36017f2fe8b8be374342a2092df9c2b1b2456077cf1db83f090ec99ad9839c45",
+      "comparison": "bytes"
+    },
+    {
+      "file": "sdk_axis_reduce.csl",
+      "old_sha256": "e6e526714566ee86021dcd82eb95524da23218815acfc9797517ad98f1d71e94",
+      "new_sha256": "e6e526714566ee86021dcd82eb95524da23218815acfc9797517ad98f1d71e94",
+      "comparison": "bytes"
+    },
+    {
+      "file": "batched_softmax_local.csl",
+      "old_sha256": "ac3f23c35fa85b5b4a63ae776b50c79ce9ff65d04656571c40668cde43f94984",
+      "new_sha256": "ac3f23c35fa85b5b4a63ae776b50c79ce9ff65d04656571c40668cde43f94984",
+      "comparison": "bytes"
+    },
+    {
+      "file": "batched_rms_local.csl",
+      "old_sha256": "63a4b5f613c548bf2e578fc433fd30185b364fc13c3d4436e4de9704c8abb6a8",
+      "new_sha256": "63a4b5f613c548bf2e578fc433fd30185b364fc13c3d4436e4de9704c8abb6a8",
+      "comparison": "bytes"
+    },
+    {
+      "file": "sdk_axis_max.csl",
+      "old_sha256": "928a4b49f0d4761b9715a5693e10a5c3cbd31b1100a12edb3df1dcfc1919b3bd",
+      "new_sha256": "928a4b49f0d4761b9715a5693e10a5c3cbd31b1100a12edb3df1dcfc1919b3bd",
+      "comparison": "bytes"
+    },
+    {
+      "file": "sdk_axis_mean.csl",
+      "old_sha256": "123b66007268f10dac3cd19d456b28933dbdb1ec51cb58c7858baa9764f0e4a4",
+      "new_sha256": "123b66007268f10dac3cd19d456b28933dbdb1ec51cb58c7858baa9764f0e4a4",
+      "comparison": "bytes"
+    }
+  ],
+  "old_provenance_sha256": "7d7943cf2633ef4ebf9a448d44c0b78715c7248e8b327969eaff59018f785f57",
+  "new_manifest_sha256": "696c957f1be94442a68fb4ea44c1ae486a2c5b86d0f3580437596603952dd088",
+  "scope": "Standard compiler native/codegen identity with the interrupted first-call experiment; does not transfer full SDK qualification."
+}
