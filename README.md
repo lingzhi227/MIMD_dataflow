@@ -1,8 +1,155 @@
-# Pragma HLS
+# MIMD Dataflow — Pragma HLS
 
-**Pragma is a research compiler that turns restricted C++ tensor programs into explicit spatial dataflow programs in Cerebras Software Language (CSL).** Its purpose is to make numerical algorithms easier to express while retaining control over processing-element (PE) placement, communication, precision and device memory. The official Cerebras compiler and SDK compile and execute the emitted CSL.
+**How should we program a machine whose many processors hold local state, execute independently and exchange data directly?** This project explores a computation-graph programming model for numerical algorithms on programmable spatial hardware. Pragma HLS is our research implementation: restricted C++ tensor programs, explicit algorithm and placement policies, a typed compiler, and generated Cerebras Software Language (CSL).
 
-This repository contains the HLS interfaces, compiler, reusable CSL runtime, algorithm profiles and recorded validation evidence. **The published September 8, 2026 snapshot records 141 SDK-qualified bounded profiles.** A profile is one specified combination of algorithm, dimensions, precision and execution policy—not a complete general-purpose algorithm library. The 35-node attention-plus-FFN candidate is not SDK-qualified in this snapshot. [Detailed status](docs/STATUS.md).
+[Research background](#from-mimd-and-dataflow-to-spatial-programming) · [Project design](#project-design) · [Repository guide](#where-the-files-fit) · [Development log](#completed-work-newest-first) · [Validation](#how-to-interpret-a-pass)
+
+## From MIMD and dataflow to spatial programming
+
+### A map for CUDA programmers
+
+Read the two paths below as **different mapping responsibilities**, not a claim that GPUs cannot execute graphs or that spatial processors eliminate instruction execution. The dashed arrows show historical ideas relevant to each path, not a complete genealogy.
+
+```mermaid
+flowchart TB
+    subgraph HISTORY["Historical context"]
+        H1["1970s-1980s dataflow research<br/>Expose dependencies and ready work"]
+        H2["Systolic architecture tradition<br/>Schedule local reuse and operand movement"]
+        H3["CUDA era<br/>General-purpose parallel kernels on GPUs"]
+    end
+
+    A["Same numerical problem<br/>matrix product, solver, FFT or neural network"]
+
+    subgraph GPU["Familiar GPU / CUDA path"]
+        G1["C++/CUDA or framework graph<br/>Choose and fuse kernels"]
+        G2["Map work to threads, warps and blocks<br/>Choose tiles and synchronization"]
+        G3["Execute on SMs<br/>Registers, shared memory, caches and HBM"]
+        G1 --> G2 --> G3
+    end
+
+    subgraph SPATIAL["Programmable spatial / MIMD dataflow path"]
+        S1["Typed graph with explicit state<br/>Choose actors and a spatial algorithm"]
+        S2["Map actors and tensor shards to PEs<br/>Plan channels, buffers and completion"]
+        S3["Execute communicating local programs<br/>Distributed local memories and routed data"]
+        S1 --> S2 --> S3
+    end
+
+    A --> G1
+    A --> S1
+    H3 -.-> G1
+    H1 -.-> S1
+    H2 -.-> S2
+    H2 -.-> T["Specialized systolic hardware<br/>for example, a TPU matrix unit"]
+    S3 --> C["Current research target: Cerebras CSL"]
+    S3 -.-> O["Related programmable spatial systems<br/>AMD XDNA and Tenstorrent<br/>Different execution models; no Pragma backends"]
+    P["Pragma HLS research boundary<br/>Graph semantics to checked spatial mapping to CSL"] -.-> S1
+    P -.-> S2
+    P -.-> C
+
+    classDef research fill:#e8f2ff,stroke:#2864b4,stroke-width:2px,color:#162b45;
+    class P,S1,S2,C research;
+```
+
+For a CUDA programmer, the shift is from primarily arranging **threads and memory access within kernel executions** to also arranging **which local programs own state and how values move between them**. Both paths still need tiling, overlap, synchronization and numerical validation. GPUs can use persistent kernels and graph execution; spatial machines can time-multiplex multiple operations on a PE. The diagram describes an emphasis, not a rigid hardware dichotomy.
+
+| Familiar CUDA concern | Question exposed by our spatial graph model |
+| --- | --- |
+| Thread/block decomposition | Which actor and tensor shard reside on each PE or PE region? |
+| Coalescing, shared-memory tiling and reuse | Which values stay local, and which travel over which routes? |
+| Synchronization and producer/consumer ordering | Which receive and compute completions make a buffer safe to consume or reuse? |
+| Registers/shared-memory limits and occupancy | Do local code/data, queues, routes and concurrent live buffers fit? |
+| Kernel fusion and persistent execution | Can adjacent graph stages compose while retaining valid ownership and state? |
+
+These are engineering analogies, not one-to-one mappings: a CUDA thread block is not a Cerebras PE. The NVIDIA and Cerebras references below describe the respective execution models.
+
+### Three related ideas with different meanings
+
+**MIMD (multiple instruction streams, multiple data streams)** describes processors that can execute different instruction streams on different data. It says how execution is organized; it does not, by itself, specify a programming language, shared memory or message passing. Flynn's taxonomy provides the historical vocabulary for this distinction. [Flynn, *Some Computer Organizations and Their Effectiveness*, 1972](https://users.cs.utah.edu/~hari/teaching/paralg/Flynn72.pdf).
+
+**Dataflow** describes computation through dependencies: operations become eligible when their required inputs and execution conditions are available. A graph makes independent work visible; communication carries values between producers and consumers. The classical dataflow research associated with Jack Dennis and Arvind explored this connection between parallel languages and machines through the 1970s and 1980s. Modern spatial systems draw on related ideas without necessarily implementing classical token-matching machines. [MIT, *The Dataflow Model of Computation*](https://www.csail.mit.edu/event/dataflow-model-computation).
+
+**Systolic algorithms** map a computation onto a regular arrangement of processing elements, with a scheduled rhythm of local computation and data movement. Data is reused as it passes through the array. For matrix multiplication, a PE can retain a partial sum while operands arrive from neighboring PEs. The design problem includes both where a recurrence executes and when its operands arrive. Kung's 1982 account emphasizes this systematic mapping and the balance between computation and I/O. A general asynchronous dataflow graph need not be systolic, and a systolic array need not offer independently programmable MIMD processors. [Kung, *Why Systolic Architectures?*](https://www.eecs.harvard.edu/~htk/publication/1982-kung-why-systolic-architecture.pdf).
+
+Here, **MIMD dataflow** names the research direction of combining independently programmable processing elements with explicit dependency-driven communication. It is a design space, not a claim that all hardware below has the same execution model.
+
+### From TensorFlow and PyTorch graphs to a physical execution graph
+
+TensorFlow graphs represent operations and tensors; `tf.function` captures graph execution from Python. PyTorch supports eager execution and graph capture through `torch.compile`, whose frontend extracts operation graphs with guards and may encounter graph breaks. These frameworks demonstrate how a graph can connect a convenient application language to compiler transformations. [TensorFlow graph guide](https://www.tensorflow.org/guide/intro_to_graphs), [PyTorch Dynamo concepts](https://docs.pytorch.org/docs/main/user_guide/torch_compiler/compile/programming_model.dynamo_core_concepts.html).
+
+An application graph still leaves physical questions unanswered: which PE owns each tensor shard, which route carries it, how much buffering is required, and when a producer may overwrite storage. Mapping a graph to spatial hardware therefore needs more than selecting an implementation for each operator. It needs a communication graph, a storage plan and a schedule that preserve the application's semantics together.
+
+```mermaid
+flowchart LR
+    A["Algorithm graph: operations and dependencies"] --> B["Spatial algorithm: shards, actors and communication"]
+    B --> C["Resource plan: buffers, routes and completion"]
+    C --> D["Executable graph: local programs and data transfers"]
+```
+
+This is the compiler boundary Pragma investigates. A future frontend might accept framework graphs, but the current project starts from restricted C++; it is not an implemented TensorFlow or PyTorch backend.
+
+### Why examine alternatives to GPU execution?
+
+GPUs are highly effective for dense parallel work and have mature libraries and compilers. Their execution and memory organization nevertheless shape algorithm design: divergent paths within a warp can reduce useful parallelism; memory access patterns affect transfer efficiency; finite local storage limits reuse; and moving intermediate results or coordinating separate stages can become expensive. Modern GPU techniques can reduce these costs, so none of these observations establishes that dataflow hardware will always be faster. [NVIDIA CUDA programming guide](https://docs.nvidia.com/cuda/cuda-programming-guide/).
+
+Our research question is whether suitable computations can benefit from persistent local state, producer-to-consumer transfers and independently progressing regions of a spatial machine. The tradeoff is explicit: distributed memory introduces placement constraints, limited routes, backpressure, load imbalance and difficult completion conditions. Performance depends on the algorithm, problem size, numerical policy and mapping. This repository's simulator qualifications establish bounded correctness, not a GPU speedup.
+
+### Contemporary hardware: different ways to exploit locality and data movement
+
+| Architecture | Relevant organization | What its programming model teaches us |
+| --- | --- | --- |
+| **FPGA** | Reconfigurable logic can implement specialized pipelines and networks of communicating tasks. | HLS must turn operations into concurrent hardware with explicit channels and finite buffering. AMD Vitis distinguishes control-driven and data-driven task parallelism. [Vitis tasks and channels](https://docs.amd.com/r/en-US/ug1399-vitis-hls/Tasks-and-Channels) |
+| **Google TPU** | Matrix-multiply units use systolic arrays, alongside vector and scalar units. | Regular matrix data reuse can be realized in specialized hardware; a systolic matrix unit is not a general CSL-like programmable PE mesh. [TPU architecture](https://docs.cloud.google.com/tpu/docs/system-architecture-tpu-vm) |
+| **Cerebras WSE** | A two-dimensional mesh of PEs with local memory, independent programs and message-based communication. | Local computation and inter-PE protocols can be programmed together. This is Pragma's current target. [WSE architecture](https://sdk.cerebras.ai/computing-with-cerebras) |
+| **AMD XDNA** | A spatial dataflow array of AI Engine tiles with scalar/vector processing and local memories. | Tile programs and communication placement are central; SIMD execution inside a tile can coexist with spatial dataflow across tiles. [XDNA architecture](https://www.amd.com/en/technologies/xdna.html) |
+| **Tenstorrent Tensix** | Programmable cores coordinate data movement and matrix/vector compute engines. | Compute, unpacking/packing and data transport require coordinated pipelines. [Tensix compute and dataflow](https://docs.tenstorrent.com/tt-metal/latest/tt-metalium/tt_metal/advanced_topics/compute_engines_and_dataflow_within_tensix.html) |
+
+These are comparison points for programming-model research. Pragma currently has no FPGA, TPU, XDNA or Tenstorrent backend.
+
+### CSL and the programming model we want to explore
+
+Cerebras exposes PE programs, task activation, routes and message transfer through CSL, with Python host code for loading, launching and transferring data. Each PE owns local memory; another PE accesses the data through communication rather than ordinary shared-memory loads. This provides a concrete substrate for experimenting with spatial algorithms. [Cerebras programming model](https://sdk.cerebras.ai/computing-with-cerebras).
+
+Our proposed higher-level model should let a programmer express **the mathematical graph, its state and its intended spatial algorithm**, while the compiler checks and implements the corresponding communication and storage contracts. For example, requesting a reduction should carry its shape, precision and completion semantics—not merely a function name. A stateful graph also needs explicit iteration boundaries, initialization and reset behavior.
+
+The longer-term research agenda is a general numerical graph model with typed tensor and stream edges, persistent actors, bounded feedback, interchangeable algorithm schedules, and composable resource ownership. It should allow expert CSL kernels where needed and expose meaningful mapping choices rather than hide every hardware constraint. These are proposed requirements, not a finished universal language or an established cross-vendor standard.
+
+**Pragma HLS is an experimental vehicle for defining and testing that model.** Here “HLS” means lowering a higher-level numerical description into CSL programs for existing hardware; this project does not synthesize a new FPGA circuit. The current compiler supports a finite collection of graph patterns and explicit policies. Its reusable contributions include typed graph checks, numerical contracts, selected spatial lowerings, resource/lifetime analysis, CSL libraries and reproducible validation.
+
+### Algorithm design: turning equations into local work and communication
+
+Consider `C = A × B`. The equation does not determine a spatial implementation. A SUMMA mapping distributes matrix tiles and broadcasts panels along rows and columns. A Cannon mapping skews tiles and then shifts operands cyclically. A systolic recurrence can keep partial sums local while operand streams move on a regular schedule. The mappings differ in communication, buffering and accumulation order even when they compute the same mathematical result. Pragma preserves that distinction through explicit supported policies and separate source/protocol evidence. [Architecture and numerical contracts](docs/ARCHITECTURE.md).
+
+The following families connect existing Cerebras/CSL algorithm work to the bounded mappings examined in this repository. Upstream implementations and Pragma qualifications are distinct; source provenance is retained in [third-party notices](THIRD_PARTY_NOTICES.md) and each profile's contract.
+
+| Algorithm family | Spatial design problem | Published Pragma scope |
+| --- | --- | --- |
+| **GEMV and GEMM** | Partition operands, retain partial results, broadcast or shift tiles, and reduce contributions. | Distributed GEMV, SUMMA, Cannon and half two-hop contraction profiles; exact shapes and policies are bounded. |
+| **Cholesky, LU and QR** | Schedule factorization dependencies, propagate pivots or rotation coefficients, and update local tiles. | Distributed Cholesky, no-pivot LU and Givens QR; input restrictions and output contracts apply. |
+| **Sparse SpMV, DOT and Norm** | Route sparse contributions, handle uneven/empty partitions and combine distributed reductions. | Bounded sparse storage and reduction profiles with numerical/state checks. |
+| **CG, Jacobi-PCG and BiCGStab** | Compose SpMV, reductions and vector updates with persistent iteration state and termination rules. | Bounded resident solvers; passing these profiles does not establish every upstream solver schedule. |
+| **FFT** | Combine local transforms with distributed data rearrangement and synchronization. | Local and distributed transform profiles, including bounded 3D FFT layouts. |
+| **Stencil and application fragments** | Reuse neighboring values and organize repeated field updates or state transitions. | Selected scalar expressions and fragments only; a complete distributed time-stepping application is not established. |
+| **Attention and FFN** | Combine contractions, normalization, activation, reductions and cache-related inputs while managing intermediate lifetimes. | Bounded resident subgraphs; complete decoder/model support is not established. |
+
+For sizes, precision, accepted evidence and exceptions, use the [complete qualification index](validation/STATUS.md). An algorithm name alone is not a completion standard.
+
+### LLM execution on Cerebras
+
+An LLM brings these issues together. Prefill processes many input tokens and can exploit matrix-matrix work. Low-batch autoregressive decoding repeatedly applies model weights to new activations, making matrix-vector work and data movement central. Attention additionally reads request-specific history, while normalization and projections require reductions and transformations of distributed tensors. WaferLLM studies wafer-scale mappings and introduces MeshGEMM/MeshGEMV designs for this setting. [WaferLLM, OSDI 2025](https://www.usenix.org/system/files/osdi25-he.pdf).
+
+Cerebras has described an inference design that places weights in on-chip SRAM and partitions larger models across systems at layer boundaries. That is a system-level execution strategy; it does not establish that an arbitrary model fits one wafer or that every request's KV cache remains there indefinitely. [Cerebras inference architecture](https://www.cerebras.ai/blog/introducing-cerebras-inference-ai-at-instant-speed).
+
+For our compiler research, the important unit is a composed graph with explicit ownership: projections produce Q/K/V, attention consumes the appropriate history, and output/FFN stages reuse storage only after prior consumers finish. The Pragma snapshot qualifies several such bounded pieces, including a supplied-cache attention graph whose old cache is read-only. It does not yet establish cache append, complete head/position/mask semantics or full-model inference. Separate CSL model implementations in [csl-llm](https://github.com/lingzhi227/csl-llm) and [csl-llm-sdk](https://github.com/lingzhi227/csl-llm-sdk) maintain their own evidence and do not automatically qualify an HLS lowering.
+
+### How more algorithms could become programmable
+
+Future extensions should start from a precise equation and dependency structure, then identify a spatial algorithm that fits local memory and communication resources. Regular recurrences may suit systolic schedules; irregular sparse or graph workloads may need data-driven actors, load balancing and explicit queue bounds. Neither approach removes the need for numerical and protocol validation.
+
+Our proposed path is to define a typed operator/state contract; choose and analyze the placement and communication schedule; implement or reuse CSL kernels; validate independent mathematics, repeated execution and failure cases; and then test composition under shared resource limits. Candidate domains include fuller PDE/stencil solvers, additional sparse methods and irregular graph algorithms. Automatic mapping search, broader graph frontends and cross-wafer composition remain research directions. This roadmap does not change the current development authorization or claim completed implementations.
+
+## Published implementation at a glance
+
+This repository contains the HLS interfaces, compiler, reusable CSL runtime, algorithm profiles and recorded validation evidence. **The published September 8, 2026 implementation snapshot records 141 SDK-qualified bounded profiles.** A profile is one specified combination of algorithm, dimensions, precision and execution policy. The 35-node attention-plus-FFN candidate is not SDK-qualified in that snapshot. The research overview was expanded on September 10; it does not advance the implementation's validation boundary. [Detailed status](docs/STATUS.md).
 
 ## Project design
 
@@ -56,7 +203,7 @@ Dates below follow the recorded qualification identifiers or publication history
 
 | Date | Completed milestone | Evidence and limits |
 | --- | --- | --- |
-| 2026-09-10 | Reorganized this research overview around design, chronology and a source/evidence map. | Documentation update only; no new algorithm qualification or simulator execution. |
+| 2026-09-10 | Expanded the research background and CUDA-to-spatial comparison; organized design, repository guide and reverse-chronological evidence. | Documentation update only; no new algorithm qualification or simulator execution. |
 | 2026-09-08 | Separated compiler, runtime, tools, benchmarks and validation into the current directory structure. | [Refactor checks](release/CHECKS.md): 338 regression tests; 4,168 moved files retained identical Git blobs. Selected code-generation comparisons cover MLP and the 25-/35-node graphs. No fresh SDK runs for the refactor. |
 | 2026-09-08 | Qualified a 25-node resident normalized-QKV, pair-transform and supplied-cache attention/output/residual composition. | [SDK report](validation/evidence/qualification-20260908T011119829595Z.json): eight-call qualification. New K/V are outputs; the supplied old cache stays read-only. No cache append, masks or head/GQA selection. |
 | 2026-09-07 | Qualified batch-major adjacent-pair rotation with an explicit repair for a source DSD offset-reset defect. | [SDK report](validation/evidence/qualification-20260907T232229262682Z.json): six matched SDK/source calls; original failure retained. Coefficients are supplied; automatic position generation is not established. |
