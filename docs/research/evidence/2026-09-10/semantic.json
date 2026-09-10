@@ -1,0 +1,87 @@
+{
+  "version": "hls.ports.f32.v1",
+  "nodes": [
+    {
+      "id": "a",
+      "op": "input",
+      "shape": [
+        64,
+        64
+      ],
+      "inputs": [],
+      "line": 3,
+      "host": "a",
+      "interval": null
+    },
+    {
+      "id": "b",
+      "op": "input",
+      "shape": [
+        64,
+        64
+      ],
+      "inputs": [],
+      "line": 4,
+      "host": "b",
+      "interval": null
+    },
+    {
+      "id": "result",
+      "op": "matmul",
+      "shape": [
+        64,
+        64
+      ],
+      "inputs": [
+        "a",
+        "b"
+      ],
+      "line": 7,
+      "dataflow": {
+        "rows": 4,
+        "cols": 4,
+        "broadcast": "rows_columns",
+        "reduce": "local",
+        "fp": "relaxed",
+        "compute": "vector"
+      },
+      "interval": null
+    },
+    {
+      "id": "sink3",
+      "op": "output",
+      "shape": [
+        64,
+        64
+      ],
+      "inputs": [
+        "result"
+      ],
+      "line": 8,
+      "host": "result",
+      "interval": null
+    }
+  ],
+  "states": {},
+  "source": "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/pragma-github-release/benchmarks/linear_algebra/sdk_examples/mesh_gemm_64x64x64_4x4_vector/hls.cpp",
+  "source_sha256": "6cbd1c78eefa101fb6639b8e6ddd78ba20e623ee80125e158aa4cd67c3fb3685",
+  "frontend_command": [
+    "clang++",
+    "-std=c++17",
+    "-Werror",
+    "-Wno-unknown-pragmas",
+    "-I",
+    "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/pragma-github-release/include/pragma",
+    "-Xclang",
+    "-ast-dump=json",
+    "-Xclang",
+    "-ast-dump-filter=design",
+    "-fsyntax-only",
+    "/Users/lingzhi/.codex/.chatgpt-projects/g-p-6a9baa47a9b481918d502bb454d92ba0/pragma-github-release/benchmarks/linear_algebra/sdk_examples/mesh_gemm_64x64x64_4x4_vector/hls.cpp"
+  ],
+  "clang_version": "Apple clang version 21.0.0 (clang-2100.1.1.101)",
+  "epochs": 4,
+  "input_bound": 64,
+  "profile": "mesh_gemm.v1",
+  "rewrites": []
+}

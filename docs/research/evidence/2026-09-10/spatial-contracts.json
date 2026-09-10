@@ -1,0 +1,1685 @@
+{
+  "schema": "spatial-contract-checks.v1",
+  "mapping": {
+    "status": "PASS",
+    "profiles": 192,
+    "mac_instances": 3000,
+    "arithmetic": "exact Python integers; values small enough for exact int32 arithmetic",
+    "grid": "unfolded M by N",
+    "schedule": "theta(i,j,k)=i+j+L*k",
+    "assumptions": "unit-hop links; independent operand forwarding; MAC recurrence latency L; logical slots only",
+    "folding_counterexample": {
+      "map": "all instances to PE (0,0)",
+      "instances": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ]
+      ],
+      "common_time": 1,
+      "failure": "two MACs require the same single-issue PE in one slot"
+    },
+    "float32_counterexample": {
+      "a": 16777216.0,
+      "b": 1,
+      "c": -16777216.0,
+      "(a+b)+c": 0.0,
+      "a+(b+c)": 1.0,
+      "exact_sum": 1
+    }
+  },
+  "protocol_results": {
+    "summa_p4": {
+      "status": "PASS",
+      "states": 131,
+      "transitions": 202,
+      "terminal_states": 1,
+      "reason": "all maximal modeled executions terminate safely",
+      "witness": [],
+      "scope": "finite abstract protocol; not arbitrary CSL or hardware"
+    },
+    "summa_missing_y_wait": {
+      "status": "UNSAFE",
+      "states": 21,
+      "transitions": 31,
+      "terminal_states": 0,
+      "reason": "read before publication, stale version, or duplicate borrow",
+      "witness": [
+        {
+          "actor": "x",
+          "pc": 0,
+          "op": "write_begin",
+          "resource": "A",
+          "version": 0,
+          "token": "dma"
+        },
+        {
+          "actor": "x",
+          "pc": 1,
+          "op": "write_end",
+          "resource": "A",
+          "version": 0,
+          "token": "dma"
+        },
+        {
+          "actor": "x",
+          "pc": 2,
+          "op": "signal",
+          "resource": "x:0",
+          "version": 0,
+          "token": ""
+        },
+        {
+          "actor": "compute",
+          "pc": 0,
+          "op": "wait",
+          "resource": "x:0",
+          "version": 0,
+          "token": ""
+        },
+        {
+          "actor": "compute",
+          "pc": 1,
+          "op": "borrow",
+          "resource": "A",
+          "version": 0,
+          "token": "compute"
+        },
+        {
+          "actor": "compute",
+          "pc": 2,
+          "op": "borrow",
+          "resource": "B",
+          "version": 0,
+          "token": "compute"
+        }
+      ],
+      "scope": "all interleavings of this finite abstract protocol"
+    },
+    "summa_early_panel_reuse": {
+      "status": "UNSAFE",
+      "states": 95,
+      "transitions": 179,
+      "terminal_states": 0,
+      "reason": "read before publication, stale version, or duplicate borrow",
+      "witness": [
+        {
+          "actor": "x",
+          "pc": 0,
+          "op": "write_begin",
+          "resource": "A",
+          "version": 0,
+          "token": "dma"
+        },
+        {
+          "actor": "x",
+          "pc": 1,
+          "op": "write_end",
+          "resource": "A",
+          "version": 0,
+          "token": "dma"
+        },
+        {
+          "actor": "x",
+          "pc": 2,
+          "op": "signal",
+          "resource": "x:0",
+          "version": 0,
+          "token": ""
+        },
+        {
+          "actor": "x",
+          "pc": 3,
+          "op": "write_begin",
+          "resource": "A",
+          "version": 1,
+          "token": "dma"
+        },
+        {
+          "actor": "y",
+          "pc": 0,
+          "op": "write_begin",
+          "resource": "B",
+          "version": 0,
+          "token": "dma"
+        },
+        {
+          "actor": "y",
+          "pc": 1,
+          "op": "write_end",
+          "resource": "B",
+          "version": 0,
+          "token": "dma"
+        },
+        {
+          "actor": "y",
+          "pc": 2,
+          "op": "signal",
+          "resource": "y:0",
+          "version": 0,
+          "token": ""
+        },
+        {
+          "actor": "compute",
+          "pc": 0,
+          "op": "wait",
+          "resource": "x:0",
+          "version": 0,
+          "token": ""
+        },
+        {
+          "actor": "compute",
+          "pc": 1,
+          "op": "wait",
+          "resource": "y:0",
+          "version": 0,
+          "token": ""
+        },
+        {
+          "actor": "compute",
+          "pc": 2,
+          "op": "borrow",
+          "resource": "A",
+          "version": 0,
+          "token": "compute"
+        }
+      ],
+      "scope": "all interleavings of this finite abstract protocol"
+    },
+    "dag_fifo_depth1": {
+      "status": "DEADLOCK",
+      "states": 2,
+      "transitions": 1,
+      "terminal_states": 0,
+      "reason": "unfinished actors, no enabled operation",
+      "witness": [
+        {
+          "actor": "producer",
+          "pc": 0,
+          "op": "put",
+          "resource": "a",
+          "version": 0,
+          "token": ""
+        }
+      ],
+      "scope": "all interleavings of this finite abstract protocol"
+    },
+    "dag_fifo_depth2": {
+      "status": "PASS",
+      "states": 7,
+      "transitions": 6,
+      "terminal_states": 1,
+      "reason": "all maximal modeled executions terminate safely",
+      "witness": [],
+      "scope": "finite abstract protocol; not arbitrary CSL or hardware"
+    }
+  },
+  "plan_input": {
+    "path": "benchmarks/linear_algebra/sdk_examples/mesh_gemm_64x64x64_4x4_vector/hls.cpp",
+    "text": "#include \"spatial.hpp\"\nvoid design() {\n  auto a = spatial::input<64,64>(\"a\");\n  auto b = spatial::input<64,64>(\"b\");\n  // SUMMA: broadcast A panels by rows and B panels by columns; accumulate locally.\n  #pragma csl dataflow rows=4 cols=4 broadcast=rows_columns reduce=local fp=relaxed compute=vector\n  auto result = spatial::matmul(a, b);\n  spatial::output(\"result\", result);\n}\n",
+    "sha256": "6cbd1c78eefa101fb6639b8e6ddd78ba20e623ee80125e158aa4cd67c3fb3685",
+    "epochs": 4,
+    "bound": 64
+  },
+  "serialized_plan": {
+    "profile": "mesh_gemm.v1",
+    "matrix_rows": 64,
+    "matrix_k": 64,
+    "matrix_cols": 64,
+    "P": 4,
+    "Mt": 16,
+    "Kt": 16,
+    "Nt": 16,
+    "epochs": 4,
+    "compute": "vector",
+    "nodes": [
+      {
+        "id": "p0_0",
+        "tile": [
+          0,
+          0
+        ],
+        "place": [
+          4,
+          1
+        ]
+      },
+      {
+        "id": "p1_0",
+        "tile": [
+          1,
+          0
+        ],
+        "place": [
+          5,
+          1
+        ]
+      },
+      {
+        "id": "p2_0",
+        "tile": [
+          2,
+          0
+        ],
+        "place": [
+          6,
+          1
+        ]
+      },
+      {
+        "id": "p3_0",
+        "tile": [
+          3,
+          0
+        ],
+        "place": [
+          7,
+          1
+        ]
+      },
+      {
+        "id": "p0_1",
+        "tile": [
+          0,
+          1
+        ],
+        "place": [
+          4,
+          2
+        ]
+      },
+      {
+        "id": "p1_1",
+        "tile": [
+          1,
+          1
+        ],
+        "place": [
+          5,
+          2
+        ]
+      },
+      {
+        "id": "p2_1",
+        "tile": [
+          2,
+          1
+        ],
+        "place": [
+          6,
+          2
+        ]
+      },
+      {
+        "id": "p3_1",
+        "tile": [
+          3,
+          1
+        ],
+        "place": [
+          7,
+          2
+        ]
+      },
+      {
+        "id": "p0_2",
+        "tile": [
+          0,
+          2
+        ],
+        "place": [
+          4,
+          3
+        ]
+      },
+      {
+        "id": "p1_2",
+        "tile": [
+          1,
+          2
+        ],
+        "place": [
+          5,
+          3
+        ]
+      },
+      {
+        "id": "p2_2",
+        "tile": [
+          2,
+          2
+        ],
+        "place": [
+          6,
+          3
+        ]
+      },
+      {
+        "id": "p3_2",
+        "tile": [
+          3,
+          2
+        ],
+        "place": [
+          7,
+          3
+        ]
+      },
+      {
+        "id": "p0_3",
+        "tile": [
+          0,
+          3
+        ],
+        "place": [
+          4,
+          4
+        ]
+      },
+      {
+        "id": "p1_3",
+        "tile": [
+          1,
+          3
+        ],
+        "place": [
+          5,
+          4
+        ]
+      },
+      {
+        "id": "p2_3",
+        "tile": [
+          2,
+          3
+        ],
+        "place": [
+          6,
+          4
+        ]
+      },
+      {
+        "id": "p3_3",
+        "tile": [
+          3,
+          3
+        ],
+        "place": [
+          7,
+          4
+        ]
+      }
+    ],
+    "memory_per_pe": {
+      "resident_A_B_C": 3072,
+      "broadcast_buffers": 2048,
+      "round_history": 4096,
+      "timestamps": 48,
+      "sdk_control_reserve": 8192
+    },
+    "tile_order": "column-major",
+    "stages": [
+      {
+        "id": "broadcast_A",
+        "axis": "row",
+        "root": "round"
+      },
+      {
+        "id": "broadcast_B",
+        "axis": "column",
+        "root": "round"
+      },
+      {
+        "id": "compute",
+        "after": [
+          "broadcast_A",
+          "broadcast_B"
+        ],
+        "operation": "C += A_panel * B_panel"
+      }
+    ],
+    "rounds": 4,
+    "numeric_policy": "explicit relaxed FMA; increasing global K order",
+    "validation_policy": "componentwise-f32-dot-v1; gamma_(2K+1)*abs(A)@abs(B)",
+    "resources": {
+      "colors": [
+        0,
+        1,
+        4,
+        5
+      ],
+      "local_tasks": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "x_queues": [
+        2,
+        4
+      ],
+      "y_queues": [
+        3,
+        5
+      ],
+      "x_dsr_dest_src0_src1": 1,
+      "y_dsr_dest_src0_src1": 2,
+      "memcpy_queues": [
+        0,
+        1
+      ],
+      "completion_join": "x activates blocked compute; y unblocks it; compute blocks before next round"
+    }
+  },
+  "plan_canonical_json_sha256": "ef297255e57bc35d9588a9f7278a34ed0409ac3d23393eb4d22799335eefb623",
+  "frozen_protocol_inputs": {
+    "summa_p4": {
+      "actors": [
+        [
+          "x",
+          [
+            {
+              "kind": "write_begin",
+              "resource": "A",
+              "version": 0,
+              "token": "dma"
+            },
+            {
+              "kind": "write_end",
+              "resource": "A",
+              "version": 0,
+              "token": "dma"
+            },
+            {
+              "kind": "signal",
+              "resource": "x:0",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "computed:0",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "write_begin",
+              "resource": "A",
+              "version": 1,
+              "token": "dma"
+            },
+            {
+              "kind": "write_end",
+              "resource": "A",
+              "version": 1,
+              "token": "dma"
+            },
+            {
+              "kind": "signal",
+              "resource": "x:1",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "computed:1",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "write_begin",
+              "resource": "A",
+              "version": 2,
+              "token": "dma"
+            },
+            {
+              "kind": "write_end",
+              "resource": "A",
+              "version": 2,
+              "token": "dma"
+            },
+            {
+              "kind": "signal",
+              "resource": "x:2",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "computed:2",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "write_begin",
+              "resource": "A",
+              "version": 3,
+              "token": "dma"
+            },
+            {
+              "kind": "write_end",
+              "resource": "A",
+              "version": 3,
+              "token": "dma"
+            },
+            {
+              "kind": "signal",
+              "resource": "x:3",
+              "version": 0,
+              "token": ""
+            }
+          ]
+        ],
+        [
+          "y",
+          [
+            {
+              "kind": "write_begin",
+              "resource": "B",
+              "version": 0,
+              "token": "dma"
+            },
+            {
+              "kind": "write_end",
+              "resource": "B",
+              "version": 0,
+              "token": "dma"
+            },
+            {
+              "kind": "signal",
+              "resource": "y:0",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "computed:0",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "write_begin",
+              "resource": "B",
+              "version": 1,
+              "token": "dma"
+            },
+            {
+              "kind": "write_end",
+              "resource": "B",
+              "version": 1,
+              "token": "dma"
+            },
+            {
+              "kind": "signal",
+              "resource": "y:1",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "computed:1",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "write_begin",
+              "resource": "B",
+              "version": 2,
+              "token": "dma"
+            },
+            {
+              "kind": "write_end",
+              "resource": "B",
+              "version": 2,
+              "token": "dma"
+            },
+            {
+              "kind": "signal",
+              "resource": "y:2",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "computed:2",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "write_begin",
+              "resource": "B",
+              "version": 3,
+              "token": "dma"
+            },
+            {
+              "kind": "write_end",
+              "resource": "B",
+              "version": 3,
+              "token": "dma"
+            },
+            {
+              "kind": "signal",
+              "resource": "y:3",
+              "version": 0,
+              "token": ""
+            }
+          ]
+        ],
+        [
+          "compute",
+          [
+            {
+              "kind": "wait",
+              "resource": "x:0",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "y:0",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "borrow",
+              "resource": "A",
+              "version": 0,
+              "token": "compute"
+            },
+            {
+              "kind": "borrow",
+              "resource": "B",
+              "version": 0,
+              "token": "compute"
+            },
+            {
+              "kind": "release",
+              "resource": "A",
+              "version": 0,
+              "token": "compute"
+            },
+            {
+              "kind": "release",
+              "resource": "B",
+              "version": 0,
+              "token": "compute"
+            },
+            {
+              "kind": "signal",
+              "resource": "computed:0",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "x:1",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "y:1",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "borrow",
+              "resource": "A",
+              "version": 1,
+              "token": "compute"
+            },
+            {
+              "kind": "borrow",
+              "resource": "B",
+              "version": 1,
+              "token": "compute"
+            },
+            {
+              "kind": "release",
+              "resource": "A",
+              "version": 1,
+              "token": "compute"
+            },
+            {
+              "kind": "release",
+              "resource": "B",
+              "version": 1,
+              "token": "compute"
+            },
+            {
+              "kind": "signal",
+              "resource": "computed:1",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "x:2",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "y:2",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "borrow",
+              "resource": "A",
+              "version": 2,
+              "token": "compute"
+            },
+            {
+              "kind": "borrow",
+              "resource": "B",
+              "version": 2,
+              "token": "compute"
+            },
+            {
+              "kind": "release",
+              "resource": "A",
+              "version": 2,
+              "token": "compute"
+            },
+            {
+              "kind": "release",
+              "resource": "B",
+              "version": 2,
+              "token": "compute"
+            },
+            {
+              "kind": "signal",
+              "resource": "computed:2",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "x:3",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "y:3",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "borrow",
+              "resource": "A",
+              "version": 3,
+              "token": "compute"
+            },
+            {
+              "kind": "borrow",
+              "resource": "B",
+              "version": 3,
+              "token": "compute"
+            },
+            {
+              "kind": "release",
+              "resource": "A",
+              "version": 3,
+              "token": "compute"
+            },
+            {
+              "kind": "release",
+              "resource": "B",
+              "version": 3,
+              "token": "compute"
+            },
+            {
+              "kind": "signal",
+              "resource": "computed:3",
+              "version": 0,
+              "token": ""
+            }
+          ]
+        ]
+      ],
+      "buffers": [
+        "A",
+        "B"
+      ],
+      "fifos": []
+    },
+    "summa_missing_y_wait": {
+      "actors": [
+        [
+          "x",
+          [
+            {
+              "kind": "write_begin",
+              "resource": "A",
+              "version": 0,
+              "token": "dma"
+            },
+            {
+              "kind": "write_end",
+              "resource": "A",
+              "version": 0,
+              "token": "dma"
+            },
+            {
+              "kind": "signal",
+              "resource": "x:0",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "computed:0",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "write_begin",
+              "resource": "A",
+              "version": 1,
+              "token": "dma"
+            },
+            {
+              "kind": "write_end",
+              "resource": "A",
+              "version": 1,
+              "token": "dma"
+            },
+            {
+              "kind": "signal",
+              "resource": "x:1",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "computed:1",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "write_begin",
+              "resource": "A",
+              "version": 2,
+              "token": "dma"
+            },
+            {
+              "kind": "write_end",
+              "resource": "A",
+              "version": 2,
+              "token": "dma"
+            },
+            {
+              "kind": "signal",
+              "resource": "x:2",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "computed:2",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "write_begin",
+              "resource": "A",
+              "version": 3,
+              "token": "dma"
+            },
+            {
+              "kind": "write_end",
+              "resource": "A",
+              "version": 3,
+              "token": "dma"
+            },
+            {
+              "kind": "signal",
+              "resource": "x:3",
+              "version": 0,
+              "token": ""
+            }
+          ]
+        ],
+        [
+          "y",
+          [
+            {
+              "kind": "write_begin",
+              "resource": "B",
+              "version": 0,
+              "token": "dma"
+            },
+            {
+              "kind": "write_end",
+              "resource": "B",
+              "version": 0,
+              "token": "dma"
+            },
+            {
+              "kind": "signal",
+              "resource": "y:0",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "computed:0",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "write_begin",
+              "resource": "B",
+              "version": 1,
+              "token": "dma"
+            },
+            {
+              "kind": "write_end",
+              "resource": "B",
+              "version": 1,
+              "token": "dma"
+            },
+            {
+              "kind": "signal",
+              "resource": "y:1",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "computed:1",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "write_begin",
+              "resource": "B",
+              "version": 2,
+              "token": "dma"
+            },
+            {
+              "kind": "write_end",
+              "resource": "B",
+              "version": 2,
+              "token": "dma"
+            },
+            {
+              "kind": "signal",
+              "resource": "y:2",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "computed:2",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "write_begin",
+              "resource": "B",
+              "version": 3,
+              "token": "dma"
+            },
+            {
+              "kind": "write_end",
+              "resource": "B",
+              "version": 3,
+              "token": "dma"
+            },
+            {
+              "kind": "signal",
+              "resource": "y:3",
+              "version": 0,
+              "token": ""
+            }
+          ]
+        ],
+        [
+          "compute",
+          [
+            {
+              "kind": "wait",
+              "resource": "x:0",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "borrow",
+              "resource": "A",
+              "version": 0,
+              "token": "compute"
+            },
+            {
+              "kind": "borrow",
+              "resource": "B",
+              "version": 0,
+              "token": "compute"
+            },
+            {
+              "kind": "release",
+              "resource": "A",
+              "version": 0,
+              "token": "compute"
+            },
+            {
+              "kind": "release",
+              "resource": "B",
+              "version": 0,
+              "token": "compute"
+            },
+            {
+              "kind": "signal",
+              "resource": "computed:0",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "x:1",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "borrow",
+              "resource": "A",
+              "version": 1,
+              "token": "compute"
+            },
+            {
+              "kind": "borrow",
+              "resource": "B",
+              "version": 1,
+              "token": "compute"
+            },
+            {
+              "kind": "release",
+              "resource": "A",
+              "version": 1,
+              "token": "compute"
+            },
+            {
+              "kind": "release",
+              "resource": "B",
+              "version": 1,
+              "token": "compute"
+            },
+            {
+              "kind": "signal",
+              "resource": "computed:1",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "x:2",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "borrow",
+              "resource": "A",
+              "version": 2,
+              "token": "compute"
+            },
+            {
+              "kind": "borrow",
+              "resource": "B",
+              "version": 2,
+              "token": "compute"
+            },
+            {
+              "kind": "release",
+              "resource": "A",
+              "version": 2,
+              "token": "compute"
+            },
+            {
+              "kind": "release",
+              "resource": "B",
+              "version": 2,
+              "token": "compute"
+            },
+            {
+              "kind": "signal",
+              "resource": "computed:2",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "x:3",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "borrow",
+              "resource": "A",
+              "version": 3,
+              "token": "compute"
+            },
+            {
+              "kind": "borrow",
+              "resource": "B",
+              "version": 3,
+              "token": "compute"
+            },
+            {
+              "kind": "release",
+              "resource": "A",
+              "version": 3,
+              "token": "compute"
+            },
+            {
+              "kind": "release",
+              "resource": "B",
+              "version": 3,
+              "token": "compute"
+            },
+            {
+              "kind": "signal",
+              "resource": "computed:3",
+              "version": 0,
+              "token": ""
+            }
+          ]
+        ]
+      ],
+      "buffers": [
+        "A",
+        "B"
+      ],
+      "fifos": []
+    },
+    "summa_early_panel_reuse": {
+      "actors": [
+        [
+          "x",
+          [
+            {
+              "kind": "write_begin",
+              "resource": "A",
+              "version": 0,
+              "token": "dma"
+            },
+            {
+              "kind": "write_end",
+              "resource": "A",
+              "version": 0,
+              "token": "dma"
+            },
+            {
+              "kind": "signal",
+              "resource": "x:0",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "write_begin",
+              "resource": "A",
+              "version": 1,
+              "token": "dma"
+            },
+            {
+              "kind": "write_end",
+              "resource": "A",
+              "version": 1,
+              "token": "dma"
+            },
+            {
+              "kind": "signal",
+              "resource": "x:1",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "write_begin",
+              "resource": "A",
+              "version": 2,
+              "token": "dma"
+            },
+            {
+              "kind": "write_end",
+              "resource": "A",
+              "version": 2,
+              "token": "dma"
+            },
+            {
+              "kind": "signal",
+              "resource": "x:2",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "write_begin",
+              "resource": "A",
+              "version": 3,
+              "token": "dma"
+            },
+            {
+              "kind": "write_end",
+              "resource": "A",
+              "version": 3,
+              "token": "dma"
+            },
+            {
+              "kind": "signal",
+              "resource": "x:3",
+              "version": 0,
+              "token": ""
+            }
+          ]
+        ],
+        [
+          "y",
+          [
+            {
+              "kind": "write_begin",
+              "resource": "B",
+              "version": 0,
+              "token": "dma"
+            },
+            {
+              "kind": "write_end",
+              "resource": "B",
+              "version": 0,
+              "token": "dma"
+            },
+            {
+              "kind": "signal",
+              "resource": "y:0",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "write_begin",
+              "resource": "B",
+              "version": 1,
+              "token": "dma"
+            },
+            {
+              "kind": "write_end",
+              "resource": "B",
+              "version": 1,
+              "token": "dma"
+            },
+            {
+              "kind": "signal",
+              "resource": "y:1",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "write_begin",
+              "resource": "B",
+              "version": 2,
+              "token": "dma"
+            },
+            {
+              "kind": "write_end",
+              "resource": "B",
+              "version": 2,
+              "token": "dma"
+            },
+            {
+              "kind": "signal",
+              "resource": "y:2",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "write_begin",
+              "resource": "B",
+              "version": 3,
+              "token": "dma"
+            },
+            {
+              "kind": "write_end",
+              "resource": "B",
+              "version": 3,
+              "token": "dma"
+            },
+            {
+              "kind": "signal",
+              "resource": "y:3",
+              "version": 0,
+              "token": ""
+            }
+          ]
+        ],
+        [
+          "compute",
+          [
+            {
+              "kind": "wait",
+              "resource": "x:0",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "y:0",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "borrow",
+              "resource": "A",
+              "version": 0,
+              "token": "compute"
+            },
+            {
+              "kind": "borrow",
+              "resource": "B",
+              "version": 0,
+              "token": "compute"
+            },
+            {
+              "kind": "release",
+              "resource": "A",
+              "version": 0,
+              "token": "compute"
+            },
+            {
+              "kind": "release",
+              "resource": "B",
+              "version": 0,
+              "token": "compute"
+            },
+            {
+              "kind": "signal",
+              "resource": "computed:0",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "x:1",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "y:1",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "borrow",
+              "resource": "A",
+              "version": 1,
+              "token": "compute"
+            },
+            {
+              "kind": "borrow",
+              "resource": "B",
+              "version": 1,
+              "token": "compute"
+            },
+            {
+              "kind": "release",
+              "resource": "A",
+              "version": 1,
+              "token": "compute"
+            },
+            {
+              "kind": "release",
+              "resource": "B",
+              "version": 1,
+              "token": "compute"
+            },
+            {
+              "kind": "signal",
+              "resource": "computed:1",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "x:2",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "y:2",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "borrow",
+              "resource": "A",
+              "version": 2,
+              "token": "compute"
+            },
+            {
+              "kind": "borrow",
+              "resource": "B",
+              "version": 2,
+              "token": "compute"
+            },
+            {
+              "kind": "release",
+              "resource": "A",
+              "version": 2,
+              "token": "compute"
+            },
+            {
+              "kind": "release",
+              "resource": "B",
+              "version": 2,
+              "token": "compute"
+            },
+            {
+              "kind": "signal",
+              "resource": "computed:2",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "x:3",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "wait",
+              "resource": "y:3",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "borrow",
+              "resource": "A",
+              "version": 3,
+              "token": "compute"
+            },
+            {
+              "kind": "borrow",
+              "resource": "B",
+              "version": 3,
+              "token": "compute"
+            },
+            {
+              "kind": "release",
+              "resource": "A",
+              "version": 3,
+              "token": "compute"
+            },
+            {
+              "kind": "release",
+              "resource": "B",
+              "version": 3,
+              "token": "compute"
+            },
+            {
+              "kind": "signal",
+              "resource": "computed:3",
+              "version": 0,
+              "token": ""
+            }
+          ]
+        ]
+      ],
+      "buffers": [
+        "A",
+        "B"
+      ],
+      "fifos": []
+    },
+    "dag_fifo_depth1": {
+      "actors": [
+        [
+          "producer",
+          [
+            {
+              "kind": "put",
+              "resource": "a",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "put",
+              "resource": "a",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "put",
+              "resource": "b",
+              "version": 0,
+              "token": ""
+            }
+          ]
+        ],
+        [
+          "consumer",
+          [
+            {
+              "kind": "get",
+              "resource": "b",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "get",
+              "resource": "a",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "get",
+              "resource": "a",
+              "version": 0,
+              "token": ""
+            }
+          ]
+        ]
+      ],
+      "buffers": [],
+      "fifos": [
+        [
+          "a",
+          1,
+          0
+        ],
+        [
+          "b",
+          1,
+          0
+        ]
+      ]
+    },
+    "dag_fifo_depth2": {
+      "actors": [
+        [
+          "producer",
+          [
+            {
+              "kind": "put",
+              "resource": "a",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "put",
+              "resource": "a",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "put",
+              "resource": "b",
+              "version": 0,
+              "token": ""
+            }
+          ]
+        ],
+        [
+          "consumer",
+          [
+            {
+              "kind": "get",
+              "resource": "b",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "get",
+              "resource": "a",
+              "version": 0,
+              "token": ""
+            },
+            {
+              "kind": "get",
+              "resource": "a",
+              "version": 0,
+              "token": ""
+            }
+          ]
+        ]
+      ],
+      "buffers": [],
+      "fifos": [
+        [
+          "a",
+          2,
+          0
+        ],
+        [
+          "b",
+          1,
+          0
+        ]
+      ]
+    }
+  },
+  "source_sha256": {
+    "lib/IR/event_protocol.py": "86da101b3e57063dfe32e9607d72b528917d80742ccb0a31bd28310e5cb56bd6",
+    "lib/Analysis/protocol_safety.py": "02892cca2e1edd8fc82ebf0d04b0d4c978d27812b0348c99b136a70ef8366fa2",
+    "lib/Transforms/summa_protocol.py": "d0403dde4857d2736d7229077cfeced2d7ceb41e36c242f2d5ac2e0aa3f6bbbd",
+    "tools/check_spatial_contracts.py": "8704369440f8435c2af70174784f89237c11f764a665d13cdba3510d032c6540",
+    "runtime/csl/mesh_gemm_pe.csl": "4f450418d5d72211687ca085a0e0bacf7ae54a424e7f7d21fee00a3d8a03c0c3",
+    "runtime/csl/mesh_gemm_vector.csl": "ce0426c2a581d39c844b5be18cc0ac11aa50877fcc41a3b0d142892f36806e7e",
+    "lib/Conversion/mesh_gemm.py": "79f3c567b5813cbf485e5538ddf5563fc4e2fa124e7a1eb309458d8e175829f3"
+  },
+  "limitations": [
+    "SUMMA protocol is a manually reviewed abstraction of the existing template, not extracted CSL semantics",
+    "No numerical values, collective routing, task bits or clock timing in protocol exploration",
+    "Every modeled step advances an actor; unmodeled environment delays require eventual-completion/fairness assumptions",
+    "No SDK or hardware execution is claimed by this report",
+    "The systolic mapping check and blocked SUMMA backend are distinct realizations of GEMM"
+  ]
+}

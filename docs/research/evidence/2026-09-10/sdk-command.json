@@ -1,0 +1,13 @@
+[
+  "cslc",
+  "layout.csl",
+  "--arch=wse3",
+  "--fabric-dims=11,6",
+  "--fabric-offsets=4,1",
+  "--params=P:4,Mt:16,Kt:16,Nt:16",
+  "-o=out",
+  "--memcpy",
+  "--channels=1",
+  "--width-west-buf=0",
+  "--width-east-buf=0"
+]

@@ -2,6 +2,8 @@
 
 **How should we program a machine whose many processors hold local state, execute independently and exchange data directly?** This project explores a computation-graph programming model for numerical algorithms on programmable spatial hardware. Pragma HLS is our research implementation: restricted C++ tensor programs, explicit algorithm and placement policies, a typed compiler, and generated Cerebras Software Language (CSL).
 
+The accompanying **[Spatial HLS survey](https://github.com/lingzhi227/dataflow-programming-literatures/blob/main/notes/spatial-hls-survey.pdf)** develops the research basis: invariant-derived algorithms, recurrence localization, transform algebra, finite-resource scheduling and concrete target interfaces. This repository supplies a [bounded supporting prototype and frozen experiment](docs/research/spatial-contracts.md). The survey's broader compiler architecture is proposed work.
+
 [Research background](#from-mimd-and-dataflow-to-spatial-programming) · [Project design](#project-design) · [Repository guide](#where-the-files-fit) · [Development log](#completed-work-newest-first) · [Validation](#how-to-interpret-a-pass)
 
 ## From MIMD and dataflow to spatial programming
@@ -203,6 +205,7 @@ Dates below follow the recorded qualification identifiers or publication history
 
 | Date | Completed milestone | Evidence and limits |
 | --- | --- | --- |
+| 2026-09-10 | Added the survey's finite event-protocol IR, exhaustive interleaving checker and exact mapping/FFT witnesses; completed one bounded SUMMA SDK run. | [Research note and frozen evidence](docs/research/spatial-contracts.md): 131-state/202-transition normal protocol, intentional unsafe/deadlock witnesses, and 16,384 final plus 65,536 intermediate SDK observations for the supplied batches. Existing CSL generation reused; no full-catalogue or cross-backend claim. |
 | 2026-09-10 | Expanded the research background and CUDA-to-spatial comparison; organized design, repository guide and reverse-chronological evidence. | Documentation update only; no new algorithm qualification or simulator execution. |
 | 2026-09-08 | Separated compiler, runtime, tools, benchmarks and validation into the current directory structure. | [Refactor checks](release/CHECKS.md): 338 regression tests; 4,168 moved files retained identical Git blobs. Selected code-generation comparisons cover MLP and the 25-/35-node graphs. No fresh SDK runs for the refactor. |
 | 2026-09-08 | Qualified a 25-node resident normalized-QKV, pair-transform and supplied-cache attention/output/residual composition. | [SDK report](validation/evidence/qualification-20260908T011119829595Z.json): eight-call qualification. New K/V are outputs; the supplied old cache stays read-only. No cache append, masks or head/GQA selection. |

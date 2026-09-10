@@ -313,7 +313,10 @@
     "runtime/twohop_comm.csl": "runtime/csl/twohop_comm.csl",
     "runtime/mesh_gemv_layout.csl": "runtime/csl/mesh_gemv_layout.csl",
     "runtime/spmv_routes.csl": "runtime/csl/spmv_routes.csl",
-    "source_tree.py": "lib/Support/source_tree.py"
+    "source_tree.py": "lib/Support/source_tree.py",
+    "event_protocol.py": "lib/IR/event_protocol.py",
+    "protocol_safety.py": "lib/Analysis/protocol_safety.py",
+    "summa_protocol.py": "lib/Transforms/summa_protocol.py"
   },
   "profiles": {
     "waferllm/projected_cache_attention_3x256x512_8x8": "benchmarks/inference/waferllm/projected_cache_attention_3x256x512_8x8",

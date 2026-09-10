@@ -1,0 +1,150 @@
+{
+  "schema": "spiral-four-point-witness.v1",
+  "status": "PASS",
+  "arithmetic": "exact Gaussian integer coefficient matrices",
+  "convention": "F4[j,k]=exp(-2*pi*i*j*k/4), no normalization",
+  "identity": "F4=(F2 kron I2) diag(1,1,1,-i) (I2 kron F2) P",
+  "matrix_entries_checked": 16,
+  "matrix": [
+    [
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    [
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        -1
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    [
+      [
+        1,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ],
+    [
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        -1
+      ]
+    ]
+  ],
+  "gather_permutation": [
+    0,
+    2,
+    1,
+    3
+  ],
+  "composed_first_stage_gathers": [
+    [
+      0,
+      2
+    ],
+    [
+      1,
+      3
+    ]
+  ],
+  "initial_block_layout_transfers": [
+    {
+      "value": "x2",
+      "from": 1,
+      "to": 0
+    },
+    {
+      "value": "x1",
+      "from": 0,
+      "to": 1
+    }
+  ],
+  "first_to_second_stage_transfers": [
+    {
+      "value": "e1",
+      "from": 0,
+      "to": 1
+    },
+    {
+      "value": "o0",
+      "from": 1,
+      "to": 0
+    }
+  ],
+  "initial_owners": [
+    0,
+    0,
+    1,
+    1
+  ],
+  "output_layout": {
+    "0": [
+      "y0",
+      "y2"
+    ],
+    "1": [
+      "y1",
+      "y3"
+    ]
+  },
+  "spatial_execution_coefficients_checked": 16,
+  "negative_layout_results": {
+    "omitted_exchange": "e1 is unavailable on PE1",
+    "misrouted_exchange": "A declared inter-PE transfer has identical endpoints"
+  },
+  "limitations": [
+    "Two-PE exchange is a proposed fixed-layout realization, not a SPIRAL execution result",
+    "Counts concern this scalar butterfly interface; no universal communication lower bound is claimed",
+    "No timing, bank-conflict, DMA or finite-buffer feasibility is established by the matrix identity",
+    "SPIRAL already includes distributed gather/send representations; this witness is not a novelty claim"
+  ],
+  "checker_sha256": "789977725eaacb84f2fafb955e8100c6d4d99a61e90a8c51a9afffb896b0301d"
+}

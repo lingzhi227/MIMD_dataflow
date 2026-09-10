@@ -1,0 +1,91 @@
+{
+  "schema": "spatial-hls-survey-evidence.v1",
+  "date": "2026-09-10",
+  "baseline_commit": "dc14c0df54b12cb9e47ae710e2215084154c9570",
+  "scope": "Selected unchanged records from the completed bounded experiment; not a complete runnable build directory.",
+  "files": {
+    "audit.json": {
+      "bytes": 7416,
+      "sha256": "51933d5fc0da53686720763a5ca41e3e3ecf5c462484a09cca7cc92a5ffba264"
+    },
+    "batches.json": {
+      "bytes": 339529,
+      "sha256": "0111c07ceb77be967cb6daf33aa71faa41f42b11fcdc6fb01e977ea3850bae8e"
+    },
+    "build-configuration.json": {
+      "bytes": 129,
+      "sha256": "8ad11909c5e2cd4d57c5cbbdce8bd9d966f0e337c2cf354d9625b747e43acbe9"
+    },
+    "layout.csl": {
+      "bytes": 2614,
+      "sha256": "b7a55278cd80b7a83dd68b33878b0a0efe49742da64a9f34156b42054b670219"
+    },
+    "manifest.json": {
+      "bytes": 33925,
+      "sha256": "14282518c2b140ea00407e36dfb51e92c3a22ac9a09caa604ed1ecef4bbfd8a2"
+    },
+    "native-command.json": {
+      "bytes": 805,
+      "sha256": "91743ab62b0f9e64189861cec6cdba094ec0b947f173d5f950e847a549f07816"
+    },
+    "pe.csl": {
+      "bytes": 6103,
+      "sha256": "8b7dbf80ddded000a5ac580de5d432a1b48a3583c29053c1538f7627efc92450"
+    },
+    "reference.json": {
+      "bytes": 1115892,
+      "sha256": "bc36e06b5ae89fea0fb76a46b26a1ea4df32f1828895c5bd1990cb9ca35446d3"
+    },
+    "results.json": {
+      "bytes": 736332,
+      "sha256": "5e14c4bedfe8e5e852377365b115e3869132dd26f40c3332ddfaf84b58f3ffa1"
+    },
+    "schedule.json": {
+      "bytes": 3374,
+      "sha256": "dd62059b373a0ca3588b371a55cc559de041b7992f61f3d8baf8868b8eec2469"
+    },
+    "sdk-command.json": {
+      "bytes": 224,
+      "sha256": "88f480128b56d0101caedc0f2807a931b4ec2899cd2a08230b2a9a999f59387f"
+    },
+    "sdk-image.sha256": {
+      "bytes": 150,
+      "sha256": "62edd6fe05ab3f82df9625a35d707919f7e9546468af01093c47130363d1566d"
+    },
+    "sdk-time.log": {
+      "bytes": 964,
+      "sha256": "a668b6a4864a4e58ca6d85187e5818b7abad6e46f9a33199fa5be3ccb98d4f93"
+    },
+    "semantic.json": {
+      "bytes": 1975,
+      "sha256": "692e28c8bbfaa6aeb885c03611e33c3497d1da0fbbd45e3fd4e7e147382e5285"
+    },
+    "sim_stats.json": {
+      "bytes": 626,
+      "sha256": "38551c8cad80486effb8a22e2aa4e47852a7a38c3d340f6a3c6c60db0c7c4a64"
+    },
+    "source.cpp": {
+      "bytes": 378,
+      "sha256": "6cbd1c78eefa101fb6639b8e6ddd78ba20e623ee80125e158aa4cd67c3fb3685"
+    },
+    "spatial-contracts.json": {
+      "bytes": 39502,
+      "sha256": "f5ef666fd183672de553a5f4ea8d3fd01ffd03e69fc53f8028891ea2deaf2b60"
+    },
+    "spiral-four-point.json": {
+      "bytes": 2371,
+      "sha256": "4866f66c2f3349999b129b9dc4466ae5c3c6359b8533d92c33559cf5e2a8a419"
+    },
+    "trace-cleanup.json": {
+      "bytes": 436,
+      "sha256": "109f50ebb237b451e8138dc15903f76d41fc6a3ecd03fe2f67cea9c2d480dcc4"
+    }
+  },
+  "omitted": [
+    "Licensed SDK container and native binary",
+    "Implementation snapshot duplicated from the compiler build; original hashes remain in manifest.json",
+    "Intermediate frontend AST/IR and duplicate native input/output text; source, numerical batches, references and outputs are retained",
+    "5,723,033,334 bytes of simulator traces deleted after successful audit; see trace-cleanup.json"
+  ],
+  "note": "manifest.json is the original build manifest and names files outside this compact bundle. bundle-index.json enumerates only the files published here. Original commands retain historical absolute paths; they are provenance, not portable commands to execute unchanged."
+}
